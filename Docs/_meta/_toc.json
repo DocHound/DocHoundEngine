@@ -33,12 +33,12 @@
   ],
   "topics": [
     {
-      "title": "Getting Started",
-      "link": "Getting Started.md"
+      "title": "Test First Topic",
+      "link": "Test.md"
     },
     {
       "title": "What's New?",
-      "link": "",
+      "link": "WhatsNew.md",
       "topics": [
         {
           "title": "Framework Change Log",
