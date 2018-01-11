@@ -16,7 +16,10 @@ namespace DocHound
             if (string.IsNullOrEmpty(gitHubProject))
             {
                 TopicViewModel.MasterUrl = Configuration["MasterUrl"];
-                TopicViewModel.MasterUrlRaw = TopicViewModel.MasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/") + "/master/";
+                TopicViewModel.MasterUrlRaw =
+                    TopicViewModel.MasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/");
+                if (!TopicViewModel.MasterUrl.Contains("/master/"))
+                    TopicViewModel.MasterUrl += "/master/";
             }
             else
             {
