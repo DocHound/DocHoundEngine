@@ -1,0 +1,404 @@
+{
+  "title": "CODE Framework Documentation",
+  "owner": "Markus Egger Inc.",
+  "language": "en-US",
+  "version": "1.0",
+  "requireHttps": true,
+  "theme": {
+    "standardTheme": "Default",
+    "customeCss": null,
+    "customTemplate": null 
+  },
+  "menu": [
+    {
+      "title": "Docs Home",
+      "link": "/"
+    },
+    {
+      "title": "Framework Home",
+      "link": "http://codeframework.io"
+    },
+    {
+      "title": "CODE Magazine",
+      "link": "http://codemag.com/magazine"
+    },
+    {
+      "title": "CODE Consulting",
+      "link": "http://codemag.com/consulting"
+    },
+    {
+      "title": "CODE Training",
+      "link": "http://codemag.com/training"
+    }
+  ],
+  "topics": [
+    {
+      "title": "Getting Started",
+      "link": "Getting Started.md"
+    },
+    {
+      "title": "What's New?",
+      "link": "",
+      "topics": [
+        {
+          "title": "Framework Change Log",
+          "link": "CODE Framework (.NET) Change Log.md",
+          "seeAlso": "Tools Change Log"
+        },
+        {
+          "title": "Tools Change Log",
+          "link": "CODE Framework Tools Change Log.md",
+          "seeAlso": "Framework Change Log"
+        }
+      ]
+    },
+    {
+      "title": "Services",
+      "topics": [
+        {
+          "title": "Understanding Services in CODE Framework",
+          "link": "Understanding Services.md"
+        },
+        {
+          "title": "Services: Server-Side Hosting",
+          "topics": [
+            {
+              "title": "Creating REST Services",
+              "link": "Creating REST Services.md"
+            },
+            {
+              "title": "WebApi Service Hosting",
+              "link": "WebApi Service Hosting.md"
+            },
+            {
+              "title": "Using the Service Test Host/Harness",
+              "link": "Using the Service Test Harness.md"
+            },
+            {
+              "title": "Fixing Service Hosting Security Errors",
+              "link": "Fixing Service Hosting Security Errors.md"
+            },
+            {
+              "title": "WCF HTTPS Service Hosting",
+              "link": "WCF HTTPS Service Hosting.md"
+            },
+            {
+              "title": "WCF Self-Hosted Service Concurrency",
+              "link": "WCF Self-Hosted Service Concurrency.md"
+            },
+            {
+              "title": "WCF Service Namespaces",
+              "link": "WCF Service Namespaces.md"
+            },
+            {
+              "title": "CORS Support in ServiceHostController",
+              "link": "CORS Support in ServiceHostController.md"
+            }
+          ]
+        },
+        {
+          "title": "Services: Client-Side Calling",
+          "topics": [
+            {
+              "title": "Calling REST Services through ServiceClient",
+              "link": "Calling%20REST%20Services%20through%20ServiceClient.md"
+            },
+            {
+              "title": "ServiceClient Events",
+              "link": "ServiceClient%20Events.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "WPF Client Development",
+      "topics": [
+        {
+          "title": "Binding the UI to Data",
+          "topics": [
+            {
+              "title": "Bind, Security, and Input Validation",
+              "link": "Bind%2C%20Security%2C%20and%20Input%20Validation.md"
+            },
+            {
+              "title": "Binding to Enums",
+              "link": "Binding%20to%20Enums.md"
+            }
+          ]
+        },
+        {
+          "title": "Controls",
+          "topics": [
+            {
+              "title": "Auto-Complete UIs",
+              "link": "Auto-Complete%20in%20WPF%20UIs.md"
+            },
+            {
+              "title": "Caps-Lock Warning (and Global Key Handlers)",
+              "link": "Caps-Lock Warning and Global Key Handlers.md"
+            },
+            {
+              "title": "Icons - Theme Icons",
+              "link": "Theme Icons.md",
+              "seeAlso": "Standard CODE Framework Icons|Themes - Standard Icon Resources"
+            },
+            {
+              "title": "ListBox - Multi-Column Lists",
+              "link": "Multi-Column Lists.md"
+            },
+            {
+              "title": "Odd and Even Row Background Colors in Lists",
+              "link": "Odd and Even Row Background Color in Lists.md"
+            },
+            {
+              "title": "Progress Animations",
+              "link": "Progress Animations.md"
+            },
+            {
+              "title": "Range Slider",
+              "link": "RangeSlider Control.md"
+            },
+            {
+              "title": "Ribbon - Custom Views and View-Models in the Ribbon", 
+              "link": "Custom Views and View-Models in Ribbons.md"
+            }, 
+            {
+              "title": "Ribbon - Setting a Default Page",
+              "link": "Ribbon - Setting a Default Page.md"
+            },
+            {
+              "title": "Sticky Notes",
+              "link": "Sticky Notes Features.md"
+            },
+            {
+              "title": "Text Boxes - Select on Entry",
+              "link": "Select WPF TextBoxes on Entry.md"
+            },
+            {
+              "title": "Text Boxes - Input Masks",
+              "link": "TextBox Input Masks.md"
+            }          
+          ]
+        },
+        {
+          "title": "Layout and Visuals",
+          "topics": [
+            {
+              "title": "Understanding Layout",
+              "link": "Understanding Layout.md"
+            },
+            {
+              "title": "Automatic Layout - Bidirectional Stack Panel",
+              "link": "Bidirectional Stack Panel.md"
+            },
+            {
+              "title": "Automatic Layout - Edit Form",
+              "link": "Automatic Layout and Elasticity.md"
+            },
+            {
+              "title": "Automatic Layout - Flow Layout",
+              "link": "Automatic Layout - Flow Layout.md"
+            },
+            {
+              "title": "Automatic Layout - Multi-Panel Layout",
+              "link": "Automatic Layout - MultiPanel.md"
+            },
+            {
+              "title": "Font Sizes and Font Families in WPF Apps",
+              "link": "Font Sizes and Styles in WPF Apps.md"
+            },
+            {
+              "title": "Layout - Setting Generic/Abstract Dimensions on Controls",
+              "link": "Setting Generic and Abstract Control Dimensions in WPF.md"
+            },
+            {
+              "title": "MessageBoxes in WPF MVVM/MVC",
+              "link": "MessageBoxes in WPF MVVM_MVC.md"
+            },            
+            {
+              "title": "Metro - ListBoxes",
+              "link": "Metro ListBoxes in WPF.md"
+            },            
+            {
+              "title": "Metro - Control Margins",
+              "link": "Metro-Style Control Margins.md"
+            },            
+            {
+              "title": "Metro - Start Screen",
+              "link": "Metro Start Screen.md"
+            },            
+            {
+              "title": "Metro - Transparent ListBoxes",
+              "link": "Transparent ListBoxes in WPF Metro-style Apps.md"
+            },
+            {
+              "title": "Styling - MVVM Shell Styling Tips",
+              "link": "WPF MVVM Shell Styling Tips.md"
+            },
+            {
+              "title": "Styling - Tuning the Shell",
+              "link": "Tuning the Appearance of the Shell.md"
+            },
+            {
+              "title": "Themes - Simplified Resource Dictionary Download",
+              "link": "WPF Theme Resource Dictionary Download.md"
+            },
+            {
+              "title": "Themes - Standard Icon Resources",
+              "link": "AllIcons.md",
+              "seeAlso": "Theme Icon Control|Icons - Theme Icons"
+            }
+          ]
+        }, 
+        {
+          "title": "Understanding View-Models",
+          "topics": [
+            {
+              "title": "Async Worker",
+              "link": "CODE%20Framework%20AsyncWorker.md",
+              "seeAlso": "Async Worker - Part 2"
+            },
+            {
+              "title": "Async Worker - Part 2",
+              "link": "AsyncWorker%20Part%202.md",
+              "seeAlso": "Async Worker"
+            },
+            {
+              "title": "Fast Loading of Standard View-Models with Image Resources",
+              "link": "Fast loading of Standard ViewModels with image resources.md"
+            },
+            {
+              "title": "Standard Views and View-Models",
+              "link": "Standard%20Views%20and%20View%20Models.md"
+            },
+            {
+              "title": "Standard View-Models Tips",
+              "link": "StandardViewModel%20Tips.md"
+            }
+          ]
+        },
+        {
+          "title": "Understanding Views",
+          "topics": [
+            {
+              "title": "Default Focus in Views",
+              "link": "Default Focus in Views.md"
+            },
+            {
+              "title": "Partial Views",
+              "link": "Partial Views in CODE Framework WPF.md"
+            },
+            {
+              "title": "Reacting when Views Close",
+              "link": "Reacting when Views Close.md"
+            },
+            {
+              "title": "Standard Views and View-Models",
+              "link": "Standard Views and View Models.md"
+            },
+            {
+              "title": "Using the View Visualizer",
+              "link": "Using the View-Visualizer.md"
+            }
+          ]
+        },
+        {
+          "title": "General WPF Framework Topics",
+          "topics": [
+            {
+              "title": "Accessing the Shell Object",
+              "link": "Accessing%20the%20Shell%20object.md"
+            },
+            {
+              "title": "Activating Existing/Loaded Views",
+              "link": "Activating%20Existing%20Views.md"
+            },
+            {
+              "title": "Configuration System",
+              "link": "CODE%20Framework%20Configuration%20System.md"
+            },
+            {
+              "title": "Hooking Events with Commands",
+              "link": "Generic ability to hook all events as commands.md"
+            },
+            {
+              "title": "Input Validation",
+              "link": "Input Validation in WPF.md"
+            },
+            {
+              "title": "Notifications",
+              "link": "WPF%20MVVM_MVC%20Notifications.md"
+            },
+            {
+              "title": "Observable Collection Helper",
+              "link": "ObservableCollection Helper.md",
+              "seeAlso": "Async Worker,Async Worker - Part 2"
+            },
+            {
+              "title": "Resource Dictionary Loading",
+              "link": "WPF%20Resource%20Dictionary%20Loading.md"
+            },
+            {
+              "title": "Splitting WPF Apps into Multiple Projects",
+              "link": "Splitting WPF Apps into Multiple Projects.md"
+            },
+            {
+              "title": "Status Bars",
+              "link": "WPF MVVM_MVC Status Bar.md"
+            },
+            {
+              "title": "WPF ImageHelper",
+              "link": "WPF%20ImageHelper.md"
+            },
+            {
+              "title": "View-Actions - CanExecute",
+              "link": "CanExecute on ViewActions.md"
+            },
+            {
+              "title": "View-Actions - Checked and Toggle",
+              "link": "Checked and Toggle View-Actions.md"
+            },
+            {
+              "title": "View-Actions - Pinned Actions",
+              "link": "Pinned View Actions.md"
+            },
+            {
+              "title": "View-Actions - String Indexers",
+              "link": "String Indexer for ViewActionsCollection.md"
+            },
+            {
+              "title": "Window Resize and Drag for Borderless Windows",
+              "link": "Window Resize and Drag for Borderless Windows.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "General Topics",
+      "topics": [
+        {
+          "title": "JSON Features",
+          "link": "JSON Features.md"
+        },
+        {
+          "title": "Logging Framework",
+          "link": "Logging Framework.md"
+        },
+        { 
+          "title": "ObjectHelper and Complex Paths",
+          "link": "ObjectHelper and Complex Paths.md"
+        },
+        {
+          "title": "TransparentProxyGenerator",
+          "link": "Using the Transparent Proxy Generator.md"
+        },
+        {
+          "title": "Type and Null Checking Convenience Method",
+          "link": "Type and Null Checking Convenience Method.md"
+        }
+      ]
+    }
+  ]
+}
