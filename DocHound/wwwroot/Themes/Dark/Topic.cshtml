@@ -1,0 +1,113 @@
+﻿@using DocHound.Classes
+@using DocHound.Models.Docs
+
+@model DocHound.Models.Docs.TopicViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>CODE Framework Docs - @Model.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Themes/Dark/SiteIcon.png" />
+
+    <meta name="Description" content="CODE Framework Documentation - @Model.Title" />
+    <meta name="Keywords" content="CODE Framework Documentation" />
+    <meta name="Author" content="Markus Egger Inc." />
+    <meta name="Robots" content="all" />
+
+    <meta name="og:title" content="CODE Framework Docs - @Model.Title" />
+    <meta name="og:type" content="website" />
+    <meta name="og:description" content="CODE Framework Documentation - @Model.Title" />
+    @*@Html.Raw(CodeHelper.GetMetaImageTag(ViewBag))*@
+
+    <meta name="twitter:title" content="CODE Framework Docs - @Model.Title" />
+    <meta name="twitter:description" content="CODE Framework Docs - @Model.Title" />
+    @*@Html.Raw(CodeHelper.GetMetaImageTag(ViewBag, MetaNamespace.Twitter))*@
+
+    @*<link rel="publisher" href="https://plus.google.com/103030867107221566748/" />*@
+
+    <link href="~/css/fontawesome-free-5.0.3/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/Themes/Dark/Theme.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="mobileMenu">
+        @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu, MenuMode.Mobile))
+        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+    </nav>
+    <header class="header headerLarge">
+        @*<div class="mobileMenuIcon"><img src="/Images/MobileMenu.png" /></div>*@
+        <i class="fas fa-bars mobileMenuIcon"></i>
+        <img class="logo" src="@(TopicViewModel.MasterUrlRaw + "_meta/_logo.png")" />
+        <div class="menu">
+            @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu))
+        </div>
+    </header>
+
+    <nav class="toc">
+        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+    </nav>
+
+    <article class="content-container">
+        @Html.Raw(Model.Html)
+
+        @if (Model.SelectedTopic != null && (Model.SelectedTopic.PreviousTopic != null || Model.SelectedTopic.NextTopic != null))
+        {
+            <div class="navigation-footer">
+                @if (Model.SelectedTopic.PreviousTopic != null)
+                {
+                    <div class="navigatePrevious">
+                        <a href="@TopicHelper.GetNormalizedName(Model.SelectedTopic.PreviousTopic.Title)" title="@Model.SelectedTopic.PreviousTopic.Title">Previous</a>
+                    </div>
+                }
+                @if (Model.SelectedTopic.NextTopic != null)
+                {
+                    <div class="navigateNext">
+                        <a href="@TopicHelper.GetNormalizedName(Model.SelectedTopic.NextTopic.Title)" title="@Model.SelectedTopic.NextTopic.Title">Next</a>
+                    </div>
+                }
+                <div style="clear: both"></div>
+            </div>
+        }
+    </article>
+
+    <aside class="sidebar">
+        @if (Model.Outline.Count > 0)
+        {
+            <p style="font-weight: bold;">On this page:</p>
+            <ul>
+                @foreach (var child in Model.Outline)
+                {
+                    <li><a href="#@child.Link">@child.Title</a></li>
+                }
+            </ul>
+        }
+
+        @if (Model.SelectedTopic != null && Model.SelectedTopic.SeeAlso.Count > 0)
+        {
+            <p style="font-weight: bold">See also:</p>
+            <ul>
+                @foreach (var seeAlso in Model.SelectedTopic.SeeAlso)
+                {
+                    <li><a href="/@TopicHelper.GetNormalizedName(seeAlso.Link)">@seeAlso.Title</a></li>
+                }
+            </ul>
+        }
+    </aside>
+
+    <footer class="footer">
+        <p>(c) by Markus Egger Inc.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="~/Themes/Dark/Topic.js"></script>
+
+
+</body>
+</html>

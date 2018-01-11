@@ -1,0 +1,132 @@
+﻿@using System.Globalization
+@using DocHound.Classes
+@using DocHound.Models.Docs
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>@ViewData["Title"]</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/Images/CodeIcon.png" />
+    
+    <meta name="Description" content="@CodeHelper.GetMetaDescription(ViewBag)" />
+    <meta name="Keywords" content="@CodeHelper.GetMetaKeywords(ViewBag)" />
+    <meta name="Author" content="@CodeHelper.GetMetaAuthors(ViewBag)" />
+    <meta name="Robots" content="all" />
+    
+    <meta name="og:title" content="@CodeHelper.GetTitle(ViewBag)" />
+    <meta name="og:type" content="@CodeHelper.GetOgMetaType(ViewBag)" />
+    <meta name="og:description" content="@CodeHelper.GetMetaDescription(ViewBag)" />
+    @Html.Raw(CodeHelper.GetMetaImageTag(ViewBag))
+    
+    <meta name="twitter:title" content="@CodeHelper.GetTitle(ViewBag)" />
+    <meta name="twitter:description" content="@CodeHelper.GetMetaDescription(ViewBag)" />
+    @Html.Raw(CodeHelper.GetMetaImageTag(ViewBag, MetaNamespace.Twitter))
+
+    <link rel="publisher" href="https://plus.google.com/103030867107221566748/" />
+
+    @RenderSection("OtherHeaderTags", false)
+    
+    <link href="@Url.Content("~/Content/Reset.css")" type="text/css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/2015/MicroFormats.css")" type="text/css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/2015/Default.css")" type="text/css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/2015/Desktop.css")" type="text/css" rel="stylesheet" />
+
+    @*<style>
+        @Html.Raw(CodeHelper.GetCurrentAreaStyle())
+    </style>*@
+
+    @RenderSection("LoadCSS", false)
+    @RenderSection("Styles", false)
+
+    <script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>*@
+    @*<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.popupWindow.js")" type="text/javascript"></script>*@
+    
+    <script language="javascript" type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-44188652-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    
+    <script type="text/javascript">
+        //function setPageHeight() {
+        //    var windowHeight = $(window).height();
+        //    var pageHeight = $('#page').height();
+        //    var headerHeight = $('#header').height();
+        //    if (windowHeight > pageHeight + headerHeight + 1)
+        //        $('#page').height(windowHeight - headerHeight - 1);
+        //}
+
+        //$(function () {
+        //    setPageHeight();
+        //    $(window).on('resize', setPageHeight);
+        //    $(document).on('scroll', function () {
+        //        $('.subMenu').removeClass('visibleSubMenu');
+        //        if ($(document).scrollTop() > 60) {
+        //            $('#header').removeClass('headerLarge').addClass('headerSmall');
+        //        } else {
+        //            $('#header').removeClass('headerSmall').addClass('headerLarge');
+        //        }
+        //        setPageHeight();
+        //    });
+        //    $('#header').on('click', function() {
+        //        $('.subMenu').removeClass('visibleSubMenu');
+        //    });
+        //    $('#menu>ul>li').on('mouseenter', function () {
+        //        $('.subMenu').removeClass('visibleSubMenu');
+        //        $(this).find('.subMenu').addClass('visibleSubMenu');
+        //    });
+        //    $('#main').on('mouseenter', function () {
+        //        $('.subMenu').removeClass('visibleSubMenu');
+        //    });
+        //    $('#mobileMenuIcon').on('click', function () {
+        //        if (!$('#page').hasClass('showMobileMenu')) {
+        //            $('#page').addClass('showMobileMenu');
+        //            $('#header').addClass('showMobileMenu');
+        //            $('#mobileMenu').addClass('showMobileMenu');
+        //            $('#mobileMenu').css('display', 'block');
+        //            setTimeout(function () {
+        //                $('#mobileMenu').css('z-index', 100);
+        //            }, 300);
+        //        } else {
+        //            $('#mobileMenu').css('z-index', -1);
+        //            $('#page').removeClass('showMobileMenu');
+        //            $('#header').removeClass('showMobileMenu');
+        //            $('#mobileMenu').removeClass('showMobileMenu');
+        //            setTimeout(function () {
+        //                $('#mobileMenu').css('display', 'none');
+        //            }, 300);
+        //        }
+        //    });
+        //})
+    </script>
+</head>
+<body>
+    @*<div id="mobileMenu">
+        @Html.Raw(CodeHelper.GetMenu(Html, mode: MenuMode.Mobile))
+    </div>
+    <div id="header" class="headerLarge">
+        <div id="logo">
+            <img src="@(TopicViewModel.MasterUrlRaw + "_meta/_logo.png")" />
+        </div>
+        <div id="menu">
+            @Html.Raw(CodeHelper.GetMenu(Html))
+        </div>
+        <div id="mobileMenuIcon"><img src="/Images/MobileMenu.png"/></div>
+    </div>*@
+            @RenderBody()
+    <!-- the following div tags are there so custom CSS can associated generic elements, such as graphics anywhere in the body content -->
+
+    @RenderSection("Scripts", false)
+</body>
+</html>
