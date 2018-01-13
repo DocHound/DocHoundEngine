@@ -41,10 +41,16 @@ namespace DocHound.Classes
             var fileList = await GetFileListJson(httpClient, repository.Id, docsFolder);
 
             var docsFolderNormalized = docsFolder;
-            if (!docsFolderNormalized.StartsWith("/")) docsFolderNormalized = "/" + docsFolderNormalized;
-            if (!docsFolderNormalized.EndsWith("/")) docsFolderNormalized = docsFolderNormalized + "/";
+            var fullPath = filePath;
+            if (docsFolderNormalized != null)
+            {
+                if (!docsFolderNormalized.StartsWith("/")) docsFolderNormalized = "/" + docsFolderNormalized;
+                if (!docsFolderNormalized.EndsWith("/")) docsFolderNormalized = docsFolderNormalized + "/";
+                fullPath = docsFolderNormalized + filePath;
+            }
+            if (!fullPath.StartsWith("/")) fullPath = "/" + fullPath;
 
-            var file = fileList.FirstOrDefault(f => f.Path == docsFolderNormalized + filePath);
+            var file = fileList.FirstOrDefault(f => f.Path == fullPath);
 
             if (file != null)
                 fileContents = await GetFileContents(httpClient, repository.Id, file.Id);
@@ -63,10 +69,16 @@ namespace DocHound.Classes
             var fileList = await GetFileListJson(httpClient, repository.Id, docsFolder);
 
             var docsFolderNormalized = docsFolder;
-            if (!docsFolderNormalized.StartsWith("/")) docsFolderNormalized = "/" + docsFolderNormalized;
-            if (!docsFolderNormalized.EndsWith("/")) docsFolderNormalized = docsFolderNormalized + "/";
+            var fullPath = filePath;
+            if (docsFolderNormalized != null)
+            {
+                if (!docsFolderNormalized.StartsWith("/")) docsFolderNormalized = "/" + docsFolderNormalized;
+                if (!docsFolderNormalized.EndsWith("/")) docsFolderNormalized = docsFolderNormalized + "/";
+                fullPath = docsFolderNormalized + filePath;
+            }
+            if (!fullPath.StartsWith("/")) fullPath = "/" + fullPath;
 
-            var file = fileList.FirstOrDefault(f => f.Path == docsFolderNormalized + filePath);
+            var file = fileList.FirstOrDefault(f => f.Path == fullPath);
 
             if (file != null)
                 fileContents = await GetFileStream(httpClient, repository.Id, file.Id);
@@ -90,7 +102,7 @@ namespace DocHound.Classes
 
         private static async Task<VstsProjectInfo> GetProjectsJson(HttpClient httpClient, string projectName)
         {
-            var httpResponseMessage = httpClient.GetAsync("/_apis/projects?stateFilter=WellFormed&api-version=1.0").Result;
+            var httpResponseMessage = await httpClient.GetAsync("/_apis/projects?stateFilter=WellFormed&api-version=1.0");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var json = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -108,7 +120,7 @@ namespace DocHound.Classes
 
         private static async Task<VstsRepositoryInfo> GetRepositoriesJson(HttpClient httpClient, string projectName, string repositoryName = "")
         {
-            var httpResponseMessage = httpClient.GetAsync("/DefaultCollection/" + projectName + "/_apis/git/repositories?api-version=1.0").Result;
+            var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/" + projectName + "/_apis/git/repositories?api-version=1.0");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var json = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -126,7 +138,10 @@ namespace DocHound.Classes
 
         private static async Task<List<VstsFileInfo>> GetFileListJson(HttpClient httpClient, Guid repositoryId, string scopePath = "")
         {
-            var httpResponseMessage = httpClient.GetAsync("/DefaultCollection/_apis/git/repositories/" + repositoryId + "/items?api-version=1.0&includeContentMetadata=true&recursionLevel=Full&scopePath=" + scopePath).Result;
+            var url = "/DefaultCollection/_apis/git/repositories/" + repositoryId + "/items?api-version=1.0&includeContentMetadata=true&recursionLevel=Full";
+            if (!string.IsNullOrEmpty(scopePath)) url += "&scopePath=" + scopePath;
+
+            var httpResponseMessage = await httpClient.GetAsync(url);
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var json = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -147,7 +162,7 @@ namespace DocHound.Classes
 
         private static async Task<string> GetFileContents(HttpClient httpClient, Guid repositoryId, string objectId)
         {
-            var httpResponseMessage = httpClient.GetAsync("/DefaultCollection/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=1.0&$format=text").Result;
+            var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=1.0&$format=text");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var text = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -157,7 +172,7 @@ namespace DocHound.Classes
         }
         private static async Task<Stream> GetFileStream(HttpClient httpClient, Guid repositoryId, string objectId)
         {
-            var httpResponseMessage = httpClient.GetAsync("/DefaultCollection/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=1.0&$format=text").Result;
+            var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=1.0&$format=text");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var stream = await httpResponseMessage.Content.ReadAsStreamAsync();
