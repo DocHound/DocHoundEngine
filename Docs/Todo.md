@@ -3,7 +3,7 @@
 
 * [X] Make the current tab work on mobile (responsive)
 * [X] Make the main menu configurable
-* Functional issues:
+* [ ] Functional issues:
     * [ ] Make sure that all the data in the topic is data-driven (from the repository)
     * [ ] Document title is still hardcoded
 * [ ] Dark/light/sepia theme
@@ -14,7 +14,7 @@
 * [ ] Sharing of documents would be nice
 * [ ] Multiple standard themes
 * [ ] Showing the outline with indent levels
-* Styling
+* [ ] Styling
     * [ ] H3 needs to get their own style
     * [ ] Need good default styles for tables
 * [ ] Need to be able to refer to other TOC files as a single node from within a TOC file
