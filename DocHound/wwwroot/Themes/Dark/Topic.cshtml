@@ -43,7 +43,7 @@
     <header class="header headerLarge">
         @*<div class="mobileMenuIcon"><img src="/Images/MobileMenu.png" /></div>*@
         <i class="fas fa-bars mobileMenuIcon"></i>
-        <img class="logo" src="@(TopicViewModel.MasterUrlRaw + "_meta/_logo.png")" />
+        <img class="logo" src="@Model.LogoUrl" />
         <div class="menu">
             @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu))
         </div>

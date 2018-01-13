@@ -34,9 +34,11 @@ namespace DocHound.Models.Docs
             {
                 case RepositoryTypes.GitHubRaw:
                     tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(MasterUrlRaw);
+                    LogoUrl = MasterUrlRaw + "_meta/_logo.png";
                     break;
                 case RepositoryTypes.VisualStudioTeamSystemGit:
                     tocJson = await VstsHelper.GetTocJson(VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
+                    LogoUrl = "/___FileProxy___?mode=vstsgit&path=_meta/_logo.png";
                     break;
             }
             if (string.IsNullOrEmpty(tocJson)) return;
@@ -184,6 +186,7 @@ namespace DocHound.Models.Docs
         public string Title => SelectedTopicTitle;
 
         public string Html { get; set; }
+        public string LogoUrl { get; set; }
 
         public TableOfContentsItem SelectedTopic
         {
