@@ -50,26 +50,25 @@ namespace DocHound.Models.Docs
 
         public List<MainMenuItem> MainMenu { get; set; }
 
-        public string Theme { get; set; } = "~/Themes/Default/Docs.css";
-
         private async Task GetHtmlContent()
         {
+            var rawTopic = new TopicRaw{OriginalName = GetFullExternalLink(SelectedTopic.Title)};
+
             try
             {
-                var fullExternalLink = GetFullExternalLink(SelectedTopic.Title);
-                var externalContent = await WebClientEx.GetStringAsync(fullExternalLink);
+                rawTopic.OriginalContent = await WebClientEx.GetStringAsync(rawTopic.OriginalName);
+            }
+            catch
+            {
+                rawTopic.OriginalContent = null;
+            }
 
-                var lowerExternalLink = fullExternalLink.ToLowerInvariant();
+            var html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic);
 
-                string html;
-                if (lowerExternalLink.EndsWith(".md"))
-                    html = MarkdownToHtml(externalContent);
-                else if (lowerExternalLink.EndsWith(".html") || lowerExternalLink.EndsWith(".htm"))
-                    html = externalContent; // TODO: Extract everything within the body tag
-                else
-                    html = externalContent;
-
-
+            // Post Processing of HTML
+            // TODO: This may either move to the client, or into a generic processor object
+            if (!string.IsNullOrEmpty(html))
+            {
                 var htmlDoc = new HtmlDocument();
                 htmlDoc.LoadHtml(html);
                 var children = htmlDoc.DocumentNode.Descendants();
@@ -89,16 +88,20 @@ namespace DocHound.Models.Docs
 
                 }
 
-                using (var stream = new MemoryStream())
+                try 
                 {
-                    htmlDoc.Save(stream);
-                    Html = StreamHelper.ToString(stream);
+                    using (var stream = new MemoryStream())
+                    {
+                        htmlDoc.Save(stream);
+                        Html = StreamHelper.ToString(stream);
+                    }
+                }
+                catch
+                {
+                    Html = string.Empty;
                 }
             }
-            catch
-            {
-                Html = string.Empty; //"<p>Topic " + topicName + " not found on GitHub";
-            }
+
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
             {
@@ -121,67 +124,6 @@ namespace DocHound.Models.Docs
 
                 Html = sb.ToString();
             }
-        }
-
-        private string MarkdownToHtml(string markdown)
-        {
-            // TODO: This uses all images as external links. We may need to handle that differently
-            markdown = markdown.Replace("![](", "![](" + MasterUrlRaw);
-            markdown = markdown.Replace("background: url('", "background: url('" + MasterUrlRaw);
-            markdown = markdown.Replace("src=\"", "src=\"" + MasterUrlRaw);
-
-            var builder = new MarkdownPipelineBuilder();
-            BuildPipeline(builder);
-            var pipeline = builder.Build();
-            return Markdown.ToHtml(markdown, pipeline);
-        }
-
-        protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder)
-        {
-            builder = builder.UseYamlFrontMatter();
-            builder = builder.UseAutoLinks();
-            builder = builder.UseAutoIdentifiers();
-            builder = builder.UseAbbreviations();
-            builder = builder.UseEmojiAndSmiley();
-            builder = builder.UseMediaLinks();
-            builder = builder.UseListExtras();
-            //builder = builder.UseFigures();
-            builder = builder.UseTaskLists();
-            //builder = builder.UseSmartyPants();
-            //builder = builder.UsePragmaLines();
-            builder = builder.UseGridTables();
-            builder = builder.UsePipeTables();
-            builder = builder.UseEmphasisExtras();
-            builder = builder.UseFootnotes();
-            builder = builder.UseCitations();
-            builder = builder.UseGenericAttributes();
-
-            return builder;
-        }
-
-        /// <summary>
-        /// Create the entire Markdig pipeline and return the completed
-        /// ready to process builder.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual MarkdownPipelineBuilder CreatePipelineBuilder()
-        {
-            var builder = new MarkdownPipelineBuilder();
-
-            try
-            {
-                builder = BuildPipeline(builder);
-            }
-            catch (ArgumentException)
-            {
-            }
-
-            return builder;
-        }
-
-        protected virtual IMarkdownRenderer CreateRenderer(TextWriter writer)
-        {
-            return new HtmlRenderer(writer);
         }
 
         private string GetFullExternalLink(string link)
