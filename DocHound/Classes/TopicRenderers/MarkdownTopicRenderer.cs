@@ -7,19 +7,19 @@ namespace DocHound.Classes.TopicRenderers
 {
     public class MarkdownTopicRenderer : ITopicRenderer
     {
-        public string RenderToHtml(TopicRaw topic)
+        public string RenderToHtml(TopicRaw topic, string imageRootUrl = "")
         {
             if (string.IsNullOrEmpty(topic.OriginalContent)) return string.Empty;
-            return MarkdownToHtml(topic);
+            return MarkdownToHtml(topic, imageRootUrl);
         }
 
-        private string MarkdownToHtml(TopicRaw topic)
+        private string MarkdownToHtml(TopicRaw topic, string imageRootUrl)
         {
             // TODO: This uses all images as external links. We may need to handle that differently
             var markdown = topic.OriginalContent;
-            markdown = markdown.Replace("![](", "![](" + topic.MasterUrl);
-            markdown = markdown.Replace("background: url('", "background: url('" + topic.MasterUrl);
-            markdown = markdown.Replace("src=\"", "src=\"" + topic.MasterUrl);
+            markdown = markdown.Replace("![](", "![](" + imageRootUrl);
+            markdown = markdown.Replace("background: url('", "background: url('" + imageRootUrl);
+            markdown = markdown.Replace("src=\"", "src=\"" + imageRootUrl);
 
             var builder = new MarkdownPipelineBuilder();
             BuildPipeline(builder);

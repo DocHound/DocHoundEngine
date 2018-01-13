@@ -7,6 +7,7 @@ using DocHound.Classes;
 using HtmlAgilityPack;
 using Markdig;
 using Markdig.Renderers;
+using Microsoft.Extensions.Configuration;
 
 namespace DocHound.Models.Docs
 {
@@ -27,7 +28,17 @@ namespace DocHound.Models.Docs
 
         private async Task BuildToc()
         {
-            var tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(MasterUrlRaw);
+            string tocJson = null;
+
+            switch (RepositoryType)
+            {
+                case RepositoryTypes.GitHubRaw:
+                    tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(MasterUrlRaw);
+                    break;
+                case RepositoryTypes.VisualStudioTeamSystemGit:
+                    tocJson = await VstsHelper.GetTocJson(VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
+                    break;
+            }
             if (string.IsNullOrEmpty(tocJson)) return;
 
             var dynamicToc = TableOfContentsHelper.GetDynamicTocFromJson(tocJson);
@@ -52,18 +63,35 @@ namespace DocHound.Models.Docs
 
         private async Task GetHtmlContent()
         {
-            var rawTopic = new TopicRaw{OriginalName = GetFullExternalLink(SelectedTopic.Title)};
+            
+            var rawTopic = new TopicRaw {OriginalName = GetFullExternalLink(SelectedTopic.Title)};
 
-            try
+            var imageRootUrl = string.Empty;
+
+            var normalizedLink = SelectedTopic.LinkPure.ToLowerInvariant();
+            if (normalizedLink.StartsWith("https://") || normalizedLink.StartsWith("http://"))
             {
-                rawTopic.OriginalContent = await WebClientEx.GetStringAsync(rawTopic.OriginalName);
+                // This is an absolute link, so we can just try to load it
+                rawTopic.OriginalContent = await WebClientEx.GetStringAsync(SelectedTopic.Link);
+                imageRootUrl = StringHelper.JustPath(SelectedTopic.Link) + "/";
             }
-            catch
+            else
             {
-                rawTopic.OriginalContent = null;
+                switch (RepositoryType)
+                {
+                    case RepositoryTypes.GitHubRaw:
+                        rawTopic.OriginalContent = await WebClientEx.GetStringAsync(rawTopic.OriginalName);
+                        imageRootUrl = MasterUrlRaw;
+                        break;
+                    case RepositoryTypes.VisualStudioTeamSystemGit:
+                        if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
+                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
+                        imageRootUrl = "/___FileProxy___?mode=vstsgit&path=";
+                        break;
+                }
             }
 
-            var html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic);
+            var html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl);
 
             // Post Processing of HTML
             // TODO: This may either move to the client, or into a generic processor object
@@ -173,6 +201,53 @@ namespace DocHound.Models.Docs
         public static string MasterUrl { get; set; }
         public string Link => string.Empty;
         public IHaveTopics Parent => null;
+
+        public static void SetStaticConfiguration(IConfiguration Configuration)
+        {
+            var repositoryType = Configuration["RepositoryType"].ToLowerInvariant();
+            switch (repositoryType)
+            {
+                case "githubraw":
+                    RepositoryType = RepositoryTypes.GitHubRaw;
+                    var gitHubProject = Configuration["GitHubProject"];
+                    if (string.IsNullOrEmpty(gitHubProject))
+                    {
+                        MasterUrl = Configuration["MasterUrl"];
+                        MasterUrlRaw = MasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/");
+                        if (!MasterUrl.Contains("/master/")) MasterUrl += "/master/";
+                    }
+                    else
+                    {
+                        MasterUrl = "https://github.com/" + gitHubProject;
+                        MasterUrlRaw = "https://raw.githubusercontent.com/" + gitHubProject + "/master/";
+                    }
+                    break;
+
+                case "vstsgit":
+                    RepositoryType = RepositoryTypes.VisualStudioTeamSystemGit;
+                    VstsInstance = Configuration["VSTSInstance"];
+                    VstsProjectName = Configuration["VSTSProjectName"];
+                    VstsDocsFolder = Configuration["VSTSDocsFolder"];
+                    VstsPat = Configuration["VSTSPAT"];
+                    break;
+            }
+        }
+
+        public static string VstsPat { get; set; }
+
+        public static string VstsDocsFolder { get; set; }
+
+        public static string VstsProjectName { get; set; }
+
+        public static string VstsInstance { get; set; }
+
+        public static RepositoryTypes RepositoryType { get; set; }
+    }
+
+    public enum RepositoryTypes
+    {
+        GitHubRaw,
+        VisualStudioTeamSystemGit
     }
 
     public class OutlineItem

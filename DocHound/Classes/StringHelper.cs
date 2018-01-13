@@ -508,7 +508,8 @@ namespace DocHound.Classes
         /// <returns>Just the path as a string</returns>
         public static string JustPath(string path)
         {
-            return path.Substring(0, At("\\", path, Occurs("\\", path)) - 1);
+            var path2 = path.Replace("/", "\\");
+            return path.Substring(0, At("\\", path2, Occurs("\\", path2)) - 1);
         }
 
         /// <summary>Returns just the file name part of a full path</summary>
@@ -516,6 +517,7 @@ namespace DocHound.Classes
         /// <returns>File name</returns>
         public static string JustFileName(string path)
         {
+            path = path.Replace("/", "\\");
             var parts = path.Split('\\');
             if (parts.Length > 0)
                 return parts[parts.Length - 1];

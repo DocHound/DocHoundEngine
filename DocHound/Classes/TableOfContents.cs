@@ -217,6 +217,7 @@ namespace DocHound.Classes
             get { return string.IsNullOrEmpty(_link) ? TopicHelper.GetNormalizedName(Title) : _link; }
             set { _link = value; }
         }
+        public string LinkPure => _link;
 
         public bool Expanded { get; set; }
 

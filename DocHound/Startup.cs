@@ -1,4 +1,5 @@
-﻿using DocHound.Models.Docs;
+﻿using DocHound.Controllers;
+using DocHound.Models.Docs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,20 +13,7 @@ namespace DocHound
         {
             Configuration = configuration;
 
-            var gitHubProject = Configuration["GitHubProject"];
-            if (string.IsNullOrEmpty(gitHubProject))
-            {
-                TopicViewModel.MasterUrl = Configuration["MasterUrl"];
-                TopicViewModel.MasterUrlRaw =
-                    TopicViewModel.MasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/");
-                if (!TopicViewModel.MasterUrl.Contains("/master/"))
-                    TopicViewModel.MasterUrl += "/master/";
-            }
-            else
-            {
-                TopicViewModel.MasterUrl = "https://github.com/" + gitHubProject;
-                TopicViewModel.MasterUrlRaw = "https://raw.githubusercontent.com/" + gitHubProject + "/master/";
-            }
+            TopicViewModel.SetStaticConfiguration(Configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -53,7 +41,8 @@ namespace DocHound
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("docs", "{topicName=index}", new {controller = "Docs", action = "Topic"});
+                routes.MapRoute("fileproxy", "___FileProxy___", new {controller = "Docs", action = nameof(DocsController.FileProxy)});
+                routes.MapRoute("docs", "{topicName=index}", new {controller = "Docs", action = nameof(DocsController.Topic)});
             });
         }
     }

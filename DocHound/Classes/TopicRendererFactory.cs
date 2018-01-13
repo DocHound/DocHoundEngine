@@ -39,14 +39,27 @@ namespace DocHound.Classes
 
     public interface ITopicRenderer
     {
-        string RenderToHtml(TopicRaw topic);
+        string RenderToHtml(TopicRaw topic, string imageRootUrl = "");
     }
 
     public class TopicRaw
     {
         public string OriginalName { get; set; }
         public string OriginalNameNormalized => OriginalName.Trim().ToLowerInvariant();
-        public string MasterUrl => string.IsNullOrEmpty(TopicViewModel.MasterUrlRaw) ? TopicViewModel.MasterUrl : TopicViewModel.MasterUrlRaw;
+        //public string MasterUrl => string.IsNullOrEmpty(TopicViewModel.MasterUrlRaw) ? TopicViewModel.MasterUrl : TopicViewModel.MasterUrlRaw;
+
+        //private string _imageRootUrl;
+        //public string ImageRootUrl
+        //{
+        //    get
+        //    {
+        //        if (string.IsNullOrEmpty(_imageRootUrl))
+        //            return MasterUrl;
+        //        return _imageRootUrl;
+        //    }
+        //    set { _imageRootUrl = value; }
+        //}
+
         public string OriginalContent { get; set; }
     }
 }
