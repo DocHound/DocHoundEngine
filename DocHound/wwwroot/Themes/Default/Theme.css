@@ -725,3 +725,32 @@ li {
 img {
     border: 0;
 }
+
+table {
+    width: 100%;
+    overflow: auto;
+    display: block;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 15px 0;
+    border-color: gray;
+}
+
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 6px 13px;
+    display: table-cell;
+    vertical-align: top;
+}
+
+th {
+    font-weight: bold;
+    color: white;
+    background: #555;
+}
+
+tbody>tr:nth-child(even) {
+    background: #eee;
+}
+
