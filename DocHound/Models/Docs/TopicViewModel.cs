@@ -45,6 +45,9 @@ namespace DocHound.Models.Docs
 
             var dynamicToc = TableOfContentsHelper.GetDynamicTocFromJson(tocJson);
 
+            if (dynamicToc.title != null) RepositoryTitle = dynamicToc.title;
+            if (dynamicToc.owner != null) Owner = dynamicToc.owner;
+
             Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, this, SelectedTopicTitle);
             MainMenu = TableOfContentsHelper.BuildMainMenuStructureFromDynamicToc(dynamicToc);
             ThemeFolder = TableOfContentsHelper.GetThemeFolderFromDynamicToc(dynamicToc);
@@ -184,6 +187,8 @@ namespace DocHound.Models.Docs
         public List<OutlineItem> Outline { get; set; } = new List<OutlineItem>();
 
         public string Title => SelectedTopicTitle;
+        public string RepositoryTitle { get; set; }
+        public string Owner { get; set; }
 
         public string Html { get; set; }
         public string LogoUrl { get; set; }

@@ -12,21 +12,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-    <title>CODE Framework Docs - @Model.Title</title>
+    <title>@Model.RepositoryTitle - @Model.Title</title>
     <link rel="shortcut icon" type="image/x-icon" href="~/Themes/Dark/SiteIcon.png" />
 
-    <meta name="Description" content="CODE Framework Documentation - @Model.Title" />
-    <meta name="Keywords" content="CODE Framework Documentation" />
-    <meta name="Author" content="Markus Egger Inc." />
+    <meta name="Description" content="@Model.RepositoryTitle - @Model.Title" />
+    <meta name="Keywords" content="@Model.RepositoryTitle" />
+    <meta name="Author" content="@Model.Owner" />
     <meta name="Robots" content="all" />
 
-    <meta name="og:title" content="CODE Framework Docs - @Model.Title" />
+    <meta name="og:title" content="@Model.RepositoryTitle - @Model.Title" />
     <meta name="og:type" content="website" />
-    <meta name="og:description" content="CODE Framework Documentation - @Model.Title" />
+    <meta name="og:description" content="@Model.RepositoryTitle - @Model.Title" />
     @*@Html.Raw(CodeHelper.GetMetaImageTag(ViewBag))*@
 
-    <meta name="twitter:title" content="CODE Framework Docs - @Model.Title" />
-    <meta name="twitter:description" content="CODE Framework Docs - @Model.Title" />
+    <meta name="twitter:title" content="@Model.RepositoryTitle - @Model.Title" />
+    <meta name="twitter:description" content="@Model.RepositoryTitle - @Model.Title" />
     @*@Html.Raw(CodeHelper.GetMetaImageTag(ViewBag, MetaNamespace.Twitter))*@
 
     @*<link rel="publisher" href="https://plus.google.com/103030867107221566748/" />*@
