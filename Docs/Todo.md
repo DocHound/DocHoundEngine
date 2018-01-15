@@ -16,7 +16,8 @@
 * [ ] Showing the outline with indent levels
 * [ ] Styling
     * [ ] H3 needs to get their own style
-    * [ ] Need good default styles for tables
+    * [x] Need good default styles for tables
+    * [ ] Need good default style for blockquotes
 * [ ] Need to be able to refer to other TOC files as a single node from within a TOC file
 * [ ] Need to get the search implemented
 * [ ] Edit link right in the topic
