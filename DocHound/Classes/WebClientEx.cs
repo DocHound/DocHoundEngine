@@ -23,8 +23,17 @@ namespace DocHound.Classes
 
         public static async Task<string> GetStringAsync(string url)
         {
-            using (var client = new WebClientEx())
-                return await client.DownloadStringTaskAsync(url);
+            if (string.IsNullOrEmpty(url)) return string.Empty;
+
+            try 
+            {
+                using (var client = new WebClientEx())
+                    return await client.DownloadStringTaskAsync(url);
+            }
+            catch 
+            {
+                return string.Empty;
+            }
         }
     }
 }

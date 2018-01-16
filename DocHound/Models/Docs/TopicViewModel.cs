@@ -68,8 +68,7 @@ namespace DocHound.Models.Docs
 
         private async Task GetHtmlContent()
         {
-            
-            var rawTopic = new TopicRaw {OriginalName = GetFullExternalLink(SelectedTopic.Title)};
+            var rawTopic = new TopicRaw {OriginalName = SelectedTopic.Title};
 
             var imageRootUrl = string.Empty;
 
@@ -80,12 +79,13 @@ namespace DocHound.Models.Docs
                 rawTopic.OriginalContent = await WebClientEx.GetStringAsync(SelectedTopic.Link);
                 imageRootUrl = StringHelper.JustPath(SelectedTopic.Link) + "/";
             }
-            else
+            else if (!string.IsNullOrEmpty(normalizedLink))
             {
                 switch (RepositoryType)
                 {
                     case RepositoryTypes.GitHubRaw:
-                        rawTopic.OriginalContent = await WebClientEx.GetStringAsync(rawTopic.OriginalName);
+                        var fullGitHubRawUrl = MasterUrlRaw + SelectedTopic.Link;
+                        rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
                         imageRootUrl = MasterUrlRaw;
                         break;
                     case RepositoryTypes.VisualStudioTeamSystemGit:
@@ -118,7 +118,6 @@ namespace DocHound.Models.Docs
                 {
                     var anchor = HtmlNode.CreateNode("<a name=\"" + TopicHelper.GetNormalizedName(item.Title) + "\">");
                     item.Node.ParentNode.InsertBefore(anchor, item.Node);
-
                 }
 
                 try 
@@ -134,7 +133,6 @@ namespace DocHound.Models.Docs
                     Html = string.Empty;
                 }
             }
-
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
             {
@@ -159,18 +157,18 @@ namespace DocHound.Models.Docs
             }
         }
 
-        private string GetFullExternalLink(string link)
-        {
-            var realLink = GetRealLink(Topics, link);
-            if (!string.IsNullOrEmpty(realLink))
-            {
-                var realLinkLower = realLink.ToLowerInvariant();
-                if (!realLinkLower.StartsWith("http://") || !realLinkLower.StartsWith("https://"))
-                    realLink = MasterUrlRaw + realLink;
-                return realLink;
-            }
-            return MasterUrlRaw + link.Replace(" ", "%20");
-        }
+        // private string GetFullExternalLink(string link)
+        // {
+        //     var realLink = GetRealLink(Topics, link);
+        //     if (!string.IsNullOrEmpty(realLink))
+        //     {
+        //         var realLinkLower = realLink.ToLowerInvariant();
+        //         if (!realLinkLower.StartsWith("http://") || !realLinkLower.StartsWith("https://"))
+        //             realLink = MasterUrlRaw + realLink;
+        //         return realLink;
+        //     }
+        //     return MasterUrlRaw + link.Replace(" ", "%20");
+        // }
 
         private static string GetRealLink(IEnumerable<TableOfContentsItem> topics, string name)
         {

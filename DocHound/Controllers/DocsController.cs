@@ -42,5 +42,13 @@ namespace DocHound.Controllers
             }
             return File((byte[])null, "image/jpeg", path);
         }
+
+        public async Task<IActionResult> ReindexAllTocFiles()
+        {
+            var vm = new ReindexViewModel();
+            await vm.LoadData();
+            await vm.Reindex();
+            return Content("Done.");
+        }
     }
 }
