@@ -279,6 +279,10 @@
         padding-right: 10px;
     }
 
+    .mobile-menu-items {
+        border-bottom: 1px solid white;
+    }
+
         .mobileMenu.showMobileMenu {
             display: block;
         }
@@ -289,9 +293,6 @@
             padding: 5px 0 5px 0;
         }
     
-            .mobileMenu ul.topicList.topicListLevel0 {
-                border-top: 1px solid white;
-            }
             .mobileMenu ul li .subMenu ul {
                 list-style: none;
                 padding-left: 0;
@@ -397,6 +398,15 @@
                 color: rgb(8, 57, 129);
             }
 
+.sidebar li.outlineLevel1 {
+    font-weight: bold;
+}
+.sidebar li.outlineLevel2 {
+    padding-left: 20px;
+}
+.sidebar li.outlineLevel3 {
+    padding-left: 30px;
+}
 
 /* Page Footer */
 .footer {
@@ -544,15 +554,15 @@
     opacity: 0;
 }
 
-.selectedTopic a {
+.selectedTopic>a {
     font-weight: bold;
     color: #1e88e5;
 }
-    .selectedTopic a:visited {
+    .selectedTopic>a:visited {
         font-weight: bold;
         color: #1e88e5;
     }
-    .selectedTopic a:link {
+    .selectedTopic>a:link {
         font-weight: bold;
         color: #1e88e5;
     }
@@ -769,4 +779,43 @@ blockquote {
     border-left: 8px solid #1e88e5;
     padding: 16px 32px 8px 24px;
     margin: 24px 16px;
+}
+
+#tree-filter {
+    width: calc(100% - 40px);
+    padding: 8px 10px;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px 15px 20px 15px;
+}
+#tree-filter-mobile {
+    width: calc(100% - 40px);
+    padding: 8px 10px;
+    color: white;
+    background-color: #555;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 20px 15px 10px 15px;
+}
+#tree-filter-mobile::placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile::-webkit-input-placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile:-moz-placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile::-moz-placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile::-ms-inputplaceholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile:-ms-inputplaceholder {
+    color: rgb(213, 213, 213);
 }

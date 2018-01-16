@@ -91,10 +91,10 @@
     }
 
     .content-container h3 {
-        color: #1e88e5;
+        color: #1e1e1e;
         font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
         font-weight: 300;
-        font-size: 1.6em;
+        font-size: 1.5em;
         margin-top: 40px;
         margin-bottom: 20px;
     }
@@ -545,15 +545,15 @@
     opacity: 0;
 }
 
-.selectedTopic a {
+.selectedTopic>a {
     font-weight: bold;
     color: #1e88e5;
 }
-    .selectedTopic a:visited {
+    .selectedTopic>a:visited {
         font-weight: bold;
         color: #1e88e5;
     }
-    .selectedTopic a:link {
+    .selectedTopic>a:link {
         font-weight: bold;
         color: #1e88e5;
     }

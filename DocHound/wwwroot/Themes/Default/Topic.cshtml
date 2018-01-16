@@ -36,10 +36,13 @@
 </head>
 
 <body>
-    <nav class="mobileMenu">
+<nav class="mobileMenu">
+    <div class="mobile-menu-items">
         @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu, MenuMode.Mobile))
-        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
-    </nav>
+    </div>
+    <input type="text" id="tree-filter-mobile" placeholder="Filter Topic Tree"/>
+    @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+</nav>
     <header class="header headerLarge">
         @*<div class="mobileMenuIcon"><img src="/Images/MobileMenu.png" /></div>*@
         <i class="fas fa-bars mobileMenuIcon"></i>
@@ -49,9 +52,10 @@
         </div>
     </header>
 
-    <nav class="toc">
-        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
-    </nav>
+<nav class="toc">
+    <input type="text" id="tree-filter" placeholder="Filter Topic Tree"/>
+    @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+</nav>
 
     <article class="content-container">
         @Html.Raw(Model.Html)
@@ -77,16 +81,10 @@
     </article>
 
     <aside class="sidebar">
-        @if (Model.Outline.Count > 0)
-        {
+        <div id="outline" style="display: none;">
             <p style="font-weight: bold;">On this page:</p>
-            <ul>
-                @foreach (var child in Model.Outline)
-                {
-                    <li><a href="#@child.Link">@child.Title</a></li>
-                }
-            </ul>
-        }
+            <div id="outlineContent"></div>
+        </div>
 
         @if (Model.SelectedTopic != null && Model.SelectedTopic.SeeAlso.Count > 0)
         {

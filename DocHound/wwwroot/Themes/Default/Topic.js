@@ -1,12 +1,15 @@
 ﻿$(function () {
+    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+        return function( elem ) {
+            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
+
     // Make sure the selected topic is visible
     var selectedTopics = $('.selectedTopic');
     if (selectedTopics.length > 0) {
         selectedTopics[0].scrollIntoView();
     }
-
-    // Making the code snippets look pretty
-    $('pre').addClass('prettyprint');
 
     // Add click behavior to tree "arrows"
     $('.caret').click(function () {
@@ -26,6 +29,74 @@
             ul1.addClass('topicExpanded');
         }
     });
+
+    // Wiring up the tree filter text element
+    $('#tree-filter').keyup(function() {
+        var filter = $('#tree-filter').val();
+
+        if (filter == '') {
+            $('.topicList li').show();
+        } else {
+            $('.topicList li').hide();
+            var matches = $('.topicList li:contains("' + filter + '")');
+            matches.parent().removeClass('topicCollapsed');
+            matches.addClass('topicExpanded');
+            matches.parent().addClass('topicExpanded');
+            matches.show();
+        }
+    });
+    $('#tree-filter-mobile').keyup(function() {
+        var filter = $('#tree-filter-mobile').val();
+
+        if (filter == '') {
+            $('.topicList li').show();
+        } else {
+            $('.topicList li').hide();
+            var matches = $('.topicList li:contains("' + filter + '")');
+            matches.parent().removeClass('topicCollapsed');
+            matches.addClass('topicExpanded');
+            matches.parent().addClass('topicExpanded');
+            matches.show();
+        }
+    });
+
+    // Making the code snippets look pretty
+    $('pre').addClass('prettyprint');
+
+    // Creating a document outline for the local document content
+    var headers = $('h1, h2, h3');
+    if (headers.length > 1) {
+        var outline = '<ul>';
+        for (var headerCounter = 0; headerCounter < headers.length; headerCounter++) {
+            var header = headers[headerCounter];
+            if (header.id) {
+                var localOutline = '<li ';
+                if (header.tagName == 'H1') {
+                    localOutline = localOutline + 'class="outlineLevel1"';
+                } else if (header.tagName == 'H2') {
+                    localOutline = localOutline + 'class="outlineLevel2"';
+                } else if (header.tagName == 'H3') {
+                    localOutline = localOutline + 'class="outlineLevel3"';
+                }
+                localOutline = localOutline + '><a data-id="' + header.id + '">' + header.innerText + '</a></li>';
+                outline = outline + localOutline;
+            }
+        }
+        outline = outline + '</ul>';
+        $('#outlineContent').html(outline);
+        $('#outline').show();
+        $('#outlineContent').on('click',
+            'li>a',
+            function() {
+                headerId = $.trim($(this).data('id'));
+                var target = $('#' + headerId)[0];
+                target.scrollIntoView();
+                var doc = $(document);
+                doc.scrollTop(doc.scrollTop() - $('header').height() - 10);
+                var href = '#' + headerId;
+                window.history.pushState({ title: '', URL: href }, "", href);
+            });
+    }
 
     // Reacting to various things when the page scrolls
     $(document).on('scroll', function () {

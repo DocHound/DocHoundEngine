@@ -98,41 +98,42 @@ namespace DocHound.Models.Docs
 
             var html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl);
 
-            // Post Processing of HTML
-            // TODO: This may either move to the client, or into a generic processor object
-            if (!string.IsNullOrEmpty(html))
-            {
-                var htmlDoc = new HtmlDocument();
-                htmlDoc.LoadHtml(html);
-                var children = htmlDoc.DocumentNode.Descendants();
-                foreach (var child in children)
-                    if (child.Name == "h1" || child.Name == "h2" || child.Name == "h3")
-                        Outline.Add(new OutlineItem
-                        {
-                            Title = child.InnerText,
-                            Link = TopicHelper.GetNormalizedName(child.InnerText),
-                            Tag = child.Name,
-                            Node = child
-                        });
-                foreach (var item in Outline)
-                {
-                    var anchor = HtmlNode.CreateNode("<a name=\"" + TopicHelper.GetNormalizedName(item.Title) + "\">");
-                    item.Node.ParentNode.InsertBefore(anchor, item.Node);
-                }
+            //// Post Processing of HTML
+            //// TODO: This may either move to the client, or into a generic processor object
+            //if (!string.IsNullOrEmpty(html))
+            //{
+            //    var htmlDoc = new HtmlDocument();
+            //    htmlDoc.LoadHtml(html);
+            //    var children = htmlDoc.DocumentNode.Descendants();
+            //    foreach (var child in children)
+            //        if (child.Name == "h1" || child.Name == "h2" || child.Name == "h3")
+            //            Outline.Add(new OutlineItem
+            //            {
+            //                Title = child.InnerText,
+            //                Link = TopicHelper.GetNormalizedName(child.InnerText),
+            //                Tag = child.Name,
+            //                Node = child
+            //            });
+            //    foreach (var item in Outline)
+            //    {
+            //        var anchor = HtmlNode.CreateNode("<a name=\"" + TopicHelper.GetNormalizedName(item.Title) + "\">");
+            //        item.Node.ParentNode.InsertBefore(anchor, item.Node);
+            //    }
 
-                try 
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        htmlDoc.Save(stream);
-                        Html = StreamHelper.ToString(stream);
-                    }
-                }
-                catch
-                {
-                    Html = string.Empty;
-                }
-            }
+            //    try 
+            //    {
+            //        using (var stream = new MemoryStream())
+            //        {
+            //            htmlDoc.Save(stream);
+            //            Html = StreamHelper.ToString(stream);
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        Html = string.Empty;
+            //    }
+            //}
+            Html = html;
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
             {
