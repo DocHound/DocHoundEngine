@@ -89,7 +89,7 @@
     }
 
     .content-container h3 {
-        color: #1e88e5;
+        color: #525252;
         font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
         font-weight: 300;
         font-size: 1.6em;
@@ -475,6 +475,11 @@
     .footer.scrolled {
         display: none;
     }
+
+    blockquote {
+        padding: 16px 20px 8px 20px !important;
+        margin: 24px 0 !important;
+    }
 }
 
 /* Styles associated with content within elements */
@@ -789,7 +794,7 @@ blockquote {
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin: 10px 15px 20px 15px;
+    margin: 10px 0 20px 15px;
 }
 #tree-filter-mobile {
     width: calc(100% - 40px);
@@ -799,7 +804,7 @@ blockquote {
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin: 20px 15px 10px 15px;
+    margin: 20px 0 10px 15px;
 }
 #tree-filter-mobile::placeholder {
     color: rgb(213, 213, 213);
