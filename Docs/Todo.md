@@ -6,6 +6,7 @@
 * [ ] Functional issues:
     * [ ] Make sure that all the data in the topic is data-driven (from the repository)
     * [ ] Document title is still hardcoded
+* [ ] Allow for a configurable page icon
 * [ ] Dark/light/sepia theme
 * [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [ ] Maybe listing contributors to a topic or all the docs (optional)
@@ -16,9 +17,12 @@
 * [ ] Showing the outline with indent levels
 * [ ] Styling
     * [ ] H3 needs to get their own style
-    * [ ] Need good default styles for tables
+    * [x] Need good default styles for tables
+    * [ ] Need good default style for blockquotes
 * [ ] Need to be able to refer to other TOC files as a single node from within a TOC file
 * [ ] Need to get the search implemented
+   * [ ] Need the basic ability to filter the tree
+   * [ ] Need the more advanced ability to do a full search across all documents using Azure Search
 * [ ] Edit link right in the topic
 * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
 * [ ] Threaded discussions, or at least comments
