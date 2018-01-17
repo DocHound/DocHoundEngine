@@ -99,15 +99,16 @@ namespace DocHound.Classes
         /// <returns>Task&lt;System.String&gt;.</returns>
         public static async Task<string> GetTocJsonFromGitHubRaw(string gitHubRawUrl)
         {
-            var content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_meta/_toc.json");
+            var content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_toc.json");
+            if (content == null) content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_meta/_toc.json");
             if (content != null) return content.ToString();
 
             // The TOC file didn't exist, so we try to scrape the repository
-            var html = await WebClientEx.GetStringAsync(gitHubRawUrl);
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
-            var children = htmlDoc.QuerySelectorAll("tr.js-navigation-item");
             // TODO: Finish this
+            //var html = await WebClientEx.GetStringAsync(gitHubRawUrl);
+            //var htmlDoc = new HtmlDocument();
+            //htmlDoc.LoadHtml(html);
+            //var children = htmlDoc.QuerySelectorAll("tr.js-navigation-item");
 
             return string.Empty;
         }

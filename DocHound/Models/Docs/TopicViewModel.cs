@@ -86,12 +86,14 @@ namespace DocHound.Models.Docs
                     case RepositoryTypes.GitHubRaw:
                         var fullGitHubRawUrl = MasterUrlRaw + SelectedTopic.Link;
                         rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
-                        imageRootUrl = MasterUrlRaw;
+                        imageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
                         break;
                     case RepositoryTypes.VisualStudioTeamSystemGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
                             rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
                         imageRootUrl = "/___FileProxy___?mode=vstsgit&path=";
+                        if (SelectedTopic.LinkPure.Contains("/"))
+                            imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
                 }
             }
