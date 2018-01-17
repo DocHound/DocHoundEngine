@@ -16,6 +16,9 @@ namespace DocHound.Classes.TopicRenderers
         private string MarkdownToHtml(TopicRaw topic, string imageRootUrl)
         {
             // TODO: This uses all images as external links. We may need to handle that differently
+
+            if (!string.IsNullOrEmpty(imageRootUrl) && !imageRootUrl.EndsWith("/")) imageRootUrl += "/";
+
             var markdown = topic.OriginalContent;
             markdown = markdown.Replace("![](", "![](" + imageRootUrl);
             markdown = markdown.Replace("background: url('", "background: url('" + imageRootUrl);
