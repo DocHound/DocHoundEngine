@@ -6,6 +6,7 @@
 * [ ] Functional issues:
     * [ ] Make sure that all the data in the topic is data-driven (from the repository)
     * [x] Document title is still hardcoded
+    * [x] Handle image paths relative to documents stored in root folders properly
 * [ ] Allow for a configurable page icon
 * [ ] Themes
 	* [ ] Dark theme
