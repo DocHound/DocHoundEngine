@@ -1,6 +1,6 @@
 {
-  "title": "CODE Framework Documentation",
-  "owner": "Markus Egger Inc.",
+  "title": "Kava Docs Documentation",
+  "owner": "Kava Docs Inc.",
   "language": "en-US",
   "version": "1.0",
   "requireHttps": true,
@@ -51,7 +51,7 @@
       ]
     },
     {
-      "title": "To-Do",
+      "title": "To-Do List",
       "link": "Todo.md"      
     }
   ]
