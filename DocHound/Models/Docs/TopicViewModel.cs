@@ -87,6 +87,7 @@ namespace DocHound.Models.Docs
                         var fullGitHubRawUrl = MasterUrlRaw + SelectedTopic.Link;
                         rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
                         imageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
+                        if (!string.IsNullOrEmpty(imageRootUrl) && !imageRootUrl.EndsWith("/")) imageRootUrl += "/";
                         break;
                     case RepositoryTypes.VisualStudioTeamSystemGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
