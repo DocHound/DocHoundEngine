@@ -23,6 +23,7 @@
 * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
 * [ ] Styling
+    * [ ] Checkboxes (such as in this list) currently look pretty bad
     * [x] H3 needs to get their own style
     * [x] Need good default styles for tables
     * [x] Need good default style for blockquotes
