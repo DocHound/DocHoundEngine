@@ -2,7 +2,7 @@
 
 ## Most-Haves for Minimum Viable Product
 
-* [ ] Landing Page Web Site
+* [ ] Landing Page Web Site (www.kavadocs.com)
 * [ ] Accounts and Log-Ins
 * [ ] A few more supported sources
     * [ ] TFS Work Items
