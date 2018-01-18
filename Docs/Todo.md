@@ -1,6 +1,6 @@
 # Kava Docs - To-Do List
 
-## Most-Haves for Minimum Viable Product
+## Must-Haves for Minimum Viable Product
 
 * [ ] Landing Page Web Site (www.kavadocs.com)
 * [ ] Accounts and Log-Ins
