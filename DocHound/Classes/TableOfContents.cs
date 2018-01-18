@@ -64,6 +64,7 @@ namespace DocHound.Classes
                 var newTopic = new TableOfContentsItem(parent) {Title = topic.title ?? "Unknown topic"};
                 if (topic.link != null) newTopic.Link = topic.link;
                 if (topic.isExpanded != null) newTopic.Expanded = topic.isExpanded;
+                if (topic.keywords != null) newTopic.KeywordsRaw = topic.keywords;
 
                 if (topic.seeAlso != null)
                 {
@@ -116,7 +117,6 @@ namespace DocHound.Classes
         public static string GetToCHtml(List<TableOfContentsItem> toc, string selectedLink)
         {
             var sb = new StringBuilder();
-            //CheckTocItems(toc, selectedLink);
             AddTocItems(sb, toc, 0, selectedLink);
             return sb.ToString();
         }
@@ -138,12 +138,20 @@ namespace DocHound.Classes
                 if (topic.Topics.Count > 0)
                 {
                     sb.Append("<a href=\"/" + TopicHelper.GetNormalizedName(topic.Title) + "\">" + topic.Title + "</a>");
+                    var keywords = topic.Keywords;
+                    if (!string.IsNullOrEmpty(keywords))
+                        sb.Append("<span style=\"display: none;\">" + topic.Keywords + "</span>");
                     sb.Append("<span class=\"caret " + (topic.Expanded ? "caretExpanded" : "caretCollapsed") + "\"><svg xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" viewBox=\"0 0 24 24\"><path fill=\"black\" stroke=\"white\" d=\"M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z\"></path></svg></span>");
 
                     AddTocItems(sb, topic.Topics, indentLevel + 1, selectedLink, topic);
                 }
                 else
+                {
+                    var keywords = topic.Keywords;
                     sb.Append("<a href=\"/" + TopicHelper.GetNormalizedName(topic.Title) + "\">" + topic.Title + "</a>");
+                    if (!string.IsNullOrEmpty(keywords))
+                        sb.Append("<span style=\"display: none;\">" + topic.Keywords + "</span>");
+                }
 
                 sb.Append("</li>");
             }
@@ -190,6 +198,24 @@ namespace DocHound.Classes
 
             return "~/wwwroot/Themes/Default";
         }
+
+        public static string GetSyntaxThemeNameFromDynamicToc(dynamic dynamicToc)
+        {
+            if (dynamicToc.theme != null)
+                if (dynamicToc.theme.syntaxTheme != null)
+                    return ((string) dynamicToc.theme.syntaxTheme).Trim();
+
+            return string.Empty;
+        }
+
+        public static string GetCustomCssFromDynamicToc(dynamic dynamicToc)
+        {
+            if (dynamicToc.theme != null)
+                if (dynamicToc.theme.customCss != null)
+                    return ((string)dynamicToc.theme.customCss).Trim();
+
+            return string.Empty;
+        }
     }
 
     public interface IHaveTopics
@@ -230,6 +256,9 @@ namespace DocHound.Classes
 
         private TableOfContentsItem _nextTopic;
         public TableOfContentsItem NextTopic => _nextTopic ?? (_nextTopic = TopicHelper.GetNextTopic(this, this));
+        public string KeywordsRaw { get; set; }
+
+        public string Keywords => KeywordsRaw?.Replace("\r", ", ").Replace("\n", ", ").Replace(", , ", ", ");
 
         public override string ToString() => Title + " [" + Link + "]";
     }

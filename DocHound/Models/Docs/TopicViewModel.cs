@@ -14,6 +14,7 @@ namespace DocHound.Models.Docs
     public class TopicViewModel : IHaveTopics, IHaveSelectedTopic
     {
         private TableOfContentsItem _selectedTopic;
+        private string _syntaxTheme;
 
         public TopicViewModel(string topicName)
         {
@@ -51,6 +52,8 @@ namespace DocHound.Models.Docs
             Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, this, SelectedTopicTitle);
             MainMenu = TableOfContentsHelper.BuildMainMenuStructureFromDynamicToc(dynamicToc);
             ThemeFolder = TableOfContentsHelper.GetThemeFolderFromDynamicToc(dynamicToc);
+            SyntaxTheme = TableOfContentsHelper.GetSyntaxThemeNameFromDynamicToc(dynamicToc);
+            CustomCss = TableOfContentsHelper.GetCustomCssFromDynamicToc(dynamicToc);
 
             // TODO: Check for HTTPS if the TOC is configured to only accept https
 
@@ -60,6 +63,38 @@ namespace DocHound.Models.Docs
                 if (SelectedTopicTitle == "index")
                     SelectedTopicTitle = SelectedTopic.Title;
             }
+        }
+
+        public string CustomCss { get; set; }
+
+        public string CustomCssFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CustomCss)) return string.Empty;
+
+                if (CustomCss.ToLowerInvariant().StartsWith("http://") || CustomCss.ToLowerInvariant().StartsWith("https://"))
+                    return CustomCss;
+
+                switch (RepositoryType)
+                {
+                    case RepositoryTypes.GitHubRaw:
+                        return "/___FileProxy___?path=" + MasterUrlRaw + CustomCss;
+                    case RepositoryTypes.VisualStudioTeamSystemGit:
+                        return "/___FileProxy___?mode=vstsgit&path=" + CustomCss;
+                }
+                return String.Empty;
+            }
+        }
+
+        public string SyntaxTheme
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_syntaxTheme)) return "kavadocs";
+                return _syntaxTheme.ToLowerInvariant();
+            }
+            set { _syntaxTheme = value; }
         }
 
         public string ThemeFolder { get; set; }

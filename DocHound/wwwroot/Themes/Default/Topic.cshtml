@@ -16,12 +16,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="~/Themes/Dark/SiteIcon.png" />
 
     <meta name="Description" content="@Model.RepositoryTitle - @Model.Title" />
-    <meta name="Keywords" content="@Model.RepositoryTitle" />
+    <meta name="Keywords" content="@Model.SelectedTopic.Keywords" />
     <meta name="Author" content="@Model.Owner" />
     <meta name="Robots" content="all" />
 
     <meta name="og:title" content="@Model.RepositoryTitle - @Model.Title" />
-    <meta name="og:type" content="website" />
+    <meta name="og:type" content="article" />
     <meta name="og:description" content="@Model.RepositoryTitle - @Model.Title" />
     @*@Html.Raw(CodeHelper.GetMetaImageTag(ViewBag))*@
 
@@ -31,8 +31,13 @@
 
     <link rel="publisher" href="https://plus.google.com/103030867107221566748/" />
 
-    <link href="~/css/fontawesome-free-5.0.3/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/css/fontawesome-free-5.0.3/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" type="text/css" />
     <link href="~/Themes/Default/Theme.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
+    @if (!string.IsNullOrEmpty(Model.CustomCss))
+    {
+        <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" />
+    }
 </head>
 
 <body>
@@ -103,8 +108,7 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="~/css/highlightjs/highlight.pack.js"></script>
     <script src="~/Themes/Default/Topic.js"></script>
-
 </body>
 </html>

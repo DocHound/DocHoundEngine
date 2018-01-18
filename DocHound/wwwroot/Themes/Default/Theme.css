@@ -3,11 +3,11 @@
     margin: 0;
 }
 
-.mat-sidenav-content::-webkit-scrollbar, body::-webkit-scrollbar, ::-webkit-scrollbar {
+body::-webkit-scrollbar, ::-webkit-scrollbar {
     height: 6px;
     width: 6px;
 }
-.mat-sidenav-content::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
     background-color: #6e6e6e;
     outline: 1px solid #333;
 }
@@ -56,16 +56,14 @@
         margin-right: -300px;
     }
 
-    .content-container pre.prettyprint {
-        overflow-x: auto;
-        overflow-y: hidden;
-        background: #f9f9f9;
+    .content-container pre {
         margin-top: 25px;
         margin-bottom: 25px;
-        line-height: 1.7;
-        border-color: #dddddd;
-        -ms-border-radius: 5px;
-        border-radius: 5px;
+    }
+
+    .content-container pre code.hljs {
+        overflow-x: auto;
+        overflow-y: hidden;
         padding-left: 8px;
         padding-right: 8px;
     }
@@ -125,8 +123,8 @@
     height: 110px;
     left: 0;
     right: 0;
-    background-color: #1e88e5 !important;
-    background-color: #1e88e5de !important;
+    background-color: #1e88e5;
+    background-color: #1e88e5de;
     -ms-transition: all .3s;
     -moz-transition: all .3s; /* Firefox 4 */
     -webkit-transition: all .3s; /* Safari and Chrome */

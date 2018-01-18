@@ -61,7 +61,7 @@
     });
 
     // Making the code snippets look pretty
-    $('pre').addClass('prettyprint');
+    highlightCode();
 
     // Creating a document outline for the local document content
     var headers = $('h1, h2, h3');
@@ -152,3 +152,10 @@ $('.mobileMenuIcon').on('click', function () {
         }, 300);
     }
 });
+
+function highlightCode() {
+    $('pre code')
+        .each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+}

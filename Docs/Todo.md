@@ -5,8 +5,11 @@
 * [X] Make the main menu configurable
 * [ ] Functional issues:
     * [ ] Make sure that all the data in the topic is data-driven (from the repository)
+    * [x] The tree should invisibly contain keywords so a tree filter will also include keywords
+    * [ ] It would be nice to be able to get away with just once instance of the tree in the document
     * [x] Document title is still hardcoded
     * [x] Handle image paths relative to documents stored in root folders properly
+* [ ] Switch from prettify to highlight
 * [ ] Allow for a configurable page icon
 * [ ] Themes
 	* [ ] Dark theme
