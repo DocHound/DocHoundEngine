@@ -15,28 +15,28 @@ The following is an example of a TOC Json File structure:
     "customTemplate": null 
   },
   "settings": {
-| Abbreviations |  | true (default) or false  | No |
-| AutoIdentifiers |  | true (default) or false  | No |
-| AutoLinks |  | true (default) or false  | No |
-| Citations |  | true (default) or false  | No |
-| CustomContainers |  | true (default) or false  | No |
-| DiagramsMermaid |  | true or false (default) | No |
-| DiagramsNomnoml |  | true or false (default) | No |
-| EmojiAndSmiley |  | true (default) or false  | No |
-| EmphasisExtras |  | true (default) or false  | No |
-| Figures |  | true (default) or false  | No |
-| Footnotes |  | true (default) or false  | No |
-| GenericAttributes |  | true (default) or false  | No |
-| GridTables |  | true (default) or false  | No |
-| ListExtras |  | true (default) or false  | No |
-| Mathematics |  | true or false (default) | No |
-| MediaLinks |  | true (default) or false  | No |
-| PipeTables |  | true (default) or false  | No |
-| PragmaLines |  | true (default) or false  | No |
-| SmartyPants |  | true (default) or false  | No |
-| SyntaxHighlighting |  | true (default) or false  | No |
-| TaskLists |  | true (default) or false  | No |
-| YamlFrontMatter": true
+    "useAbbreviations": true,
+    "useAutoIdentifiers": true,
+    "useAutoLinks": true,
+    "useCitations": true,
+    "useCustomContainers": true,
+    "useDiagramsMermaid": false,
+    "useDiagramsNomnoml": false,
+    "useEmojiAndSmiley": true,
+    "useEmphasisExtras": true,
+    "useFigures": true,
+    "useFootnotes": true,
+    "useGenericAttributes": true,
+    "useGridTables": true,
+    "useListExtras": true,
+    "useMathematics": false,
+    "useMediaLinks": true,
+    "usePipeTables": true,
+    "usePragmaLines": true,
+    "useSmartyPants": true,
+    "useSyntaxHighlighting": true,
+    "useTaskLists": true,
+    "useYamlFrontMatter": true
   },
   "menu": [
     {
