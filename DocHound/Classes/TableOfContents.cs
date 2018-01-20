@@ -440,7 +440,7 @@ namespace DocHound.Classes
         public bool UseMathematics => GetBooleanSetting(false);
         public bool UseMediaLinks => GetBooleanSetting(true);
         public bool UsePipeTables => GetBooleanSetting(true);
-        public bool UsePragmaLines => GetBooleanSetting(true);
+        public bool UsePragmaLines => GetBooleanSetting(false);
         public bool UseSmartyPants => GetBooleanSetting(true);
         public bool UseSyntaxHighlighting => GetBooleanSetting(true);
         public bool UseTaskLists => GetBooleanSetting(true);

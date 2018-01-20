@@ -353,6 +353,10 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     vertical-align: middle;
 }
 
+/* Math formulas hidden by default */
+.math {
+    display: none;
+}
 
 /* Right sidebar */
 
