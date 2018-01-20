@@ -47,7 +47,8 @@ The following is an example of a TOC Json File structure:
       "topics": [
         {
           "title": "Change Log",
-          "link": "ChangeLog.md"
+          "link": "ChangeLog.md",
+          "slug": "Changes"
         },
         {
           "title": "To-Do List",
@@ -111,4 +112,5 @@ Contains individual settings that allow for theme customization.
 |--------------|------------------------------------------|--------|
 | title        | Title of the topic                       | string |
 | link         | Url (typically relative, but can be full) to the topic file | string |
+| slug         | Url slug that is used by default for this topic. *(Note: When URLs are manually entered, Kava Docs can find other patterns also, but this slug is used as the default slug that is used when clicking on a node in the tree).* | string |
 | ...          | ... | ... |
