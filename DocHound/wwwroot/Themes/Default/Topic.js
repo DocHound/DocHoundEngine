@@ -63,6 +63,9 @@
     // Making the code snippets look pretty
     highlightCode();
 
+    // Activating mermaid
+    mermaid.initialize({startOnLoad:true});
+    
     // Creating a document outline for the local document content
     var headers = $('h1, h2, h3');
     if (headers.length > 1) {

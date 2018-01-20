@@ -60,6 +60,10 @@
         {
           "title": "CSS Customization",
           "link": "CssStructure.md"
+        },
+        {
+          "title": "Supported Markdown Features",
+          "link": "SupportedMarkdownFeatures.md"
         }
       ]
     }

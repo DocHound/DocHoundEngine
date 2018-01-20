@@ -30,23 +30,27 @@ namespace DocHound.Classes.TopicRenderers
 
         protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder)
         {
-            builder = builder.UseYamlFrontMatter();
-            builder = builder.UseAutoLinks();
-            builder = builder.UseAutoIdentifiers();
+            // TODO: We should be able to drive all of this through settings that are defined either per-document or inherit from further up in the tree
+
             builder = builder.UseAbbreviations();
-            builder = builder.UseEmojiAndSmiley();
-            builder = builder.UseMediaLinks();
-            builder = builder.UseListExtras();
-            //builder = builder.UseFigures();
-            builder = builder.UseTaskLists();
-            //builder = builder.UseSmartyPants();
-            //builder = builder.UsePragmaLines();
-            builder = builder.UseGridTables();
-            builder = builder.UsePipeTables();
-            builder = builder.UseEmphasisExtras();
-            builder = builder.UseFootnotes();
+            builder = builder.UseAutoIdentifiers();
+            builder = builder.UseAutoLinks();
             builder = builder.UseCitations();
+            builder = builder.UseCustomContainers();
+            builder = builder.UseEmojiAndSmiley();
+            builder = builder.UseEmphasisExtras();
+            builder = builder.UseFigures();
+            builder = builder.UseFootnotes();
             builder = builder.UseGenericAttributes();
+            builder = builder.UseGridTables();
+            builder = builder.UseListExtras();
+            builder = builder.UseMathematics();
+            builder = builder.UseMediaLinks();
+            builder = builder.UsePipeTables();
+            //builder = builder.UsePragmaLines();
+            builder = builder.UseSmartyPants();
+            builder = builder.UseTaskLists();
+            builder = builder.UseYamlFrontMatter();
 
             return builder;
         }
