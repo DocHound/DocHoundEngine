@@ -2,6 +2,10 @@
 
 ## Example 1
 
+```cs
+var x = new Window();
+```
+
 ```text
 $$
 \int^1_\kappa
