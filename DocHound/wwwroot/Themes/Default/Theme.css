@@ -348,6 +348,10 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     margin: 0 0.2em 0.25em -1.6em;
     vertical-align: middle;
 }
+.task-list-item input[type="checkbox"] {
+    margin: 0 0.2em 0.25em -1.6em;
+    vertical-align: middle;
+}
 
 
 /* Right sidebar */

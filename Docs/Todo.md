@@ -24,10 +24,10 @@
 * [ ] Markdown improvements
     * [ ] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
     * [ ] Support FontAwesome
+    * [ ] Would be nice to support scientific notations
     * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [x] Would be nice to support math notation
-    * [ ] Would be nice to support scientific notations
-    * [x] Would be nice to support flow charts and other charts (such as UML) - mermaid
+    * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
 * [ ] Styling
     * [x] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
     * [x] H3 needs to get their own style
