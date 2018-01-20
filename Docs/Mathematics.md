@@ -2,10 +2,6 @@
 
 ## Example 1
 
-```cs
-var x = new Window();
-```
-
 ```txt
 $$
 \int^1_\kappa
