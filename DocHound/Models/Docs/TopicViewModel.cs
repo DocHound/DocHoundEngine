@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
 using HtmlAgilityPack;
-using Markdig;
-using Markdig.Renderers;
 using Microsoft.Extensions.Configuration;
 
 namespace DocHound.Models.Docs
@@ -63,7 +60,14 @@ namespace DocHound.Models.Docs
                 if (SelectedTopicTitle == "index")
                     SelectedTopicTitle = SelectedTopic.Title;
             }
+
+            var dynamicSettings = dynamicToc.settings;
+            var dynamicSettings2 = SelectedTopic?.SettingsDynamic;
+
+            Settings = new TocSettings(dynamicSettings, dynamicSettings2);
         }
+
+        public TocSettings Settings { get; set; }
 
         public string CustomCss { get; set; }
 
@@ -134,7 +138,7 @@ namespace DocHound.Models.Docs
                 }
             }
 
-            var html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl);
+            var html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl, Settings);
 
             //// Post Processing of HTML
             //// TODO: This may either move to the client, or into a generic processor object

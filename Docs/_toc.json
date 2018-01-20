@@ -15,8 +15,8 @@
     "useAutoLinks": true,
     "useCitations": true,
     "useCustomContainers": true,
-    "useDiagramsMermaid": true,
-    "useDiagramsNomnoml": true,
+    "useDiagramsMermaid": false,
+    "useDiagramsNomnoml": false,
     "useEmojiAndSmiley": true,
     "useEmphasisExtras": true,
     "useFigures": true,
@@ -24,7 +24,7 @@
     "useGenericAttributes": true,
     "useGridTables": true,
     "useListExtras": true,
-    "useMathematics": true,
+    "useMathematics": false,
     "useMediaLinks": true,
     "usePipeTables": true,
     "usePragmaLines": true,
@@ -89,12 +89,25 @@
           "link": "SupportedMarkdownFeatures.md",
           "topics": [
               {
-                  "title": "Mermaid Charts",
-                  "link": "Mermaid.md"
+                "title": "Mermaid Charts",
+                "link": "Mermaid.md",
+                "settings": {
+                  "useDiagramsMermaid": true
+                }
               }, 
               {
-                  "title": "Nomnoml Charts",
-                  "link": "Nomnoml.md"
+                "title": "Nomnoml Charts",
+                "link": "Nomnoml.md",
+                "settings": {
+                  "useDiagramsNomnoml": true
+                }
+              },
+              {
+                "title": "Mathematics (LaTeX)",
+                "link": "Mathematics.md",
+                "settings": {
+                  "useMathematics": true
+                }
               }
           ]
         }

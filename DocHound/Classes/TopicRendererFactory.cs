@@ -39,7 +39,7 @@ namespace DocHound.Classes
 
     public interface ITopicRenderer
     {
-        string RenderToHtml(TopicRaw topic, string imageRootUrl = "");
+        string RenderToHtml(TopicRaw topic, string imageRootUrl = "", TocSettings settings = null);
     }
 
     public class TopicRaw
