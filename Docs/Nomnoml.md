@@ -4,7 +4,7 @@ Kava Docs supports the nomnoml UML diagram standard. For more information, see h
 
 ## Simple Diagram Example
 
-```
+```txt
 [example|
   propertyA: Int
   propertyB: string
@@ -32,7 +32,7 @@ Kava Docs supports the nomnoml UML diagram standard. For more information, see h
 
 ## Simple Class Diagram
 
-```
+```txt
 [Car] -> [Driver]
 [Car] -> [Engine]
 [Engine] -> [Piston]
@@ -46,7 +46,7 @@ Kava Docs supports the nomnoml UML diagram standard. For more information, see h
 
 ## Slightly Better Class Diagram
 
-```
+```txt
 [<abstract>Wagon|maxPeople:int;wheels:int|go();stop()]<:-[Car|start();stop()]
 [Car]<:-[Pickup|maxCapacity:int|load()]
 [Pickup]->[Trailer|wheels:int]
@@ -66,7 +66,7 @@ Kava Docs supports the nomnoml UML diagram standard. For more information, see h
 
 ## Advanced Digram Example
 
-```
+```txt
 [Pirate|eyeCount: Int|raid();pillage()|
   [beard]--[parrot]
   [beard]-:>[foul mouth]

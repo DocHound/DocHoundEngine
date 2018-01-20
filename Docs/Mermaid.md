@@ -4,7 +4,7 @@ Kava Docs supports Mermaid charting markup. For specifics on this standard, see 
 
 ## Mermaid Flow Chart
 
-```
+```txt
 graph TD;
     A[Patient needs a Doctor]-->B[Patient presses Button];
     B-->C[Show list of 3 Doctors to the patient];
@@ -46,7 +46,7 @@ graph TD;
 
 ## Mermaid Sequence Diagram
 
-```
+```txt
 sequenceDiagram
     Alice->>+John: Hello John, how are you?
     Alice->>+John: John, can you hear me?
@@ -64,7 +64,7 @@ sequenceDiagram
 
 ## Mermaid Gantt Chart
 
-```
+```txt
 gantt
        dateFormat  YYYY-MM-DD
        title Adding GANTT diagram functionality to mermaid
