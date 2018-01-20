@@ -37,6 +37,7 @@
 
 ## Overall Processing
 
+* [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
 * [ ] When there is a slug passed in that doesn't seem to go with a specific topic, we should show an appropriate message, rather than defaulting back to the first topic
 * [ ] Allow overriding of CSS styles on individual topics
 * [ ] The fav-icon needs to be configurable
