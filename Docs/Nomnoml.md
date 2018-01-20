@@ -59,4 +59,7 @@ Kava Docs supports the nomnoml UML diagram standard. For more information, see h
 [more loot] no ->[<end>e]
 
 [<actor>Sailor] - [<usecase>shiver me;timbers]
+
+#fontSize: 10
+#lineWidth: 1
 ```
