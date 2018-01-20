@@ -64,7 +64,7 @@ Kava Docs supports the nomnoml UML diagram standard. For more information, see h
 #lineWidth: 1
 ```
 
-## Advanced Digram Example
+## Advanced Diagram Example
 
 ```txt
 [Pirate|eyeCount: Int|raid();pillage()|
