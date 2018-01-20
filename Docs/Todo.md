@@ -27,7 +27,7 @@
     * [ ] Would be nice to support scientific notations
     * [ ] Would be nice to support flow charts and other charts (such as UML)
 * [ ] Styling
-    * [ ] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
+    * [x] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
     * [x] H3 needs to get their own style
     * [x] Need good default styles for tables
     * [x] Need good default style for blockquotes
