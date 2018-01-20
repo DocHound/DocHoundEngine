@@ -26,14 +26,6 @@ The following is an example of a TOC Json File structure:
     {
       "title": "CODE Magazine",
       "link": "http://codemag.com/magazine"
-    },
-    {
-      "title": "CODE Consulting",
-      "link": "http://codemag.com/consulting"
-    },
-    {
-      "title": "CODE Training",
-      "link": "http://codemag.com/training"
     }
   ],
   "topics": [
