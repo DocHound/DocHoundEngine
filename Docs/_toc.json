@@ -29,6 +29,7 @@
     "usePipeTables": true,
     "usePragmaLines": true,
     "useSmartyPants": true,
+    "useSyntaxHighlighting": true,
     "useTaskLists": true,
     "useYamlFrontMatter": true
   },

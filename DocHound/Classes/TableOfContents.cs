@@ -386,7 +386,7 @@ namespace DocHound.Classes
             {
                 try
                 {
-                    var value = BuildDynamicGetter(_settings2Type, settingName).Invoke(_settings).ToString().ToLowerInvariant();
+                    var value = BuildDynamicGetter(_settings2Type, settingName).Invoke(_settings2).ToString().ToLowerInvariant();
                     if (value == "true") return true;
                     if (value == "false") return false;
                 }
@@ -442,6 +442,7 @@ namespace DocHound.Classes
         public bool UsePipeTables => GetBooleanSetting(true);
         public bool UsePragmaLines => GetBooleanSetting(true);
         public bool UseSmartyPants => GetBooleanSetting(true);
+        public bool UseSyntaxHighlighting => GetBooleanSetting(true);
         public bool UseTaskLists => GetBooleanSetting(true);
         public bool UseYamlFrontMatter => GetBooleanSetting(true);
 

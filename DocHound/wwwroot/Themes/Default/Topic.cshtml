@@ -35,7 +35,10 @@
 
     @*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
     <link href="~/css/fontawesome-free-5.0.3/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
+    @if (Model.Settings.UseSyntaxHighlighting)
+    {
+        <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
+    }
     @if (!string.IsNullOrEmpty(Model.CustomCss))
     {
         <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" />
@@ -111,13 +114,39 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     @*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
-    <script src="~/css/lodash/lodash.min.js"></script>
-    <script src="~/css/highlightjs/highlight.pack.js"></script>
-    <script src="~/css/mermaid/mermaid.min.js"></script>
-    <script src="~/css/dagre/dagre.min.js"></script>
-    <script src="~/css/nomnoml/nomnoml.js"></script>
+    @if (Model.Settings.UseSyntaxHighlighting)
+    {
+        <script src="~/css/highlightjs/highlight.pack.js"></script>
+    }
+    @if (Model.Settings.UseDiagramsMermaid)
+    {
+        <script src="~/css/mermaid/mermaid.min.js"></script>
+    }
+    @if (Model.Settings.UseDiagramsNomnoml)
+    {
+        <script src="~/css/lodash/lodash.min.js"></script>
+        <script src="~/css/dagre/dagre.min.js"></script>
+        <script src="~/css/nomnoml/nomnoml.js"></script>
+    }
 
     @*Must have file that goes with the theme*@
     <script src="~/Themes/Default/Topic.js"></script>
+    @if (Model.Settings.UseSyntaxHighlighting)
+    {
+        <script src="~/Themes/Default/Feature-Highlight.js"></script>
+    }
+    @if (Model.Settings.UseDiagramsMermaid)
+    {
+        <script src="~/Themes/Default/Feature-Mermaid.js"></script>
+    }
+    @if (Model.Settings.UseDiagramsNomnoml)
+    {
+        <script src="~/Themes/Default/Feature-Nomnoml.js"></script>
+    }
+    @if (Model.Settings.UseMathematics)
+    {
+        <SCRIPT SRC="~/css/jsmath/plugins/noImageFonts.js"></SCRIPT>
+        <SCRIPT SRC="~/css/jsmath/jsMath.js"></SCRIPT>
+    }
 </body>
 </html>

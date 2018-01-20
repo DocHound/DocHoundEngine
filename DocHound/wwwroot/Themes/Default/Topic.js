@@ -60,19 +60,6 @@
         }
     });
 
-    // Making the code snippets look pretty
-    highlightCode();
-
-    // Activating mermaid
-    mermaid.initialize({startOnLoad:true});
-
-    // Activating nomnoml
-    var graphs = document.getElementsByClassName('nomnoml');
-    for (var i = 0; i < graphs.length; i++) {
-        var doc = new DOMParser().parseFromString(graphs[i].innerHTML, "text/html");
-        graphs[i].innerHTML = nomnoml.renderSvg(doc.documentElement.textContent);
-    }
-
     // Creating a document outline for the local document content
     var headers = $('h1, h2, h3');
     if (headers.length > 1) {
@@ -162,10 +149,3 @@ $('.mobileMenuIcon').on('click', function () {
         }, 300);
     }
 });
-
-function highlightCode() {
-    $('pre code')
-        .each(function(i, block) {
-            hljs.highlightBlock(block);
-        });
-}
