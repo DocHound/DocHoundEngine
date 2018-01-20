@@ -9,6 +9,29 @@
     "customeCss": null,
     "customTemplate": null 
   },
+  "settings": {
+    "useAbbreviations": true,
+    "useAutoIdentifiers": true,
+    "useAutoLinks": true,
+    "useCitations": true,
+    "useCustomContainers": true,
+    "useDiagramsMermaid": true,
+    "useDiagramsNomnoml": true,
+    "useEmojiAndSmiley": true,
+    "useEmphasisExtras": true,
+    "useFigures": true,
+    "useFootnotes": true,
+    "useGenericAttributes": true,
+    "useGridTables": true,
+    "useListExtras": true,
+    "useMathematics": true,
+    "useMediaLinks": true,
+    "usePipeTables": true,
+    "usePragmaLines": true,
+    "useSmartyPants": true,
+    "useTaskLists": true,
+    "useYamlFrontMatter": true
+  },
   "menu": [
     {
       "title": "Docs Home",
@@ -31,9 +54,6 @@
       "link": "http://codemag.com/training"
     }
   ],
-  "settings": {
-    "useMermaid": true
-  },
   "topics": [
     {
       "title": "Welcome to Kava Docs",
