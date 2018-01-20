@@ -75,42 +75,42 @@ The following is an example of a TOC Json File structure:
 
 ## Root Properties
 
-| Property     | Description                              | Values |
-|--------------|------------------------------------------|--------|
-| title        | Title of the documentation set           | string |
-| owner        | Legal owner and copyright holder         | string |
-| version      | Version of the docs                      | string |
-| requireHttps | Indicates whether the docs must be accessed using HTTPS | true or false |
-| title        | Title of the documentation set           | string |
-| menu         | Contains an array of menu items (see below) | array of menu items |
-| theme        | Contains information about the applied theme (see below)  | theme object |
-| topics       | Contains an array of topics (see below)  | array of topics |
+| Property     | Description                              | Values | Required |
+|--------------|------------------------------------------|--------|----------|
+| title        | Title of the documentation set           | string | Yes |
+| owner        | Legal owner and copyright holder         | string | No |
+| version      | Version of the docs                      | string | No |
+| requireHttps | Indicates whether the docs must be accessed using HTTPS | true or false | No |
+| title        | Title of the documentation set           | string | Yes |
+| menu         | Contains an array of menu items (see below) | array of menu items | No |
+| theme        | Contains information about the applied theme (see below)  | theme object | No |
+| topics       | Contains an array of topics (see below)  | array of topics | Yes |
 
 ## Menu Collection
 
 Contains an array of menu items that are rendered as part of the documentationdocumentations.
 
-| Property     | Description                                     |        |
-|--------------|-------------------------------------------------|--------|
-| title        | Menu item title                                 | string |
-| link         | The URL (or partial URL) the menu item links to | string |
+| Property     | Description                                     | Values | Required |
+|--------------|-------------------------------------------------|--------|----------|
+| title        | Menu item title                                 | string | Yes |
+| link         | The URL (or partial URL) the menu item links to | string | Yes |
 
 ## Theme Object
 
 Contains individual settings that allow for theme customization.
 
-| Property       | Description                                     | Values |
-|----------------|-------------------------------------------------|--------|
-| standardTheme  | Name of the theme supported by Kava Docs        | Supported values: Default, Dark (more to come) |
-| customCss      | URL (relative or absolute) to a CSS file with CSS overrides | Partial URL or full URL |
-| customTemplate | *reserved for future use* |  |
-| syntaxTheme    | Name of the color theme for syntax highlighting | Supported values: **kavadocs**, **kavadocsdark**, brown-paper, brown-papersq, codepen-embed, color-brewer, darcula, dark, darkula, default, dracula, far, foundation, github, github-gist, cooglecode, grayscale, idea, ir-black, kimbie.dark, kimbie.light, magula, mono-blue, monokai, monokai-sublime, obsidian, paraiso-dark, paraiso-light, railcasts, rainbow, solarized-dark, solarized-light, sunburst, twilight, vs, vs2015, xcode, zenburn |
+| Property       | Description                                     | Values | Required |
+|----------------|-------------------------------------------------|--------|----------|
+| standardTheme  | Name of the theme supported by Kava Docs        | Supported values: Default, Dark (more to come) | No |
+| customCss      | URL (relative or absolute) to a CSS file with CSS overrides | Partial URL or full URL | No |
+| customTemplate | *reserved for future use* |  | No |
+| syntaxTheme    | Name of the color theme for syntax highlighting | Supported values: **kavadocs**, **kavadocsdark**, brown-paper, brown-papersq, codepen-embed, color-brewer, darcula, dark, darkula, default, dracula, far, foundation, github, github-gist, cooglecode, grayscale, idea, ir-black, kimbie.dark, kimbie.light, magula, mono-blue, monokai, monokai-sublime, obsidian, paraiso-dark, paraiso-light, railcasts, rainbow, solarized-dark, solarized-light, sunburst, twilight, vs, vs2015, xcode, zenburn | No |
 
 ## Topics Collection
 
-| Property     | Description                              | Values |
-|--------------|------------------------------------------|--------|
-| title        | Title of the topic                       | string |
-| link         | Url (typically relative, but can be full) to the topic file | string |
-| slug         | Url slug that is used by default for this topic. *(Note: When URLs are manually entered, Kava Docs can find other patterns also, but this slug is used as the default slug that is used when clicking on a node in the tree).* | string |
-| ...          | ... | ... |
+| Property     | Description                              | Values | Required |
+|--------------|------------------------------------------|--------|----------|
+| title        | Title of the topic                       | string | Yes |
+| link         | Url (typically relative, but can be full) to the topic file | string | No |
+| slug         | Url slug that is used by default for this topic. *(Note: When URLs are manually entered, Kava Docs can find other patterns also, but this slug is used as the default slug that is used when clicking on a node in the tree).* | string | No |
+| ...          | ... | ... | |
