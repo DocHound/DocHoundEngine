@@ -164,28 +164,28 @@ The settings object can be set on the root or an individual topic. Settings on a
 
 | Property       | Description                                     | Values | Required |
 |----------------|-------------------------------------------------|--------|----------|
-| Abbreviations | Should abbreviations be used? | true (default) or false  | No |
-| AutoIdentifiers | Should headings automatically be generated with id attributes? | true (default) or false  | No |
-| AutoLinks | Should URLs be automatically turned into links? | true (default) or false  | No |
-| Citations | Support the citations feature? | true (default) or false  | No |
-| CustomContainers | Support custom container syntax? | true (default) or false  | No |
-| DiagramsMermaid | Support mermaid diagrams? | true or false (default) | No |
-| DiagramsNomnoml | Support nomnoml diagrams? | true or false (default) | No |
-| EmojiAndSmiley | Support automatic emojis and smileys? | true (default) or false  | No |
-| EmphasisExtras | Support extra emphasis? | true (default) or false  | No |
-| Figures | Support figures? | true (default) or false  | No |
-| Footnotes | Support footnotes? | true (default) or false  | No |
-| GenericAttributes | Support generic attributes? | true (default) or false  | No |
-| GridTables | Support grid tables? | true (default) or false  | No |
-| ListExtras | Support list extras? | true (default) or false  | No |
-| Mathematics | Support LaTeX mathematics notation? | true or false (default) | No |
-| MediaLinks | Support media links? | true (default) or false  | No |
-| PipeTables | Support pipe tables? | true (default) or false  | No |
-| PragmaLines | Support pragma lines? | true (default) or false  | No |
-| SmartyPants | Support SmartyPants? | true (default) or false  | No |
-| SyntaxHighlighting | Support source code syntax highlighting? | true (default) or false  | No |
-| TaskLists | Support task lists? | true (default) or false  | No |
-| YamlFrontMatter | Support YAML FrontMatter? | true (default) or false  | No |
+| useAbbreviations | Should abbreviations be used? | true (default) or false  | No |
+| useAutoIdentifiers | Should headings automatically be generated with id attributes? | true (default) or false  | No |
+| useAutoLinks | Should URLs be automatically turned into links? | true (default) or false  | No |
+| useCitations | Support the citations feature? | true (default) or false  | No |
+| useCustomContainers | Support custom container syntax? | true (default) or false  | No |
+| useDiagramsMermaid | Support mermaid diagrams? | true or false (default) | No |
+| useDiagramsNomnoml | Support nomnoml diagrams? | true or false (default) | No |
+| useEmojiAndSmiley | Support automatic emojis and smileys? | true (default) or false  | No |
+| useEmphasisExtras | Support extra emphasis? | true (default) or false  | No |
+| useFigures | Support figures? | true (default) or false  | No |
+| useFootnotes | Support footnotes? | true (default) or false  | No |
+| useGenericAttributes | Support generic attributes? | true (default) or false  | No |
+| useGridTables | Support grid tables? | true (default) or false  | No |
+| useListExtras | Support list extras? | true (default) or false  | No |
+| useMathematics | Support LaTeX mathematics notation? | true or false (default) | No |
+| useMediaLinks | Support media links? | true (default) or false  | No |
+| usePipeTables | Support pipe tables? | true (default) or false  | No |
+| usePragmaLines | Support pragma lines? | true or false (default)  | No |
+| useSmartyPants | Support SmartyPants? | true (default) or false  | No |
+| useSyntaxHighlighting | Support source code syntax highlighting? | true (default) or false  | No |
+| useTaskLists | Support task lists? | true (default) or false  | No |
+| useYamlFrontMatter | Support YAML FrontMatter? | true (default) or false  | No |
 
 ## Topics Collection
 
