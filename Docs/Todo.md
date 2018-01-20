@@ -2,7 +2,7 @@
 
 ## Must-Haves for Minimum Viable Product
 
-* [ ] Landing Page Web Site (www.kavadocs.com)
+* [ ] Landing Page Web Site (www.kavadocs.com) 
 * [ ] Accounts and Log-Ins
 * [ ] A few more supported sources
     * [ ] TFS Work Items
@@ -26,7 +26,7 @@
     * [ ] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [ ] Would be nice to support math notation
     * [ ] Would be nice to support scientific notations
-    * [ ] Would be nice to support flow charts and other charts (such as UML)
+    * [ ] Would be nice to support flow charts and other charts (such as UML) - mermaid
 * [ ] Styling
     * [x] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
     * [x] H3 needs to get their own style
