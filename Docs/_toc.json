@@ -15,8 +15,8 @@
       "link": "/"
     },
     {
-      "title": "Framework Home",
-      "link": "http://codeframework.io"
+      "title": "West-Wind Home",
+      "link": "http://www.west-wind.com"
     },
     {
       "title": "CODE Magazine",
@@ -33,26 +33,35 @@
   ],
   "topics": [
     {
-      "title": "Test First Topic",
-      "link": "Test.md"
+      "title": "Welcome to Kava Docs",
+      "link": "Welcome.md"
     },
     {
       "title": "What's New?",
       "link": "WhatsNew.md",
       "topics": [
         {
-          "title": "Version 0.02",
-          "link": "Version0-02.md"
+          "title": "Change Log",
+          "link": "ChangeLog.md"
         },
         {
-          "title": "Version 0.01",
-          "link": "Version0-01.md"
+          "title": "To-Do List",
+          "link": "Todo.md"
         }
       ]
     },
     {
-      "title": "To-Do List",
-      "link": "Todo.md"      
+      "title": "Reference Guide",
+      "topics": [
+        {
+          "title": "TOC File Structure",
+          "link": "TocFileStructure.md"
+        },
+        {
+          "title": "CSS Customization",
+          "link": "CssStructure.md"
+        }
+      ]
     }
   ]
 }

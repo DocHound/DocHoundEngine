@@ -339,7 +339,17 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
                     border-left: 4px solid rgb(8, 57, 129);
                     padding: 9px 20px 9px 11px;
                 }
-    
+
+/* Markdown checked lists                 */
+.task-list-item {
+    list-style-type: none;
+}
+.task-list-item-checkbox {
+    margin: 0 0.2em 0.25em -1.6em;
+    vertical-align: middle;
+}
+
+
 /* Right sidebar */
 
 .sidebar {

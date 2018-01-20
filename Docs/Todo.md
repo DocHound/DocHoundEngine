@@ -11,6 +11,7 @@
     * [ ] ...?
 * [ ] Full index search
 * [ ] Wildcard domain support
+* [ ] Create fundamental documentation for how to use and customize Kava Docs
 
 ## Rendering Engine
 
