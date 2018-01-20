@@ -31,6 +31,9 @@
       "link": "http://codemag.com/training"
     }
   ],
+  "settings": {
+    "useMermaid": true
+  },
   "topics": [
     {
       "title": "Welcome to Kava Docs",
@@ -63,7 +66,17 @@
         },
         {
           "title": "Supported Markdown Features",
-          "link": "SupportedMarkdownFeatures.md"
+          "link": "SupportedMarkdownFeatures.md",
+          "topics": [
+              {
+                  "title": "Mermaid Charts",
+                  "link": "Mermaid.md"
+              }, 
+              {
+                  "title": "Nomnoml Charts",
+                  "link": "Nomnoml.md"
+              }
+          ]
         }
       ]
     }

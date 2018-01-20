@@ -37,6 +37,7 @@ namespace DocHound.Classes.TopicRenderers
             builder = builder.UseAutoLinks();
             builder = builder.UseCitations();
             builder = builder.UseCustomContainers();
+            builder = builder.UseDiagrams();
             builder = builder.UseEmojiAndSmiley();
             builder = builder.UseEmphasisExtras();
             builder = builder.UseFigures();
