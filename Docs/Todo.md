@@ -22,6 +22,7 @@
 * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
 * [ ] Markdown improvements
+    * [ ] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
     * [ ] Support FontAwesome
     * [ ] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [ ] Would be nice to support math notation
