@@ -118,4 +118,3 @@ Kava Docs supports the nomnoml UML diagram standard. For more information, see h
 #lineWidth: 1
 ```
 
-Enjoy!
