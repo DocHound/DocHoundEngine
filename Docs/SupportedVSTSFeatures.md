@@ -70,3 +70,5 @@ It is possible to display TFS work item queries in a way where each query become
   "vsts-pat": "[Personal Access Token for authentication]"
 }
 ```
+
+> Note: Displaying work item queries in the table of contents can put considerable strain on the documentation engine and diminish performance.
