@@ -38,7 +38,9 @@
 
 ## Overall Processing
 
+* [x] URL parameters identifying topics should *not* be case sensitive
 * [x] Allow for settings on the entire TOC as well as on individual topics
+* [ ] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl
 * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
 * [ ] Should support slug better
 * [ ] Topics in the TOC should have a "visible" or "hidden" flag, so they can be managed in the tree (and be considered for URL patterns and such), but not displayed as part of the tree. This is useful in a number of scenarios. For instance, one could create a custom slug the topic can be found by, even though we may not want it in the tree (such as when embedding a document inside of another). It is also useful for tooling, such as when we want a tool that shows all files that are not yet referenced by the TOC (which could get annoying if you have files you really do not want to show up in the tree).

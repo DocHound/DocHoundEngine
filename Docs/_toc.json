@@ -78,12 +78,24 @@
       "title": "Reference Guide",
       "topics": [
         {
+          "title": "Configuring Repositories",
+          "link": "ConfiguringRepositories.md"
+        },
+        {
           "title": "TOC File Structure",
           "link": "TocFileStructure.md"
         },
         {
           "title": "CSS Customization",
           "link": "CssStructure.md"
+        },
+        {
+          "title": "Supported Topic Types",
+          "link": "SupportedTopicTypes.md"
+        },
+        {
+          "title": "Supported HTML Features",
+          "link": "SupportedHtmlFeatures.md"
         },
         {
           "title": "Supported Markdown Features",
