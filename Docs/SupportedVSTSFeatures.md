@@ -41,6 +41,23 @@ It is also possible to display the results of a work item query as the contents 
 }
 ```
 
+## Displaying the REsults of a Work Item Query as Sub-Nodes
+
+It is possible to display TFS work item queries in a way where each item within the query result becomes a sub-node of the current TOC node. The sub-nodes are then displayed as if they were individually configured work item nodes (see above).
+
+```json
+{ 
+  "title": "My Query",
+  "link": "Query Name",
+  "type": "vsts-workitem-query:toc",
+  "vsts-instance": "myinstance.visualstudio.com",
+  "vsts-project": "ProjectName",
+  "vsts-pat": "[Personal Access Token for authentication]"
+}
+```
+
+> Note: Displaying work item query results in the table of contents can put considerable strain on the documentation engine and diminish performance.
+
 ## Displaying a List of Queries as a Topic
 
 It is possible to create a topic that shows a list of queries, so the user can then choose a query to execute and see the results as as described above.
@@ -49,7 +66,7 @@ It is possible to create a topic that shows a list of queries, so the user can t
 { 
   "title": "My Query",
   "link": "Optional Query Filter",
-  "type": "vsts-queries",
+  "type": "vsts-workitem-queries",
   "vsts-instance": "myinstance.visualstudio.com",
   "vsts-project": "ProjectName",
   "vsts-pat": "[Personal Access Token for authentication]"
@@ -64,7 +81,7 @@ It is possible to display TFS work item queries in a way where each query become
 { 
   "title": "Work Item Queries",
   "link": "Optional Query Filter",
-  "type": "vsts-queries:toc",
+  "type": "vsts-workitem-queries:toc",
   "vsts-instance": "myinstance.visualstudio.com",
   "vsts-project": "ProjectName",
   "vsts-pat": "[Personal Access Token for authentication]"
