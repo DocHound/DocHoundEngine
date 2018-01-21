@@ -10,8 +10,8 @@ Typic types can be defined on a per-topic basis (see also: [Table of Contents Fi
 
 | Type | Description | Auto Link Pattern | More Information |
 |---|---|---|---|
-| Markdown | Topics written in the popular Markdown standard. We also support a variety of extensions. | Links ending in .md and also, Markdown is the fallback option when no other type can be identified by the pattern. | [Supported Markdown Features](Supported-Markdown-Features) |
-| Html | Topics written in standard HTML format. | Links ending in .html or .htm | [Supported HTML Features](Supported-HTML-Features) |
+| markdown | Topics written in the popular Markdown standard. We also support a variety of extensions. | Links ending in .md and also, Markdown is the fallback option when no other type can be identified by the pattern. | [Supported Markdown Features](Supported-Markdown-Features) |
+| html | Topics written in standard HTML format. | Links ending in .html or .htm | [Supported HTML Features](Supported-HTML-Features) |
 | vsts-workitem | A single TFS/VSTS Work Item | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
 
 ## Additional Content Types Under Development or Consideration
