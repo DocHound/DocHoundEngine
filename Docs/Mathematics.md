@@ -4,6 +4,8 @@ Kava Docs supports LaTeX Math markup. For specifics on this standard, see https:
 
 > Note: To use LaTeX Meth, the feature has to be enabled in the TOC, either globally, or on a topic-by-topic basis, by setting the **useMathematics** to *true*. This is done to prevent performance problems in repositories and/or topics that do not need this feature. (Note that loading all the features required for LaTeX Math features can be very resource intensive, therefore it should only be activated when it is really used). For more information, see [Table of Contents File Structure](TOC File Structure)
 
+For more information, see [Table of Contents File Structure](TOC File Structure) yada yada
+
 ## Example 1
 
 ```txt
