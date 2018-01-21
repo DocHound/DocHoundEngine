@@ -1,6 +1,6 @@
 ﻿// Activating nomnoml
 var graphs = document.getElementsByClassName('nomnoml');
-for (var i = 0; i < graphs.length; i++) {
-    var doc = new DOMParser().parseFromString(graphs[i].innerHTML, "text/html");
-    graphs[i].innerHTML = nomnoml.renderSvg(doc.documentElement.textContent);
+for (var nomCounter = 0; nomCounter < graphs.length; nomCounter++) {
+    var doc = new DOMParser().parseFromString(graphs[nomCounter].innerHTML, "text/html");
+    graphs[nomCounter].innerHTML = nomnoml.renderSvg(doc.documentElement.textContent);
 }
