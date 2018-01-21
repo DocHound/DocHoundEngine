@@ -187,7 +187,7 @@ namespace DocHound.Models.Docs
                     sb.Append("<ul>");
                     foreach (var topic in SelectedTopic.Topics)
                     {
-                        sb.Append("<li>");
+                        sb.Append("<li class=\"kava-auto-link\">");
                         sb.Append("<a href=\"" + TopicHelper.GetNormalizedName(topic.Title) + "\">");
                         sb.Append(topic.Title);
                         sb.Append("</a>");

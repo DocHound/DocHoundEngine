@@ -298,12 +298,12 @@ namespace DocHound.Classes
         public static bool LinkMatchesTopic(string link, IHaveTopics topic)
         {
             var normalizedName = GetNormalizedName(link);
-            if (GetNormalizedName(topic.Title) == normalizedName) return true;
+            if (string.Compare(GetNormalizedName(topic.Title), normalizedName, true) == 0) return true;
 
             var normalizedLink = GetNormalizedName(topic.Link);
             if (normalizedLink == normalizedName) return true;
             var normalizedLinkParts = normalizedLink.Split('.');
-            if (normalizedLinkParts.Length > 0 && normalizedLinkParts[0] == normalizedName) return true;
+            if (normalizedLinkParts.Length > 0 && string.Compare(normalizedLinkParts[0], normalizedName, true) == 0) return true;
 
             return false;
         }
