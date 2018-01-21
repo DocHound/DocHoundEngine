@@ -32,6 +32,7 @@
     * [x] H3 needs to get their own style
     * [x] Need good default styles for tables
     * [x] Need good default style for blockquotes
+    * [x] Should have better styles for the links to sub-topics created automatically when a parent topic is empty.
 * [x] Showing the outline with indent levels
 * [x] Make the current tab work on mobile (responsive)
 * [x] Handle image paths relative to documents stored in root folders properly
