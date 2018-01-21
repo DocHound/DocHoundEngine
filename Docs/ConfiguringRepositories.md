@@ -45,4 +45,12 @@ This type of repository access is used to access a Git repository in a Microsoft
 | VSTSProjectName | Name of the project within that TFS instance. Example: MyDocs | Yes |
 | VSTSPAT | Personal Access Token used to authenticate against TFS. This token can be created in the TFS interface. | Yes |
 
+## Additional Repository Types under Consideration or Development
 
+The following repository types are being considered, or actively developed:
+
+* [x] GitHub (for non-private GitHub repositories that require authentication)
+* [ ] Git (general Git repository support, for Git repositories *not* hosted by GitHub or TFS)
+* [ ] One Drive
+* [ ] DropBox
+* [ ] Azure Blob Storage
