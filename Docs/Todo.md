@@ -38,7 +38,7 @@
 
 ## Overall Processing
 
-* [ ] URL parameters identifying topics should *not* be case sensitive
+* [x] URL parameters identifying topics should *not* be case sensitive
 * [x] Allow for settings on the entire TOC as well as on individual topics
 * [ ] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl
 * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
