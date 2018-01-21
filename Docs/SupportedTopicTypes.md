@@ -11,7 +11,7 @@ Typic types can be defined on a per-topic basis (see also: [Table of Contents Fi
 | Type | Description | Auto Link Pattern | More Information |
 |---|---|---|---|
 | Markdown | Topics written in the popular Markdown standard. We also support a variety of extensions. | Links ending in .md | [Supported Markdown Features](Supported-Markdown-Features) |
-| Html | Topics written in standard HTML format. | Links ending in .html or .htm | [Supported HTML Features](Supported-Html-Features) |
+| Html | Topics written in standard HTML format. | Links ending in .html or .htm | [Supported HTML Features](Supported-HTML-Features) |
 
 ## Additional Content Types Under Development or Consideration
 
