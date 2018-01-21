@@ -41,7 +41,7 @@ It is also possible to display the results of a work item query as the contents 
 }
 ```
 
-## Displaying the REsults of a Work Item Query as Sub-Nodes
+## Displaying the Results of a Work Item Query as Sub-Nodes
 
 It is possible to display TFS work item queries in a way where each item within the query result becomes a sub-node of the current TOC node. The sub-nodes are then displayed as if they were individually configured work item nodes (see above).
 
