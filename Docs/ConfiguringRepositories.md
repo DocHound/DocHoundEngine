@@ -8,10 +8,10 @@ The root repository has to be configured in the settings. For instance, to point
 
 ```json
 {
-"RepositoryType": "VSTSGit",
-"VSTSInstance": "https://myrepo.visualstudio.com",
-"VSTSProjectName": "MyDocs",
-"VSTSPAT": "access key"
+  "RepositoryType": "VSTSGit",
+  "VSTSInstance": "https://myrepo.visualstudio.com",
+  "VSTSProjectName": "MyDocs",
+  "VSTSPAT": "access key"
 }
 ```
 
@@ -19,8 +19,8 @@ Or, to access a repository managed by GitHub, it could be configured like so:
 
 ```json
 {
-"RepositoryType": "GitHubRaw",
-"GitHubProject": "MarkusEggerInc/CodeFrameworkDocs"
+ "RepositoryType": "GitHubRaw",
+  "GitHubProject": "MarkusEggerInc/CodeFrameworkDocs"
 }
 ```
 
