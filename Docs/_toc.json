@@ -123,6 +123,10 @@
                 }
               }
           ]
+        },
+        {
+          "title": "Supported VSTS Features",
+          "link": "SupportedVSTSFeatures.md"
         }
       ]
     }

@@ -9,6 +9,7 @@
     * [ ] DOCX
     * [ ] OneNote
     * [ ] ...?
+* [ ] Themes
 * [ ] Full index search
 * [ ] Wildcard domain support
 * [ ] Create fundamental documentation for how to use and customize Kava Docs
@@ -27,6 +28,11 @@
     * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
+* [ ] Markdown
+    * [ ] Markdown needs to do a better job of fixin up image links
+* [ ] Html
+    * [ ] Only use HTML body
+    * [ ] Should we eliminate scripts from HTML topics?
 * [ ] Styling
     * [x] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
     * [x] H3 needs to get their own style
