@@ -121,7 +121,11 @@ namespace DocHound.Models.Docs
             }
             else if (!string.IsNullOrEmpty(normalizedLink))
             {
-                switch (RepositoryType)
+                var repositoryType = RepositoryType;
+                if (rawTopic.Type.ToLowerInvariant() == "vsts-workitem")
+                    repositoryType = RepositoryTypes.VisualStudioTeamSystemWorkItems;
+
+                switch (repositoryType)
                 {
                     case RepositoryTypes.GitHubRaw:
                         var fullGitHubRawUrl = MasterUrlRaw + SelectedTopic.Link;
@@ -136,47 +140,17 @@ namespace DocHound.Models.Docs
                         if (SelectedTopic.LinkPure.Contains("/"))
                             imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
+                    case RepositoryTypes.VisualStudioTeamSystemWorkItems:
+                        var itemNumber = int.Parse(SelectedTopic.Link);
+                        rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, VstsInstance, VstsPat);
+                        imageRootUrl = "/___FileProxy___?mode=vstswit&path=";
+                        if (SelectedTopic.LinkPure.Contains("/"))
+                            imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
+                        break;
                 }
             }
 
-            var html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl, Settings);
-
-            //// Post Processing of HTML
-            //// TODO: This may either move to the client, or into a generic processor object
-            //if (!string.IsNullOrEmpty(html))
-            //{
-            //    var htmlDoc = new HtmlDocument();
-            //    htmlDoc.LoadHtml(html);
-            //    var children = htmlDoc.DocumentNode.Descendants();
-            //    foreach (var child in children)
-            //        if (child.Name == "h1" || child.Name == "h2" || child.Name == "h3")
-            //            Outline.Add(new OutlineItem
-            //            {
-            //                Title = child.InnerText,
-            //                Link = TopicHelper.GetNormalizedName(child.InnerText),
-            //                Tag = child.Name,
-            //                Node = child
-            //            });
-            //    foreach (var item in Outline)
-            //    {
-            //        var anchor = HtmlNode.CreateNode("<a name=\"" + TopicHelper.GetNormalizedName(item.Title) + "\">");
-            //        item.Node.ParentNode.InsertBefore(anchor, item.Node);
-            //    }
-
-            //    try 
-            //    {
-            //        using (var stream = new MemoryStream())
-            //        {
-            //            htmlDoc.Save(stream);
-            //            Html = StreamHelper.ToString(stream);
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        Html = string.Empty;
-            //    }
-            //}
-            Html = html;
+            Html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl, Settings);
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
             {
@@ -297,7 +271,8 @@ namespace DocHound.Models.Docs
     public enum RepositoryTypes
     {
         GitHubRaw,
-        VisualStudioTeamSystemGit
+        VisualStudioTeamSystemGit,
+        VisualStudioTeamSystemWorkItems
     }
 
     public class OutlineItem

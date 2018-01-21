@@ -40,6 +40,11 @@ namespace DocHound.Controllers
                 var stream = await VstsHelper.GetFileStream(path, TopicViewModel.VstsInstance, TopicViewModel.VstsProjectName, TopicViewModel.VstsDocsFolder, TopicViewModel.VstsPat);
                 return File(stream, GetContentTypeFromUrl(path), StringHelper.JustFileName(path));
             }
+
+            if (mode == "vstswit")
+            {
+                // TODO: No idea if there could be images in this and what to do with that...
+            }
             return File((byte[])null, "image/jpeg", path);
         }
 

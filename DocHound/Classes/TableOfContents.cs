@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -285,23 +286,25 @@ namespace DocHound.Classes
             normalizedName = normalizedName.Replace(" ", "-");
             normalizedName = normalizedName.Replace("%20", "-");
             normalizedName = normalizedName.Replace("/", "-");
-            normalizedName = normalizedName.Replace(",", "");
-            normalizedName = normalizedName.Replace("(", "");
-            normalizedName = normalizedName.Replace(")", "");
-            normalizedName = normalizedName.Replace("?", "");
-            normalizedName = normalizedName.Replace(":", "");
+            normalizedName = normalizedName.Replace(",", string.Empty);
+            normalizedName = normalizedName.Replace("(", string.Empty);
+            normalizedName = normalizedName.Replace(")", string.Empty);
+            normalizedName = normalizedName.Replace("?", string.Empty);
+            normalizedName = normalizedName.Replace(":", string.Empty);
+            normalizedName = normalizedName.Replace("#", string.Empty);
+            normalizedName = normalizedName.Replace("&", string.Empty);
             return normalizedName;
         }
 
         public static bool LinkMatchesTopic(string link, IHaveTopics topic)
         {
             var normalizedName = GetNormalizedName(link);
-            if (string.Compare(GetNormalizedName(topic.Title), normalizedName, true) == 0) return true;
+            if (String.Compare(GetNormalizedName(topic.Title), normalizedName, StringComparison.OrdinalIgnoreCase) == 0) return true;
 
             var normalizedLink = GetNormalizedName(topic.Link);
             if (normalizedLink == normalizedName) return true;
             var normalizedLinkParts = normalizedLink.Split('.');
-            if (normalizedLinkParts.Length > 0 && string.Compare(normalizedLinkParts[0], normalizedName, true) == 0) return true;
+            if (normalizedLinkParts.Length > 0 && String.Compare(normalizedLinkParts[0], normalizedName, StringComparison.OrdinalIgnoreCase) == 0) return true;
 
             return false;
         }

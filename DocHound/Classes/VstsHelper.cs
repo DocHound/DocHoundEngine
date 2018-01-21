@@ -12,6 +12,24 @@ namespace DocHound.Classes
 {
     public static class VstsHelper
     {
+        public static async Task<string> GetWorkItemJson(int workItemNumber, string instance, string personalAccessToken)
+        {
+            return await GetWorkItemsJson(new[] {workItemNumber}, instance, personalAccessToken);
+        }
+        public static async Task<string> GetWorkItemsJson(IEnumerable<int> workItemNumbers, string instance, string personalAccessToken)
+        {
+            var httpClient = CreateHttpClient(instance + ":", personalAccessToken);
+            // https://fabrikam-fiber-inc.visualstudio.com/DefaultCollection/_apis/wit/workitems?ids=297,299,300&api-version=1.0
+            var workItemIds = string.Join(',', workItemNumbers);
+            var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/_apis/wit/workitems?ids=" + workItemIds + "&api-version=1.0");
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var json = await httpResponseMessage.Content.ReadAsStringAsync();
+                return json;
+            }
+            return string.Empty;
+        }
+
         public static async Task<string> GetTocJson(string instance, string project, string docsFolder, string personalAccessToken)
         {
             var tocJson = string.Empty;
@@ -91,7 +109,9 @@ namespace DocHound.Classes
 
         private static HttpClient CreateHttpClient(string rootUrl, string personalAccessToken)
         {
-            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", "zi6opdawlmm7mvd3xxaycfxgboz2enbxrdmitjj5nawmbg3ldvtq")));
+            // TODO: This is fishy. Why is there an embedded access topken here?!?
+            //var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", "zi6opdawlmm7mvd3xxaycfxgboz2enbxrdmitjj5nawmbg3ldvtq")));
+            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", personalAccessToken)));
             var client = new HttpClient { BaseAddress = new Uri(rootUrl) };
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

@@ -1,4 +1,27 @@
-﻿* {
+﻿/*VSTS styles need to be moved elsewhere*/
+.vsts-workitem-statearea {
+    color: Black;
+    background-color: rgba(25,118,210,.05);
+    border-left: 8px solid #1e88e5;
+    padding: 2px 5px 2px 0;
+    margin: 24px 16px;
+    clear: both;
+}
+
+.vsts-workitem-statearea td {
+    border: none;
+}
+
+.vsts-workitem-statearea tbody>tr:nth-child(even) {
+    background: transparent;
+}
+.vsts-workitem-label {
+    color: #666666;
+}
+
+
+/*Standard styles*/
+* {
     padding: 0;
     margin: 0;
 }

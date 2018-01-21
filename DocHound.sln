@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.Htm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.Markdown", "DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj", "{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.VisualStudioTeamSystem", "DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj", "{101CEAE5-E939-42B8-89AE-AA433B3D6471}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{910163B1-AEF9-482A-8054-C84360DD5C80} = {7CE42800-AC30-4E47-A669-117BDE152221}
 		{A3AE9E38-319F-47B1-AC12-24E0682C7E0D} = {7CE42800-AC30-4E47-A669-117BDE152221}
+		{101CEAE5-E939-42B8-89AE-AA433B3D6471} = {7CE42800-AC30-4E47-A669-117BDE152221}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ECF405A6-4BC2-4A47-A583-0DF2C2551E17}

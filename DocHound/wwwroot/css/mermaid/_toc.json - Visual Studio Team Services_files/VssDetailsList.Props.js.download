@@ -1,0 +1,4 @@
+//dependencies=
+// Copyright (C) Microsoft Corporation. All rights reserved.
+define("VSSUI/Components/VssDetailsList/VssDetailsList.Props",["require","exports"],function(n,t){Object.defineProperty(t,"__esModule",{value:!0});var i;(function(n){n[n.oneLine=0]="oneLine";n[n.twoLine=1]="twoLine"})(i=t.VssDetailsListRowStyle||(t.VssDetailsListRowStyle={}))});
+//direct-dependencies=
