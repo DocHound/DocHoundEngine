@@ -60,3 +60,5 @@ The following repository types are being considered, or actively developed:
 * [ ] One Drive
 * [ ] DropBox
 * [ ] Azure Blob Storage
+* [ ] File system
+* [ ] SharePoint
