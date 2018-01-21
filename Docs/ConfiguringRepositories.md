@@ -19,7 +19,7 @@ Or, to access a repository managed by GitHub, it could be configured like so:
 
 ```json
 {
- "RepositoryType": "GitHubRaw",
+  "RepositoryType": "GitHubRaw",
   "GitHubProject": "MarkusEggerInc/CodeFrameworkDocs"
 }
 ```
