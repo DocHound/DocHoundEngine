@@ -7,20 +7,26 @@ All Kava Docs documentation sites are driven by a root repository that contains 
 The root repository has to be configured in the settings. For instance, to point to a Git Repository managed my Microsoft Team Foundation Server, the configuration can look like so:
 
 ```json
+{
 "RepositoryType": "VSTSGit",
 "VSTSInstance": "https://myrepo.visualstudio.com",
 "VSTSProjectName": "MyDocs",
 "VSTSPAT": "access key"
+}
 ```
 
 Or, to access a repository managed by GitHub, it could be configured like so:
 
 ```json
+{
 "RepositoryType": "GitHubRaw",
 "GitHubProject": "MarkusEggerInc/CodeFrameworkDocs"
+}
 ```
 
 Note that different settings are used for each repository type. The only setting that is always present is the **RepositoryType** setting, which specifies the fundamental type of repository that is being used.
+
+> Note: Settings are currently configured in the AppSettings.json file in the Kava Docs web site project. However, these settings will moved into a more managed system that supports multi-tennant setups.
 
 ## RepositoryType: GitHubRaw
 
