@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
+using DocHound.Interfaces;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
 
@@ -107,7 +108,7 @@ namespace DocHound.Models.Docs
 
         private async Task GetHtmlContent()
         {
-            var rawTopic = new TopicRaw {OriginalName = SelectedTopic.Title};
+            var rawTopic = new TopicInformation {OriginalName = SelectedTopic.Title, Type = SelectedTopic.Type};
 
             var imageRootUrl = string.Empty;
 

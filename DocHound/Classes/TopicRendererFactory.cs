@@ -1,65 +1,44 @@
-using DocHound.Classes.TopicRenderers;
-using DocHound.Models.Docs;
+using System.Collections.Generic;
+using DocHound.Interfaces;
+using DocHound.TopicRenderers.Html;
+using DocHound.TopicRenderers.Markdown;
 
 namespace DocHound.Classes
 {
     public static class TopicRendererFactory
     {
-        public static ITopicRenderer GetTopicRenderer(TopicRaw topic)
+        public static ITopicRenderer GetTopicRenderer(TopicInformation topic)
         {
+            // If we recognize the topic type, we use it to determine the renderer
+            if (!string.IsNullOrEmpty(topic.Type))
+            {
+                var normalizedType = topic.Type.ToLowerInvariant();
+                if (normalizedType == "markdown") return GetRegisteredTopicRenderer("markdown");
+                if (normalizedType == "html") return GetRegisteredTopicRenderer("html");
+            }
+
+            // Since we couldn't use type information, we try to inspect the name (URL pattern) to see if we can do anything with it
             var normalizedName = topic.OriginalNameNormalized;
 
-            if (normalizedName.EndsWith(".html") || normalizedName.EndsWith(".htm")) return HtmlTopicRenderer;
+            if (normalizedName.EndsWith(".html") || normalizedName.EndsWith(".htm")) return GetRegisteredTopicRenderer("html");
 
-            return MarkdownTopicRenderer;
+            return GetRegisteredTopicRenderer("markdown"); // For anything else, we assume markdown
         }
 
-        private static ITopicRenderer _markdownTopicRenderer;
-        public static ITopicRenderer MarkdownTopicRenderer
+        private static readonly Dictionary<string, ITopicRenderer> RegisteredRenderers = new Dictionary<string, ITopicRenderer>
         {
-            get 
-            {
-                if (_markdownTopicRenderer == null)
-                    _markdownTopicRenderer = new MarkdownTopicRenderer();
-                return _markdownTopicRenderer;
-            }
-        }
+            {"markdown", new MarkdownTopicRenderer()},
+            {"html", new HtmlTopicRenderer()}
+        };
 
-        private static ITopicRenderer _htmlTopicRenderer;
-        public static ITopicRenderer HtmlTopicRenderer
+        public static ITopicRenderer GetRegisteredTopicRenderer(string type) => RegisteredRenderers.ContainsKey(type) ? RegisteredRenderers[type] : null;
+
+        public static void RegisterTopicRenderer(string type, ITopicRenderer renderer)
         {
-            get 
-            {
-                if (_htmlTopicRenderer == null)
-                    _htmlTopicRenderer = new HtmlTopicRenderer();
-                return _htmlTopicRenderer;
-            }
+            if (RegisteredRenderers.ContainsKey(type))
+                RegisteredRenderers[type] = renderer;
+            else
+                RegisteredRenderers.Add(type, renderer);
         }
-    }
-
-    public interface ITopicRenderer
-    {
-        string RenderToHtml(TopicRaw topic, string imageRootUrl = "", TocSettings settings = null);
-    }
-
-    public class TopicRaw
-    {
-        public string OriginalName { get; set; }
-        public string OriginalNameNormalized => OriginalName.Trim().ToLowerInvariant();
-        //public string MasterUrl => string.IsNullOrEmpty(TopicViewModel.MasterUrlRaw) ? TopicViewModel.MasterUrl : TopicViewModel.MasterUrlRaw;
-
-        //private string _imageRootUrl;
-        //public string ImageRootUrl
-        //{
-        //    get
-        //    {
-        //        if (string.IsNullOrEmpty(_imageRootUrl))
-        //            return MasterUrl;
-        //        return _imageRootUrl;
-        //    }
-        //    set { _imageRootUrl = value; }
-        //}
-
-        public string OriginalContent { get; set; }
     }
 }

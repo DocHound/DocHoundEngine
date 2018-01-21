@@ -1,17 +1,18 @@
+﻿using DocHound.Interfaces;
 using Markdig;
 
-namespace DocHound.Classes.TopicRenderers
+namespace DocHound.TopicRenderers.Markdown
 {
     public class MarkdownTopicRenderer : ITopicRenderer
     {
-        public string RenderToHtml(TopicRaw topic, string imageRootUrl = "", TocSettings settings = null)
+        public string RenderToHtml(TopicInformation topic, string imageRootUrl = "", TocSettings settings = null)
         {
             if (settings == null) settings = new TocSettings(null, null);
             if (string.IsNullOrEmpty(topic.OriginalContent)) return string.Empty;
             return MarkdownToHtml(topic, imageRootUrl, settings);
         }
 
-        private string MarkdownToHtml(TopicRaw topic, string imageRootUrl, TocSettings settings)
+        private string MarkdownToHtml(TopicInformation topic, string imageRootUrl, TocSettings settings)
         {
             // TODO: This uses all images as external links. We may need to handle that differently
 
@@ -23,7 +24,7 @@ namespace DocHound.Classes.TopicRenderers
             var builder = new MarkdownPipelineBuilder();
             BuildPipeline(builder, settings);
             var pipeline = builder.Build();
-            return Markdown.ToHtml(markdown, pipeline);
+            return Markdig.Markdown.ToHtml(markdown, pipeline);
         }
 
         protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder, TocSettings settings)
