@@ -15,31 +15,33 @@ Typic types can be defined on a per-topic basis (see also: [Table of Contents Fi
 
 ## Additional Content Types Under Development or Consideration
 
-* Plain Text (essentially treated like Markup, I would think)
-* Wiki formats (not sure what that would be exactly :-) )
-* Word
-* One Note
-* PDF
-* Power Point 
-* Excel
-* EML
-* RTF
-* .msg (email messages)
-* TFS Work Items (and/or queries)
-* CODE Magazine Articles (individual articles and categories or search terms)
-* JIRA Items
-* Some kind of Slack integration (including harvesting Slack history)
-* Screencast
-* Pluralsight
-* Swagger/SwaggerHub
-* Reference source code (so actual source code repositories displayed like Microsoft reference source)
-    * GitHub
-    * TfsGit
-    * General Git
-    * Other source control systems such as Mercurial
-* Evernote
-* Help Monster/Builder
-* Moqups
-* Wikipedia
-* LaTeX
-* NuGet (so people can document things one needs to get from NuGet and how to get it)
+The following topic types are currently being considered. Those with a checkmark are under active development.
+
+* [ ] Plain Text (essentially treated like Markup, I would think)
+* [ ] Wiki formats (not sure what that would be exactly :-) )
+* [ ] Word
+* [ ] One Note
+* [ ] PDF
+* [ ] Power Point 
+* [ ] Excel
+* [ ] EML
+* [ ] RTF
+* [ ] .msg (email messages)
+* [x] TFS Work Items (and/or queries)
+* [ ] CODE Magazine Articles (individual articles and categories or search terms)
+* [ ] JIRA Items
+* [ ] Some kind of Slack integration (including harvesting Slack history)
+* [ ] Screencast
+* [ ] Pluralsight
+* [ ] Swagger/SwaggerHub
+* [ ] Reference source code (so actual source code repositories displayed like Microsoft reference source)
+    * [ ] GitHub
+    * [ ] TfsGit
+    * [ ] General Git
+    * [ ] Other source control systems such as Mercurial
+* [ ] Evernote
+* [ ] Help Monster/Builder
+* [ ] Moqups
+* [ ] Wikipedia
+* [ ] LaTeX
+* [ ] NuGet (so people can document things one needs to get from NuGet and how to get it)
