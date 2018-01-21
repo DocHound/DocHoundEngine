@@ -2,6 +2,8 @@
 
 Kava Docs supports Mermaid charting markup. For specifics on this standard, see https://mermaidjs.github.io/
 
+> Note: To use Mermaid Charts, the feature has to be enabled in the TOC, either globally, or on a topic-by-topic basis. This is done to prevent performance problems in repositories and/or topics that do not need this feature. For more information, see (Table of Contents File Structure)[TOC File Structure]
+
 ## Mermaid Flow Chart
 
 ```txt
