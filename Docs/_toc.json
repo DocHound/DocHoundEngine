@@ -75,6 +75,15 @@
       ]
     },
     {
+      "title": "Developer Guide",
+      "topics": [
+        {
+          "title": "Settings and Configuration",
+          "link": "DevSettings.md"
+        }
+        ]
+    },
+    {
       "title": "Reference Guide",
       "topics": [
         {
