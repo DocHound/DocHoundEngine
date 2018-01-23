@@ -212,6 +212,7 @@ namespace DocHound.Models.Docs
         }
 
         public string ThemeFolder { get; set; }
+        public string ThemeFolderRaw => ThemeFolder.Replace("~/wwwroot/", "/");
 
         private string _templateName = "TopicDefault";
         public string TemplateName 
