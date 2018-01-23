@@ -10,5 +10,7 @@ namespace DocHound.TopicRenderers.Html
             // TODO: Patch up the root URL of images that have a relative path
             return topic.OriginalContent;
         }
+
+        public string GetTemplateName(TopicInformation topic, string suggestedTemplateName, ISettingsProvider settings = null) => suggestedTemplateName;
     }
 }

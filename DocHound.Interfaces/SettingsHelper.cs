@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
 
 namespace DocHound.Interfaces
 {
@@ -80,7 +81,7 @@ namespace DocHound.Interfaces
         {
             if (settingsObject == null) return default(T);
 
-            var settingsDictionary = settingsObject as Dictionary<string, object>;
+            var settingsDictionary = settingsObject as IDictionary<string, JToken>;
             if (settingsDictionary == null) return default(T);
 
             return GetDictionarySetting<T>(setting, settingsDictionary);
@@ -90,7 +91,7 @@ namespace DocHound.Interfaces
         {
             if (settingsObject == null) return default(T);
 
-            var settingsDictionary = settingsObject as Dictionary<string, object>;
+            var settingsDictionary = settingsObject as IDictionary<string, JToken>;
             if (settingsDictionary == null) return default(T);
 
             return GetDictionarySetting<T>(setting, settingsDictionary);
@@ -100,7 +101,7 @@ namespace DocHound.Interfaces
         {
             if (settingsObject == null) return false;
 
-            var settingsDictionary = settingsObject as Dictionary<string, object>;
+            var settingsDictionary = settingsObject as IDictionary<string, JToken>;
             if (settingsDictionary == null) return false;
 
             var settingName = GetSettingNameFromSetting(setting);
@@ -111,30 +112,30 @@ namespace DocHound.Interfaces
         {
             if (settingsObject == null) return false;
 
-            var settingsDictionary = settingsObject as Dictionary<string, object>;
+            var settingsDictionary = settingsObject as IDictionary<string, JToken>;
             if (settingsDictionary == null) return false;
 
             return settingsDictionary.Keys.Any(k => IsMatch(k, setting));
         }
 
-        private static T GetDictionarySetting<T>(Settings setting, Dictionary<string, object> dictionary)
+        private static T GetDictionarySetting<T>(Settings setting, IDictionary<string, JToken> dictionary)
         {
             if (dictionary == null) return default(T);
 
             var settingName = GetSettingNameFromSetting(setting);
             var settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, settingName));
             if (!string.IsNullOrEmpty(settingKey))
-                return (T)dictionary[settingKey];
+                return dictionary[settingKey].Value<T>();
             return default(T);
         }
 
-        private static T GetDictionarySetting<T>(string setting, Dictionary<string, object> dictionary)
+        private static T GetDictionarySetting<T>(string setting, IDictionary<string, JToken> dictionary)
         {
             if (dictionary == null) return default(T);
 
             var settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, setting));
             if (!string.IsNullOrEmpty(settingKey))
-                return (T)dictionary[settingKey];
+                return dictionary[settingKey].Value<T>();
             return default(T);
         }
 

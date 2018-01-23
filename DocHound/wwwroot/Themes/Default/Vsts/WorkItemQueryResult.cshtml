@@ -1,0 +1,50 @@
+@using DocHound.Classes;
+@using Newtonsoft.Json;
+@using Newtonsoft.Json.Linq;
+
+@model DocHound.Models.Docs.TopicViewModel
+
+@{
+    Layout = "../_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@(Model.ThemeFolder)/Vsts/Vsts.css" type="text/css" rel="stylesheet" />
+}
+
+<article class="content-container">
+    <h1>@Model.SelectedTopic.Title</h1>
+
+    @{
+        dynamic result = JObject.Parse(Model.Html);
+        if (result.columns != null)
+        {
+            <table>
+                <thead>
+                <tr>
+                    @foreach (dynamic column in result.columns)
+                    {
+                        <th>@column.name</th>
+                    }
+                </tr>
+                </thead>
+                @foreach (dynamic row in result.resultSet)
+                {
+                    JToken fields = row.fields;
+                    <tr>
+                        @foreach (dynamic column in result.columns)
+                        {
+                            <td>@fields[column.referenceName.ToString()]</td>
+                        }
+                    </tr>
+                }
+            </table>
+        }
+    }
+
+    @Html.Partial("../_PartialDefaultBottomNavigation.cshtml", Model)
+</article>
+
+<aside class="sidebar">
+    @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
+</aside>

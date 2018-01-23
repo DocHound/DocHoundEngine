@@ -1,0 +1,22 @@
+@using DocHound.Classes;
+
+@model DocHound.Models.Docs.TopicViewModel
+
+@if (Model.SelectedTopic != null && (Model.SelectedTopic.PreviousTopic != null || Model.SelectedTopic.NextTopic != null))
+{
+    <div class="navigation-footer">
+        @if (Model.SelectedTopic.PreviousTopic != null)
+        {
+            <div class="navigatePrevious">
+                <a href="@TopicHelper.GetNormalizedName(Model.SelectedTopic.PreviousTopic.Title)" title="@Model.SelectedTopic.PreviousTopic.Title">Previous</a>
+            </div>
+        }
+        @if (Model.SelectedTopic.NextTopic != null)
+        {
+            <div class="navigateNext">
+                <a href="@TopicHelper.GetNormalizedName(Model.SelectedTopic.NextTopic.Title)" title="@Model.SelectedTopic.NextTopic.Title">Next</a>
+            </div>
+        }
+        <div style="clear: both"></div>
+    </div>
+}

@@ -1,0 +1,78 @@
+@using DocHound.Classes;
+@using Newtonsoft.Json.Linq;
+
+@model DocHound.Models.Docs.TopicViewModel
+
+@{
+    Layout = "../_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@(Model.ThemeFolder)/Vsts/Vsts.css" type="text/css" rel="stylesheet" />
+}
+
+<article class="content-container">
+    @{
+        dynamic workItems = JObject.Parse(Model.Html);
+        if (workItems.value.Count > 0)
+        {
+            var workItem = workItems.value[0];
+            var fields = workItem.fields;
+
+            // Title
+            var title = fields["System.Title"].ToString().Trim();
+            if (fields["System.WorkItemType"] != null) {
+                title = fields["System.WorkItemType"].ToString().Trim() + ": " + title;
+            }
+            <h1 id="@title">@title</h1>
+
+            // Header info table
+            <div class="vsts-workitem-statearea">
+            <table>
+            @if (fields["System.AssignedTo"] != null) {
+                <tr><td class="vsts-workitem-label">Assigned To:</td><td class="vsts-workitem-data">@fields["System.AssignedTo"]</td></tr>            
+            }
+            @if (fields["System.WorkItemType"] != null) {
+                <tr><td class="vsts-workitem-label">Work Item Type:</td><td class="vsts-workitem-data">@fields["System.WorkItemType"]</td></tr>            
+            }
+            @if (fields["System.TeamProject"] != null) {
+                <tr><td class="vsts-workitem-label">Team Project:</td><td class="vsts-workitem-data">@fields["System.TeamProject"]</td></tr>            
+            }
+            @if (fields["System.AreaPath"] != null) {
+                <tr><td class="vsts-workitem-label">Area Path:</td><td class="vsts-workitem-data">@fields["System.AreaPath"]</td></tr>            
+            }
+            @if (fields["System.IterationPath"] != null) {
+                <tr><td class="vsts-workitem-label">Iteration Path:</td><td class="vsts-workitem-data">@fields["System.IterationPath"]</td></tr>            
+            }
+            @if (fields["System.State"] != null) {
+                <tr><td class="vsts-workitem-label">State:</td><td class="vsts-workitem-data">@fields["System.State"]</td></tr>            
+            }
+            @if (fields["System.Reason"] != null) {
+                <tr><td class="vsts-workitem-label">Reason:</td><td class="vsts-workitem-data">@fields["System.Reason"]</td></tr>            
+            }
+            </table>
+            </div>
+
+            // Description
+            <h2 id="workitemdescription">Description</h2>
+            @if (fields["System.Description"] != null) {
+                @Html.Raw(Model.FixHtmlReferences(fields["System.Description"]))
+            }
+            else {
+                <p><i>n/a</i></p>
+            }
+
+            // Description
+            @if (fields["Microsoft.VSTS.Common.AcceptanceCriteria"] != null) {
+                <h2 id="acceptancecriteria">Acceptance Criteria</h2>
+                @Html.Raw(Model.FixHtmlReferences(fields["Microsoft.VSTS.Common.AcceptanceCriteria"]))
+            }
+        }
+    }
+
+    @Html.Partial("../_PartialDefaultBottomNavigation.cshtml", Model)
+</article>
+
+<aside class="sidebar">
+    @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
+</aside>

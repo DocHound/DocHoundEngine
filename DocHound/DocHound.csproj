@@ -1,29 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack.CssSelectors.NetCore" Version="1.0.0" />
     <PackageReference Include="Markdig" Version="0.14.9" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
   </ItemGroup>
-
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="wwwroot\css\jsmath\" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\DocHound.Interfaces\DocHound.Interfaces.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj" />
   </ItemGroup>
-
 </Project>

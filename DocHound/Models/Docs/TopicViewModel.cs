@@ -7,6 +7,7 @@ using DocHound.Classes;
 using DocHound.Interfaces;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
 namespace DocHound.Models.Docs
 {
@@ -98,6 +99,7 @@ namespace DocHound.Models.Docs
                         imageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
                         if (!string.IsNullOrEmpty(imageRootUrl) && !imageRootUrl.EndsWith("/")) imageRootUrl += "/";
                         break;
+
                     case RepositoryTypes.VstsGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
                             rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
@@ -105,9 +107,18 @@ namespace DocHound.Models.Docs
                         if (SelectedTopic.LinkPure.Contains("/"))
                             imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
+
                     case RepositoryTypes.VstsWorkItemTracking:
-                        var itemNumber = int.Parse(SelectedTopic.Link);
-                        rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
+                        if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItem))
+                        {
+                            var itemNumber = int.Parse(SelectedTopic.Link);
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
+                        }
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries))
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemQueriesJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery))
+                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+
                         imageRootUrl = "/___FileProxy___?mode="+RepositoryTypeNames.VstsWorkItemTracking+"&path=";
                         if (SelectedTopic.LinkPure.Contains("/"))
                             imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
@@ -115,7 +126,9 @@ namespace DocHound.Models.Docs
                 }
             }
 
-            Html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl, this);
+            var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
+            Html = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
+            TemplateName = renderer.GetTemplateName(rawTopic, TemplateName, this);
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
             {
@@ -146,8 +159,23 @@ namespace DocHound.Models.Docs
             if (_cachedSettings.ContainsKey(setting)) return (T)_cachedSettings[setting];
 
             var value = SettingsHelper.GetSetting<T>(setting, TocSettings, CurrentTopicSettings);
-            _cachedSettings.Add(setting, value);
+
+            if (CurrentTopicSettings != null)
+                // We can only cache if we already have current topic settings, otherwise, those may just not have been loaded yet, and may thus still be loaded and needed later.
+                _cachedSettings.Add(setting, value);
+
             return value;
+        }
+
+        public string FixHtmlReferences(string html)
+        {
+            // TODO: Need to check if there are any broken image links or similar stuff in the HTML
+            return html;
+        }
+
+        public string FixHtmlReferences(JToken html)
+        {
+            return FixHtmlReferences(html.ToString());
         }
 
         public string CustomCss { get; set; }
@@ -184,6 +212,21 @@ namespace DocHound.Models.Docs
         }
 
         public string ThemeFolder { get; set; }
+
+        private string _templateName = "TopicDefault";
+        public string TemplateName 
+        {
+             get
+             {
+                return _templateName;
+             }
+             set 
+             {
+                 if (value.ToLowerInvariant().EndsWith(".cshtml"))
+                    throw new ArgumentException("Templates name should not include a file extension, such as '.cshtml'");
+                 _templateName = value;
+             }
+        }
 
         public List<MainMenuItem> MainMenu { get; set; }
 

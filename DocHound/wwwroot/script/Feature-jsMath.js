@@ -12,7 +12,7 @@ jsMath.Easy = {
     //  If you leave this blank, jsMath will try to look it up from
     //  the URL where it loaded this file, but that may not work.
     //
-    root: "/css/jsmath",
+    root: "/script/jsmath",
 
     //
     //  The default scaling factor for mathematics compared to the

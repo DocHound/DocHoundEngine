@@ -53,5 +53,7 @@ namespace DocHound.TopicRenderers.Markdown
 
             return builder;
         }
+
+        public string GetTemplateName(TopicInformation topic, string suggestedTemplateName, ISettingsProvider settings = null) => suggestedTemplateName;
     }
 }

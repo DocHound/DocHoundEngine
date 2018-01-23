@@ -27,6 +27,8 @@ namespace DocHound.Classes
             {TopicTypeNames.Markdown, new MarkdownTopicRenderer()},
             {TopicTypeNames.Html, new HtmlTopicRenderer()},
             {TopicTypeNames.VstsWorkItem, new WorkItemTopicRenderer()},
+            {TopicTypeNames.VstsWorkItemQueries, new WorkItemTopicRenderer()},
+            {TopicTypeNames.VstsWorkItemQuery, new WorkItemTopicRenderer()},
         };
 
         public static ITopicRenderer GetRegisteredTopicRenderer(string typeName) 

@@ -1,0 +1,18 @@
+@using DocHound.Classes;
+@model DocHound.Models.Docs.TopicViewModel
+
+<div id="outline" style="display: none;">
+    <p style="font-weight: bold;">On this page:</p>
+    <div id="outlineContent"></div>
+</div>
+
+@if (Model.SelectedTopic != null && Model.SelectedTopic.SeeAlso.Count > 0)
+{
+    <p style="font-weight: bold">See also:</p>
+    <ul>
+        @foreach (var seeAlso in Model.SelectedTopic.SeeAlso)
+        {
+            <li><a href="/@TopicHelper.GetNormalizedName(seeAlso.Link)">@seeAlso.Title</a></li>
+        }
+    </ul>
+}

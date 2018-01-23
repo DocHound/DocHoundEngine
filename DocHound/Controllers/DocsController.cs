@@ -14,7 +14,7 @@ namespace DocHound.Controllers
         {
             var vm = new TopicViewModel(topicName);
             await vm.LoadData();
-            return View(vm.ThemeFolder + "/Topic.cshtml", vm);
+            return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
         }
 
         // TODO: Need topics and toc to be individually accessible for AJAX calls

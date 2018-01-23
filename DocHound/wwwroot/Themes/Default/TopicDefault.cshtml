@@ -1,0 +1,16 @@
+﻿@using DocHound.Classes;
+
+@model DocHound.Models.Docs.TopicViewModel
+
+@{
+    Layout = "_Layout.cshtml";
+}
+
+<article class="content-container">
+    @Html.Raw(Model.Html)
+    @Html.Partial("_PartialDefaultBottomNavigation.cshtml", Model)
+</article>
+
+<aside class="sidebar">
+    @Html.Partial("_PartialDefaultSidebar.cshtml", Model)
+</aside>

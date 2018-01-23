@@ -1,0 +1,102 @@
+{
+    "queryType": "flat",
+    "queryResultType": "workItem",
+    "asOf": "2018-01-23T06:53:55.923Z",
+    "columns": [
+        {
+            "referenceName": "System.Id",
+            "name": "ID",
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+        },
+        {
+            "referenceName": "Microsoft.VSTS.Common.StackRank",
+            "name": "Stack Rank",
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+        },
+        {
+            "referenceName": "Microsoft.VSTS.Common.Priority",
+            "name": "Priority",
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+        },
+        {
+            "referenceName": "System.AssignedTo",
+            "name": "Assigned To",
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+        },
+        {
+            "referenceName": "Microsoft.VSTS.Scheduling.RemainingWork",
+            "name": "Remaining Work",
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+        },
+        {
+            "referenceName": "Microsoft.VSTS.Scheduling.CompletedWork",
+            "name": "Completed Work",
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+        },
+        {
+            "referenceName": "System.Title",
+            "name": "Title",
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+        }
+    ],
+    "sortColumns": [
+        {
+            "field": {
+                "referenceName": "Microsoft.VSTS.Common.StackRank",
+                "name": "Stack Rank",
+                "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            },
+            "descending": false
+        },
+        {
+            "field": {
+                "referenceName": "Microsoft.VSTS.Common.Priority",
+                "name": "Priority",
+                "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            },
+            "descending": false
+        },
+        {
+            "field": {
+                "referenceName": "System.Id",
+                "name": "ID",
+                "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            },
+            "descending": false
+        }
+    ],
+    "workItems": [
+        {
+            "id": 24,
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/24"
+        },
+        {
+            "id": 29,
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/29"
+        }
+    ],
+    "resultSet": [
+        {
+            "id": 24,
+            "rev": 8,
+            "fields": {
+                "System.Id": 24,
+                "System.AssignedTo": "Tiberiu Covaci <tiberiu.covaci@outlook.com>",
+                "System.Title": "Determine the technologies that we'll use for DN2Me",
+                "Microsoft.VSTS.Common.Priority": 1
+            },
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/24"
+        },
+        {
+            "id": 29,
+            "rev": 9,
+            "fields": {
+                "System.Id": 29,
+                "System.AssignedTo": "Markus Egger <megger@eps-software.com>",
+                "System.Title": "Set up Service Structure/Framework",
+                "Microsoft.VSTS.Common.Priority": 2
+            },
+            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/29"
+        }
+    ]
+}
