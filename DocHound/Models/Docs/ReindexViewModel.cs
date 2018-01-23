@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
+using DocHound.Interfaces;
 using HtmlAgilityPack;
 using Markdig;
 using Markdig.Renderers;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DocHound.Models.Docs
 {
+    // TODO: This whole class was just started but never completed
     public class ReindexViewModel
     {
         public async Task LoadData()
@@ -23,13 +25,13 @@ namespace DocHound.Models.Docs
         {
             string tocJson = null;
 
-            switch (TopicViewModel.RepositoryType)
+            switch (RepositoryType)
             {
                 case RepositoryTypes.GitHubRaw:
-                    tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(TopicViewModel.MasterUrlRaw);
+                    tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
                     break;
-                case RepositoryTypes.VisualStudioTeamSystemGit:
-                    tocJson = await VstsHelper.GetTocJson(TopicViewModel.VstsInstance, TopicViewModel.VstsProjectName, TopicViewModel.VstsDocsFolder, TopicViewModel.VstsPat);
+                case RepositoryTypes.VstsGit:
+                    tocJson = await VstsHelper.GetTocJson(VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
                     break;
             }
             if (string.IsNullOrEmpty(tocJson)) return;
@@ -40,6 +42,116 @@ namespace DocHound.Models.Docs
         }
 
         public List<TableOfContentsItem> Topics { get; set; } = new List<TableOfContentsItem>();
+
+        private RepositoryTypes _repositoryTypes = RepositoryTypes.Undefined;
+        public RepositoryTypes RepositoryType 
+        {
+            get
+            {
+                if (_repositoryTypes == RepositoryTypes.Undefined)
+                    _repositoryTypes = RepositoryTypeHelper.GetTypeFromTypeName(SettingsHelper.GetSetting<string>(Settings.RepositoryType));
+                return _repositoryTypes;
+            }
+        }
+
+        private string _gitHubProject = null;
+        public string GitHubProject
+        {
+            get
+            {
+                if (_gitHubProject == null)
+                    _gitHubProject = SettingsHelper.GetSetting<string>(Settings.GitHubProject);
+                return _gitHubProject;
+            }
+        }
+
+        // GitHub Raw Settings
+        private string _gitHubMasterUrlRaw = null;
+        public string GitHubMasterUrlRaw 
+        { 
+            get
+            {
+                if (RepositoryType != RepositoryTypes.GitHubRaw) return string.Empty;
+
+                if (_gitHubMasterUrlRaw == null)
+                {
+                    if (string.IsNullOrEmpty(GitHubProject))
+                    {
+                        var gitHubMasterUrlRaw = GitHubMasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/");
+                        if (!GitHubMasterUrl.Contains("/master/")) gitHubMasterUrlRaw += "/master/";
+                        _gitHubMasterUrlRaw = gitHubMasterUrlRaw;
+                    }
+                    else
+                        _gitHubMasterUrlRaw = "https://raw.githubusercontent.com/" + GitHubProject + "/master/";
+                }
+
+                return _gitHubMasterUrlRaw;
+            } 
+        }
+    
+        private string _gitHubMasterUrl = null;
+        public string GitHubMasterUrl
+        {
+            get
+            {
+                if (RepositoryType != RepositoryTypes.GitHubRaw) return string.Empty;
+
+                if (_gitHubMasterUrl == null)
+                {
+                    if (string.IsNullOrEmpty(GitHubProject))
+                        _gitHubMasterUrl = SettingsHelper.GetSetting<string>(Settings.GitHubMasterUrl);
+                    else
+                        _gitHubMasterUrl = "https://github.com/" + GitHubProject;
+                }
+
+                return _gitHubMasterUrl;
+            }
+        }
+
+        // VSTS Settings
+        public string _vstsPat = null;
+        public string VstsPat 
+        {
+            get
+            {
+                if (_vstsPat == null)
+                    _vstsPat = SettingsHelper.GetSetting<string>(Settings.VstsPat);
+                return _vstsPat;
+            }
+        }
+
+        public string _vstsInstance;
+        public string VstsInstance
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_vstsInstance))
+                    _vstsInstance = SettingsHelper.GetSetting<string>(Settings.VstsInstance);
+                return _vstsInstance;
+            }
+        }
+
+        public string _vstsDocsFolder = null;
+        public string VstsDocsFolder
+        {
+            get
+            {
+                if (_vstsDocsFolder == null)
+                    _vstsDocsFolder = SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder);
+                return _vstsDocsFolder;
+            }
+        }
+
+        public string _vstsDocsProjectName = null;
+        public string VstsProjectName
+        {
+            get
+            {
+                if (_vstsDocsProjectName == null)
+                    _vstsDocsProjectName = SettingsHelper.GetSetting<string>(Settings.VstsProjectName);
+                return _vstsDocsProjectName;
+            }
+        }
 
         public async Task Reindex()
         {
@@ -57,14 +169,14 @@ namespace DocHound.Models.Docs
                 }
                 else
                 {
-                    switch (TopicViewModel.RepositoryType)
+                    switch (RepositoryType)
                     {
                         case RepositoryTypes.GitHubRaw:
                             content = await WebClientEx.GetStringAsync(GetFullExternalLink(nextTopic.Title));
                             break;
-                        case RepositoryTypes.VisualStudioTeamSystemGit:
+                        case RepositoryTypes.VstsGit:
                             if (!string.IsNullOrEmpty(nextTopic.LinkPure))
-                                content = await VstsHelper.GetFileContents(nextTopic.LinkPure, TopicViewModel.VstsInstance, TopicViewModel.VstsProjectName, TopicViewModel.VstsDocsFolder, TopicViewModel.VstsPat);
+                                content = await VstsHelper.GetFileContents(nextTopic.LinkPure, VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
                             break;
                     }
                 }
@@ -87,10 +199,10 @@ namespace DocHound.Models.Docs
             {
                 var realLinkLower = realLink.ToLowerInvariant();
                 if (!realLinkLower.StartsWith("http://") || !realLinkLower.StartsWith("https://"))
-                    realLink = TopicViewModel.MasterUrlRaw + realLink;
+                    realLink = GitHubMasterUrlRaw + realLink;
                 return realLink;
             }
-            return TopicViewModel.MasterUrlRaw + link.Replace(" ", "%20");
+            return GitHubMasterUrlRaw + link.Replace(" ", "%20");
         }
 
         private static string GetRealLink(IEnumerable<TableOfContentsItem> topics, string name)

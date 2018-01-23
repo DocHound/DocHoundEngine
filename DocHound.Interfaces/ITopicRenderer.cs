@@ -2,7 +2,7 @@
 {
     public interface ITopicRenderer
     {
-        string RenderToHtml(TopicInformation topic, string imageRootUrl = "", TocSettings settings = null);
+        string RenderToHtml(TopicInformation topic, string imageRootUrl = "", ISettingsProvider settings = null);
     }
 
 }

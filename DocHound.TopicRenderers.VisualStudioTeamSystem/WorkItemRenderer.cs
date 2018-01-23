@@ -6,7 +6,7 @@ namespace DocHound.TopicRenderers.VisualStudioTeamSystem
 {
     public class WorkItemTopicRenderer : ITopicRenderer
     {
-        public string RenderToHtml(TopicInformation topic, string imageRootUrl = "", TocSettings settings = null)
+        public string RenderToHtml(TopicInformation topic, string imageRootUrl = "", ISettingsProvider settings = null)
         {
             if (string.IsNullOrEmpty(topic.OriginalContent)) return string.Empty;
 
@@ -20,7 +20,7 @@ namespace DocHound.TopicRenderers.VisualStudioTeamSystem
             return sb.ToString();
         }
 
-        private void RenderWorkItem(StringBuilder sb, dynamic workItem, string imageRootUrl, TocSettings settings)
+        private void RenderWorkItem(StringBuilder sb, dynamic workItem, string imageRootUrl, ISettingsProvider settings)
         {
             // TODO: This should really be based on some kind of template instead
             // TODO: The way the heading IDs are created here will not work if there is more than one item

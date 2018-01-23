@@ -4,6 +4,7 @@ using DocHound.Classes;
 using DocHound.Models.Docs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using DocHound.Interfaces;
 
 namespace DocHound.Controllers
 {
@@ -35,13 +36,13 @@ namespace DocHound.Controllers
                 }
             }
 
-            if (mode == "vstsgit")
+            if (RepositoryTypeHelper.IsMatch(mode, RepositoryTypeNames.VstsGit))
             {
-                var stream = await VstsHelper.GetFileStream(path, TopicViewModel.VstsInstance, TopicViewModel.VstsProjectName, TopicViewModel.VstsDocsFolder, TopicViewModel.VstsPat);
+                var stream = await VstsHelper.GetFileStream(path, SettingsHelper.GetSetting<string>(Settings.VstsInstance), SettingsHelper.GetSetting<string>(Settings.VstsProjectName), SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder), SettingsHelper.GetSetting<string>(Settings.VstsPat));
                 return File(stream, GetContentTypeFromUrl(path), StringHelper.JustFileName(path));
             }
 
-            if (mode == "vstswit")
+            if (RepositoryTypeHelper.IsMatch(mode, RepositoryTypeNames.VstsWorkItemTracking))
             {
                 // TODO: No idea if there could be images in this and what to do with that...
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DocHound.Models.Docs
 {
-    public class TopicViewModel : IHaveTopics, IHaveSelectedTopic
+    public class TopicViewModel : IHaveTopics, IHaveSelectedTopic, ISettingsProvider
     {
         private TableOfContentsItem _selectedTopic;
         private string _syntaxTheme;
@@ -29,14 +30,15 @@ namespace DocHound.Models.Docs
         {
             string tocJson = null;
 
-            switch (RepositoryType)
+            var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+            switch (repositoryType)
             {
                 case RepositoryTypes.GitHubRaw:
-                    tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(MasterUrlRaw);
-                    LogoUrl = MasterUrlRaw + "_meta/_logo.png";
+                    tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
+                    LogoUrl = GitHubMasterUrlRaw + "_meta/_logo.png";
                     break;
-                case RepositoryTypes.VisualStudioTeamSystemGit:
-                    tocJson = await VstsHelper.GetTocJson(VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
+                case RepositoryTypes.VstsGit:
+                    tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
                     LogoUrl = "/___FileProxy___?mode=vstsgit&path=_meta/_logo.png";
                     break;
             }
@@ -62,49 +64,9 @@ namespace DocHound.Models.Docs
                     SelectedTopicTitle = SelectedTopic.Title;
             }
 
-            var dynamicSettings = dynamicToc.settings;
-            var dynamicSettings2 = SelectedTopic?.SettingsDynamic;
-
-            Settings = new TocSettings(dynamicSettings, dynamicSettings2);
+            TocSettings = dynamicToc.settings;
+            CurrentTopicSettings = SelectedTopic?.SettingsDynamic;
         }
-
-        public TocSettings Settings { get; set; }
-
-        public string CustomCss { get; set; }
-
-        public string CustomCssFullPath
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(CustomCss)) return string.Empty;
-
-                if (CustomCss.ToLowerInvariant().StartsWith("http://") || CustomCss.ToLowerInvariant().StartsWith("https://"))
-                    return CustomCss;
-
-                switch (RepositoryType)
-                {
-                    case RepositoryTypes.GitHubRaw:
-                        return "/___FileProxy___?path=" + MasterUrlRaw + CustomCss;
-                    case RepositoryTypes.VisualStudioTeamSystemGit:
-                        return "/___FileProxy___?mode=vstsgit&path=" + CustomCss;
-                }
-                return String.Empty;
-            }
-        }
-
-        public string SyntaxTheme
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_syntaxTheme)) return "kavadocs";
-                return _syntaxTheme.ToLowerInvariant();
-            }
-            set { _syntaxTheme = value; }
-        }
-
-        public string ThemeFolder { get; set; }
-
-        public List<MainMenuItem> MainMenu { get; set; }
 
         private async Task GetHtmlContent()
         {
@@ -121,36 +83,39 @@ namespace DocHound.Models.Docs
             }
             else if (!string.IsNullOrEmpty(normalizedLink))
             {
-                var repositoryType = RepositoryType;
-                if (rawTopic.Type.ToLowerInvariant() == "vsts-workitem")
-                    repositoryType = RepositoryTypes.VisualStudioTeamSystemWorkItems;
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+
+                // Even if the overall repository type is something else, we will switch to different repository access for specific node types, 
+                // as they may point to other repositories or require different APIs even within the same repository
+                if (TopicTypeHelper.IsVstsWorkItemType(rawTopic?.Type))
+                    repositoryType = RepositoryTypes.VstsWorkItemTracking;
 
                 switch (repositoryType)
                 {
                     case RepositoryTypes.GitHubRaw:
-                        var fullGitHubRawUrl = MasterUrlRaw + SelectedTopic.Link;
+                        var fullGitHubRawUrl = GitHubMasterUrlRaw + SelectedTopic.Link;
                         rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
                         imageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
                         if (!string.IsNullOrEmpty(imageRootUrl) && !imageRootUrl.EndsWith("/")) imageRootUrl += "/";
                         break;
-                    case RepositoryTypes.VisualStudioTeamSystemGit:
+                    case RepositoryTypes.VstsGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
-                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
-                        imageRootUrl = "/___FileProxy___?mode=vstsgit&path=";
+                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
+                        imageRootUrl = "/___FileProxy___?mode="+RepositoryTypeNames.VstsGit+"&path=";
                         if (SelectedTopic.LinkPure.Contains("/"))
                             imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
-                    case RepositoryTypes.VisualStudioTeamSystemWorkItems:
+                    case RepositoryTypes.VstsWorkItemTracking:
                         var itemNumber = int.Parse(SelectedTopic.Link);
-                        rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, VstsInstance, VstsPat);
-                        imageRootUrl = "/___FileProxy___?mode=vstswit&path=";
+                        rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
+                        imageRootUrl = "/___FileProxy___?mode="+RepositoryTypeNames.VstsWorkItemTracking+"&path=";
                         if (SelectedTopic.LinkPure.Contains("/"))
                             imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
                 }
             }
 
-            Html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl, Settings);
+            Html = TopicRendererFactory.GetTopicRenderer(rawTopic).RenderToHtml(rawTopic, imageRootUrl, this);
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
             {
@@ -175,18 +140,52 @@ namespace DocHound.Models.Docs
             }
         }
 
-        // private string GetFullExternalLink(string link)
-        // {
-        //     var realLink = GetRealLink(Topics, link);
-        //     if (!string.IsNullOrEmpty(realLink))
-        //     {
-        //         var realLinkLower = realLink.ToLowerInvariant();
-        //         if (!realLinkLower.StartsWith("http://") || !realLinkLower.StartsWith("https://"))
-        //             realLink = MasterUrlRaw + realLink;
-        //         return realLink;
-        //     }
-        //     return MasterUrlRaw + link.Replace(" ", "%20");
-        // }
+        private readonly Dictionary<Settings, object> _cachedSettings = new Dictionary<Settings, object>();
+        public T GetSetting<T>(Settings setting)
+        {
+            if (_cachedSettings.ContainsKey(setting)) return (T)_cachedSettings[setting];
+
+            var value = SettingsHelper.GetSetting<T>(setting, TocSettings, CurrentTopicSettings);
+            _cachedSettings.Add(setting, value);
+            return value;
+        }
+
+        public string CustomCss { get; set; }
+
+        public string CustomCssFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CustomCss)) return string.Empty;
+
+                if (CustomCss.ToLowerInvariant().StartsWith("http://") || CustomCss.ToLowerInvariant().StartsWith("https://"))
+                    return CustomCss;
+
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+                switch (repositoryType)
+                {
+                    case RepositoryTypes.GitHubRaw:
+                        return "/___FileProxy___?path=" + GitHubMasterUrlRaw + CustomCss;
+                    case RepositoryTypes.VstsGit:
+                        return "/___FileProxy___?mode=vstsgit&path=" + CustomCss;
+                }
+                return String.Empty;
+            }
+        }
+
+        public string SyntaxTheme
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_syntaxTheme)) return "kavadocs";
+                return _syntaxTheme.ToLowerInvariant();
+            }
+            set { _syntaxTheme = value; }
+        }
+
+        public string ThemeFolder { get; set; }
+
+        public List<MainMenuItem> MainMenu { get; set; }
 
         private static string GetRealLink(IEnumerable<TableOfContentsItem> topics, string name)
         {
@@ -221,58 +220,56 @@ namespace DocHound.Models.Docs
         }
 
         public string SelectedTopicTitle { get; set; }
-        public static string MasterUrlRaw { get; set; }
-        public static string MasterUrl { get; set; }
         public string Link => string.Empty;
         public IHaveTopics Parent => null;
 
-        public static void SetStaticConfiguration(IConfiguration Configuration)
-        {
-            var repositoryType = Configuration["RepositoryType"].ToLowerInvariant();
-            switch (repositoryType)
+        public dynamic TocSettings { get; private set; }
+        public dynamic CurrentTopicSettings { get; private set; }
+
+        private string _gitHubMasterUrlRaw = null;
+        public string GitHubMasterUrlRaw 
+        { 
+            get
             {
-                case "githubraw":
-                    RepositoryType = RepositoryTypes.GitHubRaw;
-                    var gitHubProject = Configuration["GitHubProject"];
-                    if (string.IsNullOrEmpty(gitHubProject))
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+                if (repositoryType != RepositoryTypes.GitHubRaw) return string.Empty;
+
+                if (_gitHubMasterUrlRaw == null)
+                {
+                    if (string.IsNullOrEmpty(GetSetting<string>(Settings.GitHubProject)))
                     {
-                        MasterUrl = Configuration["MasterUrl"];
-                        MasterUrlRaw = MasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/");
-                        if (!MasterUrl.Contains("/master/")) MasterUrl += "/master/";
+                        var gitHubMasterUrlRaw = GitHubMasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/");
+                        if (!GitHubMasterUrl.Contains("/master/")) gitHubMasterUrlRaw += "/master/";
+                        _gitHubMasterUrlRaw = gitHubMasterUrlRaw;
                     }
                     else
-                    {
-                        MasterUrl = "https://github.com/" + gitHubProject;
-                        MasterUrlRaw = "https://raw.githubusercontent.com/" + gitHubProject + "/master/";
-                    }
-                    break;
+                        _gitHubMasterUrlRaw = "https://raw.githubusercontent.com/" + GetSetting<string>(Settings.GitHubProject) + "/master/";
+                }
 
-                case "vstsgit":
-                    RepositoryType = RepositoryTypes.VisualStudioTeamSystemGit;
-                    VstsInstance = Configuration["VSTSInstance"];
-                    VstsProjectName = Configuration["VSTSProjectName"];
-                    VstsDocsFolder = Configuration["VSTSDocsFolder"];
-                    VstsPat = Configuration["VSTSPAT"];
-                    break;
+                return _gitHubMasterUrlRaw;
+            } 
+        }
+    
+        private string _gitHubMasterUrl = null;
+        public string GitHubMasterUrl
+        {
+            get
+            {
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+                if (repositoryType != RepositoryTypes.GitHubRaw) return string.Empty;
+
+                if (_gitHubMasterUrl == null)
+                {
+                    if (string.IsNullOrEmpty(GetSetting<string>(Settings.GitHubProject)))
+                        _gitHubMasterUrl = GetSetting<string>(Settings.GitHubMasterUrl);
+                    else
+                        _gitHubMasterUrl = "https://github.com/" + GetSetting<string>(Settings.GitHubProject);
+                }
+
+                return _gitHubMasterUrl;
             }
         }
 
-        public static string VstsPat { get; set; }
-
-        public static string VstsDocsFolder { get; set; }
-
-        public static string VstsProjectName { get; set; }
-
-        public static string VstsInstance { get; set; }
-
-        public static RepositoryTypes RepositoryType { get; set; }
-    }
-
-    public enum RepositoryTypes
-    {
-        GitHubRaw,
-        VisualStudioTeamSystemGit,
-        VisualStudioTeamSystemWorkItems
     }
 
     public class OutlineItem
@@ -282,5 +279,4 @@ namespace DocHound.Models.Docs
         public string Tag { get; set; }
         public HtmlNode Node { get; set; }
     }
-
 }
