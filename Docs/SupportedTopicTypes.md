@@ -13,6 +13,10 @@ Typic types can be defined on a per-topic basis (see also: [Table of Contents Fi
 | markdown | Topics written in the popular Markdown standard. We also support a variety of extensions. | Links ending in .md and also, Markdown is the fallback option when no other type can be identified by the pattern. | [Supported Markdown Features](Supported-Markdown-Features) |
 | html | Topics written in standard HTML format. | Links ending in .html or .htm | [Supported HTML Features](Supported-HTML-Features) |
 | vsts-workitem | A single TFS/VSTS Work Item | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
+| vsts-workitem-query | Displays the resulting records of a work-item query | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
+| vsts-workitem-query:toc | Displays the resulting records of a work-item query as nodes of the TOC tree | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
+| vsts-workitem-queries | Displays a list of work item queries | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
+| vsts-workitem-queries:toc | Displays a list of work item queries as nodes of the TOC tree | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
 
 ## Additional Content Types Under Development or Consideration
 
