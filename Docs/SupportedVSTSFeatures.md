@@ -17,7 +17,7 @@ The simplest form of integrating a TFS work item is to display a single work ite
 This assumes that a VSTS server is already configured as the root repository for this documentation setup. Otherwise, VSTS information has to be specified either at the root of the TOC file like so:
 
 ```json
-{
+{ // This is the root
   "title": "My Docs",
   // More here...
   "settings": {
@@ -31,16 +31,18 @@ This assumes that a VSTS server is already configured as the root repository for
 This configures settings for the entire documentation tree, thus when using anything from VSTS, these settings will be applied. However, it is also possible to configure these settings on each topic node. (Note: If both global and topic settings are present, the topic settings will override the global ones).
 
 ```json
-{ 
-  "title": "Work Item 32",
-  "link": "32",
-  "type": "vsts-workitem",
-  "settings": {
-    "vstsInstance": "https://[your-server].visualstudio.com", // Use your server name here
-    "vstsProjectName": "[your-project]", // Use your project name here
-    "vstsPat": "[personal-access-token]" // Use your actual PAT here
+"topics": [
+  { 
+    "title": "Work Item 32",
+    "link": "32",
+    "type": "vsts-workitem",
+    "settings": {
+      "vstsInstance": "https://[your-server].visualstudio.com", // Use your server name here
+      "vstsProjectName": "[your-project]", // Use your project name here
+      "vstsPat": "[personal-access-token]" // Use your actual PAT here
+    }
   }
-}
+]
 ```
 
 ## Displaying the Results of a Work Item Query as a Topic
