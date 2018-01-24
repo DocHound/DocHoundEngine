@@ -15,6 +15,24 @@ namespace DocHound.Classes
     {
         private static string ApiVersion => "2.2";
 
+        public static async Task<string> GetWorkItemStates(string instance, string projectName, string personalAccessToken)
+        {
+            using (var httpClient = CreateHttpClient(instance + ":", personalAccessToken))
+            {
+                var url = "/DefaultCollection/" + projectName + "/_apis/wit/fields/System.State";
+
+                var urlParameters = "api-version=" + ApiVersion;
+
+                var httpResponseMessage = await httpClient.GetAsync(url + "?" + urlParameters);
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    var json = await httpResponseMessage.Content.ReadAsStringAsync();
+                    return json;
+                }
+                return string.Empty;
+            }
+        }
+
         public static async Task<string> GetWorkItemQueriesJson(string folder, string instance, string projectName, string personalAccessToken)
         {
             using (var httpClient = CreateHttpClient(instance + ":", personalAccessToken))

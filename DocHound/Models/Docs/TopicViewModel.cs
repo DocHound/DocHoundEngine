@@ -17,10 +17,12 @@ namespace DocHound.Models.Docs
         private TableOfContentsItem _selectedTopic;
         private string _syntaxTheme;
         public HttpContext HttpContext { get; private set; }
+        public VstsOutputHelper Vsts { get; private set; }
 
         public TopicViewModel(string topicName, HttpContext context)
         {
             HttpContext = context;
+            Vsts = new VstsOutputHelper(this);
             SelectedTopicTitle = topicName;
         }
 

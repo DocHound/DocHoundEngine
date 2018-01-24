@@ -51,7 +51,7 @@
                                     }
                                     else if (column.referenceName == "System.State")
                                     {
-                                        @Html.Raw(VstsTagHelper.GetStateHtmlTag(displayValue))
+                                        @Html.Raw(Model.Vsts.GetStateHtmlTag(displayValue))
                                         @displayValue
                                     }
                                     else
