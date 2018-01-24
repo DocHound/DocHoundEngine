@@ -12,7 +12,7 @@ namespace DocHound.Controllers
     {
         public async Task<IActionResult> Topic(string topicName)
         {
-            var vm = new TopicViewModel(topicName);
+            var vm = new TopicViewModel(topicName, HttpContext);
             await vm.LoadData();
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
         }

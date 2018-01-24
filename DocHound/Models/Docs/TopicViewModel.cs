@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DocHound.Classes;
 using DocHound.Interfaces;
 using HtmlAgilityPack;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
@@ -15,9 +16,11 @@ namespace DocHound.Models.Docs
     {
         private TableOfContentsItem _selectedTopic;
         private string _syntaxTheme;
+        public HttpContext HttpContext { get; private set; }
 
-        public TopicViewModel(string topicName)
+        public TopicViewModel(string topicName, HttpContext context)
         {
+            HttpContext = context;
             SelectedTopicTitle = topicName;
         }
 
@@ -109,14 +112,24 @@ namespace DocHound.Models.Docs
                         break;
 
                     case RepositoryTypes.VstsWorkItemTracking:
-                        if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItem))
+                        if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery) && HttpContext.Request.Query.ContainsKey("workitemnumber"))
                         {
+                            // The current node is a work item query, but we use it as a context to get the actual work item
+                            var itemNumber = int.Parse(HttpContext.Request.Query["workitemnumber"]);
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
+                            rawTopic.Type = TopicTypeNames.VstsWorkItem;
+                        }
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItem))
+                        {
+                        // Plain work item node
                             var itemNumber = int.Parse(SelectedTopic.Link);
                             rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries))
+                            // Plain work item queries
                             rawTopic.OriginalContent = await VstsHelper.GetWorkItemQueriesJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery))
+                            // Plain work item query
                             rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
 
                         imageRootUrl = "/___FileProxy___?mode="+RepositoryTypeNames.VstsWorkItemTracking+"&path=";
@@ -313,7 +326,6 @@ namespace DocHound.Models.Docs
                 return _gitHubMasterUrl;
             }
         }
-
     }
 
     public class OutlineItem

@@ -19,7 +19,7 @@
         dynamic result = JObject.Parse(Model.Html);
         if (result.columns != null)
         {
-            <table>
+            <table class="workitem-query-results">
                 <thead>
                 <tr>
                     @foreach (dynamic column in result.columns)
@@ -34,7 +34,32 @@
                     <tr>
                         @foreach (dynamic column in result.columns)
                         {
-                            <td>@fields[column.referenceName.ToString()]</td>
+                            <td>
+                                @{
+                                    string displayValue = "" + fields[column.referenceName.ToString()];
+                                    if (displayValue.IndexOf("<") > 0 && displayValue.IndexOf("@") > 0 && displayValue.IndexOf(">") > 0)
+                                    {
+                                        // We trim email from names for a nicer display value
+                                        displayValue = displayValue.Substring(0, displayValue.IndexOf("<") - 1).Trim();
+                                    }
+
+                                    if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
+                                    {
+                                        var url = string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString);
+                                        url += "?workitemnumber=" + fields["System.Id"];
+                                        <a href="@url">@displayValue</a>
+                                    }
+                                    else if (column.referenceName == "System.State")
+                                    {
+                                        @Html.Raw(VstsTagHelper.GetStateHtmlTag(displayValue))
+                                        @displayValue
+                                    }
+                                    else
+                                    {
+                                        @displayValue
+                                    }
+                                }
+                            </td>
                         }
                     </tr>
                 }
