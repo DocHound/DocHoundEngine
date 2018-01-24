@@ -59,6 +59,8 @@ It is also possible to display the results of a work item query as the contents 
 
 ## Displaying the Results of a Work Item Query as Sub-Nodes
 
+> Note: This feature is currently under development and not yet supported in production environments!
+
 It is possible to display TFS work item queries in a way where each item within the query result becomes a sub-node of the current TOC node. The sub-nodes are then displayed as if they were individually configured work item nodes (see above).
 
 ```json
@@ -72,6 +74,8 @@ It is possible to display TFS work item queries in a way where each item within 
 > Note: Displaying work item query results in the table of contents can put considerable strain on the documentation engine and diminish performance.
 
 ## Displaying a List of Queries as a Topic
+
+> Note: This feature is currently under development and not yet supported in production environments!
 
 It is possible to create a topic that shows a list of queries, so the user can then choose a query to execute and see the results as as described above.
 
@@ -87,6 +91,8 @@ It is possible to create a topic that shows a list of queries, so the user can t
 ```
 
 ## Displaying a List of Queries as Sub-Nodes
+
+> Note: This feature is currently under development and not yet supported in production environments!
 
 It is possible to display TFS work item queries in a way where each query becomes a sub-node of the current TOC node. The sub-nodes are then displayed as additional nodes similar to manually creating a query node as described above.
 
