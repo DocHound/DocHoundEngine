@@ -5,13 +5,14 @@
 * [ ] Landing Page Web Site (www.kavadocs.com) 
 * [ ] Accounts and Log-Ins
 * [ ] A few more supported sources
-    * [ ] TFS Work Items
+    * [x] VSTS Work Items
     * [ ] DOCX
     * [ ] OneNote
     * [ ] ...?
 * [ ] Themes
 * [ ] Full index search
 * [ ] Wildcard domain support
+* [ ] Need an editor for the TOC live on the kavadocs.com site
 * [ ] Create fundamental documentation for how to use and customize Kava Docs
 
 ## Rendering Engine
