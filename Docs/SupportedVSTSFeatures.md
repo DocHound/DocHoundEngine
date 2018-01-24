@@ -14,15 +14,32 @@ The simplest form of integrating a TFS work item is to display a single work ite
 }
 ```
 
-This assumes that a VSTS server is already configured as the root repository for this documentation setup. Otherwise, the server has to be specified as well:
+This assumes that a VSTS server is already configured as the root repository for this documentation setup. Otherwise, VSTS information has to be specified either at the root of the TOC file like so:
+
+```json
+{
+  "title": "My Docs",
+  // More here...
+  "settings": {
+    "vstsInstance": "https://[your-server].visualstudio.com", // Use your server name here
+    "vstsProjectName": "[your-project]", // Use your project name here
+    "vstsPat": "[personal-access-token]" // Use your actual PAT here
+  }
+}
+```
+
+This configures settings for the entire documentation tree, thus when using anything from VSTS, these settings will be applied. However, it is also possible to configure these settings on each topic node. (Note: If both global and topic settings are present, the topic settings will override the global ones).
 
 ```json
 { 
   "title": "Work Item 32",
   "link": "32",
   "type": "vsts-workitem",
-  "vsts-instance": "myinstance.visualstudio.com",
-  "vsts-pat": "[Personal Access Token for authentication]"
+  "settings": {
+    "vstsInstance": "https://[your-server].visualstudio.com", // Use your server name here
+    "vstsProjectName": "[your-project]", // Use your project name here
+    "vstsPat": "[personal-access-token]" // Use your actual PAT here
+  }
 }
 ```
 
@@ -35,9 +52,6 @@ It is also possible to display the results of a work item query as the contents 
   "title": "My Query",
   "link": "Query Name",
   "type": "vsts-workitem-query",
-  "vsts-instance": "myinstance.visualstudio.com",
-  "vsts-project": "ProjectName",
-  "vsts-pat": "[Personal Access Token for authentication]"
 }
 ```
 
@@ -50,9 +64,6 @@ It is possible to display TFS work item queries in a way where each item within 
   "title": "My Query",
   "link": "Query Name",
   "type": "vsts-workitem-query:toc",
-  "vsts-instance": "myinstance.visualstudio.com",
-  "vsts-project": "ProjectName",
-  "vsts-pat": "[Personal Access Token for authentication]"
 }
 ```
 
