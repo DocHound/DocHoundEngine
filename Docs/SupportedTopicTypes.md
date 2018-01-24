@@ -20,6 +20,7 @@ The following topic types are currently being considered. Those with a checkmark
 
 * [x] TFS Work Items (and/or queries)
 * [ ] Plain Text (essentially treated like Markup, I would think)
+* [ ] RSS Feeds
 * [ ] Wiki formats (not sure what that would be exactly :-) )
 * [ ] Word
 * [ ] One Note
