@@ -1,6 +1,3 @@
-@using DocHound.Classes;
-@using Newtonsoft.Json.Linq;
-
 @model DocHound.Models.Docs.TopicViewModel
 
 @{
@@ -13,8 +10,8 @@
 
 <article class="content-container">
     @{
-        dynamic workItems = JObject.Parse(Model.Html);
-        if (workItems.value.Count > 0)
+        dynamic workItems = Model.JsonObject;
+        if (workItems?.value.Count > 0)
         {
             var workItem = workItems.value[0];
             var fields = workItem.fields;

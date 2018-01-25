@@ -141,6 +141,7 @@ namespace DocHound.Models.Docs
 
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
             Html = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
+            Json = renderer.RenderToJson(rawTopic, imageRootUrl, this);
             TemplateName = renderer.GetTemplateName(rawTopic, TemplateName, this);
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
@@ -251,6 +252,25 @@ namespace DocHound.Models.Docs
         public string Owner { get; set; }
 
         public string Html { get; set; }
+        public string Json { get; set; }
+
+        public dynamic JsonObject
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Json)) return null;
+
+                try
+                {
+                    return JObject.Parse(Json);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public string LogoUrl { get; set; }
 
         public TableOfContentsItem SelectedTopic

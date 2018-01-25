@@ -12,5 +12,6 @@ namespace DocHound.TopicRenderers.Html
         }
 
         public string GetTemplateName(TopicInformation topic, string suggestedTemplateName, ISettingsProvider settings = null) => suggestedTemplateName;
+        public string RenderToJson(TopicInformation topic, string imageRootUrl = "", ISettingsProvider settings = null) => string.Empty;
     }
 }

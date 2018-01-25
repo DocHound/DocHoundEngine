@@ -77,10 +77,14 @@
     {
       "title": "Developer Guide",
       "topics": [
-        {
-          "title": "Settings and Configuration",
-          "link": "DevSettings.md"
-        }
+          {
+            "title": "Settings and Configuration",
+            "link": "DevSettings.md"
+          },
+          {
+            "title": "Topic Renderers",
+            "link": "TopicRenderers.md"
+          }
         ]
     },
     {
