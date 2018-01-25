@@ -10,7 +10,7 @@ Topics are rendered based on the type specified for each topic. Each topic has a
 
 #fontSize: 10pt 
 #lineWidth: 1 
-#fill: #d2dbee white
+#fill: #d2dbee
 #font: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif
 ```
 
