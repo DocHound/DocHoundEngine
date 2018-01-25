@@ -10,7 +10,7 @@ Topics are rendered based on the type specified for each topic. Each topic has a
 
 #fontSize: 10
 #lineWidth: 1
-#fill: skyblue
+#fill: rgba(59, 150, 231, 0.25)
 ```
 
 ## ITopicRenderer Interface
