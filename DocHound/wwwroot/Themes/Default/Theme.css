@@ -855,3 +855,9 @@ blockquote {
 #tree-filter-mobile:-ms-inputplaceholder {
     color: rgb(213, 213, 213);
 }
+
+
+div.nomnoml {
+    max-width: 100%;
+    overflow-x: auto;
+}
