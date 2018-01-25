@@ -108,15 +108,11 @@ public class MarkdownTopicRenderer : ITopicRenderer
 
     private string MarkdownToHtml(TopicInformation topic, string imageRootUrl, ISettingsProvider settings)
     {
-        var markdown = topic.OriginalContent;
-        markdown = markdown.Replace("![](", "![](" + imageRootUrl);
-        markdown = markdown.Replace("background: url('", "background: url('" + imageRootUrl);
-        markdown = markdown.Replace("src=\"", "src=\"" + imageRootUrl);
-
         var builder = new MarkdownPipelineBuilder();
         BuildPipeline(builder, settings);
-        var pipeline = builder.Build();
-        return Markdig.Markdown.ToHtml(markdown, pipeline);
+        var html = Markdig.Markdown.ToHtml(topic.OriginalContent, builder.Build());
+        html = HtmlHelper.FixHtml(html, imageRootUrl);
+        return html;
     }
 
     protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder, ISettingsProvider settings)
