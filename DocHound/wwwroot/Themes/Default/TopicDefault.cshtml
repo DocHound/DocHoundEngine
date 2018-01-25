@@ -1,16 +1,68 @@
-﻿@using DocHound.Classes;
+﻿@using DocHound.Interfaces
 
 @model DocHound.Models.Docs.TopicViewModel
 
 @{
-    Layout = "_Layout.cshtml";
+    if (!Model.RenderTopicOnly)
+    {
+        Layout = "_Layout.cshtml";
+    }
 }
 
-<article class="content-container">
-    @Html.Raw(Model.Html)
-    @Html.Partial("_PartialDefaultBottomNavigation.cshtml", Model)
-</article>
+@if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+{
+    <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
+}
+@if (!string.IsNullOrEmpty(Model.CustomCss))
+{
+    <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" />
+}
 
-<aside class="sidebar">
-    @Html.Partial("_PartialDefaultSidebar.cshtml", Model)
-</aside>
+@if (!Model.RenderTopicOnly)
+{
+    <article class="content-container">
+        @Html.Raw(Model.Html)
+        @Html.Partial("_PartialDefaultBottomNavigation.cshtml", Model)
+    </article>
+
+    <aside class="sidebar">
+        @Html.Partial("_PartialDefaultSidebar.cshtml", Model)
+    </aside>
+}
+else
+{
+    @Html.Raw(Model.Html)
+}
+
+@*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
+@if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+{
+    <script src="~/css/highlightjs/highlight.pack.js"></script>
+}
+@if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
+{
+    <script src="~/script/mermaid/mermaid.min.js"></script>
+}
+@if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
+{
+    <script src="~/script/lodash/lodash.min.js"></script>
+    <script src="~/script/dagre/dagre.min.js"></script>
+    <script src="~/script/nomnoml/nomnoml.js"></script>
+}
+
+@if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+{
+    <script src="~/script/Feature-Highlight.js"></script>
+}
+@if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
+{
+    <script src="~/script/Feature-Mermaid.js"></script>
+}
+@if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
+{
+    <script src="~/script/Feature-Nomnoml.js"></script>
+}
+@if (Model.GetSetting<bool>(Settings.UseMathematics))
+{
+    <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
+}

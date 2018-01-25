@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
 using DocHound.Interfaces;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
 namespace DocHound.Models.Docs
@@ -16,14 +15,19 @@ namespace DocHound.Models.Docs
     {
         private TableOfContentsItem _selectedTopic;
         private string _syntaxTheme;
-        public HttpContext HttpContext { get; private set; }
-        public VstsOutputHelper Vsts { get; private set; }
+        public HttpContext HttpContext { get; }
+        public VstsOutputHelper Vsts { get; }
+
+        public bool RenderTopicOnly { get; set; }
 
         public TopicViewModel(string topicName, HttpContext context)
         {
             HttpContext = context;
             Vsts = new VstsOutputHelper(this);
             SelectedTopicName = topicName;
+
+            if (HttpContext.Request.Query.ContainsKey("contentonly"))
+                RenderTopicOnly = context.Request.Query["contentonly"] == "true";
         }
 
         public async Task LoadData(bool buildToc = true, bool buildHtml = true)
@@ -140,7 +144,34 @@ namespace DocHound.Models.Docs
             }
 
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
+
             Html = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
+            while (Html.Contains("<kava-topic"))
+            {
+                var canEmbedTopic = true;
+                var recs = new List<string>();
+                if (HttpContext.Request.Query.ContainsKey("recursion"))
+                {
+                    var rec = StringHelper.Base64Decode(HttpContext.Request.Query["recursion"]);
+                    if (!string.IsNullOrEmpty(rec))
+                    {
+                        recs = rec.Split('&').ToList();
+                        if (recs.Contains(SelectedTopicName)) // We are recursive if this is true
+                            canEmbedTopic = false;
+                    }
+                }
+
+                if (!canEmbedTopic)
+                {
+                    Html = await EmbeddKavaTopic(Html, recs, true);
+                }
+                else
+                {
+                    recs.Add(SelectedTopicName);
+                    Html = await EmbeddKavaTopic(Html, recs);
+                }
+            }
+
             Json = renderer.RenderToJson(rawTopic, imageRootUrl, this);
             TemplateName = renderer.GetTemplateName(rawTopic, TemplateName, this);
 
@@ -165,6 +196,75 @@ namespace DocHound.Models.Docs
 
                 Html = sb.ToString();
             }
+        }
+
+        private async Task<string> EmbeddKavaTopic(string html, IEnumerable<string> recursions, bool killRecursion = false)
+        {
+            var recsEncoded = StringHelper.Base64Encode(string.Join('&', recursions));
+            var sb = new StringBuilder();
+            var tagStart = html.IndexOf("<kava-topic", StringComparison.Ordinal);
+            if (tagStart > -1)
+            {
+                sb.Append(html.Substring(0, tagStart - 1));
+                html = html.Substring(tagStart + 11);
+                var index2 = html.IndexOf("slug=\"", StringComparison.Ordinal);
+                if (index2 > -1)
+                {
+                    html = html.Substring(index2 + 6);
+                    var index3 = html.IndexOf("\"", StringComparison.Ordinal);
+                    if (index3 > -1)
+                    {
+                        var slug = html.Substring(0, index3);
+                        html = html.Substring(index3 + 1);
+                        var index4 = html.IndexOf("/>", StringComparison.Ordinal);
+                        if (index4 > -1)
+                        {
+                            html = html.Substring(index4 + 2);
+                            if (!killRecursion)
+                            {
+                                if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
+                                    slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/" + slug;
+                                var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, $"{slug}?contentonly=true&recursion={recsEncoded}");
+                                sb.Append(insertedHtml);
+                            }
+                            else
+                                sb.Append($"<span class=\"kava-recursive-topic\">Recursive topic link detected: {slug}</span>");
+                        }
+                        sb.Append(html);
+                    }
+                }
+                else
+                {
+                    var index2a = html.IndexOf("link=\"", StringComparison.Ordinal);
+                    if (index2a > -1)
+                    {
+                        html = html.Substring(index2 + 6);
+                        var index3 = html.IndexOf("\"", StringComparison.Ordinal);
+                        if (index3 > -1)
+                        {
+                            var slug = html.Substring(0, index3);
+                            html = html.Substring(index3 + 1);
+                            var index4 = html.IndexOf("/>", StringComparison.Ordinal);
+                            if (index4 > -1)
+                            {
+                                html = html.Substring(index4 + 2);
+                                if (!killRecursion)
+                                {
+                                    if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
+                                        slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/" + slug;
+                                    var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, $"{slug}?contentonly=true");
+                                    sb.Append(insertedHtml);
+                                }
+                                else
+                                    sb.Append($"<span class=\"kava-recursive-topic\">Recursive topic link detected: {slug}</span>");
+                            }
+                            sb.Append(html);
+                        }
+                    }
+                }
+            }
+
+            return sb.ToString();
         }
 
         private readonly Dictionary<Settings, object> _cachedSettings = new Dictionary<Settings, object>();
@@ -296,6 +396,7 @@ namespace DocHound.Models.Docs
 
         public string SelectedTopicName { get; set; }
         public string Link => string.Empty;
+        public string Slug => string.Empty;
         public IHaveTopics Parent => null;
 
         public dynamic TocSettings { get; private set; }

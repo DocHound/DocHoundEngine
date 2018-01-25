@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
+using HtmlAgilityPack.CssSelectors.NetCore;
 using Newtonsoft.Json;
 
 namespace DocHound.Classes
@@ -65,6 +67,7 @@ namespace DocHound.Classes
                 if (topic.keywords != null) newTopic.KeywordsRaw = topic.keywords;
                 if (topic.settings != null) newTopic.SettingsDynamic = topic.settings;
                 if (topic.type != null) newTopic.Type = topic.type;
+                if (topic.slug != null) newTopic.Slug = topic.slug;
 
                 if (topic.seeAlso != null)
                 {
@@ -101,15 +104,104 @@ namespace DocHound.Classes
         public static async Task<string> GetTocJsonFromGitHubRaw(string gitHubRawUrl)
         {
             var content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_toc.json");
-            if (content == null) content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_meta/_toc.json");
-            if (content != null) return content.ToString();
+            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_meta/_toc.json");
+            if (!string.IsNullOrEmpty(content)) return content;
 
             // The TOC file didn't exist, so we try to scrape the repository
-            // TODO: Finish this
-            //var html = await WebClientEx.GetStringAsync(gitHubRawUrl);
-            //var htmlDoc = new HtmlDocument();
-            //htmlDoc.LoadHtml(html);
-            //var children = htmlDoc.QuerySelectorAll("tr.js-navigation-item");
+            var gitHubRegularUrl = gitHubRawUrl.Replace("raw.githubusercontent.com", "github.com");
+            if (gitHubRegularUrl.EndsWith("/master/")) gitHubRegularUrl = gitHubRegularUrl.Substring(0, gitHubRegularUrl.Length - 7);
+            return await CrawlGitHubForToc(gitHubRegularUrl);
+        }
+
+        private static readonly Dictionary<string, string> CrawledGitHubRepositories = new Dictionary<string, string>();
+
+        private static async Task<string> CrawlGitHubForToc(string url, StringBuilder sb = null)
+        {
+            if (CrawledGitHubRepositories.ContainsKey(url)) return CrawledGitHubRepositories[url];
+
+            var sbWasNull = false;
+            if (sb == null)
+            {
+                sb = new StringBuilder();
+                sb.Append("{ \"title\": \"" + url + "\", \"topics\": [");
+                sbWasNull = true;
+            }
+
+            try
+            {
+                var html = await WebClientEx.GetStringAsync(url);
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(html);
+
+
+                var navigationItems = htmlDoc.QuerySelectorAll("tr.js-navigation-item");
+                foreach (var navigationItem in navigationItems)
+                {
+                    // First, we look for all folders
+                    var icon = navigationItem.QuerySelector("td.icon");
+                    if (icon != null)
+                    {
+                        var svg = icon.QuerySelector("svg.octicon-file-directory");
+                        if (svg != null)
+                        {
+                            // This is a folder
+                            var content = navigationItem.QuerySelector("td.content span a");
+                            if (content != null)
+                            {
+                                sb.Append("{");
+                                sb.Append($"\"title\": \"{content.InnerText}\"");
+                                sb.Append(", \"topics\": [");
+
+                                var linkUrl = "https://github.com" + content.GetAttributeValue("href", string.Empty);
+                                //var slashPosition = StringHelper.At("/", linkUrl, 3);
+                                //if (slashPosition > -1)
+                                //{
+                                  //  linkUrl = url + linkUrl.Substring(slashPosition);
+                                    await CrawlGitHubForToc(linkUrl, sb);
+                                //}
+                                sb.Append("]},");
+                            }
+                        }
+                    }
+
+                    // Now, we look for all the local documents
+                    var icon2 = navigationItem.QuerySelector("td.icon");
+                    if (icon2 != null)
+                    {
+                        var svg = icon2.QuerySelector("svg.octicon-file");
+                        if (svg != null)
+                        {
+                            // This is a file
+                            var content = navigationItem.QuerySelector("td.content span a");
+                            if (content != null)
+                            {
+                                var text = content.InnerText;
+                                var lowerText = text.ToLowerInvariant();
+                                if (lowerText.EndsWith(".md") || lowerText.EndsWith(".html") || lowerText.EndsWith(".htm") || lowerText.EndsWith(".txt"))
+                                {
+                                    var title = StringHelper.JustFileName(text);
+                                    sb.Append("{");
+                                    sb.Append($"\"title\": \"{title}\", \"link\": \"{text}\"");
+                                    sb.Append("},");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Oh well! Nothing we can do
+            }
+
+            if (sbWasNull)
+            {
+
+                sb.Append("]}");
+                var resultToc = sb.ToString();
+                CrawledGitHubRepositories.Add(url, resultToc);
+                return resultToc;
+            }
 
             return string.Empty;
         }
@@ -137,18 +229,18 @@ namespace DocHound.Classes
 
                 if (topic.Topics.Count > 0)
                 {
-                    sb.Append("<a href=\"/" + TopicHelper.GetNormalizedName(topic.Title) + "\">" + topic.Title + "</a>");
+                    sb.Append($"<a href=\"/{topic.SlugSafe}\">{topic.Title}</a>");
                     var keywords = topic.Keywords;
                     if (!string.IsNullOrEmpty(keywords))
-                        sb.Append("<span style=\"display: none;\">" + topic.Keywords + "</span>");
+                        sb.Append($"<span style=\"display: none;\">{topic.Keywords}</span>");
                     sb.Append("<span class=\"caret " + (topic.Expanded ? "caretExpanded" : "caretCollapsed") + "\"><svg xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" viewBox=\"0 0 24 24\"><path fill=\"black\" stroke=\"white\" d=\"M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z\"></path></svg></span>");
 
                     AddTocItems(sb, topic.Topics, indentLevel + 1, selectedLink, topic);
                 }
                 else
                 {
+                    sb.Append($"<a href=\"/{topic.SlugSafe}\">{topic.Title}</a>");
                     var keywords = topic.Keywords;
-                    sb.Append("<a href=\"/" + TopicHelper.GetNormalizedName(topic.Title) + "\">" + topic.Title + "</a>");
                     if (!string.IsNullOrEmpty(keywords))
                         sb.Append("<span style=\"display: none;\">" + topic.Keywords + "</span>");
                 }
@@ -223,6 +315,7 @@ namespace DocHound.Classes
         List<TableOfContentsItem> Topics { get; }
         string Title { get; }
         string Link { get; }
+        string Slug { get; }
         IHaveTopics Parent { get; }
     }
 
@@ -239,6 +332,19 @@ namespace DocHound.Classes
         public string Type { get; set; }
 
         private string _link = string.Empty;
+
+        public string Slug { get; set; }
+
+        public string SlugSafe
+        {
+            get
+            {
+                var slug = Slug;
+                if (string.IsNullOrEmpty(slug))
+                    slug = TopicHelper.GetNormalizedName(Title);
+                return slug;
+            }
+        }
 
         public string Link
         {
@@ -285,7 +391,7 @@ namespace DocHound.Classes
             var normalizedName = name;
             normalizedName = normalizedName.Replace(" ", "-");
             normalizedName = normalizedName.Replace("%20", "-");
-            normalizedName = normalizedName.Replace("/", "-");
+            //normalizedName = normalizedName.Replace("/", "-");
             normalizedName = normalizedName.Replace(",", string.Empty);
             normalizedName = normalizedName.Replace("(", string.Empty);
             normalizedName = normalizedName.Replace(")", string.Empty);
@@ -298,13 +404,15 @@ namespace DocHound.Classes
 
         public static bool LinkMatchesTopic(string link, IHaveTopics topic)
         {
+            if (string.Compare(GetNormalizedName(topic.Slug), link, StringComparison.OrdinalIgnoreCase) == 0) return true;
+
             var normalizedName = GetNormalizedName(link);
-            if (String.Compare(GetNormalizedName(topic.Title), normalizedName, StringComparison.OrdinalIgnoreCase) == 0) return true;
+            if (string.Compare(GetNormalizedName(topic.Title), normalizedName, StringComparison.OrdinalIgnoreCase) == 0) return true;
 
             var normalizedLink = GetNormalizedName(topic.Link);
             if (normalizedLink == normalizedName) return true;
             var normalizedLinkParts = normalizedLink.Split('.');
-            if (normalizedLinkParts.Length > 0 && String.Compare(normalizedLinkParts[0], normalizedName, StringComparison.OrdinalIgnoreCase) == 0) return true;
+            if (normalizedLinkParts.Length > 0 && string.Compare(normalizedLinkParts[0], normalizedName, StringComparison.OrdinalIgnoreCase) == 0) return true;
 
             return false;
         }

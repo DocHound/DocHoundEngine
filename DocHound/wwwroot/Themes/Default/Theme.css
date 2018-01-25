@@ -861,3 +861,9 @@ div.nomnoml {
     max-width: 100%;
     overflow-x: auto;
 }
+
+.kava-recursive-topic {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: red;
+}

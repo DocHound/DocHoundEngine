@@ -1,4 +1,4 @@
-@using DocHound.Classes
+﻿@using DocHound.Classes
 @using DocHound.Interfaces
 @using DocHound.Models.Docs
 @model DocHound.Models.Docs.TopicViewModel
@@ -32,16 +32,6 @@
 
     @*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
     <link href="~/css/fontawesome-free-5.0.3/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" type="text/css" />
-    @if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
-    {
-        <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
-    }
-    @if (!string.IsNullOrEmpty(Model.CustomCss))
-    {
-        <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" />
-    }
-
-    @RenderSection("Styles", false)
 </head>
 
 <body>
@@ -73,42 +63,10 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    @*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
-    @if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
-    {
-        <script src="~/css/highlightjs/highlight.pack.js"></script>
-    }
-    @if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
-    {
-        <script src="~/script/mermaid/mermaid.min.js"></script>
-    }
-    @if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
-    {
-        <script src="~/script/lodash/lodash.min.js"></script>
-        <script src="~/script/dagre/dagre.min.js"></script>
-        <script src="~/script/nomnoml/nomnoml.js"></script>
-    }
-
+    
     @*Must have file that goes with the theme*@
     <script src="~/Themes/Default/Topic.js"></script>
-    @if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
-    {
-        <script src="~/script/Feature-Highlight.js"></script>
-    }
-    @if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
-    {
-        <script src="~/script/Feature-Mermaid.js"></script>
-    }
-    @if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
-    {
-        <script src="~/script/Feature-Nomnoml.js"></script>
-    }
-    @if (Model.GetSetting<bool>(Settings.UseMathematics))
-    {
-        <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
-        @*<SCRIPT SRC="~/script/jsmath/plugins/noImageFonts.js"></SCRIPT>
-        <SCRIPT SRC="~/script/jsmath/jsMath.js"></SCRIPT>
-        <script src="~/script/Feature-jsMath.js"></script>*@
-    }
+
+    @RenderSection("Scripts", false)
 </body>
 </html>

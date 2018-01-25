@@ -1,18 +1,24 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using DocHound.Classes;
 using DocHound.Models.Docs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using DocHound.Interfaces;
+using Microsoft.AspNetCore.Routing;
 
 namespace DocHound.Controllers
 {
     public class DocsController : Controller
     {
-        public async Task<IActionResult> Topic(string topicName)
+        //public async Task<IActionResult> Topic(string fragment1 = null, string fragment2 = null, string fragment3 = null, string fragment4 = null, string fragment5 = null, string fragment6 = null, string fragment7 = null, string fragment8 = null, string fragment9 = null, string fragment10 = null)
+        public async Task<IActionResult> Topic()
         {
-            var vm = new TopicViewModel(topicName, HttpContext);
+            var routeCollection = HttpContext.GetRouteData();
+            var topic = routeCollection.Values.Values.FirstOrDefault()?.ToString();
+
+            var vm = new TopicViewModel(topic, HttpContext);
             await vm.LoadData();
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
         }

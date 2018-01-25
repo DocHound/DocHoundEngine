@@ -3,71 +3,128 @@
 @model DocHound.Models.Docs.TopicViewModel
 
 @{
-    Layout = "../_Layout.cshtml";
+    if (!Model.RenderTopicOnly)
+    {
+        Layout = "../_Layout.cshtml";
+    }
 }
 
-@section Styles {
-    <link href="@(Model.ThemeFolderRaw)/Vsts/Vsts.css" type="text/css" rel="stylesheet" />
-}
+<link href="@(Model.ThemeFolderRaw)/Vsts/Vsts.css" type="text/css" rel="stylesheet" />
 
-<article class="content-container">
-    <h1>@Model.SelectedTopic.Title</h1>
+@if (!Model.RenderTopicOnly)
+{
+    <article class="content-container">
+        <h1>@Model.SelectedTopic.Title</h1>
 
-    @{
-        dynamic result = Model.JsonObject;
-        if (result.columns != null)
-        {
-            <table class="workitem-query-results">
-                <thead>
-                <tr>
-                    @foreach (dynamic column in result.columns)
-                    {
-                        <th>@column.name</th>
-                    }
-                </tr>
-                </thead>
-                @foreach (dynamic row in result.resultSet)
-                {
-                    JToken fields = row.fields;
+        @{
+            dynamic result = Model.JsonObject;
+            if (result.columns != null)
+            {
+                <table class="workitem-query-results">
+                    <thead>
                     <tr>
                         @foreach (dynamic column in result.columns)
                         {
-                            <td>
-                                @{
-                                    string displayValue = "" + fields[column.referenceName.ToString()];
-                                    if (displayValue != null && displayValue.IndexOf("<", StringComparison.Ordinal) > 0 && displayValue.IndexOf("@", StringComparison.Ordinal) > 0 && displayValue.IndexOf(">", StringComparison.Ordinal) > 0)
-                                    {
-                                        // We trim email from names for a nicer display value
-                                        displayValue = displayValue.Substring(0, displayValue.IndexOf("<", StringComparison.Ordinal) - 1).Trim();
-                                    }
-
-                                    if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
-                                    {
-                                        var url = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}";
-                                        url += "?workitemnumber=" + fields["System.Id"];
-                                        <a href="@url">@displayValue</a>
-                                    }
-                                    else if (column.referenceName == "System.State")
-                                    {
-                                        @Html.Raw(Model.Vsts.GetStateHtmlTag(displayValue))
-                                        @displayValue
-                                    }
-                                    else
-                                    {
-                                        @displayValue
-                                    }
-                                }
-                            </td>
+                            <th>@column.name</th>
                         }
                     </tr>
-                }
-            </table>
+                    </thead>
+                    @foreach (dynamic row in result.resultSet)
+                    {
+                        JToken fields = row.fields;
+                        <tr>
+                            @foreach (dynamic column in result.columns)
+                            {
+                                <td>
+                                    @{
+                                        string displayValue = "" + fields[column.referenceName.ToString()];
+                                        if (displayValue != null && displayValue.IndexOf("<", StringComparison.Ordinal) > 0 && displayValue.IndexOf("@", StringComparison.Ordinal) > 0 && displayValue.IndexOf(">", StringComparison.Ordinal) > 0)
+                                        {
+                                            // We trim email from names for a nicer display value
+                                            displayValue = displayValue.Substring(0, displayValue.IndexOf("<", StringComparison.Ordinal) - 1).Trim();
+                                        }
+
+                                        if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
+                                        {
+                                            var url = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}";
+                                            url += "?workitemnumber=" + fields["System.Id"];
+                                            <a href="@url">@displayValue</a>
+                                        }
+                                        else if (column.referenceName == "System.State")
+                                        {
+                                            @Html.Raw(Model.Vsts.GetStateHtmlTag(displayValue))
+                                            @displayValue
+                                        }
+                                        else
+                                        {
+                                            @displayValue
+                                        }
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </table>
+            }
         }
+        @Html.Partial("../_PartialDefaultBottomNavigation.cshtml", Model)
+    </article>
+
+    <aside class="sidebar">
+        @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
+    </aside>
+}
+else
+{
+    <h1>@Model.SelectedTopic.Title</h1>
+
+    dynamic result = Model.JsonObject;
+    if (result.columns != null)
+    {
+        <table class="workitem-query-results">
+            <thead>
+            <tr>
+                @foreach (dynamic column in result.columns)
+                {
+                    <th>@column.name</th>
+                }
+            </tr>
+            </thead>
+            @foreach (dynamic row in result.resultSet)
+            {
+                JToken fields = row.fields;
+                <tr>
+                    @foreach (dynamic column in result.columns)
+                    {
+                        <td>
+                            @{
+                                string displayValue = "" + fields[column.referenceName.ToString()];
+                                if (displayValue != null && displayValue.IndexOf("<", StringComparison.Ordinal) > 0 && displayValue.IndexOf("@", StringComparison.Ordinal) > 0 && displayValue.IndexOf(">", StringComparison.Ordinal) > 0)
+                                {
+                                    // We trim email from names for a nicer display value
+                                    displayValue = displayValue.Substring(0, displayValue.IndexOf("<", StringComparison.Ordinal) - 1).Trim();
+                                }
+
+                                if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
+                                {
+                                    var url = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}";
+                                    url += "?workitemnumber=" + fields["System.Id"];
+                                    <a href="@url">@displayValue</a>
+                                }
+                                else if (column.referenceName == "System.State")
+                                {
+                                    @Html.Raw(Model.Vsts.GetStateHtmlTag(displayValue))
+                                    @displayValue
+                                }
+                                else
+                                {
+                                    @displayValue
+                                }
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
     }
-
-    @Html.Partial("../_PartialDefaultBottomNavigation.cshtml", Model)
-</article>
-
-<aside class="sidebar">
-    @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
-</aside>
+}

@@ -39,7 +39,7 @@ namespace DocHound
             app.UseMvc(routes =>
             {
                 routes.MapRoute("fileproxy", "___FileProxy___", new {controller = "Docs", action = nameof(DocsController.FileProxy)});
-                routes.MapRoute("docs", "{topicName=index}", new {controller = "Docs", action = nameof(DocsController.Topic)});
+                routes.MapRoute("docs", "{*url}", new {controller = "Docs", action = nameof(DocsController.Topic)});
             });
         }
     }

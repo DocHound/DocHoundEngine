@@ -4,7 +4,7 @@ namespace DocHound.Classes
 {
     public static class ContentSniffer
     {
-        public async static Task<object> DownloadContent(DownloadMode mode, string url)
+        public static async Task<string> DownloadContent(DownloadMode mode, string url)
         {
             switch (mode)
             {
