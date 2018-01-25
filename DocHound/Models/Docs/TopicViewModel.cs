@@ -144,7 +144,7 @@ namespace DocHound.Models.Docs
             }
 
             // TODO: This needs to be done more sophisticated
-            rawTopic.OriginalContent = await ProcessKavaTopic(rawTopic.OriginalContent);
+            //rawTopic.OriginalContent = await ProcessKavaTopic(rawTopic.OriginalContent);
 
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
 
