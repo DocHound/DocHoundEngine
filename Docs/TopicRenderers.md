@@ -3,13 +3,14 @@
 Topics are rendered based on the type specified for each topic. Each topic has a registered "Topic Renderer" object, which implements the ITopicRenderer interface. The following diagram shows the fundamental setup:
 
 ```nomnoml
-[<interface>ITopicRenderer|RenderToHtml();RenderToJson();GetTemplateName()]
+[<abstract>ITopicRenderer|RenderToHtml();RenderToJson();GetTemplateName()]
 [ITopicRenderer]<:-[MarkdownTopicRenderer]
 [ITopicRenderer]<:-[HtmlTopicRenderer]
 [ITopicRenderer]<:-[WorkItemTopicRenderer]
 
 #fontSize: 10
 #lineWidth: 1
+#fill: skyblue
 ```
 
 ## ITopicRenderer Interface
