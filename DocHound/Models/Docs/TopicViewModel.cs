@@ -23,13 +23,13 @@ namespace DocHound.Models.Docs
         {
             HttpContext = context;
             Vsts = new VstsOutputHelper(this);
-            SelectedTopicTitle = topicName;
+            SelectedTopicName = topicName;
         }
 
-        public async Task LoadData()
+        public async Task LoadData(bool buildToc = true, bool buildHtml = true)
         {
-            await BuildToc();
-            await GetHtmlContent();
+            if (buildToc) await BuildToc();
+            if (buildHtml) await GetHtmlContent();
         }
 
         private async Task BuildToc()
@@ -55,7 +55,7 @@ namespace DocHound.Models.Docs
             if (dynamicToc.title != null) RepositoryTitle = dynamicToc.title;
             if (dynamicToc.owner != null) Owner = dynamicToc.owner;
 
-            Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, this, SelectedTopicTitle);
+            Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, this, SelectedTopicName);
             MainMenu = TableOfContentsHelper.BuildMainMenuStructureFromDynamicToc(dynamicToc);
             ThemeFolder = TableOfContentsHelper.GetThemeFolderFromDynamicToc(dynamicToc);
             SyntaxTheme = TableOfContentsHelper.GetSyntaxThemeNameFromDynamicToc(dynamicToc);
@@ -66,8 +66,8 @@ namespace DocHound.Models.Docs
             if (SelectedTopic == null && Topics.Count > 0)
             {
                 SelectedTopic = Topics[0];
-                if (SelectedTopicTitle == "index")
-                    SelectedTopicTitle = SelectedTopic.Title;
+                if (SelectedTopicName == "index")
+                    SelectedTopicName = SelectedTopic.Title;
             }
 
             TocSettings = dynamicToc.settings;
@@ -108,7 +108,7 @@ namespace DocHound.Models.Docs
                     case RepositoryTypes.VstsGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
                             rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
-                        imageRootUrl = "/___FileProxy___?mode="+RepositoryTypeNames.VstsGit+"&path=";
+                        imageRootUrl = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsGit + "&path=";
                         if (SelectedTopic.LinkPure.Contains("/"))
                             imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
@@ -123,7 +123,7 @@ namespace DocHound.Models.Docs
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItem))
                         {
-                        // Plain work item node
+                            // Plain work item node
                             var itemNumber = int.Parse(SelectedTopic.Link);
                             rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
                         }
@@ -134,9 +134,7 @@ namespace DocHound.Models.Docs
                             // Plain work item query
                             rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
 
-                        imageRootUrl = "/___FileProxy___?mode="+RepositoryTypeNames.VstsWorkItemTracking+"&path=";
-                        if (SelectedTopic.LinkPure.Contains("/"))
-                            imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
+                        Vsts.ImageLink = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsWorkItemTracking + "&topic=" + SelectedTopicName + "&path=";
                         break;
                 }
             }
@@ -169,9 +167,10 @@ namespace DocHound.Models.Docs
         }
 
         private readonly Dictionary<Settings, object> _cachedSettings = new Dictionary<Settings, object>();
+
         public T GetSetting<T>(Settings setting)
         {
-            if (_cachedSettings.ContainsKey(setting)) return (T)_cachedSettings[setting];
+            if (_cachedSettings.ContainsKey(setting)) return (T) _cachedSettings[setting];
 
             var value = SettingsHelper.GetSetting<T>(setting, TocSettings, CurrentTopicSettings);
 
@@ -180,17 +179,6 @@ namespace DocHound.Models.Docs
                 _cachedSettings.Add(setting, value);
 
             return value;
-        }
-
-        public string FixHtmlReferences(string html)
-        {
-            // TODO: Need to check if there are any broken image links or similar stuff in the HTML
-            return html;
-        }
-
-        public string FixHtmlReferences(JToken html)
-        {
-            return FixHtmlReferences(html.ToString());
         }
 
         public string CustomCss { get; set; }
@@ -230,18 +218,16 @@ namespace DocHound.Models.Docs
         public string ThemeFolderRaw => ThemeFolder.Replace("~/wwwroot/", "/");
 
         private string _templateName = "TopicDefault";
-        public string TemplateName 
+
+        public string TemplateName
         {
-             get
-             {
-                return _templateName;
-             }
-             set 
-             {
-                 if (value.ToLowerInvariant().EndsWith(".cshtml"))
+            get { return _templateName; }
+            set
+            {
+                if (value.ToLowerInvariant().EndsWith(".cshtml"))
                     throw new ArgumentException("Templates name should not include a file extension, such as '.cshtml'");
-                 _templateName = value;
-             }
+                _templateName = value;
+            }
         }
 
         public List<MainMenuItem> MainMenu { get; set; }
@@ -260,7 +246,7 @@ namespace DocHound.Models.Docs
         public List<TableOfContentsItem> Topics { get; set; } = new List<TableOfContentsItem>();
         public List<OutlineItem> Outline { get; set; } = new List<OutlineItem>();
 
-        public string Title => SelectedTopicTitle;
+        public string Title => SelectedTopicName;
         public string RepositoryTitle { get; set; }
         public string Owner { get; set; }
 
@@ -278,7 +264,7 @@ namespace DocHound.Models.Docs
             }
         }
 
-        public string SelectedTopicTitle { get; set; }
+        public string SelectedTopicName { get; set; }
         public string Link => string.Empty;
         public IHaveTopics Parent => null;
 
@@ -286,8 +272,9 @@ namespace DocHound.Models.Docs
         public dynamic CurrentTopicSettings { get; private set; }
 
         private string _gitHubMasterUrlRaw = null;
-        public string GitHubMasterUrlRaw 
-        { 
+
+        public string GitHubMasterUrlRaw
+        {
             get
             {
                 var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
@@ -306,10 +293,11 @@ namespace DocHound.Models.Docs
                 }
 
                 return _gitHubMasterUrlRaw;
-            } 
+            }
         }
-    
+
         private string _gitHubMasterUrl = null;
+
         public string GitHubMasterUrl
         {
             get

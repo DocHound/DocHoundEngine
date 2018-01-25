@@ -38,7 +38,7 @@
 <body>
     <nav class="mobileMenu">
         @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu, MenuMode.Mobile))
-        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicName))
     </nav>
     <header class="header headerLarge">
         @*<div class="mobileMenuIcon"><img src="/Images/MobileMenu.png" /></div>*@
@@ -50,7 +50,7 @@
     </header>
 
     <nav class="toc">
-        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicName))
     </nav>
 
     <article class="content-container">

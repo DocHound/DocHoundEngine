@@ -24,7 +24,7 @@ table.workitem-query-results {
 
     table.workitem-query-results td {
         padding-left: 5px;
-        padding-right: 5px;
+        padding-right: 10px;
     }
     
 /* Work item states */
@@ -38,38 +38,6 @@ table.workitem-query-results {
     margin-right: 7px;
     margin-top: 1px;
     position: relative;
-    border-color: #efefef;
-    background-color: #e0e0e0;
-}
-.vsts-state-closed {
-    border-color: rgb(51, 153, 51);
-    background-color: rgb(51, 153, 51);
-}
-.vsts-state-on-hold {
-    border-color: rgb(224, 130, 86);
-    background-color: rgb(224, 130, 86);
-}
-.vsts-state-ready-for-development {
-    border-color: rgb(86, 136, 224);
-    background-color: rgb(86, 136, 224);
-}
-.vsts-state-ready-for-internal-testing {
-    border-color: rgb(86, 136, 224);
-    background-color: rgb(86, 136, 224);
-}
-.vsts-state-ready-for-client-testing {
-    border-color: rgb(86, 136, 224);
-    background-color: rgb(86, 136, 224);
-}
-.vsts-state-ready-for-estimation {
-    border-color: rgb(86, 136, 224);
-    background-color: rgb(86, 136, 224);
-}
-.vsts-state-active {
-    border-color: rgb(51, 153, 51);
-    background-color: rgb(51, 153, 51);
-}
-.vsts-state-new {
-    border-color: rgb(178, 178, 178);
-    background-color: rgb(178, 178, 178);
+    border-color: #bababa;
+    background-color: #bababa;
 }

@@ -50,7 +50,7 @@
         @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu, MenuMode.Mobile))
     </div>
     <input type="text" id="tree-filter-mobile" placeholder="Filter Topic Tree"/>
-    @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+    @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicName))
 </nav>
     <header class="header headerLarge">
         @*<div class="mobileMenuIcon"><img src="/Images/MobileMenu.png" /></div>*@
@@ -63,7 +63,7 @@
 
     <nav class="toc">
         <input type="text" id="tree-filter" placeholder="Filter Topic Tree"/>
-        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicTitle))
+        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicName))
     </nav>
 
     @RenderBody()

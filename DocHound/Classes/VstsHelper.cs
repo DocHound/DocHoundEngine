@@ -13,13 +13,31 @@ namespace DocHound.Classes
 {
     public static class VstsHelper
     {
-        private static string ApiVersion => "2.2";
+        private static string ApiVersion => "4.1-preview";
 
-        public static async Task<string> GetWorkItemStates(string instance, string projectName, string personalAccessToken)
+        public static async Task<string> GetWorkItemTypes(string instance, string projectName, string personalAccessToken)
         {
             using (var httpClient = CreateHttpClient(instance + ":", personalAccessToken))
             {
-                var url = "/DefaultCollection/" + projectName + "/_apis/wit/fields/System.State";
+                var url = "/" + projectName + "/_apis/wit/workitemtypes";
+
+                var urlParameters = "api-version=" + ApiVersion;
+
+                var httpResponseMessage = await httpClient.GetAsync(url + "?" + urlParameters);
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    var json = await httpResponseMessage.Content.ReadAsStringAsync();
+                    return json;
+                }
+                return string.Empty;
+            }
+        }
+
+        public static async Task<string> GetWorkItemTypeStates(string workItemType, string instance, string projectName, string personalAccessToken)
+        {
+            using (var httpClient = CreateHttpClient(instance + ":", personalAccessToken))
+            {
+                var url = "/" + projectName + "/_apis/wit/workitemtypes/" + workItemType + "/states";
 
                 var urlParameters = "api-version=" + ApiVersion;
 
@@ -37,11 +55,34 @@ namespace DocHound.Classes
         {
             using (var httpClient = CreateHttpClient(instance + ":", personalAccessToken))
             {
-                var url = "/DefaultCollection/" + projectName + "/_apis/wit/queries";
+                var url = "/" + projectName + "/_apis/wit/queries";
                 if (!string.IsNullOrEmpty(folder))
                 {
                     if (!folder.StartsWith("/")) url += "/";
                     url += folder;
+                }
+
+                var urlParameters = "depth=2&api-version=" + ApiVersion;
+
+                var httpResponseMessage = await httpClient.GetAsync(url + "?" + urlParameters);
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    var json = await httpResponseMessage.Content.ReadAsStringAsync();
+                    return json;
+                }
+                return string.Empty;
+            }
+        }
+
+        public static async Task<string> GetWorkItemQueryJson(string queryName, string instance, string projectName, string personalAccessToken)
+        {
+            using (var httpClient = CreateHttpClient(instance + ":", personalAccessToken))
+            {
+                var url = "/" + projectName + "/_apis/wit/queries";
+                if (!string.IsNullOrEmpty(queryName))
+                {
+                    if (!queryName.StartsWith("/")) url += "/";
+                    url += queryName;
                 }
 
                 var urlParameters = "depth=2&api-version=" + ApiVersion;
@@ -67,7 +108,7 @@ namespace DocHound.Classes
                     {
                         try
                         {
-                            var queryInfoJson = await GetWorkItemQueriesJson(queryId, instance, projectName, personalAccessToken);
+                            var queryInfoJson = await GetWorkItemQueryJson(queryId, instance, projectName, personalAccessToken);
                             dynamic queryInfo = JObject.Parse(queryInfoJson);
                             queryId = queryInfo.id;
                         }
@@ -76,7 +117,7 @@ namespace DocHound.Classes
                             return string.Empty;
                         }
                     }
-                    var url = "/DefaultCollection/" + projectName + "/_apis/wit/wiql";
+                    var url = "/" + projectName + "/_apis/wit/wiql";
                     var urlParameters = "api-version=" + ApiVersion;
                     if (!queryId.StartsWith("/")) url += "/";
                     url += queryId;
@@ -141,7 +182,7 @@ namespace DocHound.Classes
                 var workItemIds = string.Join(',', workItemNumbers);
                 var parameters = "&api-version=" + ApiVersion;
                 if (!string.IsNullOrEmpty(fieldList)) parameters += "&fields=" + fieldList;
-                var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/_apis/wit/workitems?ids=" + workItemIds + parameters);
+                var httpResponseMessage = await httpClient.GetAsync("/_apis/wit/workitems?ids=" + workItemIds + parameters);
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
                     var json = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -194,6 +235,13 @@ namespace DocHound.Classes
                     fileContents = await GetFileContents(httpClient, repository.Id, file.Id);
                 return fileContents;
             }
+        }
+
+        public static async Task<Stream> GetWorkItemAttachmentStream(string url, string instance, string personalAccessToken)
+        {
+            var httpClient = CreateHttpClient(instance + ":", personalAccessToken);
+            if (url.StartsWith(instance)) url = url.Substring(instance.Length + 1);
+            return await httpClient.GetStreamAsync(url);
         }
 
         public static async Task<Stream> GetFileStream(string filePath, string instance, string project, string docsFolder, string personalAccessToken)
@@ -257,7 +305,7 @@ namespace DocHound.Classes
 
         private static async Task<VstsRepositoryInfo> GetRepositoriesJson(HttpClient httpClient, string projectName, string repositoryName = "")
         {
-            var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/" + projectName + "/_apis/git/repositories?api-version=" + ApiVersion);
+            var httpResponseMessage = await httpClient.GetAsync("/" + projectName + "/_apis/git/repositories?api-version=" + ApiVersion);
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var json = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -275,7 +323,7 @@ namespace DocHound.Classes
 
         private static async Task<List<VstsFileInfo>> GetFileListJson(HttpClient httpClient, Guid repositoryId, string scopePath = "")
         {
-            var url = "/DefaultCollection/_apis/git/repositories/" + repositoryId + "/items?api-version=" + ApiVersion + "&includeContentMetadata=true&recursionLevel=Full";
+            var url = "/_apis/git/repositories/" + repositoryId + "/items?api-version=" + ApiVersion + "&includeContentMetadata=true&recursionLevel=Full";
             if (!string.IsNullOrEmpty(scopePath)) url += "&scopePath=" + scopePath;
 
             var httpResponseMessage = await httpClient.GetAsync(url);
@@ -299,7 +347,7 @@ namespace DocHound.Classes
 
         private static async Task<string> GetFileContents(HttpClient httpClient, Guid repositoryId, string objectId)
         {
-            var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=" + ApiVersion + "&$format=text");
+            var httpResponseMessage = await httpClient.GetAsync("/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=" + ApiVersion + "&$format=text");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var text = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -309,7 +357,7 @@ namespace DocHound.Classes
         }
         private static async Task<Stream> GetFileStream(HttpClient httpClient, Guid repositoryId, string objectId)
         {
-            var httpResponseMessage = await httpClient.GetAsync("/DefaultCollection/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=" + ApiVersion + "&$format=text");
+            var httpResponseMessage = await httpClient.GetAsync("/_apis/git/repositories/" + repositoryId + "/blobs/" + objectId + "?api-version=" + ApiVersion + "&$format=text");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var stream = await httpResponseMessage.Content.ReadAsStreamAsync();

@@ -56,7 +56,7 @@
             // Description
             <h2 id="workitemdescription">Description</h2>
             @if (fields["System.Description"] != null) {
-                @Html.Raw(Model.FixHtmlReferences(fields["System.Description"]))
+                @Html.Raw(Model.Vsts.FixHtml(fields["System.Description"]))
             }
             else {
                 <p><i>n/a</i></p>
@@ -65,7 +65,7 @@
             // Description
             @if (fields["Microsoft.VSTS.Common.AcceptanceCriteria"] != null) {
                 <h2 id="acceptancecriteria">Acceptance Criteria</h2>
-                @Html.Raw(Model.FixHtmlReferences(fields["Microsoft.VSTS.Common.AcceptanceCriteria"]))
+                @Html.Raw(Model.Vsts.FixHtml(fields["Microsoft.VSTS.Common.AcceptanceCriteria"]))
             }
         }
     }
