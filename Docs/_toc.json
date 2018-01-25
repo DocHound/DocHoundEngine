@@ -83,10 +83,7 @@
           },
           {
             "title": "Topic Renderers",
-            "link": "TopicRenderers.md",
-            "settings": {
-              "useDiagramsNomnoml": true
-            }
+            "link": "TopicRenderers.md"
       }
         ]
     },
