@@ -9,30 +9,6 @@
     "customeCss": null,
     "customTemplate": null 
   },
-  "settings": {
-    "useAbbreviations": true,
-    "useAutoIdentifiers": true,
-    "useAutoLinks": true,
-    "useCitations": true,
-    "useCustomContainers": true,
-    "useDiagramsMermaid": false,
-    "useDiagramsNomnoml": false,
-    "useEmojiAndSmiley": true,
-    "useEmphasisExtras": true,
-    "useFigures": true,
-    "useFootnotes": true,
-    "useGenericAttributes": true,
-    "useGridTables": true,
-    "useListExtras": true,
-    "useMathematics": false,
-    "useMediaLinks": true,
-    "usePipeTables": true,
-    "usePragmaLines": true,
-    "useSmartyPants": true,
-    "useSyntaxHighlighting": true,
-    "useTaskLists": true,
-    "useYamlFrontMatter": true
-  },
   "menu": [
     {
       "title": "Docs Home",
