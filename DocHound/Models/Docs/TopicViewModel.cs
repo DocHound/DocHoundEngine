@@ -143,34 +143,13 @@ namespace DocHound.Models.Docs
                 }
             }
 
+            // TODO: This needs to be done more sophisticated
+            rawTopic.OriginalContent = await ProcessKavaTopic(rawTopic.OriginalContent);
+
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
 
-            Html = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
-            while (Html.Contains("<kava-topic"))
-            {
-                var canEmbedTopic = true;
-                var recs = new List<string>();
-                if (HttpContext.Request.Query.ContainsKey("recursion"))
-                {
-                    var rec = StringHelper.Base64Decode(HttpContext.Request.Query["recursion"]);
-                    if (!string.IsNullOrEmpty(rec))
-                    {
-                        recs = rec.Split('&').ToList();
-                        if (recs.Contains(SelectedTopicName)) // We are recursive if this is true
-                            canEmbedTopic = false;
-                    }
-                }
-
-                if (!canEmbedTopic)
-                {
-                    Html = await EmbeddKavaTopic(Html, recs, true);
-                }
-                else
-                {
-                    recs.Add(SelectedTopicName);
-                    Html = await EmbeddKavaTopic(Html, recs);
-                }
-            }
+            var intermediateHtml = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
+            Html = await ProcessKavaTopic(intermediateHtml);
 
             Json = renderer.RenderToJson(rawTopic, imageRootUrl, this);
             TemplateName = renderer.GetTemplateName(rawTopic, TemplateName, this);
@@ -196,6 +175,37 @@ namespace DocHound.Models.Docs
 
                 Html = sb.ToString();
             }
+        }
+
+        private async Task<string> ProcessKavaTopic(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return string.Empty;
+            while (text.Contains("<kava-topic"))
+            {
+                var canEmbedTopic = true;
+                var recs = new List<string>();
+                if (HttpContext.Request.Query.ContainsKey("recursion"))
+                {
+                    var rec = StringHelper.Base64Decode(HttpContext.Request.Query["recursion"]);
+                    if (!string.IsNullOrEmpty(rec))
+                    {
+                        recs = rec.Split('&').ToList();
+                        if (recs.Contains(SelectedTopicName)) // We are recursive if this is true
+                            canEmbedTopic = false;
+                    }
+                }
+
+                if (!canEmbedTopic)
+                {
+                    text = await EmbeddKavaTopic(text, recs, true);
+                }
+                else
+                {
+                    recs.Add(SelectedTopicName);
+                    text = await EmbeddKavaTopic(text, recs);
+                }
+            }
+            return text;
         }
 
         private async Task<string> EmbeddKavaTopic(string html, IEnumerable<string> recursions, bool killRecursion = false)
@@ -238,7 +248,7 @@ namespace DocHound.Models.Docs
                     var index2a = html.IndexOf("link=\"", StringComparison.Ordinal);
                     if (index2a > -1)
                     {
-                        html = html.Substring(index2 + 6);
+                        html = html.Substring(index2a + 6);
                         var index3 = html.IndexOf("\"", StringComparison.Ordinal);
                         if (index3 > -1)
                         {

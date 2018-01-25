@@ -35,13 +35,17 @@
 </head>
 
 <body>
-<nav class="mobileMenu">
-    <div class="mobile-menu-items">
-        @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu, MenuMode.Mobile))
-    </div>
-    <input type="text" id="tree-filter-mobile" placeholder="Filter Topic Tree"/>
-    @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicName))
-</nav>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    @*Must have file that goes with the theme*@
+    <script src="~/Themes/Default/Topic.js"></script>
+
+    <nav class="mobileMenu">
+        <div class="mobile-menu-items">
+            @Html.Raw(CodeHelper.GetMenu(Html, Model.MainMenu, MenuMode.Mobile))
+        </div>
+        <input type="text" id="tree-filter-mobile" placeholder="Filter Topic Tree"/>
+        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopicName))
+    </nav>
     <header class="header headerLarge">
         @*<div class="mobileMenuIcon"><img src="/Images/MobileMenu.png" /></div>*@
         <i class="fas fa-bars mobileMenuIcon"></i>
@@ -62,10 +66,6 @@
         <p>(c) by Markus Egger Inc.</p>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    
-    @*Must have file that goes with the theme*@
-    <script src="~/Themes/Default/Topic.js"></script>
 
     @RenderSection("Scripts", false)
 </body>
