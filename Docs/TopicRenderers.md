@@ -7,6 +7,9 @@ Topics are rendered based on the type specified for each topic. Each topic has a
 [ITopicRenderer]<:-[MarkdownTopicRenderer]
 [ITopicRenderer]<:-[HtmlTopicRenderer]
 [ITopicRenderer]<:-[WorkItemTopicRenderer]
+
+#fontSize: 10
+#lineWidth: 1
 ```
 
 ## ITopicRenderer Interface
