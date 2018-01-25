@@ -21,8 +21,10 @@
     * [ ] Dark theme
     * [ ] Sepia theme
 * [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
-* [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
+* [ ] Code
+    * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
+    * [ ] Would be nice to have a setting that allows specifying the max height for a code snippet. If it is taller, it could show an expand/collapse button.
 * [ ] Markdown improvements
     * [ ] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
     * [ ] Support FontAwesome
@@ -30,7 +32,7 @@
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
 * [ ] Markdown
-    * [ ] Markdown needs to do a better job of fixin up image links
+    * [ ] Markdown needs to do a better job of fixing up image links
 * [ ] Html
     * [ ] Only use HTML body
     * [ ] Should we eliminate scripts from HTML topics?
