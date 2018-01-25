@@ -116,17 +116,11 @@
           "topics": [
               {
                 "title": "Mermaid Charts",
-                "link": "Mermaid.md",
-                "settings": {
-                  "useDiagramsMermaid": true
-                }
+                "link": "Mermaid.md"
               }, 
               {
                 "title": "Nomnoml Charts",
-                "link": "Nomnoml.md",
-                "settings": {
-                  "useDiagramsNomnoml": true
-                }
+                "link": "Nomnoml.md"
               },
               {
                 "title": "Mathematics (LaTeX)",
