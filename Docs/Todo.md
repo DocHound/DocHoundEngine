@@ -21,7 +21,7 @@
     * [ ] Dark theme
     * [ ] Sepia theme
 * [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
-* [ ] It would probably make sense to turn certain features on automatically. For instance, if we find a math-block, or a nomnoml-block, it is probably safe to assume we should turn the feature on for that topic. The default setting for that feature would then be "auto"
+* [x] It would probably make sense to turn certain features on automatically. For instance, if we find a nomnoml-block, it is probably safe to assume we should turn the feature on for that topic. The default setting for that feature would then essentially be "auto". (Note: This makes sense for mermaid and nomnoml charts, but not for math, since math is too hard to detect reliably, and the overhead of accidentally including it is considerable).
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
