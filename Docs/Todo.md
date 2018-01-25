@@ -5,9 +5,9 @@
 * [ ] Landing Page Web Site (www.kavadocs.com) 
 * [ ] Accounts and Log-Ins
 * [ ] A few more supported sources
-    * [x] VSTS Work Items
     * [ ] DOCX
     * [ ] OneNote
+    * [x] VSTS Work Items (almost done, except for fringe features)
     * [ ] ...?
 * [ ] Themes
 * [ ] Full index search
@@ -21,7 +21,6 @@
     * [ ] Dark theme
     * [ ] Sepia theme
 * [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
-* [x] It would probably make sense to turn certain features on automatically. For instance, if we find a nomnoml-block, it is probably safe to assume we should turn the feature on for that topic. The default setting for that feature would then essentially be "auto". (Note: This makes sense for mermaid and nomnoml charts, but not for math, since math is too hard to detect reliably, and the overhead of accidentally including it is considerable).
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
@@ -46,11 +45,10 @@
 * [x] Showing the outline with indent levels
 * [x] Make the current tab work on mobile (responsive)
 * [x] Handle image paths relative to documents stored in root folders properly
+* [x] It would probably make sense to turn certain features on automatically. For instance, if we find a nomnoml-block, it is probably safe to assume we should turn the feature on for that topic. The default setting for that feature would then essentially be "auto". (Note: This makes sense for mermaid and nomnoml charts, but not for math, since math is too hard to detect reliably, and the overhead of accidentally including it is considerable).
 
 ## Overall Processing
 
-* [x] URL parameters identifying topics should *not* be case sensitive
-* [x] Allow for settings on the entire TOC as well as on individual topics
 * [ ] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl
 * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
 * [ ] Should support slug better
@@ -83,4 +81,6 @@
 * [x] Document description needs to be picked up from the repository
 * [x] Document keywords needs to be picked up from the repository
 * [x] Switch from prettify to highlight
+* [x] URL parameters identifying topics should *not* be case sensitive
+* [x] Allow for settings on the entire TOC as well as on individual topics
 

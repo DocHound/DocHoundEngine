@@ -182,6 +182,16 @@ namespace DocHound.Models.Docs
             return value;
         }
 
+        public bool IsSettingSpecified(Settings setting) => SettingsHelper.IsSettingSet(setting, TocSettings, CurrentTopicSettings);
+
+        public void OverrideSetting<T>(Settings setting, T value)
+        {
+            if (_cachedSettings.ContainsKey(setting))
+                _cachedSettings[setting] = value;
+            else
+                _cachedSettings.Add(setting, value);
+        }
+
         public string CustomCss { get; set; }
 
         public string CustomCssFullPath

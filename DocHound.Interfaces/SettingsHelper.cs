@@ -77,6 +77,25 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
+        public static bool IsSettingSet(Settings setting, dynamic repositorySettings = null, dynamic topicSettings = null)
+        {
+            // Topic-specific settings overrule everything else
+            if (IsDynamicSettingSet(setting, topicSettings)) return true;
+
+            // Settings for the whole repository still overrule app-global settings
+            if (IsDynamicSettingSet(setting, repositorySettings)) return true;
+
+            // We haven't found anything yet, so we take a look at the global app settings
+            if (GlobalConfiguration != null)
+            {
+                var dynamicGlobalConfiguraiton = (dynamic)GlobalConfiguration;
+                var value = dynamicGlobalConfiguraiton[GetSettingNameFromSetting(setting)];
+                if (value != null) return true;
+            }
+
+            return false;
+        }
+
         private static T GetDynamicSetting<T>(string setting, dynamic settingsObject)
         {
             if (settingsObject == null) return default(T);

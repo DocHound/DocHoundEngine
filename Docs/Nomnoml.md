@@ -2,7 +2,7 @@
 
 Kava Docs supports the nomnoml UML diagram standard. For more information, see https://github.com/skanaar/nomnoml
 
-> Note: To use Nomnoml Charts, the feature has to be enabled in the TOC, either globally, or on a topic-by-topic basis, by setting the **useDiagramsNomnoml** to *true*. This is done to prevent performance problems in repositories and/or topics that do not need this feature. For more information, see [Table of Contents File Structure](TOC-File-Structure)
+> Note: Nomnoml chart features are automatically enabled when a nomnoml block is used in markdown. Nomnoml can also be specifically enabled using the **useDiagramsNomnoml** setting, which can be set to *true* (the default can be considered to be 'auto', although that is not a setting that can be set explicitly). Note that nomnoml can be specifically disabled by setting **useDiagramsNomnoml** to *false*.  For more information, see [Table of Contents File Structure](TOC-File-Structure)
 
 ## Simple Diagram Example
 
