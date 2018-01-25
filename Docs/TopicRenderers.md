@@ -8,9 +8,9 @@ Topics are rendered based on the type specified for each topic. Each topic has a
 [ITopicRenderer]<:-[HtmlTopicRenderer]
 [ITopicRenderer]<:-[WorkItemTopicRenderer]
 
-#fontSize=10pt 
-#lineWidth=1 
-#fill=#d2dbee
+#fontSize 10pt 
+#lineWidth 1 
+#fill #d2dbee white
 #font Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif
 ```
 
