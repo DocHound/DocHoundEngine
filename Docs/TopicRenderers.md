@@ -8,7 +8,7 @@ Topics are rendered based on the type specified for each topic. Each topic has a
 [ITopicRenderer]<:-[HtmlTopicRenderer]
 [ITopicRenderer]<:-[WorkItemTopicRenderer]
 
-#fontSize: 10pt 
+#fontSize: 10 
 #lineWidth: 1 
 #fill: #d2dbee
 ```
