@@ -8,7 +8,7 @@ The following is an example of a TOC Json File structure:
   "owner": "Kava Docs Inc.",
   "language": "en-US",
   "version": "1.0",
-  "requireHttps |  | true (default) or false  | No |
+  "requireHttps": "false",
   "theme": {
     "standardTheme": "Default",
     "customeCss": null,
