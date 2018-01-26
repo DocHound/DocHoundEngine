@@ -111,41 +111,51 @@
             $('.footer').removeClass('scrolled');
         }
     });
-});
 
-// Closing the menu when the header areas is clicked
-$('.header').on('click', function() {
-    $('.subMenu').removeClass('visibleSubMenu');
-});
-$('.menu>ul>li').on('mouseenter', function () {
-    $('.subMenu').removeClass('visibleSubMenu');
-    $(this).find('.subMenu').addClass('visibleSubMenu');
-});
-$('body').on('mouseenter', function () {
-    $('.subMenu').removeClass('visibleSubMenu');
-});
+    // Closing the menu when the header areas is clicked
+    $('.header').on('click', function() {
+        $('.subMenu').removeClass('visibleSubMenu');
+    });
+    $('.menu>ul>li').on('mouseenter', function () {
+        $('.subMenu').removeClass('visibleSubMenu');
+        $(this).find('.subMenu').addClass('visibleSubMenu');
+    });
+    $('body').on('mouseenter', function () {
+        $('.subMenu').removeClass('visibleSubMenu');
+    });
 
-// Opening the hamburger/mobile menu
-$('.mobileMenuIcon').on('click', function () {
-    if (!$('body').hasClass('showMobileMenu')) {
-        $('body').addClass('showMobileMenu');
-        $('.header').addClass('showMobileMenu');
-        $('.mobileMenu').addClass('showMobileMenu');
-        $('.content-container').addClass('showMobileMenu');
-        $('.footer').addClass('showMobileMenu');
-        $('.mobileMenu').css('display', 'block');
-        setTimeout(function () {
-            $('.mobileMenu').css('z-index', 10000);
-        }, 300);
-    } else {
-        $('body').removeClass('showMobileMenu');
-        $('.header').removeClass('showMobileMenu');
-        $('.content-container').removeClass('showMobileMenu');
-        $('.footer').removeClass('showMobileMenu');
-        $('.mobileMenu').removeClass('showMobileMenu');
-        $('.mobileMenu').css('z-index', -10000);
-        setTimeout(function () {
-            $('.mobileMenu').css('display', 'none');
-        }, 300);
-    }
+    // Opening the hamburger/mobile menu
+    $('.mobileMenuIcon').on('click', function () {
+        if (!$('body').hasClass('showMobileMenu')) {
+            $('body').addClass('showMobileMenu');
+            $('.header').addClass('showMobileMenu');
+            $('.mobileMenu').addClass('showMobileMenu');
+            $('.content-container').addClass('showMobileMenu');
+            $('.footer').addClass('showMobileMenu');
+            $('.mobileMenu').css('display', 'block');
+            setTimeout(function () {
+                $('.mobileMenu').css('z-index', 10000);
+            }, 300);
+        } else {
+            $('body').removeClass('showMobileMenu');
+            $('.header').removeClass('showMobileMenu');
+            $('.content-container').removeClass('showMobileMenu');
+            $('.footer').removeClass('showMobileMenu');
+            $('.mobileMenu').removeClass('showMobileMenu');
+            $('.mobileMenu').css('z-index', -10000);
+            setTimeout(function () {
+                $('.mobileMenu').css('display', 'none');
+            }, 300);
+        }
+    });
+
+    // Making sure the main content has a minimum height set, so we do not get visual glitches when the mobile menu opens
+    $(window).on('resize', function(){
+        var paddingTop = $('.content-container').css('padding-top').replace('px','');
+        var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
+        $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
+    });
+    var paddingTop = $('.content-container').css('padding-top').replace('px','');
+    var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
+    $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
 });
