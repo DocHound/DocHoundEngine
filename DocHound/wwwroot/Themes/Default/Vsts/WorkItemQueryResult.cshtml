@@ -14,10 +14,9 @@
 @if (!Model.RenderTopicOnly)
 {
     <article class="content-container">
-        <h1>@Model.SelectedTopic.Title</h1>
-
         @{
             dynamic result = Model.JsonObject;
+            <h1 id="@Model.TitleAsId">@Model.Title</h1>
             if (result.columns != null)
             {
                 <table class="workitem-query-results">
@@ -46,7 +45,7 @@
 
                                         if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
                                         {
-                                            var url = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}";
+                                            var url = $"{Context.Request.Scheme}://{Context.Request.Host}/{Model.SelectedTopicName}";
                                             url += "?workitemnumber=" + fields["System.Id"];
                                             <a href="@url">@displayValue</a>
                                         }
@@ -76,7 +75,7 @@
 }
 else
 {
-    <h1>@Model.SelectedTopic.Title</h1>
+    <h1 id="@Model.TitleAsId">@Model.SelectedTopic.Title</h1>
 
     dynamic result = Model.JsonObject;
     if (result.columns != null)
@@ -107,7 +106,7 @@ else
 
                                 if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
                                 {
-                                    var url = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}";
+                                    var url = $"{Context.Request.Scheme}://{Context.Request.Host}/{Model.SelectedTopicName}";
                                     url += "?workitemnumber=" + fields["System.Id"];
                                     <a href="@url">@displayValue</a>
                                 }

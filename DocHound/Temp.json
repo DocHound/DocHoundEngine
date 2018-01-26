@@ -1,102 +1,1092 @@
 {
-    "queryType": "flat",
-    "queryResultType": "workItem",
-    "asOf": "2018-01-23T06:53:55.923Z",
-    "columns": [
+    "id": "ba8ccada-a193-4edf-9214-38b7f4fd9d78",
+    "name": "Shared Queries",
+    "path": "Shared Queries",
+    "createdDate": "2017-11-13T19:49:02.65Z",
+    "lastModifiedBy": {
+        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+        "name": "Mike Yeager <myeager@eps-software.com>",
+        "displayName": null
+    },
+    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+    "isFolder": true,
+    "hasChildren": true,
+    "children": [
         {
-            "referenceName": "System.Id",
-            "name": "ID",
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            "id": "dc8d861a-6b6a-44be-a0c3-fe217927a0fe",
+            "name": "Current Iteration",
+            "path": "Shared Queries/Current Iteration",
+            "createdBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2017-11-13T19:49:03.76Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+            "isFolder": true,
+            "hasChildren": true,
+            "children": [
+                {
+                    "id": "f24ec1d9-987a-46d3-a8b2-dd269360c5b0",
+                    "name": "Active Bugs",
+                    "path": "Shared Queries/Current Iteration/Active Bugs",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T07:16:07.157Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/f24ec1d9-987a-46d3-a8b2-dd269360c5b0"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=f24ec1d9-987a-46d3-a8b2-dd269360c5b0"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/f24ec1d9-987a-46d3-a8b2-dd269360c5b0"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/f24ec1d9-987a-46d3-a8b2-dd269360c5b0"
+                },
+                {
+                    "id": "b81925c7-6d15-42d9-a2b4-c4c188a325f6",
+                    "name": "Open Issues",
+                    "path": "Shared Queries/Current Iteration/Open Issues",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:45.363Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/b81925c7-6d15-42d9-a2b4-c4c188a325f6"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=b81925c7-6d15-42d9-a2b4-c4c188a325f6"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/b81925c7-6d15-42d9-a2b4-c4c188a325f6"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/b81925c7-6d15-42d9-a2b4-c4c188a325f6"
+                },
+                {
+                    "id": "4fef181e-48e1-465c-9317-bd122fb3f7aa",
+                    "name": "Completed Tasks",
+                    "path": "Shared Queries/Current Iteration/Completed Tasks",
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "9c7e4327-ff49-4739-ad65-9ffbb9676845",
+                        "name": "Erik Ruthruff <eruthruff@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-12-21T16:54:28.377Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:46.27Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/4fef181e-48e1-465c-9317-bd122fb3f7aa"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=4fef181e-48e1-465c-9317-bd122fb3f7aa"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/4fef181e-48e1-465c-9317-bd122fb3f7aa"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/4fef181e-48e1-465c-9317-bd122fb3f7aa"
+                },
+                {
+                    "id": "8ce0cdda-ee49-404d-88ed-8c16e9ff749b",
+                    "name": "Bug Triage",
+                    "path": "Shared Queries/Current Iteration/Bug Triage",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-24T01:51:43.583Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/8ce0cdda-ee49-404d-88ed-8c16e9ff749b"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=8ce0cdda-ee49-404d-88ed-8c16e9ff749b"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/8ce0cdda-ee49-404d-88ed-8c16e9ff749b"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/8ce0cdda-ee49-404d-88ed-8c16e9ff749b"
+                },
+                {
+                    "id": "d571a173-d7a9-493b-b542-8a5d31e76a34",
+                    "name": "Open Test Cases",
+                    "path": "Shared Queries/Current Iteration/Open Test Cases",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:17.427Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/d571a173-d7a9-493b-b542-8a5d31e76a34"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=d571a173-d7a9-493b-b542-8a5d31e76a34"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/d571a173-d7a9-493b-b542-8a5d31e76a34"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/d571a173-d7a9-493b-b542-8a5d31e76a34"
+                },
+                {
+                    "id": "cd6c6b4f-1b07-4c4f-afad-65caef41feb8",
+                    "name": "Resolved Bugs",
+                    "path": "Shared Queries/Current Iteration/Resolved Bugs",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:39.233Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/cd6c6b4f-1b07-4c4f-afad-65caef41feb8"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=cd6c6b4f-1b07-4c4f-afad-65caef41feb8"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/cd6c6b4f-1b07-4c4f-afad-65caef41feb8"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/cd6c6b4f-1b07-4c4f-afad-65caef41feb8"
+                },
+                {
+                    "id": "30d2ef00-5f68-4884-b160-63c2bfd62747",
+                    "name": "User Stories without Test Cases",
+                    "path": "Shared Queries/Current Iteration/User Stories without Test Cases",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:35.5Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/30d2ef00-5f68-4884-b160-63c2bfd62747"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=30d2ef00-5f68-4884-b160-63c2bfd62747"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/30d2ef00-5f68-4884-b160-63c2bfd62747"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/30d2ef00-5f68-4884-b160-63c2bfd62747"
+                },
+                {
+                    "id": "a6ee7a89-4ef5-490f-ae82-58b4d7e46315",
+                    "name": "User Stories Delivered",
+                    "path": "Shared Queries/Current Iteration/User Stories Delivered",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:36.253Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/a6ee7a89-4ef5-490f-ae82-58b4d7e46315"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=a6ee7a89-4ef5-490f-ae82-58b4d7e46315"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/a6ee7a89-4ef5-490f-ae82-58b4d7e46315"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/a6ee7a89-4ef5-490f-ae82-58b4d7e46315"
+                },
+                {
+                    "id": "94adc28a-f79e-41e4-906b-576503bf8bbf",
+                    "name": "Active Tasks",
+                    "path": "Shared Queries/Current Iteration/Active Tasks",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T07:54:55.733Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/94adc28a-f79e-41e4-906b-576503bf8bbf"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=94adc28a-f79e-41e4-906b-576503bf8bbf"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/94adc28a-f79e-41e4-906b-576503bf8bbf"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/94adc28a-f79e-41e4-906b-576503bf8bbf"
+                },
+                {
+                    "id": "abe05459-c254-4bfc-960c-27ef7f9ade25",
+                    "name": "All Tasks",
+                    "path": "Shared Queries/Current Iteration/All Tasks",
+                    "createdDate": "2018-01-23T07:16:31.11Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:16:19.053Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T10:15:29.717Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/abe05459-c254-4bfc-960c-27ef7f9ade25"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=abe05459-c254-4bfc-960c-27ef7f9ade25"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/abe05459-c254-4bfc-960c-27ef7f9ade25"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/abe05459-c254-4bfc-960c-27ef7f9ade25"
+                },
+                {
+                    "id": "a5e73932-51fb-48b0-aa94-26e477ece9de",
+                    "name": "Open User Stories",
+                    "path": "Shared Queries/Current Iteration/Open User Stories",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:37.97Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/a5e73932-51fb-48b0-aa94-26e477ece9de"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=a5e73932-51fb-48b0-aa94-26e477ece9de"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/a5e73932-51fb-48b0-aa94-26e477ece9de"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/a5e73932-51fb-48b0-aa94-26e477ece9de"
+                },
+                {
+                    "id": "632228ee-1dcb-47b0-b8a2-1c234798d8b3",
+                    "name": "All User Stories",
+                    "path": "Shared Queries/Current Iteration/All User Stories",
+                    "createdDate": "2018-01-24T06:17:24.6Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:18:17.333Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T10:15:44.98Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/632228ee-1dcb-47b0-b8a2-1c234798d8b3"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=632228ee-1dcb-47b0-b8a2-1c234798d8b3"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/632228ee-1dcb-47b0-b8a2-1c234798d8b3"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/632228ee-1dcb-47b0-b8a2-1c234798d8b3"
+                }
+            ],
+            "isPublic": true,
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/dc8d861a-6b6a-44be-a0c3-fe217927a0fe"
         },
         {
-            "referenceName": "Microsoft.VSTS.Common.StackRank",
-            "name": "Stack Rank",
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            "id": "86365f50-f097-47d0-a13a-c52395878db3",
+            "name": "My Test Cases",
+            "path": "Shared Queries/My Test Cases",
+            "createdBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2017-11-13T19:49:03.76Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+            "isPublic": true,
+            "lastExecutedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "uniqueName": "megger@eps-software.com",
+                "displayName": "Markus Egger"
+            },
+            "lastExecutedDate": "2018-01-23T06:06:27.903Z",
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/86365f50-f097-47d0-a13a-c52395878db3"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=86365f50-f097-47d0-a13a-c52395878db3"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                },
+                "wiql": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/86365f50-f097-47d0-a13a-c52395878db3"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/86365f50-f097-47d0-a13a-c52395878db3"
         },
         {
-            "referenceName": "Microsoft.VSTS.Common.Priority",
-            "name": "Priority",
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            "id": "12e4ed11-3da0-4754-8106-9424f91653f1",
+            "name": "By Assignee",
+            "path": "Shared Queries/By Assignee",
+            "createdBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "name": "Markus Egger <megger@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2018-01-24T06:22:07.273Z",
+            "lastModifiedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "name": "Markus Egger <megger@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2018-01-24T06:22:07.273Z",
+            "isFolder": true,
+            "hasChildren": true,
+            "children": [
+                {
+                    "id": "9d0d45c8-327d-42cf-988f-ba59d61be544",
+                    "name": "Unassigned",
+                    "path": "Shared Queries/By Assignee/Unassigned",
+                    "createdDate": "2018-01-24T06:26:37.167Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:26:44.743Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T02:21:45.947Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/9d0d45c8-327d-42cf-988f-ba59d61be544"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=9d0d45c8-327d-42cf-988f-ba59d61be544"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/12e4ed11-3da0-4754-8106-9424f91653f1"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/9d0d45c8-327d-42cf-988f-ba59d61be544"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/9d0d45c8-327d-42cf-988f-ba59d61be544"
+                },
+                {
+                    "id": "2439bfdc-5ef6-4316-b7d0-a3b81dbdd480",
+                    "name": "Markus Egger",
+                    "path": "Shared Queries/By Assignee/Markus Egger",
+                    "createdDate": "2018-01-24T06:26:23.277Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:26:32.213Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T11:06:57.93Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/2439bfdc-5ef6-4316-b7d0-a3b81dbdd480"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=2439bfdc-5ef6-4316-b7d0-a3b81dbdd480"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/12e4ed11-3da0-4754-8106-9424f91653f1"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/2439bfdc-5ef6-4316-b7d0-a3b81dbdd480"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/2439bfdc-5ef6-4316-b7d0-a3b81dbdd480"
+                },
+                {
+                    "id": "25a5145a-55a3-409a-a7a6-8f0cd832ff9d",
+                    "name": "Alex Czerny",
+                    "path": "Shared Queries/By Assignee/Alex Czerny",
+                    "createdDate": "2018-01-24T06:22:26.76Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:23:07.557Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T22:01:54.27Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/25a5145a-55a3-409a-a7a6-8f0cd832ff9d"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=25a5145a-55a3-409a-a7a6-8f0cd832ff9d"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/12e4ed11-3da0-4754-8106-9424f91653f1"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/25a5145a-55a3-409a-a7a6-8f0cd832ff9d"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/25a5145a-55a3-409a-a7a6-8f0cd832ff9d"
+                },
+                {
+                    "id": "774a568f-a491-450d-bd8c-4ff188b963ec",
+                    "name": "Tiberiu Covaci",
+                    "path": "Shared Queries/By Assignee/Tiberiu Covaci",
+                    "createdDate": "2018-01-24T06:26:06.98Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:26:15.4Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T11:07:21.247Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/774a568f-a491-450d-bd8c-4ff188b963ec"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=774a568f-a491-450d-bd8c-4ff188b963ec"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/12e4ed11-3da0-4754-8106-9424f91653f1"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/774a568f-a491-450d-bd8c-4ff188b963ec"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/774a568f-a491-450d-bd8c-4ff188b963ec"
+                }
+            ],
+            "isPublic": true,
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/12e4ed11-3da0-4754-8106-9424f91653f1"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=12e4ed11-3da0-4754-8106-9424f91653f1"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/12e4ed11-3da0-4754-8106-9424f91653f1"
         },
         {
-            "referenceName": "System.AssignedTo",
-            "name": "Assigned To",
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            "id": "1d87105c-4819-4bda-9282-92c02f03d3f9",
+            "name": "TFS Hours Across Projects",
+            "path": "Shared Queries/TFS Hours Across Projects",
+            "createdDate": "2017-11-27T16:34:56.553Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-27T16:36:53.893Z",
+            "isPublic": true,
+            "lastExecutedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "uniqueName": "megger@eps-software.com",
+                "displayName": "Markus Egger"
+            },
+            "lastExecutedDate": "2018-01-23T06:06:25.39Z",
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/1d87105c-4819-4bda-9282-92c02f03d3f9"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=1d87105c-4819-4bda-9282-92c02f03d3f9"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                },
+                "wiql": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/1d87105c-4819-4bda-9282-92c02f03d3f9"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/1d87105c-4819-4bda-9282-92c02f03d3f9"
         },
         {
-            "referenceName": "Microsoft.VSTS.Scheduling.RemainingWork",
-            "name": "Remaining Work",
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            "id": "4559f4e1-9dc3-446f-958e-84f2b506e72a",
+            "name": "My Bugs",
+            "path": "Shared Queries/My Bugs",
+            "createdBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2017-11-13T19:49:03.76Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+            "isPublic": true,
+            "lastExecutedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "uniqueName": "megger@eps-software.com",
+                "displayName": "Markus Egger"
+            },
+            "lastExecutedDate": "2018-01-23T06:06:29.95Z",
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/4559f4e1-9dc3-446f-958e-84f2b506e72a"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=4559f4e1-9dc3-446f-958e-84f2b506e72a"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                },
+                "wiql": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/4559f4e1-9dc3-446f-958e-84f2b506e72a"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/4559f4e1-9dc3-446f-958e-84f2b506e72a"
         },
         {
-            "referenceName": "Microsoft.VSTS.Scheduling.CompletedWork",
-            "name": "Completed Work",
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            "id": "8ee5e2a9-4bb7-450c-b4b3-5176de8e68ac",
+            "name": "Testing",
+            "path": "Shared Queries/Testing",
+            "createdBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "name": "Markus Egger <megger@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2018-01-24T06:30:28.7Z",
+            "lastModifiedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "name": "Markus Egger <megger@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2018-01-24T06:30:28.7Z",
+            "isFolder": true,
+            "hasChildren": true,
+            "children": [
+                {
+                    "id": "6acae08b-73d5-4afd-9861-9a01de99797b",
+                    "name": "Ready for Internal Testing",
+                    "path": "Shared Queries/Testing/Ready for Internal Testing",
+                    "createdDate": "2018-01-24T06:30:39.95Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:31:39.387Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-25T00:34:16.03Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/6acae08b-73d5-4afd-9861-9a01de99797b"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=6acae08b-73d5-4afd-9861-9a01de99797b"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/8ee5e2a9-4bb7-450c-b4b3-5176de8e68ac"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/6acae08b-73d5-4afd-9861-9a01de99797b"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/6acae08b-73d5-4afd-9861-9a01de99797b"
+                },
+                {
+                    "id": "35d7eab2-4de5-4954-aa5a-325e8cbcb2bc",
+                    "name": "Ready for Client Testing",
+                    "path": "Shared Queries/Testing/Ready for Client Testing",
+                    "createdBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2018-01-24T06:31:55.933Z",
+                    "lastModifiedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "name": "Markus Egger <megger@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2018-01-24T06:31:55.933Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-24T07:40:09.567Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/35d7eab2-4de5-4954-aa5a-325e8cbcb2bc"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=35d7eab2-4de5-4954-aa5a-325e8cbcb2bc"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/8ee5e2a9-4bb7-450c-b4b3-5176de8e68ac"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/35d7eab2-4de5-4954-aa5a-325e8cbcb2bc"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/35d7eab2-4de5-4954-aa5a-325e8cbcb2bc"
+                }
+            ],
+            "isPublic": true,
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/8ee5e2a9-4bb7-450c-b4b3-5176de8e68ac"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=8ee5e2a9-4bb7-450c-b4b3-5176de8e68ac"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/8ee5e2a9-4bb7-450c-b4b3-5176de8e68ac"
         },
         {
-            "referenceName": "System.Title",
-            "name": "Title",
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
+            "id": "627ec729-c078-40f1-a43f-42d74abd1ec4",
+            "name": "My Tasks",
+            "path": "Shared Queries/My Tasks",
+            "createdBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2017-11-13T19:49:03.76Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+            "isPublic": true,
+            "lastExecutedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "uniqueName": "megger@eps-software.com",
+                "displayName": "Markus Egger"
+            },
+            "lastExecutedDate": "2018-01-23T06:06:29.043Z",
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/627ec729-c078-40f1-a43f-42d74abd1ec4"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=627ec729-c078-40f1-a43f-42d74abd1ec4"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                },
+                "wiql": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/627ec729-c078-40f1-a43f-42d74abd1ec4"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/627ec729-c078-40f1-a43f-42d74abd1ec4"
+        },
+        {
+            "id": "296c208f-d24e-4bd1-b223-33488e7008f5",
+            "name": "Product Planning",
+            "path": "Shared Queries/Product Planning",
+            "createdBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2017-11-13T19:49:03.76Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+            "isPublic": true,
+            "lastExecutedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "uniqueName": "megger@eps-software.com",
+                "displayName": "Markus Egger"
+            },
+            "lastExecutedDate": "2018-01-23T06:06:26.577Z",
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/296c208f-d24e-4bd1-b223-33488e7008f5"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=296c208f-d24e-4bd1-b223-33488e7008f5"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                },
+                "wiql": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/296c208f-d24e-4bd1-b223-33488e7008f5"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/296c208f-d24e-4bd1-b223-33488e7008f5"
+        },
+        {
+            "id": "39c3ec1a-b881-4428-ab33-0e3da406b389",
+            "name": "Feedback",
+            "path": "Shared Queries/Feedback",
+            "createdBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2017-11-13T19:49:03.76Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+            "isPublic": true,
+            "lastExecutedBy": {
+                "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                "uniqueName": "megger@eps-software.com",
+                "displayName": "Markus Egger"
+            },
+            "lastExecutedDate": "2018-01-23T06:06:31.107Z",
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/39c3ec1a-b881-4428-ab33-0e3da406b389"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=39c3ec1a-b881-4428-ab33-0e3da406b389"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                },
+                "wiql": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/39c3ec1a-b881-4428-ab33-0e3da406b389"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/39c3ec1a-b881-4428-ab33-0e3da406b389"
+        },
+        {
+            "id": "53dc96ea-4d6b-48e4-9af8-005c493af8a0",
+            "name": "Troubleshooting",
+            "path": "Shared Queries/Troubleshooting",
+            "createdBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "createdDate": "2017-11-13T19:49:03.76Z",
+            "lastModifiedBy": {
+                "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                "name": "Mike Yeager <myeager@eps-software.com>",
+                "displayName": null
+            },
+            "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+            "isFolder": true,
+            "hasChildren": true,
+            "children": [
+                {
+                    "id": "ee709b1b-a546-4f8d-bd17-231fc8854833",
+                    "name": "Work Items With Summary Values",
+                    "path": "Shared Queries/Troubleshooting/Work Items With Summary Values",
+                    "createdBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "createdDate": "2017-11-13T19:49:03.76Z",
+                    "lastModifiedBy": {
+                        "id": "bda4f2c6-895e-42ff-abbc-24c2a6481b5a",
+                        "name": "Mike Yeager <myeager@eps-software.com>",
+                        "displayName": null
+                    },
+                    "lastModifiedDate": "2017-11-13T19:49:03.76Z",
+                    "isPublic": true,
+                    "lastExecutedBy": {
+                        "id": "80522902-9d2d-472b-9aca-9c1ce69593b1",
+                        "uniqueName": "megger@eps-software.com",
+                        "displayName": "Markus Egger"
+                    },
+                    "lastExecutedDate": "2018-01-23T06:06:34.403Z",
+                    "_links": {
+                        "self": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ee709b1b-a546-4f8d-bd17-231fc8854833"
+                        },
+                        "html": {
+                            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=ee709b1b-a546-4f8d-bd17-231fc8854833"
+                        },
+                        "parent": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/53dc96ea-4d6b-48e4-9af8-005c493af8a0"
+                        },
+                        "wiql": {
+                            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/wiql/ee709b1b-a546-4f8d-bd17-231fc8854833"
+                        }
+                    },
+                    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ee709b1b-a546-4f8d-bd17-231fc8854833"
+                }
+            ],
+            "isPublic": true,
+            "_links": {
+                "self": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/53dc96ea-4d6b-48e4-9af8-005c493af8a0"
+                },
+                "html": {
+                    "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=53dc96ea-4d6b-48e4-9af8-005c493af8a0"
+                },
+                "parent": {
+                    "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
+                }
+            },
+            "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/53dc96ea-4d6b-48e4-9af8-005c493af8a0"
         }
     ],
-    "sortColumns": [
-        {
-            "field": {
-                "referenceName": "Microsoft.VSTS.Common.StackRank",
-                "name": "Stack Rank",
-                "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
-            },
-            "descending": false
+    "isPublic": true,
+    "_links": {
+        "self": {
+            "href": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
         },
-        {
-            "field": {
-                "referenceName": "Microsoft.VSTS.Common.Priority",
-                "name": "Priority",
-                "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
-            },
-            "descending": false
-        },
-        {
-            "field": {
-                "referenceName": "System.Id",
-                "name": "ID",
-                "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/fields"
-            },
-            "descending": false
+        "html": {
+            "href": "https://eps-software.visualstudio.com/web/qr.aspx?pguid=24c5fb17-232d-48b2-8034-c69d13d46b20&qid=ba8ccada-a193-4edf-9214-38b7f4fd9d78"
         }
-    ],
-    "workItems": [
-        {
-            "id": 24,
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/24"
-        },
-        {
-            "id": 29,
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/29"
-        }
-    ],
-    "resultSet": [
-        {
-            "id": 24,
-            "rev": 8,
-            "fields": {
-                "System.Id": 24,
-                "System.AssignedTo": "Tiberiu Covaci <tiberiu.covaci@outlook.com>",
-                "System.Title": "Determine the technologies that we'll use for DN2Me",
-                "Microsoft.VSTS.Common.Priority": 1
-            },
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/24"
-        },
-        {
-            "id": 29,
-            "rev": 9,
-            "fields": {
-                "System.Id": 29,
-                "System.AssignedTo": "Markus Egger <megger@eps-software.com>",
-                "System.Title": "Set up Service Structure/Framework",
-                "Microsoft.VSTS.Common.Priority": 2
-            },
-            "url": "https://eps-software.visualstudio.com/DefaultCollection/_apis/wit/workItems/29"
-        }
-    ]
+    },
+    "url": "https://eps-software.visualstudio.com/24c5fb17-232d-48b2-8034-c69d13d46b20/_apis/wit/queries/ba8ccada-a193-4edf-9214-38b7f4fd9d78"
 }

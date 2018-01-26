@@ -1,4 +1,5 @@
 @using DocHound.Interfaces
+@using DocHound.Classes
 @model DocHound.Models.Docs.TopicViewModel
 
 @{
@@ -24,7 +25,7 @@
                 if (fields["System.WorkItemType"] != null) {
                     title = fields["System.WorkItemType"].ToString().Trim() + ": " + title;
                 }
-                <h1 id="@title">@title</h1>
+                <h1 id="@TopicHelper.GetNormalizedName(title)">@title</h1>
 
                 // Header info table
                 <div class="vsts-workitem-statearea">
@@ -89,7 +90,7 @@ else
         if (fields["System.WorkItemType"] != null) {
             title = fields["System.WorkItemType"].ToString().Trim() + ": " + title;
         }
-        <h1 id="@title">@title</h1>
+        <h1 id="@TopicHelper.GetNormalizedName(title)">@title</h1>
 
         // Header info table
         <div class="vsts-workitem-statearea">

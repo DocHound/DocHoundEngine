@@ -1,0 +1,106 @@
+@using System.Linq;
+@using System.Linq.Expressions;
+@using Newtonsoft.Json.Linq;
+@using DocHound.Interfaces
+@using DocHound.Classes
+@model DocHound.Models.Docs.TopicViewModel
+
+@{
+    if (!Model.RenderTopicOnly)
+    {
+        Layout = "../_Layout.cshtml";
+    }
+}
+
+<link href="@(Model.ThemeFolderRaw)/Vsts/Vsts.css" type="text/css" rel="stylesheet" />
+@if (!Model.RenderTopicOnly)
+{
+    <article class="content-container">
+        @{
+            dynamic query = Model.JsonObject;
+            var url = $"{Context.Request.Scheme}://{Context.Request.Host}/{Model.SelectedTopicName}";
+
+            <h1 id="@TopicHelper.GetNormalizedName(query.name.ToString())">@query.name</h1>
+
+            @if (query?.hasChildren == true)
+            {
+                var sortedRoot = ((JArray)(query?.children)).OrderBy(q => (string)q["name"]);
+                var queriesInRoot = sortedRoot.Where(i => i["isFolder"] == null).ToList();
+                var foldersInRoot = sortedRoot.Where(i => i["isFolder"] != null).ToList();
+                if (queriesInRoot.Count > 0)
+                {
+                    <ul>
+                    @foreach (dynamic queryItem in queriesInRoot) {
+                        <li class="vsts-query">
+                            <a href="@url?queryid=@(queryItem["id"])">@(queryItem["name"])</a>
+                        </li>
+                    }
+                    </ul>
+                }
+
+                foreach (var folder in foldersInRoot)
+                {
+                    <h2 id="@(folder["name"].ToString().Replace(" ",""))" class="vsts-query-name">@(folder["name"])</h2>
+                    var sortedFolder = ((JArray)(folder["children"])).OrderBy(q => (string)q["name"]);
+                    var queriesInFolder = sortedFolder.Where(i => i["isFolder"] == null).ToList();
+                    if (queriesInFolder.Count > 0)
+                    {
+                        <ul>
+                        @foreach (dynamic queryItem in queriesInFolder) {
+                            <li class="vsts-query">
+                                <a href="@url?queryid=@(queryItem["id"])">@(queryItem["name"])</a>
+                            </li>
+                        }
+                        </ul>
+                    }
+                }
+            }
+        }
+        @Html.Partial("../_PartialDefaultBottomNavigation.cshtml", Model)
+    </article>
+
+    <aside class="sidebar">
+        @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
+    </aside>
+}
+else
+{
+    dynamic query = Model.JsonObject;
+    var url = $"{Context.Request.Scheme}://{Context.Request.Host}/{Model.SelectedTopicName}";
+
+    <h1 id="@TopicHelper.GetNormalizedName(query.name.ToString())">@query.name</h1>
+
+    @if (query?.hasChildren == true)
+    {
+        var sortedRoot = ((JArray)(query?.children)).OrderBy(q => (string)q["name"]);
+        var queriesInRoot = sortedRoot.Where(i => i["isFolder"] == null).ToList();
+        var foldersInRoot = sortedRoot.Where(i => i["isFolder"] != null).ToList();
+        if (queriesInRoot.Count > 0)
+        {
+            <ul>
+            @foreach (dynamic queryItem in queriesInRoot) {
+                <li class="vsts-query">
+                    <a href="@url?queryid=@(queryItem["id"])">@(queryItem["name"])</a>
+                </li>
+            }
+            </ul>
+        }
+
+        foreach (var folder in foldersInRoot)
+        {
+            <h2 id="@(folder["name"].ToString().Replace(" ",""))" class="vsts-query-name">@(folder["name"])</h2>
+            var sortedFolder = ((JArray)(folder["children"])).OrderBy(q => (string)q["name"]);
+            var queriesInFolder = sortedFolder.Where(i => i["isFolder"] == null).ToList();
+            if (queriesInFolder.Count > 0)
+            {
+                <ul>
+                @foreach (dynamic queryItem in queriesInFolder) {
+                    <li class="vsts-query">
+                        <a href="@url?queryid=@(queryItem["id"])">@(queryItem["name"])</a>
+                    </li>
+                }
+                </ul>
+            }
+        }
+    }
+}

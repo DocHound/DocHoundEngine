@@ -118,12 +118,23 @@ namespace DocHound.Models.Docs
                         break;
 
                     case RepositoryTypes.VstsWorkItemTracking:
-                        if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery) && HttpContext.Request.Query.ContainsKey("workitemnumber"))
+                        if ((TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery) || TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries)) && HttpContext.Request.Query.ContainsKey("workitemnumber"))
                         {
                             // The current node is a work item query, but we use it as a context to get the actual work item
                             var itemNumber = int.Parse(HttpContext.Request.Query["workitemnumber"]);
                             rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
                             rawTopic.Type = TopicTypeNames.VstsWorkItem;
+                        }
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries) && HttpContext.Request.Query.ContainsKey("queryid"))
+                        {
+                            // The current node is a list of work item queries, but we use it as a context to run the actual query
+                            var queryId = HttpContext.Request.Query["queryid"];
+                            var queryInfoJson = await VstsHelper.GetWorkItemQueriesJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                            dynamic queryInfo = JObject.Parse(queryInfoJson);
+                            if (queryInfo != null)
+                                Title = "Query: " + queryInfo.name;
+                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                            rawTopic.Type = TopicTypeNames.VstsWorkItemQuery;
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItem))
                         {
@@ -132,11 +143,17 @@ namespace DocHound.Models.Docs
                             rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries))
+                        {
                             // Plain work item queries
                             rawTopic.OriginalContent = await VstsHelper.GetWorkItemQueriesJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                            Title = SelectedTopic.Title;
+                        }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery))
+                        {
                             // Plain work item query
                             rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                            Title = SelectedTopic.Title;
+                        }
 
                         Vsts.ImageLink = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsWorkItemTracking + "&topic=" + SelectedTopicName + "&path=";
                         break;
@@ -367,7 +384,19 @@ namespace DocHound.Models.Docs
         public List<TableOfContentsItem> Topics { get; set; } = new List<TableOfContentsItem>();
         public List<OutlineItem> Outline { get; set; } = new List<OutlineItem>();
 
-        public string Title => SelectedTopicName;
+        private string _title;
+        public string Title 
+        {
+            get
+            {
+                if (_title == null) return SelectedTopicName;
+                return _title;
+            }
+            set{ _title = value; }
+        }
+
+        public string TitleAsId => TopicHelper.GetNormalizedName(Title.ToLowerInvariant());
+
         public string RepositoryTitle { get; set; }
         public string Owner { get; set; }
 

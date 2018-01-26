@@ -41,3 +41,13 @@ table.workitem-query-results {
     border-color: #bababa;
     background-color: #bababa;
 }
+
+ul.vsts-query {
+    font-weight: normal;
+    font-size: 11pt;
+}
+
+li.vsts-query-folder {
+    font-weight: bold;
+    font-size: 14pt;
+}
