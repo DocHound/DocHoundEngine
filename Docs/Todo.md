@@ -26,7 +26,7 @@
     * [ ] Maybe we could even show the name of the language at the top of the snippet
     * [ ] Would be nice to have a setting that allows specifying the max height for a code snippet. If it is taller, it could show an expand/collapse button.
 * [ ] Markdown improvements
-    * [ ] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
+    * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
     * [ ] Support FontAwesome
     * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [x] Would be nice to support math notation
@@ -50,10 +50,13 @@
 ## Overall Processing
 
 * [ ] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl
-* [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
+* [ ] No hardcoding of any elements
+   * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
+   * [ ] The footer content needs to be customizable
+   * [ ] Sidebar content needs to be customizable
+   * [ ] The site icon needs to be customizable
 * [ ] Should support slug better
 * [ ] Topics in the TOC should have a "visible" or "hidden" flag, so they can be managed in the tree (and be considered for URL patterns and such), but not displayed as part of the tree. This is useful in a number of scenarios. For instance, one could create a custom slug the topic can be found by, even though we may not want it in the tree (such as when embedding a document inside of another). It is also useful for tooling, such as when we want a tool that shows all files that are not yet referenced by the TOC (which could get annoying if you have files you really do not want to show up in the tree).
-* [x] Would be nice to allow links to external markdown files (or really any other topic we support) to be brought inline on-demand (so it wouldn't always be there, but it could be 'expanded' in... a good example of this would be in our own [Supported Markdown Features topic](Supported Markdown Features), where I would like to pull in the externally linked explanations of markdown features)
 * [ ] Handlebars templates would be a nice feature to support at least for simple templating. (Probably on a topic-by-topic basis... for instance, we could have a template just for specific types of TFS items)
 * [ ] When there is a slug passed in that doesn't seem to go with a specific topic, we should show an appropriate message, rather than defaulting back to the first topic
 * [ ] Allow overriding of CSS styles on individual topics
@@ -70,6 +73,7 @@
 * [ ] Threaded discussions, or at least comments
 * [ ] Would be nice to support cool interactions with linked source code. For instance, could we pull all source files that are flagged for code-review and show them inside the docs, so people authorized to review code could look through the code right there and approve it? 
 * [ ] PDF export
+* [x] Would be nice to allow links to external markdown files (or really any other topic we support) to be brought inline on-demand (so it wouldn't always be there, but it could be 'expanded' in... a good example of this would be in our own [Supported Markdown Features topic](Supported Markdown Features), where I would like to pull in the externally linked explanations of markdown features)
 * [ ] Need to get the search implemented
    * [ ] Need the more advanced ability to do a full search across all documents using Azure Search
    * [ ] Keywords and description need to be passed to the fully indexed search as relatively high priority fields
