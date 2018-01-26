@@ -68,6 +68,7 @@
     * [ ] We want to do the same inside a topic by having a special placeholder in the doc (we are thinking about a kava-topic HTML tag
 * [ ] Edit link right in the topic
 * [ ] Threaded discussions, or at least comments
+* [ ] Would be nice to support cool interactions with linked source code. For instance, could we pull all source files that are flagged for code-review and show them inside the docs, so people authorized to review code could look through the code right there and approve it? 
 * [ ] PDF export
 * [ ] Need to get the search implemented
    * [ ] Need the more advanced ability to do a full search across all documents using Azure Search
