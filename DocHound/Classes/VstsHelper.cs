@@ -62,7 +62,7 @@ namespace DocHound.Classes
                     url += folder;
                 }
 
-                var urlParameters = "depth=2&api-version=" + ApiVersion;
+                var urlParameters = "$depth=2&api-version=" + ApiVersion;
 
                 var httpResponseMessage = await httpClient.GetAsync(url + "?" + urlParameters);
                 if (httpResponseMessage.IsSuccessStatusCode)
@@ -85,7 +85,7 @@ namespace DocHound.Classes
                     url += queryName;
                 }
 
-                var urlParameters = "depth=2&api-version=" + ApiVersion;
+                var urlParameters = "api-version=" + ApiVersion;
 
                 var httpResponseMessage = await httpClient.GetAsync(url + "?" + urlParameters);
                 if (httpResponseMessage.IsSuccessStatusCode)
