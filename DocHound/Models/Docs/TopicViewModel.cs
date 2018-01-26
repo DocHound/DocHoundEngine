@@ -160,9 +160,6 @@ namespace DocHound.Models.Docs
                 }
             }
 
-            // TODO: This needs to be done more sophisticated
-            //rawTopic.OriginalContent = await ProcessKavaTopic(rawTopic.OriginalContent);
-
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
 
             var intermediateHtml = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
@@ -197,35 +194,76 @@ namespace DocHound.Models.Docs
         private async Task<string> ProcessKavaTopic(string text)
         {
             if (string.IsNullOrEmpty(text)) return string.Empty;
+
+            var recs = new List<string>();
+
+            if ((text.Contains("<kava-topic") || text.Contains("[kava-topic:")) && HttpContext.Request.Query.ContainsKey("recursion"))
+            {
+                var rec = StringHelper.Base64Decode(HttpContext.Request.Query["recursion"]);
+                if (!string.IsNullOrEmpty(rec))
+                    recs = rec.Split('&').ToList();
+            }
+
+
+            // Fixing up <kava-topic link="x" slug="x" /> syntax
             while (text.Contains("<kava-topic"))
             {
-                var canEmbedTopic = true;
-                var recs = new List<string>();
-                if (HttpContext.Request.Query.ContainsKey("recursion"))
-                {
-                    var rec = StringHelper.Base64Decode(HttpContext.Request.Query["recursion"]);
-                    if (!string.IsNullOrEmpty(rec))
-                    {
-                        recs = rec.Split('&').ToList();
-                        if (recs.Contains(SelectedTopicName)) // We are recursive if this is true
-                            canEmbedTopic = false;
-                    }
-                }
-
-                if (!canEmbedTopic)
-                {
-                    text = await EmbeddKavaTopic(text, recs, true);
-                }
+                if (recs.Contains(SelectedTopicName))
+                    text = await EmbeddKavaTopicTag(text, recs, true);
                 else
                 {
                     recs.Add(SelectedTopicName);
-                    text = await EmbeddKavaTopic(text, recs);
+                    text = await EmbeddKavaTopicTag(text, recs);
                 }
             }
+
+            // Fixing up [kava-topic:x] syntax
+            while (text.Contains("[kava-topic:"))
+            {
+                if (recs.Contains(SelectedTopicName))
+                    text = await EmbeddKavaTopicPlaceholder(text, recs, true);
+                else
+                {
+                    recs.Add(SelectedTopicName);
+                    text = await EmbeddKavaTopicPlaceholder(text, recs);
+                }
+            }
+
             return text;
         }
 
-        private async Task<string> EmbeddKavaTopic(string html, IEnumerable<string> recursions, bool killRecursion = false)
+        private async Task<string> EmbeddKavaTopicPlaceholder(string html, IEnumerable<string> recursions, bool killRecursion = false)
+        {
+            var recsEncoded = StringHelper.Base64Encode(string.Join('&', recursions));
+            var sb = new StringBuilder();
+
+            var tagStart = html.IndexOf("[kava-topic:", StringComparison.Ordinal);
+            if (tagStart > -1)
+            {
+                sb.Append(html.Substring(0, tagStart - 1));
+                html = html.Substring(tagStart + 12);
+                var slugEnd = html.IndexOf(']');
+                if (slugEnd > -1)
+                {
+                    var slug = html.Substring(0, slugEnd);
+                    html = html.Substring(slugEnd + 1);
+                    if (!killRecursion)
+                    {
+                        if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
+                            slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/" + slug;
+                        var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, $"{slug}?contentonly=true&recursion={recsEncoded}");
+                        sb.Append(insertedHtml);
+                    }
+                    else
+                        sb.Append($"<span class=\"kava-recursive-topic\">Recursive topic link detected: {slug}</span>");
+                }
+                sb.Append(html);
+            }
+
+            return sb.ToString();
+        }
+
+        private async Task<string> EmbeddKavaTopicTag(string html, IEnumerable<string> recursions, bool killRecursion = false)
         {
             var recsEncoded = StringHelper.Base64Encode(string.Join('&', recursions));
             var sb = new StringBuilder();
