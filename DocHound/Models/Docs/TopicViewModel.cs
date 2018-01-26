@@ -427,7 +427,8 @@ namespace DocHound.Models.Docs
         {
             get
             {
-                if (_title == null) return SelectedTopicName;
+                if (_title == null)
+                    return SelectedTopic != null ? SelectedTopic.Title : SelectedTopicName;
                 return _title;
             }
             set{ _title = value; }
