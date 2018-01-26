@@ -11,5 +11,5 @@ For more information on how to specify a custom CSS file, see [Table of Contents
 The current CSS file used by the Kava Docs Default Theme contains the following styles:
 
 ```css
-<kava-topic link="https://raw.githubusercontent.com/DocHound/DocHoundEngine/master/DocHound/wwwroot/Themes/Default/Theme.css" />
+[kava-topic:https://raw.githubusercontent.com/DocHound/DocHoundEngine/master/DocHound/wwwroot/Themes/Default/Theme.css]
 ```
