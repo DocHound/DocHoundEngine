@@ -46,10 +46,11 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     padding-right: 330px;
     padding-bottom: 100px;
     overflow-x: hidden;
-    -ms-transition: top .3s;
-    -moz-transition: top .3s; /* Firefox 4 */
-    -webkit-transition: top .3s; /* Safari and Chrome */
-    -o-transition: top .3s; /* Opera */
+    -ms-transition: top .3s, margin-left .3s, margin-right .3s;
+    -moz-transition: top .3s, margin-left .3s, margin-right .3s; /* Firefox 4 */
+    -webkit-transition: top .3s, margin-left .3s, margin-right .3s; /* Safari and Chrome */
+    -o-transition: top .3s, margin-left .3s, margin-right .3s; /* Opera */
+    transition: top .3s, margin-left .3s, margin-right .3s;
 }
 
     .content-container.showMobileMenu {
@@ -140,11 +141,11 @@ li.kava-auto-link {
     right: 0;
     background-color: #1e88e5;
     background-color: #1e88e5de;
-    -ms-transition: height .3s;
-    -moz-transition: height .3s; /* Firefox 4 */
-    -webkit-transition: height .3s; /* Safari and Chrome */
-    -o-transition: height .3s; /* Opera */
-    transition: height .3s;
+    -ms-transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s;
+    -moz-transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s; /* Firefox 4 */
+    -webkit-transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s; /* Safari and Chrome */
+    -o-transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s; /* Opera */
+    transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s;
 }
 
     .header.showMobileMenu {
@@ -382,11 +383,11 @@ li.kava-auto-link {
     top: 130px;
     bottom: 50px;
     overflow-y: auto;
-    -ms-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
-    -moz-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Firefox 4 */
-    -webkit-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Safari and Chrome */
-    -o-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Opera */
-    transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
+    -ms-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s;
+    -moz-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Firefox 4 */
+    -webkit-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Safari and Chrome */
+    -o-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Opera */
+    transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s;
 }
 
     .sidebar.scrolled {
@@ -473,7 +474,6 @@ li.kava-auto-link {
     .content-container {
         padding-right: 15px;
         padding-left: 15px;
-        padding-top: 70px;
     }
 }
 
@@ -502,6 +502,7 @@ li.kava-auto-link {
 
     .content-container {
         margin-left: 0px;
+        padding-top: 70px;
         background-color: white;
     }
 
