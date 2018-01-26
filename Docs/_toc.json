@@ -51,6 +51,21 @@
       ]
     },
     {
+      "title": "Authoring Documentation",
+      "topics": [
+          {
+            "title": "Getting Started",
+            "slug": "Authoring/Getting-Started",
+            "link": "Authoring/GettingStarted.md"
+          },
+          {
+            "title": "Embedding Topics within Others",
+            "slug": "Authoring/Embedding-Topics",
+            "link": "Authoring/EmbeddingTopics.md"
+          }
+        ]
+    },
+    {
       "title": "Developer Guide",
       "topics": [
           {
