@@ -24,6 +24,7 @@ The following topic types are currently being considered. Those with a checkmark
 
 * [x] TFS Work Items (and/or queries)
 * [ ] Plain Text (essentially treated like Markup, I would think)
+* [ ] Entire topics that only show an image, or maybe collections of images, like all images in a folder (would be very useful for graphics design shops)
 * [ ] RSS Feeds
 * [ ] Wiki formats (not sure what that would be exactly :-) )
 * [ ] Word
