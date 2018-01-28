@@ -11,6 +11,7 @@
     * [ ] ...?
 * [ ] Themes
 * [ ] Full index search
+* [ ] Analytics integration (probably support different ones)
 * [ ] Wildcard domain support
 * [ ] Need an editor for the TOC live on the kavadocs.com site
 * [ ] Create fundamental documentation for how to use and customize Kava Docs
