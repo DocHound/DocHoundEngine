@@ -32,6 +32,7 @@
     * [ ] Not sure if we should do something more old fashioned like this: https://docs.blesta.com/display/user/Overview
     * [ ] Or another somewhat old fashioned option: https://docs.whmcs.com/Importing_Data
     * [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
+    * [ ] People seem to like http://en.cppreference.com/w/
     * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
 * [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [ ] Code
