@@ -11,6 +11,7 @@
     * [ ] ...?
 * [ ] Themes
 * [ ] Full index search
+* [ ] Analytics integration (probably support different ones)
 * [ ] Wildcard domain support
 * [ ] Need an editor for the TOC live on the kavadocs.com site
 * [ ] Create fundamental documentation for how to use and customize Kava Docs
@@ -89,3 +90,6 @@
 * [x] URL parameters identifying topics should *not* be case sensitive
 * [x] Allow for settings on the entire TOC as well as on individual topics
 
+## Other Ideas
+
+* [ ] It would be nice if Doc Hound could serve up a few non-doc pages also, allowing people to build their entire site with Kava Docs. (Example: http://aurelia.io could be almost entirely done in Kava Docs, if we only allowed a few more other pages to be added in interesting ways).

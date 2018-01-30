@@ -12,6 +12,7 @@ Typic types can be defined on a per-topic basis (see also: [Table of Contents Fi
 |---|---|---|---|
 | markdown | Topics written in the popular Markdown standard. We also support a variety of extensions. | Links ending in .md and also, Markdown is the fallback option when no other type can be identified by the pattern. | [Supported Markdown Features](Supported-Markdown-Features) |
 | html | Topics written in standard HTML format. | Links ending in .html or .htm | [Supported HTML Features](Supported-HTML-Features) |
+| imageurl | The topic simply points to an image file | Links ending in .png, .jpg, .jpeg, .tiff, .gif |  |
 | vsts-workitem | A single TFS/VSTS Work Item | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
 | vsts-workitem-query | Displays the resulting records of a work-item query | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
 | vsts-workitem-query:toc | Displays the resulting records of a work-item query as nodes of the TOC tree | n/a | [Supported VSTS Features](Supported-VSTS-Features) |
@@ -52,5 +53,6 @@ The following topic types are currently being considered. Those with a checkmark
    * [ ] Moqups
    * [ ] Adobe XD
 * [ ] Wikipedia
+* [ ] Stack Overflow
 * [ ] LaTeX
 * [ ] NuGet (so people can document things one needs to get from NuGet and how to get it)

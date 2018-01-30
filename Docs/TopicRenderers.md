@@ -6,6 +6,7 @@ Topics are rendered based on the type specified for each topic. Each topic has a
 [<abstract>ITopicRenderer|RenderToHtml();RenderToJson();GetTemplateName()]
 [ITopicRenderer]<:-[MarkdownTopicRenderer]
 [ITopicRenderer]<:-[HtmlTopicRenderer]
+[ITopicRenderer]<:-[ImageTopicRenderer]
 [ITopicRenderer]<:-[WorkItemTopicRenderer]
 
 #fontSize: 10 
