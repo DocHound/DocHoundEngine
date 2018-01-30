@@ -19,8 +19,11 @@
 ## Rendering Engine
 
 * [ ] Themes
-    * [ ] Dark theme
-    * [ ] Sepia theme
+    * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
+    * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
+    * [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
+    * [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
+    
 * [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
