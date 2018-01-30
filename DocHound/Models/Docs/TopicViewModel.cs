@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
 using DocHound.Interfaces;
 using HtmlAgilityPack;
+using HtmlAgilityPack.CssSelectors.NetCore;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 
@@ -20,11 +22,11 @@ namespace DocHound.Models.Docs
 
         public bool RenderTopicOnly { get; set; }
 
-        public TopicViewModel(string topicName, HttpContext context)
+        public TopicViewModel(string slug, HttpContext context)
         {
             HttpContext = context;
             Vsts = new VstsOutputHelper(this);
-            SelectedTopicName = topicName;
+            CurrentSlug = slug;
 
             if (HttpContext.Request.Query.ContainsKey("contentonly"))
                 RenderTopicOnly = context.Request.Query["contentonly"] == "true";
@@ -58,25 +60,28 @@ namespace DocHound.Models.Docs
 
             if (dynamicToc.title != null) RepositoryTitle = dynamicToc.title;
             if (dynamicToc.owner != null) Owner = dynamicToc.owner;
+            if (dynamicToc.requireHttps != null) RequireHttps = dynamicToc.requireHttps;
 
-            Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, this, SelectedTopicName);
+            Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, this, CurrentSlug, out List<TableOfContentsItem> flatTopicList);
+            FlatTopics = flatTopicList;
             MainMenu = TableOfContentsHelper.BuildMainMenuStructureFromDynamicToc(dynamicToc);
             ThemeFolder = TableOfContentsHelper.GetThemeFolderFromDynamicToc(dynamicToc);
             SyntaxTheme = TableOfContentsHelper.GetSyntaxThemeNameFromDynamicToc(dynamicToc);
             CustomCss = TableOfContentsHelper.GetCustomCssFromDynamicToc(dynamicToc);
 
-            // TODO: Check for HTTPS if the TOC is configured to only accept https
+            var matchingTopic = FlatTopics.FirstOrDefault(t => TopicHelper.SlugMatchesTopic(CurrentSlug, t));
+            if (matchingTopic == null) matchingTopic = FlatTopics.FirstOrDefault(t => TopicHelper.SlugMatchesTopic(CurrentSlug, t, true));
+            if (matchingTopic == null) matchingTopic = FlatTopics.FirstOrDefault(t => TopicHelper.LinkMatchesTopic(CurrentSlug, t));
+            if (matchingTopic == null) matchingTopic = Topics.FirstOrDefault();
 
-            if (SelectedTopic == null && Topics.Count > 0)
-            {
-                SelectedTopic = Topics[0];
-                if (SelectedTopicName == "index")
-                    SelectedTopicName = SelectedTopic.Title;
-            }
+            SelectedTopic = matchingTopic;
+            TableOfContentsHelper.EnsureExpanded(SelectedTopic);
 
             TocSettings = dynamicToc.settings;
             CurrentTopicSettings = SelectedTopic?.SettingsDynamic;
         }
+
+        public bool RequireHttps { get; set; } = true;
 
         private async Task GetHtmlContent()
         {
@@ -104,7 +109,11 @@ namespace DocHound.Models.Docs
                 {
                     case RepositoryTypes.GitHubRaw:
                         var fullGitHubRawUrl = GitHubMasterUrlRaw + SelectedTopic.Link;
-                        rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
+                        if (string.IsNullOrEmpty(rawTopic.Type)) rawTopic.Type = TopicTypeHelper.GetTopicTypeFromLink(fullGitHubRawUrl);
+                        if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Markdown) || TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Html))
+                            rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
+                        else if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.ImageUrl))
+                            rawTopic.OriginalContent = fullGitHubRawUrl;
                         imageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
                         if (!string.IsNullOrEmpty(imageRootUrl) && !imageRootUrl.EndsWith("/")) imageRootUrl += "/";
                         break;
@@ -155,7 +164,7 @@ namespace DocHound.Models.Docs
                             Title = SelectedTopic.Title;
                         }
 
-                        Vsts.ImageLink = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsWorkItemTracking + "&topic=" + SelectedTopicName + "&path=";
+                        Vsts.ImageLink = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsWorkItemTracking + "&topic=" + CurrentSlug + "&path=";
                         break;
                 }
             }
@@ -164,6 +173,7 @@ namespace DocHound.Models.Docs
 
             var intermediateHtml = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
             Html = await ProcessKavaTopic(intermediateHtml);
+            Html = ProcessBrokenImageLinks(intermediateHtml, imageRootUrl);
 
             Json = renderer.RenderToJson(rawTopic, imageRootUrl, this);
             TemplateName = renderer.GetTemplateName(rawTopic, TemplateName, this);
@@ -191,6 +201,44 @@ namespace DocHound.Models.Docs
             }
         }
 
+        private string ProcessBrokenImageLinks(string html, string imageRootUrl)
+        {
+            if (!html.Contains("<img ")) return html;
+
+            try
+            {
+                var changesMade = false;
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+
+                var images = doc.QuerySelectorAll("img");
+
+                foreach (var image in images)
+                {
+                    var src = image.GetAttributeValue("src", string.Empty);
+                    if (src.StartsWith("data:")) continue;
+                    if (src.StartsWith("http://")) continue;
+                    if (src.StartsWith("https://")) continue;
+
+                    changesMade = true;
+                    image.SetAttributeValue("src", imageRootUrl + src);
+                }
+
+                if (changesMade)
+                {
+                    var stream = new MemoryStream();
+                    doc.Save(stream);
+                    html = StreamHelper.ToString(stream);
+                }
+
+                return html;
+            }
+            catch
+            {
+                return html;
+            }
+        }
+
         private async Task<string> ProcessKavaTopic(string text)
         {
             if (string.IsNullOrEmpty(text)) return string.Empty;
@@ -208,11 +256,11 @@ namespace DocHound.Models.Docs
             // Fixing up <kava-topic link="x" slug="x" /> syntax
             while (text.Contains("<kava-topic"))
             {
-                if (recs.Contains(SelectedTopicName))
+                if (recs.Contains(CurrentSlug))
                     text = await EmbeddKavaTopicTag(text, recs, true);
                 else
                 {
-                    recs.Add(SelectedTopicName);
+                    recs.Add(CurrentSlug);
                     text = await EmbeddKavaTopicTag(text, recs);
                 }
             }
@@ -220,11 +268,11 @@ namespace DocHound.Models.Docs
             // Fixing up [kava-topic:x] syntax
             while (text.Contains("[kava-topic:"))
             {
-                if (recs.Contains(SelectedTopicName))
+                if (recs.Contains(CurrentSlug))
                     text = await EmbeddKavaTopicPlaceholder(text, recs, true);
                 else
                 {
-                    recs.Add(SelectedTopicName);
+                    recs.Add(CurrentSlug);
                     text = await EmbeddKavaTopicPlaceholder(text, recs);
                 }
             }
@@ -420,6 +468,7 @@ namespace DocHound.Models.Docs
         }
 
         public List<TableOfContentsItem> Topics { get; set; } = new List<TableOfContentsItem>();
+        public List<TableOfContentsItem> FlatTopics { get; set; }
         public List<OutlineItem> Outline { get; set; } = new List<OutlineItem>();
 
         private string _title;
@@ -428,7 +477,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (_title == null)
-                    return SelectedTopic != null ? SelectedTopic.Title : SelectedTopicName;
+                    return SelectedTopic != null ? SelectedTopic.Title : CurrentSlug;
                 return _title;
             }
             set{ _title = value; }
@@ -472,7 +521,7 @@ namespace DocHound.Models.Docs
             }
         }
 
-        public string SelectedTopicName { get; set; }
+        public string CurrentSlug { get; set; }
         public string Link => string.Empty;
         public string Slug => string.Empty;
         public IHaveTopics Parent => null;

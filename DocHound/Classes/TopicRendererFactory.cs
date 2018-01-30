@@ -26,6 +26,7 @@ namespace DocHound.Classes
         {
             {TopicTypeNames.Markdown, new MarkdownTopicRenderer()},
             {TopicTypeNames.Html, new HtmlTopicRenderer()},
+            {TopicTypeNames.ImageUrl, new ImageTopicRenderer()},
             {TopicTypeNames.VstsWorkItem, new WorkItemTopicRenderer()},
             {TopicTypeNames.VstsWorkItemQueries, new WorkItemTopicRenderer()},
             {TopicTypeNames.VstsWorkItemQuery, new WorkItemTopicRenderer()},

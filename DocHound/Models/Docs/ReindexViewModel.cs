@@ -38,7 +38,7 @@ namespace DocHound.Models.Docs
 
             var dynamicToc = TableOfContentsHelper.GetDynamicTocFromJson(tocJson);
 
-            Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, null, string.Empty);
+            Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, null, string.Empty, out List<TableOfContentsItem> flatTopicsList);
         }
 
         public List<TableOfContentsItem> Topics { get; set; } = new List<TableOfContentsItem>();

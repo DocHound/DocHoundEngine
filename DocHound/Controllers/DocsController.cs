@@ -20,6 +20,12 @@ namespace DocHound.Controllers
 
             var vm = new TopicViewModel(topic, HttpContext);
             await vm.LoadData();
+
+            if (vm.RequireHttps && !HttpContext.Request.IsHttps && !HttpContext.Request.Host.Host.StartsWith("localhost"))
+            {
+                var url = $"https://{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}";
+                return Redirect(url);
+            }
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
         }
 

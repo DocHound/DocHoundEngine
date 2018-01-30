@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocHound.Models.Docs;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 using Newtonsoft.Json;
@@ -35,14 +36,15 @@ namespace DocHound.Classes
             return menu;
         }
 
-        public static List<TableOfContentsItem> BuildTocFromDynamicToc(dynamic toc, IHaveTopics parent, string selectedTopicTitle)
+        public static List<TableOfContentsItem> BuildTocFromDynamicToc(dynamic toc, IHaveTopics parent, string selectedTopicTitle, out List<TableOfContentsItem> flatTopicList)
         {
             var rootTopics = new List<TableOfContentsItem>();
+            flatTopicList = new List<TableOfContentsItem>();
             if (toc == null) return rootTopics;
             try
             {
                 if (toc.topics != null)
-                    AddTopics(toc.topics, rootTopics, parent, parent, selectedTopicTitle);
+                    AddTopics(toc.topics, rootTopics, parent, parent, selectedTopicTitle, flatTopicList);
             }
             catch
             {
@@ -51,17 +53,17 @@ namespace DocHound.Classes
             return rootTopics;
         }
 
-        public static List<TableOfContentsItem> BuildTocFromJson(string tocJson, IHaveTopics parent, string selectedTopicTitle)
+        public static List<TableOfContentsItem> BuildTocFromJson(string tocJson, IHaveTopics parent, string selectedTopicTitle, out List<TableOfContentsItem> flatTopicList)
         {
             dynamic toc = GetDynamicTocFromJson(tocJson);
-            return BuildTocFromDynamicToc(toc, parent, selectedTopicTitle);
+            return BuildTocFromDynamicToc(toc, parent, selectedTopicTitle, out flatTopicList);
         }
 
-        private static void AddTopics(IEnumerable<dynamic> topics, ICollection<TableOfContentsItem> parentTopics, IHaveTopics parent, IHaveTopics root, string selectedTopicTitle)
+        private static void AddTopics(IEnumerable<dynamic> topics, ICollection<TableOfContentsItem> parentTopics, IHaveTopics parent, IHaveTopics root, string selectedTopicTitle, List<TableOfContentsItem> flatTopicList)
         {
             foreach (var topic in topics)
             {
-                var newTopic = new TableOfContentsItem(parent) {Title = topic.title ?? "Unknown topic"};
+                var newTopic = new TableOfContentsItem(parent, root) {Title = topic.title ?? "Unknown topic"};
                 if (topic.link != null) newTopic.Link = topic.link;
                 if (topic.isExpanded != null) newTopic.Expanded = topic.isExpanded;
                 if (topic.keywords != null) newTopic.KeywordsRaw = topic.keywords;
@@ -83,16 +85,17 @@ namespace DocHound.Classes
                 }
 
                 parentTopics.Add(newTopic);
+                flatTopicList.Add(newTopic);
 
-                if (TopicHelper.LinkMatchesTopic(selectedTopicTitle, newTopic))
-                {
-                    if (root is IHaveSelectedTopic selectedTopicParent)
-                        selectedTopicParent.SelectedTopic = newTopic;
-                    EnsureExpanded(newTopic);
-                }
+                //if (selectedTopicTitle != null && TopicHelper.LinkMatchesTopic(selectedTopicTitle, newTopic))
+                //{
+                //    if (root is IHaveSelectedTopic selectedTopicParent)
+                //        selectedTopicParent.SelectedTopic = newTopic;
+                //    EnsureExpanded(newTopic);
+                //}
 
                 if (topic.topics != null)
-                    AddTopics(topic.topics, newTopic.Topics, newTopic, root, selectedTopicTitle);
+                    AddTopics(topic.topics, newTopic.Topics, newTopic, root, selectedTopicTitle, flatTopicList);
             }
         }
 
@@ -115,9 +118,12 @@ namespace DocHound.Classes
 
         private static readonly Dictionary<string, string> CrawledGitHubRepositories = new Dictionary<string, string>();
 
-        private static async Task<string> CrawlGitHubForToc(string url, StringBuilder sb = null)
+        private static async Task<string> CrawlGitHubForToc(string url, StringBuilder sb = null, string rootUrl = null)
         {
-            if (CrawledGitHubRepositories.ContainsKey(url)) return CrawledGitHubRepositories[url];
+            lock (CrawledGitHubRepositories)
+                if (CrawledGitHubRepositories.ContainsKey(url)) return CrawledGitHubRepositories[url];
+
+            if (rootUrl == null) rootUrl = url;
 
             var sbWasNull = false;
             if (sb == null)
@@ -148,17 +154,13 @@ namespace DocHound.Classes
                             var content = navigationItem.QuerySelector("td.content span a");
                             if (content != null)
                             {
+                                var slug = GetSlugFromLink(url, rootUrl, content.InnerText);
                                 sb.Append("{");
-                                sb.Append($"\"title\": \"{content.InnerText}\"");
+                                sb.Append($"\"title\": \"{content.InnerText}\", \"slug\": \"{slug}\"");
                                 sb.Append(", \"topics\": [");
 
                                 var linkUrl = "https://github.com" + content.GetAttributeValue("href", string.Empty);
-                                //var slashPosition = StringHelper.At("/", linkUrl, 3);
-                                //if (slashPosition > -1)
-                                //{
-                                  //  linkUrl = url + linkUrl.Substring(slashPosition);
-                                    await CrawlGitHubForToc(linkUrl, sb);
-                                //}
+                                await CrawlGitHubForToc(linkUrl, sb, rootUrl);
                                 sb.Append("]},");
                             }
                         }
@@ -176,12 +178,16 @@ namespace DocHound.Classes
                             if (content != null)
                             {
                                 var text = content.InnerText;
-                                var lowerText = text.ToLowerInvariant();
-                                if (lowerText.EndsWith(".md") || lowerText.EndsWith(".html") || lowerText.EndsWith(".htm") || lowerText.EndsWith(".txt"))
+                                if (ShouldFileBeIncludedInCrawl(text))
                                 {
                                     var title = StringHelper.JustFileName(text);
+                                    var slug = GetSlugFromLink(url, rootUrl, title);
+                                    var link = content.GetAttributeValue("href", string.Empty);
+                                    var blobMasterIndex = link.IndexOf("/blob/master/", StringComparison.InvariantCultureIgnoreCase);
+                                    if (blobMasterIndex > -1)
+                                        link = link.Substring(blobMasterIndex + 13);
                                     sb.Append("{");
-                                    sb.Append($"\"title\": \"{title}\", \"link\": \"{text}\"");
+                                    sb.Append($"\"title\": \"{title}\", \"link\": \"{link}\", \"slug\": \"{slug}\"");
                                     sb.Append("},");
                                 }
                             }
@@ -199,21 +205,52 @@ namespace DocHound.Classes
 
                 sb.Append("]}");
                 var resultToc = sb.ToString();
-                CrawledGitHubRepositories.Add(url, resultToc);
+                lock (CrawledGitHubRepositories)
+                    if (CrawledGitHubRepositories.ContainsKey(url))
+                        CrawledGitHubRepositories[url] = resultToc;
+                    else
+                        CrawledGitHubRepositories.Add(url, resultToc);
                 return resultToc;
             }
 
             return string.Empty;
         }
 
-        public static string GetToCHtml(List<TableOfContentsItem> toc, string selectedLink)
+        private static string GetSlugFromLink(string url, string rootUrl, string title)
+        {
+            var slug = url.Substring(rootUrl.Length) + "/" + TopicHelper.GetNormalizedName(title);
+            if (slug.ToLowerInvariant().StartsWith("tree/")) slug = slug.Substring(5);
+            if (slug.ToLowerInvariant().StartsWith("master/")) slug = slug.Substring(7);
+            slug = TrimSupportedCrawlExtensionFromSlug(slug);
+            while (slug.Contains("//")) slug = slug.Replace("//", "/");
+            return slug;
+        }
+
+        private static readonly string[] SupportedCrawlExtensions = {"md", "html", "htm", "txt", "jpeg", "jpg", "png", "gif", "tiff", "tif"};
+
+        private static bool ShouldFileBeIncludedInCrawl(string fileName)
+        {
+            fileName = fileName.ToLowerInvariant();
+            return SupportedCrawlExtensions.Any(supportedExtension => fileName.EndsWith("." + supportedExtension));
+        }
+
+        private static string TrimSupportedCrawlExtensionFromSlug(string slug)
+        {
+            var slugLower = slug.ToLowerInvariant();
+            foreach (var supportedExtension in SupportedCrawlExtensions)
+                if (slugLower.EndsWith("." + supportedExtension))
+                    slugLower = slugLower.Substring(0, slug.Length - (supportedExtension.Length + 1));
+            return slug;
+        }
+
+        public static string GetToCHtml(List<TableOfContentsItem> toc, TableOfContentsItem selectedTopic)
         {
             var sb = new StringBuilder();
-            AddTocItems(sb, toc, 0, selectedLink);
+            AddTocItems(sb, toc, 0, selectedTopic);
             return sb.ToString();
         }
 
-        private static void AddTocItems(StringBuilder sb, IEnumerable<TableOfContentsItem> topics, int indentLevel, string selectedLink, TableOfContentsItem parentTopic = null)
+        private static void AddTocItems(StringBuilder sb, IEnumerable<TableOfContentsItem> topics, int indentLevel, TableOfContentsItem selectedTopic, TableOfContentsItem parentTopic = null)
         {
             var ulClasses = "topicList topicListLevel" + indentLevel;
             if (parentTopic != null) ulClasses += parentTopic.Expanded ? " topicExpanded" : " topicCollapsed";
@@ -223,23 +260,23 @@ namespace DocHound.Classes
             {
                 var className = "topicLink topicLevel" + indentLevel;
 
-                if (TopicHelper.LinkMatchesTopic(selectedLink, topic)) className += " selectedTopic";
+                if (topic == selectedTopic) className += " selectedTopic";
 
                 sb.Append("<li class=\"" + className + "\">");
 
                 if (topic.Topics.Count > 0)
                 {
-                    sb.Append($"<a href=\"/{topic.SlugSafe}\">{topic.Title}</a>");
+                    sb.Append($"<a href=\"{topic.SlugSafe}\">{topic.Title}</a>");
                     var keywords = topic.Keywords;
                     if (!string.IsNullOrEmpty(keywords))
                         sb.Append($"<span style=\"display: none;\">{topic.Keywords}</span>");
                     sb.Append("<span class=\"caret " + (topic.Expanded ? "caretExpanded" : "caretCollapsed") + "\"><svg xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" viewBox=\"0 0 24 24\"><path fill=\"black\" stroke=\"white\" d=\"M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z\"></path></svg></span>");
 
-                    AddTocItems(sb, topic.Topics, indentLevel + 1, selectedLink, topic);
+                    AddTocItems(sb, topic.Topics, indentLevel + 1, selectedTopic, topic);
                 }
                 else
                 {
-                    sb.Append($"<a href=\"/{topic.SlugSafe}\">{topic.Title}</a>");
+                    sb.Append($"<a href=\"{topic.SlugSafe}\">{topic.Title}</a>");
                     var keywords = topic.Keywords;
                     if (!string.IsNullOrEmpty(keywords))
                         sb.Append("<span style=\"display: none;\">" + topic.Keywords + "</span>");
@@ -268,7 +305,7 @@ namespace DocHound.Classes
         //    }
         //}
 
-        private static void EnsureExpanded(TableOfContentsItem item)
+        public static void EnsureExpanded(TableOfContentsItem item)
         {
             if (item == null) return;
             item.Expanded = true;
@@ -321,12 +358,14 @@ namespace DocHound.Classes
 
     public class TableOfContentsItem : IHaveTopics
     {
-        public TableOfContentsItem(IHaveTopics parent)
+        public TableOfContentsItem(IHaveTopics parent, IHaveTopics root)
         {
             Parent = parent;
+            Root = root;
         }
 
         public IHaveTopics Parent { get; }
+        public IHaveTopics Root { get; }
 
         public string Title { get; set; }
         public string Type { get; set; }
@@ -340,8 +379,9 @@ namespace DocHound.Classes
             get
             {
                 var slug = Slug;
-                if (string.IsNullOrEmpty(slug))
-                    slug = TopicHelper.GetNormalizedName(Title);
+                if (string.IsNullOrEmpty(slug)) slug = TopicHelper.GetNormalizedName(Title);
+                if (!slug.StartsWith('/')) slug = "/" + slug;
+                while (slug.StartsWith("//")) slug = slug.Substring(1);
                 return slug;
             }
         }
@@ -359,10 +399,10 @@ namespace DocHound.Classes
         public List<SeeAlsoTopic> SeeAlso { get; } = new List<SeeAlsoTopic>();
 
         private TableOfContentsItem _previousTopic;
-        public TableOfContentsItem PreviousTopic => _previousTopic ?? (_previousTopic = TopicHelper.GetPreviousTopic(this));
+        public TableOfContentsItem PreviousTopic => _previousTopic ?? (_previousTopic = TopicHelper.GetPreviousTopic(this, Root as TopicViewModel));
 
         private TableOfContentsItem _nextTopic;
-        public TableOfContentsItem NextTopic => _nextTopic ?? (_nextTopic = TopicHelper.GetNextTopic(this, this));
+        public TableOfContentsItem NextTopic => _nextTopic ?? (_nextTopic = TopicHelper.GetNextTopic(this, Root as TopicViewModel));
         public string KeywordsRaw { get; set; }
 
         public string Keywords => KeywordsRaw?.Replace("\r", ", ").Replace("\n", ", ").Replace(", , ", ", ");
@@ -402,8 +442,32 @@ namespace DocHound.Classes
             return normalizedName;
         }
 
+        public static bool SlugMatchesTopic(string slug, IHaveTopics topic, bool ignoreCase = false)
+        {
+            // This is a more discriminating version of LinkMatchesTopic()
+
+            if (slug == null) return false;
+            if (topic == null) return false;
+
+            var topicSlug = topic.Slug;
+
+            if (ignoreCase)
+            {
+                slug = slug.ToLowerInvariant();
+                topicSlug = topicSlug.ToLowerInvariant();
+            }
+
+            while (slug.StartsWith('/')) slug = slug.Substring(1);
+            while (topicSlug.StartsWith('/')) topicSlug = topicSlug.Substring(1);
+
+            return slug == topicSlug;
+        }
+
         public static bool LinkMatchesTopic(string link, IHaveTopics topic)
         {
+            if (link == null) return false;
+            if (topic == null) return false;
+
             if (string.Compare(GetNormalizedName(topic.Slug), link, StringComparison.OrdinalIgnoreCase) == 0) return true;
 
             var normalizedName = GetNormalizedName(link);
@@ -417,42 +481,26 @@ namespace DocHound.Classes
             return false;
         }
 
-        public static TableOfContentsItem GetPreviousTopic(IHaveTopics topic)
+        public static TableOfContentsItem GetPreviousTopic(IHaveTopics topic, TopicViewModel topicViewModel)
         {
-            var parentItem = topic.Parent;
-            if (parentItem == null) return null;
-
-            for (var counter = 0; counter < parentItem.Topics.Count; counter++)
-                if (parentItem.Topics[counter] == topic)
-                {
-                    if (counter > 0)
-                    {
-                        var previousTopic = parentItem.Topics[counter - 1];
-                        while (previousTopic.Topics.Count > 0)
-                            previousTopic = previousTopic.Topics.Last();
-                        return previousTopic;
-                    }
-                    var tableOfContentsParentItem = parentItem as TableOfContentsItem;
-                    if (tableOfContentsParentItem != null)
-                        return tableOfContentsParentItem; // Since it is the first item at the current level, we return the parent node
-                }
+            var tocItem = topic as TableOfContentsItem;
+            if (tocItem != null && topicViewModel?.FlatTopics != null)
+            {
+                var index = topicViewModel.FlatTopics.IndexOf(tocItem);
+                return index > 0 ? topicViewModel.FlatTopics[index - 1] : null;
+            }
 
             return null;
         }
 
-        public static TableOfContentsItem GetNextTopic(IHaveTopics topic, IHaveTopics originalTopic)
+        public static TableOfContentsItem GetNextTopic(IHaveTopics topic, TopicViewModel topicViewModel)
         {
-            if (topic == originalTopic && topic.Topics.Count > 0) return topic.Topics[0];
-
-            var parentItem = topic.Parent;
-            if (parentItem == null) return null;
-
-            for (var counter = 0; counter < parentItem.Topics.Count; counter++)
-                if (parentItem.Topics[counter] == topic)
-                {
-                    if (counter < parentItem.Topics.Count - 1) return parentItem.Topics[counter + 1];
-                    return GetNextTopic(parentItem, originalTopic); // Since it is the last topic in the list, we try to find the next node in the parent
-                }
+            var tocItem = topic as TableOfContentsItem;
+            if (tocItem != null && topicViewModel?.FlatTopics != null)
+            {
+                var index = topicViewModel.FlatTopics.IndexOf(tocItem);
+                return index < topicViewModel.FlatTopics.Count ? topicViewModel.FlatTopics[index + 1] : null;
+            }
 
             return null;
         }
