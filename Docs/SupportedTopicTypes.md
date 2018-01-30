@@ -52,5 +52,6 @@ The following topic types are currently being considered. Those with a checkmark
    * [ ] Moqups
    * [ ] Adobe XD
 * [ ] Wikipedia
+* [ ] Stack Overflow
 * [ ] LaTeX
 * [ ] NuGet (so people can document things one needs to get from NuGet and how to get it)
