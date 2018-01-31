@@ -18,6 +18,7 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
 /* Table of Contents (complete tree) */
 
 .toc {
+    background: #efefef;
     position: fixed;
     width: 275px;
     top: 110px;
@@ -51,6 +52,8 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     -webkit-transition: top .3s, margin-left .3s, margin-right .3s; /* Safari and Chrome */
     -o-transition: top .3s, margin-left .3s, margin-right .3s; /* Opera */
     transition: top .3s, margin-left .3s, margin-right .3s;
+    line-height: 1.7;
+    text-align: justify;
 }
 
     .content-container.showMobileMenu {
@@ -768,6 +771,15 @@ p {
     margin-bottom: 10px;
     line-height: 1.5;
 }
+    p code {
+        font-family: Consolas, monospace;
+        background-color: #f9f9f9;
+        color: #505050;
+        border: 1px solid rgb(230, 230, 230);
+        padding: 1px 5px;
+        font-weight: 600;
+        border-radius: 3px;
+    }
 
 ul, ol {
     margin-bottom: 20px;
@@ -800,6 +812,7 @@ td, th {
     padding: 6px 13px;
     display: table-cell;
     vertical-align: top;
+    line-height: 1.4em;
 }
 
 th {

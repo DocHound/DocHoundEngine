@@ -221,6 +221,7 @@ namespace DocHound.Models.Docs
                     if (src.StartsWith("data:")) continue;
                     if (src.StartsWith("http://")) continue;
                     if (src.StartsWith("https://")) continue;
+                    if (src.StartsWith("/___FileProxy___?")) continue;
 
                     changesMade = true;
                     image.SetAttributeValue("src", imageRootUrl + src);
@@ -414,7 +415,7 @@ namespace DocHound.Models.Docs
         {
             if (_cachedSettings.ContainsKey(setting)) return (T) _cachedSettings[setting];
 
-            var value = SettingsHelper.GetSetting<T>(setting, TocSettings, CurrentTopicSettings);
+            var value = SettingsHelper.GetSetting<T>(setting, TocSettings, CurrentTopicSettings, CurrentRequestRootSettings);
 
             if (CurrentTopicSettings != null)
                 // We can only cache if we already have current topic settings, otherwise, those may just not have been loaded yet, and may thus still be loaded and needed later.
@@ -602,6 +603,21 @@ namespace DocHound.Models.Docs
                 return _gitHubMasterUrl;
             }
         }
+
+        public void SetRootSettingsForRequest(string settings)
+        {
+            try
+            {
+                dynamic dynamicSettings = JObject.Parse(settings);
+                CurrentRequestRootSettings = dynamicSettings;
+            }
+            catch
+            {
+                CurrentRequestRootSettings = null;
+            }
+        }
+
+        public dynamic CurrentRequestRootSettings { get; set; }
     }
 
     public class OutlineItem

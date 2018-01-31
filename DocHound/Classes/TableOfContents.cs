@@ -500,7 +500,7 @@ namespace DocHound.Classes
             if (tocItem != null && topicViewModel?.FlatTopics != null)
             {
                 var index = topicViewModel.FlatTopics.IndexOf(tocItem);
-                return index < topicViewModel.FlatTopics.Count ? topicViewModel.FlatTopics[index + 1] : null;
+                return index < topicViewModel.FlatTopics.Count - 1 ? topicViewModel.FlatTopics[index + 1] : null;
             }
 
             return null;

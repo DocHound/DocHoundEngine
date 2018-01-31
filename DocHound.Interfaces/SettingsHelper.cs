@@ -15,15 +15,19 @@ namespace DocHound.Interfaces
             GlobalConfiguration = configuration;
         }
 
-        public static T GetSetting<T>(string setting, dynamic repositorySettings = null, dynamic topicSettings = null)
+        public static T GetSetting<T>(string setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
         {
             // Topic-specific settings overrule everything else
             if (IsDynamicSettingSet(setting, topicSettings))
-                return GetDynamicSetting(setting, topicSettings);
+                return GetDynamicSetting<T>(setting, topicSettings);
 
             // Settings for the whole repository still overrule app-global settings
             if (IsDynamicSettingSet(setting, repositorySettings))
-                return GetDynamicSetting(setting, repositorySettings);
+                return GetDynamicSetting<T>(setting, repositorySettings);
+
+            // If we have request-specific root settings, we consider that
+            if (IsDynamicSettingSet(setting, requestRootSettings))
+                return GetDynamicSetting<T>(setting, requestRootSettings);
 
             // We haven't found anything yet, so we take a look at the global app settings
             if (GlobalConfiguration != null)
@@ -46,7 +50,7 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
-        public static T GetSetting<T>(Settings setting, dynamic repositorySettings = null, dynamic topicSettings = null)
+        public static T GetSetting<T>(Settings setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
         {
             // Topic-specific settings overrule everything else
             if (IsDynamicSettingSet(setting, topicSettings))
@@ -55,6 +59,10 @@ namespace DocHound.Interfaces
             // Settings for the whole repository still overrule app-global settings
             if (IsDynamicSettingSet(setting, repositorySettings))
                 return GetDynamicSetting<T>(setting, repositorySettings);
+
+            // If we have request-specific root settings, we consider that
+            if (IsDynamicSettingSet(setting, requestRootSettings))
+                return GetDynamicSetting<T>(setting, requestRootSettings);
 
             // We haven't found anything yet, so we take a look at the global app settings
             if (GlobalConfiguration != null)
@@ -186,6 +194,12 @@ namespace DocHound.Interfaces
             if (string.IsNullOrEmpty(settingName)) return string.Empty;
             return settingName.ToLowerInvariant();
         }
+
+        public static string GetGlobalSetting(string setting)
+        {
+            var dynamicGlobalConfiguraiton = (dynamic)GlobalConfiguration;
+            return dynamicGlobalConfiguraiton[setting];
+        }
     }
 
     /// <summary>All available settings supported by the system either as global configuration or as settings on a TOC or an invidual Topic</summary>
@@ -194,6 +208,7 @@ namespace DocHound.Interfaces
     {
         Unknown,
         RepositoryType,
+        SqlConnectionString,
 
         // GitHub settings
         GitHubProject,

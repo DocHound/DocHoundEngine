@@ -201,8 +201,8 @@ namespace DocHound.Classes
                 var repository = await GetRepositoriesJson(httpClient, project);
                 var fileList = await GetFileListJson(httpClient, repository.Id, docsFolder);
 
-                var toc = fileList.FirstOrDefault(f => f.Path.ToLowerInvariant().EndsWith("_meta/_toc.json"));
-                if (toc == null) toc = fileList.FirstOrDefault(f => f.Path.ToLowerInvariant().EndsWith("_toc.json"));
+                var toc = fileList?.FirstOrDefault(f => f.Path.ToLowerInvariant().EndsWith("_meta/_toc.json"));
+                if (toc == null) toc = fileList?.FirstOrDefault(f => f.Path.ToLowerInvariant().EndsWith("_toc.json"));
 
                 if (toc != null)
                     tocJson = await GetFileContents(httpClient, repository.Id, toc.Id);
