@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
@@ -172,8 +173,9 @@ namespace DocHound.Models.Docs
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
 
             var intermediateHtml = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
-            Html = await ProcessKavaTopic(intermediateHtml);
-            Html = ProcessBrokenImageLinks(intermediateHtml, imageRootUrl);
+            intermediateHtml = await ProcessKavaTopic(intermediateHtml);
+            intermediateHtml = ProcessBrokenImageLinks(intermediateHtml, imageRootUrl);
+            Html = intermediateHtml;
 
             Json = renderer.RenderToJson(rawTopic, imageRootUrl, this);
             TemplateName = renderer.GetTemplateName(rawTopic, TemplateName, this);
@@ -280,6 +282,29 @@ namespace DocHound.Models.Docs
             return text;
         }
 
+        private static readonly string[] AutoEncodeFileExtensions = {"css", "c", "cpp", "cs", "vb", "js", "ts", "py", "ps1", "fs", "cshtml", "vbhtml", "pl", "rb", "xml", "rss"};
+
+        private static string AutoEncodeEmbedContent(string content, string url)
+        {
+            var urlLower = url.ToLowerInvariant();
+            if (!urlLower.StartsWith("http://") && !urlLower.StartsWith("https://")) return content; // This was a local topic, so it should already be processed and encoded properly by DocHound
+
+            var mustEncode = false;
+            foreach (var fileExtension in AutoEncodeFileExtensions)
+            {
+                if (urlLower.EndsWith("." + fileExtension))
+                {
+                    mustEncode = true;
+                    break;
+                }
+            }
+
+            if (mustEncode)
+                content = WebUtility.HtmlEncode(content);
+
+            return content;
+        }
+
         private async Task<string> EmbeddKavaTopicPlaceholder(string html, IEnumerable<string> recursions, bool killRecursion = false)
         {
             var recsEncoded = StringHelper.Base64Encode(string.Join('&', recursions));
@@ -288,7 +313,7 @@ namespace DocHound.Models.Docs
             var tagStart = html.IndexOf("[kava-topic:", StringComparison.Ordinal);
             if (tagStart > -1)
             {
-                sb.Append(html.Substring(0, tagStart - 1));
+                sb.Append(html.Substring(0, tagStart));
                 html = html.Substring(tagStart + 12);
                 var slugEnd = html.IndexOf(']');
                 if (slugEnd > -1)
@@ -298,8 +323,9 @@ namespace DocHound.Models.Docs
                     if (!killRecursion)
                     {
                         if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
-                            slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/" + slug;
-                        var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, $"{slug}?contentonly=true&recursion={recsEncoded}");
+                            slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{slug}?contentonly=true&recursion={recsEncoded}";
+                        var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, slug);
+                        insertedHtml = AutoEncodeEmbedContent(insertedHtml, slug);
                         sb.Append(insertedHtml);
                     }
                     else
@@ -336,8 +362,9 @@ namespace DocHound.Models.Docs
                             if (!killRecursion)
                             {
                                 if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
-                                    slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/" + slug;
-                                var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, $"{slug}?contentonly=true&recursion={recsEncoded}");
+                                    slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{slug}?contentonly=true&recursion={recsEncoded}";
+                                var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, slug);
+                                insertedHtml = AutoEncodeEmbedContent(insertedHtml, slug);
                                 sb.Append(insertedHtml);
                             }
                             else
@@ -364,8 +391,9 @@ namespace DocHound.Models.Docs
                                 if (!killRecursion)
                                 {
                                     if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
-                                        slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/" + slug;
-                                    var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, $"{slug}?contentonly=true");
+                                        slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{slug}?contentonly=true";
+                                    var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, slug);
+                                    insertedHtml = AutoEncodeEmbedContent(insertedHtml, slug);
                                     sb.Append(insertedHtml);
                                 }
                                 else

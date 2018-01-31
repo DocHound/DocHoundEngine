@@ -450,6 +450,7 @@ namespace DocHound.Classes
             if (topic == null) return false;
 
             var topicSlug = topic.Slug;
+            if (topicSlug == null) return false;
 
             if (ignoreCase)
             {
@@ -457,8 +458,8 @@ namespace DocHound.Classes
                 topicSlug = topicSlug.ToLowerInvariant();
             }
 
-            while (slug.StartsWith('/')) slug = slug.Substring(1);
-            while (topicSlug.StartsWith('/')) topicSlug = topicSlug.Substring(1);
+            while (slug.Length > 0 && slug.StartsWith('/')) slug = slug.Substring(1);
+            while (topicSlug.Length > 0 && topicSlug.StartsWith('/')) topicSlug = topicSlug.Substring(1);
 
             return slug == topicSlug;
         }
