@@ -19,8 +19,22 @@
 ## Rendering Engine
 
 * [ ] Themes
-    * [ ] Dark theme
-    * [ ] Sepia theme
+    * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
+    * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
+    * [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
+    * [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
+    * [ ] Maybe something more like an article (such as https://www.tomsguide.com/us/samsung-galaxy-s7-guide,review-3456.html)
+    * [ ] Would be nice to have a good theme for consumer related things, such as games (such as https://dev.battle.net/docs/read/oauth or even https://worldofwarcraft.com/en-us/game/new-players-guide). We will also need a better way to associate banner art with topics (and similar art customizations)
+    * [ ] Microsoft's consumer docs are slightly simpler than their other docs, and that might be good to support for us: https://support.microsoft.com/en-us/products/windows?os=windows-10
+    * [ ] Ionic has some interesting and clean stuff. Not too different from our standard theme, but some nice integration of a preview feature: https://ionicframework.com/docs/
+    * [ ] Twilio has some interesting stuff that looks a bit different: https://www.twilio.com/docs/sms
+    * [ ] Skype has some interesting stuff going: https://support.skype.com/en/skype/windows-desktop/start/
+    * [ ] Not sure if we should do something more old fashioned like this: https://docs.blesta.com/display/user/Overview
+    * [ ] Or another somewhat old fashioned option: https://docs.whmcs.com/Importing_Data
+    * [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
+    * [ ] People seem to like http://en.cppreference.com/w/
+    * [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
+    * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
 * [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
@@ -38,6 +52,7 @@
     * [ ] Only use HTML body
     * [ ] Should we eliminate scripts from HTML topics?
 * [ ] Styling
+    * [ ] Inline code should be a bit more visible
     * [x] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
     * [x] H3 needs to get their own style
     * [x] Need good default styles for tables
