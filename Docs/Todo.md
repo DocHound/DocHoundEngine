@@ -12,7 +12,7 @@
 * [ ] Themes
 * [ ] Full index search
 * [ ] Analytics integration (probably support different ones)
-* [ ] Wildcard domain support
+* [x] Wildcard domain support
 * [ ] Need an editor for the TOC live on the kavadocs.com site
 * [ ] Create fundamental documentation for how to use and customize Kava Docs
 
@@ -46,18 +46,19 @@
     * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
-* [ ] Markdown
-    * [ ] Markdown needs to do a better job of fixing up image links
+    * [x] Markdown needs to do a better job of fixing up image links
 * [ ] Html
     * [ ] Only use HTML body
     * [ ] Should we eliminate scripts from HTML topics?
 * [ ] Styling
-    * [ ] Inline code should be a bit more visible
+    * [ ] Maybe text within tables should not be justified
+    * [x] Inline code should be a bit more visible
     * [x] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
     * [x] H3 needs to get their own style
     * [x] Need good default styles for tables
     * [x] Need good default style for blockquotes
     * [x] Should have better styles for the links to sub-topics created automatically when a parent topic is empty.
+    * [x] Text within tables doesn't look all that great and should be improved
 * [x] Showing the outline with indent levels
 * [x] Make the current tab work on mobile (responsive)
 * [x] Handle image paths relative to documents stored in root folders properly
@@ -71,11 +72,16 @@
    * [ ] The footer content needs to be customizable
    * [ ] Sidebar content needs to be customizable
    * [ ] The site icon needs to be customizable
-* [ ] Should support slug better
+* [x] Should support slug better
 * [ ] Topics in the TOC should have a "visible" or "hidden" flag, so they can be managed in the tree (and be considered for URL patterns and such), but not displayed as part of the tree. This is useful in a number of scenarios. For instance, one could create a custom slug the topic can be found by, even though we may not want it in the tree (such as when embedding a document inside of another). It is also useful for tooling, such as when we want a tool that shows all files that are not yet referenced by the TOC (which could get annoying if you have files you really do not want to show up in the tree).
-* [ ] Handlebars templates would be a nice feature to support at least for simple templating. (Probably on a topic-by-topic basis... for instance, we could have a template just for specific types of TFS items)
+* [ ] Should support a way to add custom themes and Razor templates without requiring a re-deploy
 * [ ] When there is a slug passed in that doesn't seem to go with a specific topic, we should show an appropriate message, rather than defaulting back to the first topic
 * [ ] Allow overriding of CSS styles on individual topics
+* [ ] Would be nice to support theme switching
+* [ ] Would be nice to support code-highlight theme switching for topics that have code
+* [ ] Would be nice to have the outline in the current document be a bit more interactive
+* [ ] Some themes may want the current-doc outline more in the document and below the first heading (or some other arbitrary place)
+* [ ] Maybe there should be a link to the next topic in the sidebar in some themes?
 * [ ] The fav-icon needs to be configurable
 * [ ] Make sure that all the data in the topic is data-driven (from the repository)
 * [ ] It would be nice to be able to get away with just once instance of the tree in the document
@@ -87,12 +93,14 @@
     * [ ] We want to do the same inside a topic by having a special placeholder in the doc (we are thinking about a kava-topic HTML tag
 * [ ] Edit link right in the topic
 * [ ] Threaded discussions, or at least comments
-* [ ] Would be nice to support cool interactions with linked source code. For instance, could we pull all source files that are flagged for code-review and show them inside the docs, so people authorized to review code could look through the code right there and approve it? 
+* [ ] Would be nice to support cool interactions with linked source code. For instance, could we pull all source files that are flagged for code-review and show them inside the docs, so people authorized to review code could look through the code right there and approve it?
+* [ ] Would be nice to somehow support "try it now" for JavaScript examples (and such)
 * [ ] PDF export
 * [x] Would be nice to allow links to external markdown files (or really any other topic we support) to be brought inline on-demand (so it wouldn't always be there, but it could be 'expanded' in... a good example of this would be in our own [Supported Markdown Features topic](Supported Markdown Features), where I would like to pull in the externally linked explanations of markdown features)
 * [ ] Need to get the search implemented
    * [ ] Need the more advanced ability to do a full search across all documents using Azure Search
    * [ ] Keywords and description need to be passed to the fully indexed search as relatively high priority fields
+   * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
 * [x] Make the main menu configurable
