@@ -18,3 +18,7 @@ The chosen repository is likely not specifically built for Kava Docs and will th
 2. Choose to save the repository.
 
 And that's it! You now have a new repository with an automatically generated table of contents. You can now browse to the newly created documentation repository using the prefix you have chosen. When we went through this exercise ourselves, we chose ```raspberrypi```, therefore, that documentation is now available at http://raspberrypi.kavadocs.com
+
+The result will look similar to this example:
+
+![](Tutorial1-Figure1.png)
