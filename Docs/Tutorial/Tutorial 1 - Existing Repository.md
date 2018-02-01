@@ -12,7 +12,15 @@
 
 The chosen repository is likely not specifically built for Kava Docs and will thus not have a table of contents definition. Therefore, the Kava Docs engine ("DocHound") will crawl the repository (give it a minute, depending on the size of the chosen repository), and come up with a table of contents on the fly, based on the repository's folder structure and the files in the folders.
 
-## Step 2: Save the new Repository
+## Step 2: Choose Options
+
+1. You can now choose further options, such as whether you want to include images as individual pages (this way, images get their own entries in the table of contents, rather than just being there to be used by other topics).
+2. You can also choose which types of files you would like to include in your documentation.
+3. You can choose to exclude certain common files from being included (such as license information or contributing information)
+
+> Note: Typically, you do not need to change any of these settings, as the defaults work for most scenarios.
+
+## Step 3: Save the new Repository
 
 1. Provide a "prefix" for the new repository. The prefix is the name of the repository under which it is accessible. For instance, if you used a ```raspberrypi``` prefix, then the URL under which the repository is accessible will be ```raspberrypi.kavadocs.com```. (Note: The prefix has to be unique).
 2. Choose to save the repository.
