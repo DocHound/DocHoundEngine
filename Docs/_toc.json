@@ -65,6 +65,11 @@
                     "title": "Scenario 1 - Connect to an Existing Github Repository",
                     "link": "Tutorial/Tutorial 1 - Existing Repository.md",
                     "slug": "Tutorial-1"
+                },
+                {
+                    "title": "Scenario 2 - Manually Create new Github and Kava Docs Repositories",
+                    "link": "Tutorial/Tutorial 2 - New Repository.md",
+                    "slug": "Tutorial-2"
                 }
             ]
           },
