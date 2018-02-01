@@ -59,6 +59,16 @@
             "link": "Authoring/GettingStarted.md"
           },
           {
+            "title": "Tutorial",
+            "topics": [
+                {
+                    "title": "Scenario 1 - Connect to an Existing Github Repository",
+                    "link": "Tutorial 1 - Existing Repository.md",
+                    "slug": "Tutorial1"
+                }
+            ]
+          },
+          {
             "title": "Embedding Topics within Others",
             "slug": "Authoring/Embedding-Topics",
             "link": "Authoring/EmbeddingTopics.md"
