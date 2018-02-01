@@ -20,7 +20,14 @@ The chosen repository is likely not specifically built for Kava Docs and will th
 
 > Note: Typically, you do not need to change any of these settings, as the defaults work for most scenarios.
 
-## Step 3: Save the new Repository
+## Step 3: Choose a Theme
+
+1. Choose an overall theme for the documentation repository to set the overall look and feel of your docs.
+2. If your docs include source code listings, it makes sense to also choose a source code highlight theme to define what syntax highlighting looks like in your docs.
+
+> Note: You can customize the appearance further, once you have created your initial repository.
+
+## Step 4: Save the new Repository
 
 1. Provide a "prefix" for the new repository. The prefix is the name of the repository under which it is accessible. For instance, if you used a ```raspberrypi``` prefix, then the URL under which the repository is accessible will be ```raspberrypi.kavadocs.com```. (Note: The prefix has to be unique).
 2. Choose to save the repository.
