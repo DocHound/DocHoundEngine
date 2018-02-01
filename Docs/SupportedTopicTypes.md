@@ -50,6 +50,7 @@ The following topic types are currently being considered. Those with a checkmark
     * [ ] Other source control systems such as Mercurial
 * [ ] Evernote
 * [ ] Help Monster/Builder
+* [ ] Visual Studio Class Diagrams
 * [ ] UI Design and Wireframing tools
    * [ ] Moqups
    * [ ] Adobe XD
