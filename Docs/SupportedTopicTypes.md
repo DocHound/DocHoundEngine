@@ -49,6 +49,8 @@ The following topic types are currently being considered. Those with a checkmark
     * [ ] General Git
     * [ ] Other source control systems such as Mercurial
 * [ ] Evernote
+* [ ] Github Issues
+* [ ] Github Wiki
 * [ ] Help Monster/Builder
 * [ ] Visual Studio Class Diagrams
 * [ ] UI Design and Wireframing tools
