@@ -6,12 +6,12 @@
   "requireHttps": true,
   "theme": {
     "standardTheme": "Default",
-    "colors": "Dark",
+    "colors": "Default",
     "customeCss": null,
     "customTemplate": null 
   },
   "settings": {
-    "allowableThemeColors": "Default, Dark, Sepia",
+    "allowableThemeColors": "", // Allows for all
   },
   "menu": [
     {
