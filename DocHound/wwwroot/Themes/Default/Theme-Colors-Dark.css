@@ -1,0 +1,273 @@
+﻿-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+    background-color: #6e6e6e;
+    outline: 1px solid #333;
+}
+
+a:link {
+    color: #1e88e5;
+}
+
+a:visited {
+    color: #1e88e5;
+}
+
+a:hover {
+    color: #1e88e5;
+}
+
+a:active {
+    color: #12eb87;
+}
+
+body {
+    background-color: rgb(30, 30, 30);
+    color: rgb(203, 203, 203);
+}
+
+
+p code {
+    background-color: #5d5d5d;
+    border: 1px solid black;
+}
+
+table {
+    border-color: lightgray;
+}
+
+td, th {
+    border: 1px solid #444444;
+    color: rgb(203, 203, 203);
+}
+
+th {
+    color: rgb(203, 203, 203);
+    background: #111111;
+}
+
+tbody>tr:nth-child(even) {
+    background: rgb(40, 40, 40);
+}
+
+blockquote {
+    background-color: rgba(30, 136, 229, 0.2);
+    border-left: 8px solid #1e88e5;
+}
+
+.toc {
+    color: rgb(203, 203, 203);
+    background: #252526;
+    box-shadow: 1px 0 20px rgba(0, 0, 0, .2);
+}
+
+.content-container h1 {
+    color: #1e88e5;
+}
+
+.content-container h2 {
+    color: #1e88e5;
+}
+
+.content-container h3 {
+    color: #1e88e5;
+}
+
+.header {
+    background-color: #1e88e5;
+    background-color: #1e88e5de;
+}
+
+.header .menu ul li a {
+    color: rgb(203, 203, 203);
+}
+
+.header .mobile-menu-icon {
+    color: rgb(203, 203, 203);
+}
+        
+.mobile-menu {
+    color: rgb(203, 203, 203);
+    background-color: #323232;
+}
+
+.mobile-menu-items {
+    border-bottom: 1px solid rgb(203, 203, 203);
+}
+
+.mobile-menu ul li a, .mobile-menu ul li a:visited, .mobile-menu ul li a:hover {
+    color: rgb(203, 203, 203);
+}
+    
+.mobile-menu ul li.neutral-menu-selected {
+    border-left: 4px solid #1e88e5;
+    background-color: #03142e;
+    background-color: rgba(8, 57, 129, 0.2);
+}
+    
+.mobile-menu ul li.neutral-menu:hover {
+    border-left: 4px solid #1e88e5;
+}
+
+
+.footer {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: rgb(203, 203, 203);
+}
+
+li.kava-auto-link {
+    background-color: rgba(25,118,210,.05);
+    border-left: 8px solid #1e88e5;
+}
+li.kava-auto-link a:link {
+    color: rgb(203, 203, 203);
+}
+li.kava-auto-link a:visited {
+    color: rgb(203, 203, 203);
+}
+
+.kava-recursive-topic {
+    color: red;
+}
+
+
+.sidebar li {
+    border-left: 1px solid #1e88e5;
+    color: #1e88e5;
+}
+
+.sidebar li a:link {
+    color: black;
+}
+
+.sidebar li a:visited {
+    color: black;
+}
+
+.sidebar li a:hover {
+    color: white;
+}
+
+.sidebar select {
+    background-color: #1a1a1a;
+    color: rgb(203, 203, 203);
+    border: 1px solid #2e2e2e;
+}
+
+
+@media only screen and (max-width: 1024px) {
+    .content-container {
+        background-color: #1e1e1e;
+    }
+}
+
+
+.topic-link a:link {
+    color: rgb(203, 203, 203);
+}
+
+.topic-link a:visited {
+    color: rgb(203, 203, 203);
+}
+
+.topic-link a:hover {
+    color: #1e88e5;
+}
+
+.mobile-menu .topic-link a:link {
+    color: rgb(203, 203, 203);
+}
+
+.mobile-menu .topic-link a:visited {
+    color: rgb(203, 203, 203);
+}
+
+.mobile-menu .topic-link a:hover {
+    color: rgb(203, 203, 203);
+}
+
+.selected-topic>a {
+    color: #1e88e5;
+}
+    .selected-topic>a:visited {
+        color: #1e88e5;
+    }
+    .selected-topic>a:link {
+        color: #1e88e5;
+    }
+
+a.area-link {
+    color: #1e88e5;
+}
+
+    a.area-link:visited {
+        color: #1e88e5;
+    }
+
+figure {
+    color: #1e88e5;
+}
+
+.navigate-previous {
+    background-color: #edf0f2;
+    border-color: rgb(217, 220, 220);
+    border-style: solid;
+    border-width: 1px 1px 3px 1px;
+}
+
+    .navigate-previous a:link {
+        color: black;
+    }
+
+    .navigate-previous a:visited {
+        color: black;
+    }
+
+    .navigate-previous a:hover {
+        color: #1e88e5;
+    }
+
+.navigate-next {
+    background-color: #edf0f2;
+    border-color: rgb(217, 220, 220);
+    border-style: solid;
+    border-width: 1px 1px 3px 1px;
+}
+
+    .navigate-next a:link {
+        color: black;
+    }
+
+    .navigate-next a:visited {
+        color: black;
+    }
+
+    .navigate-next a:hover {
+        color: #1e88e5;
+    }
+#tree-filter {
+    color: white;
+    background-color: #555;
+    border: 1px solid #222222;
+}
+#tree-filter-mobile {
+    color: white;
+    background-color: #555;
+    border: 1px solid #ccc;
+}
+#tree-filter-mobile::placeholder {
+    color: black;
+}
+#tree-filter-mobile::-webkit-input-placeholder {
+    color: black;
+}
+#tree-filter-mobile:-moz-placeholder {
+    color: black;
+}
+#tree-filter-mobile::-moz-placeholder {
+    color: black;
+}
+#tree-filter-mobile::-ms-inputplaceholder {
+    color: black;
+}
+#tree-filter-mobile:-ms-inputplaceholder {
+    color: black;
+}

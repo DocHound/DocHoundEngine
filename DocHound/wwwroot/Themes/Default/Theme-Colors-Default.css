@@ -1,0 +1,271 @@
+﻿-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+    background-color: #6e6e6e;
+    outline: 1px solid #333;
+}
+
+a:link {
+    color: #034af3;
+}
+
+a:visited {
+    color: #034af3;
+}
+
+a:hover {
+    color: #1d60ff;
+}
+
+a:active {
+    color: #12eb87;
+}
+
+body {
+    background-color: white;
+    color: Black;
+}
+
+
+p code {
+    background-color: #f9f9f9;
+    border: 1px solid rgb(230, 230, 230);
+}
+
+table {
+    border-color: gray;
+}
+
+td, th {
+    border: 1px solid #ddd;
+}
+
+th {
+    color: white;
+    background: #555;
+}
+
+tbody>tr:nth-child(even) {
+    background: #eee;
+}
+
+blockquote {
+    color: #333;
+    background-color: rgba(25,118,210,.05);
+    border-left: 8px solid #1e88e5;
+}
+
+.toc {
+    background: #efefef;
+    box-shadow: 1px 0 20px rgba(0, 0, 0, .2);
+}
+
+.content-container h1 {
+    color: #1e88e5;
+}
+
+.content-container h2 {
+    color: #1e88e5;
+}
+
+.content-container h3 {
+    color: #525252;
+}
+
+.header {
+    background-color: #1e88e5;
+    background-color: #1e88e5de;
+}
+
+.header .menu ul li a {
+    color: white;
+}
+
+.header .mobile-menu-icon {
+    color: white;
+}
+        
+.mobile-menu {
+    color: white;
+    background-color: rgb(39, 39, 39);
+}
+
+.mobile-menu-items {
+    border-bottom: 1px solid white;
+}
+
+.mobile-menu ul li a, .mobile-menu ul li a:visited, .mobile-menu ul li a:hover {
+    color: white;
+}
+    
+.mobile-menu ul li.neutral-menu-selected {
+    border-left: 4px solid rgb(8, 57, 129);
+    background-color: #03142e;
+    background-color: rgba(8, 57, 129, 0.2);
+}
+    
+.mobile-menu ul li.neutral-menu:hover {
+    border-left: 4px solid rgb(8, 57, 129);
+}
+
+
+.footer {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: rgb(201, 201, 201);
+}
+
+li.kava-auto-link {
+    background-color: rgba(25,118,210,.05);
+    border-left: 8px solid #1e88e5;
+}
+li.kava-auto-link a:link {
+    color: black;
+}
+li.kava-auto-link a:visited {
+    color: black;
+}
+
+.kava-recursive-topic {
+    color: red;
+}
+
+
+.sidebar li {
+    border-left: 1px solid #dddddd;
+}
+
+.sidebar li a:link {
+    color: black;
+}
+
+.sidebar li a:visited {
+    color: black;
+}
+
+.sidebar li a:hover {
+    color: rgb(8, 57, 129);
+}
+
+.sidebar select {
+    background-color: white;
+    color: black;
+    border: 1px solid #888;
+}
+
+
+@media only screen and (max-width: 1024px) {
+    .content-container {
+        background-color: white;
+    }
+}
+
+
+.topic-link a:link {
+    color: black;
+}
+
+.topic-link a:visited {
+    color: black;
+}
+
+.topic-link a:hover {
+    color: rgb(8, 57, 129);
+}
+
+.mobile-menu .topic-link a:link {
+    color: white;
+}
+
+.mobile-menu .topic-link a:visited {
+    color: white;
+}
+
+.mobile-menu .topic-link a:hover {
+    color: white;
+}
+
+.selected-topic>a {
+    color: #1e88e5;
+}
+    .selected-topic>a:visited {
+        color: #1e88e5;
+    }
+    .selected-topic>a:link {
+        color: #1e88e5;
+    }
+
+a.area-link {
+    color: rgb(8, 57, 129);
+}
+
+    a.area-link:visited {
+        color: rgb(8, 57, 129);
+    }
+
+figure {
+    color: rgb(8, 57, 129);
+}
+
+.navigate-previous {
+    background-color: #edf0f2;
+    border-color: rgb(217, 220, 220);
+    border-style: solid;
+    border-width: 1px 1px 3px 1px;
+}
+
+    .navigate-previous a:link {
+        color: black;
+    }
+
+    .navigate-previous a:visited {
+        color: black;
+    }
+
+    .navigate-previous a:hover {
+        color: rgb(8, 57, 129);
+    }
+
+.navigate-next {
+    background-color: #edf0f2;
+    border-color: rgb(217, 220, 220);
+    border-style: solid;
+    border-width: 1px 1px 3px 1px;
+}
+
+    .navigate-next a:link {
+        color: black;
+    }
+
+    .navigate-next a:visited {
+        color: black;
+    }
+
+    .navigate-next a:hover {
+        color: rgb(8, 57, 129);
+    }
+#tree-filter {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+#tree-filter-mobile {
+    color: white;
+    background-color: #555;
+    border: 1px solid #ccc;
+}
+#tree-filter-mobile::placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile::-webkit-input-placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile:-moz-placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile::-moz-placeholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile::-ms-inputplaceholder {
+    color: rgb(213, 213, 213);
+}
+#tree-filter-mobile:-ms-inputplaceholder {
+    color: rgb(213, 213, 213);
+}

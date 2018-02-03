@@ -222,6 +222,11 @@ namespace DocHound.Interfaces
 
         // General topic settings
         [DefaultValue(true)] UseSyntaxHighlighting,
+        [DefaultValue(false)] AllowThemeSwitching,
+        [DefaultValue("")] AllowableThemeColors,
+        [DefaultValue(true)] AllowThemeColorSwitching,
+        [DefaultValue(true)] AllowSyntaxHighlightingThemeSwitching,
+        [DefaultValue("")] AllowableSyntaxHighlightingThemes,
 
         // Markdown related settings
         [DefaultValue(true)] UseAbbreviations,

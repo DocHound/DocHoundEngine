@@ -165,6 +165,11 @@ The settings object can be set on the root or an individual topic. Settings on a
 
 | Property       | Description                                     | Values | Required |
 |----------------|-------------------------------------------------|--------|----------|
+| allowThemeSwitching | Defines whether the user should be allowed to switch the overall theme | true or false (default)  | No |
+| allowThemeColorSwitching | Defines whether the user is allowed to switch the colors of the current theme (if applicable) | true (default) or false  | No |
+| allowableThemeColors | Defines the list of color sets allowed (if color switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "Default, Sepia, Dark" | No |
+| allowSyntaxHighlightingThemeSwitching | Defines whether the user is allowed to switch the color theme for syntax highlighting (if applicable) | true (default) or false  | No |
+| allowableSyntaxHighlightingThemes | Defines the list of syntax highlight themes the user can switch to (if theme switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "kavadocs, kavadocsdark, vs, vs2017" | No |
 | useAbbreviations | Should abbreviations be used? | true (default) or false  | No |
 | useAutoIdentifiers | Should headings automatically be generated with id attributes? | true (default) or false  | No |
 | useAutoLinks | Should URLs be automatically turned into links? | true (default) or false  | No |

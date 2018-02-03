@@ -67,6 +67,7 @@ namespace DocHound.Models.Docs
             FlatTopics = flatTopicList;
             MainMenu = TableOfContentsHelper.BuildMainMenuStructureFromDynamicToc(dynamicToc);
             ThemeFolder = TableOfContentsHelper.GetThemeFolderFromDynamicToc(dynamicToc);
+            ThemeColors = TableOfContentsHelper.GetThemeColorFromDynamicToc(dynamicToc);
             SyntaxTheme = TableOfContentsHelper.GetSyntaxThemeNameFromDynamicToc(dynamicToc);
             CustomCss = TableOfContentsHelper.GetCustomCssFromDynamicToc(dynamicToc);
 
@@ -469,6 +470,77 @@ namespace DocHound.Models.Docs
 
         public string ThemeFolder { get; set; }
         public string ThemeFolderRaw => ThemeFolder.Replace("~/wwwroot/", "/");
+        public string ThemeCss => ThemeFolderRaw + "/Theme.css";
+
+        public string ThemeColors { get; set; }
+
+        public string ThemeColorsCss
+        {
+            get
+            {
+                var colors =  ThemeColors;
+                if (colors.ToLowerInvariant().EndsWith(".css"))
+                    return colors;
+                return ThemeFolderRaw + "/" + colors + ".css";
+            }
+        }
+    
+        // TODO: This needs to be done more sophisticated by automatically figuring out what the theme supports
+        public List<string> AvailableThemeColors
+        {
+            get
+            {
+                var allowableColors = GetSetting<string>(Settings.AllowableThemeColors);
+                if (!string.IsNullOrEmpty(allowableColors))
+                {
+                    var list = allowableColors.Split(',').ToList();
+                    for (var counter = 0; counter < list.Count; counter++)
+                        list[counter] = list[counter].Trim();
+                    return list;
+
+                }
+                return new List<string> {"Default", "Dark", "Sepia", "High Contrast"};
+            }
+        }
+
+        // TODO: This needs to be done more sophisticated by automatically figuring out what the theme supports
+        public string GetThemeColorCss(string colorLabel)
+        {
+            return ThemeFolderRaw + "/Theme-Colors-" + colorLabel.Replace(" ", "-") + ".css";
+        }
+
+        // TODO: This needs to be done more sophisticated by automatically figuring out what the theme supports
+        public List<string> AvailableSyntaxThemeColors
+        {
+            get
+            {
+                var allowableSyntaxThemeColors = GetSetting<string>(Settings.AllowableSyntaxHighlightingThemes);
+                if (!string.IsNullOrEmpty(allowableSyntaxThemeColors))
+                {
+                    var list = allowableSyntaxThemeColors.Split(',').ToList();
+                    for (var counter = 0; counter < list.Count; counter++)
+                        list[counter] = list[counter].Trim();
+                    return list;
+
+                }
+                return new List<string>
+                {
+                    "Brown Paper", "Codepen Embed", "Color Brewer", "Dracula", "Dark", "Darkula", "Default",
+                    "Dracula", "Far", "Foundation", "Github", "Github Gist", "GoogleCode", "Grayscale",
+                    "Idea", "IR Black", "KavaDocs", "KavaDocsDark", "Kimbie.Dark", "Kimbie.Light", "Magula",
+                    "Mono Blue", "Monokai", "Monokai Sublime", "Obsidian", "Paraiso Dark", "Paraiso Light",
+                    "RailsCasts", "Rainbow", "Solarized Dark", "Solarized Light", "Sunburst", "Twilight",
+                    "VS", "VS2015", "XCode", "ZenBurn"
+                };
+            }
+        }
+
+        // TODO: This needs to be done more sophisticated by automatically figuring out what the theme supports
+        public string GetSyntaxThemeColorCss(string colorLabel)
+        {
+            return "/css/highlightjs/styles/" + colorLabel.Replace(" ", "-").ToLowerInvariant() + ".css";
+        }
+
 
         private string _templateName = "TopicDefault";
 

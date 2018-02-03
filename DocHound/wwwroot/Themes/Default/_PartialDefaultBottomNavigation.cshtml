@@ -8,13 +8,13 @@
     <div class="navigation-footer">
         @if (Model.SelectedTopic.PreviousTopic != null)
         {
-            <div class="navigatePrevious">
+            <div class="navigate-previous">
                 <a href="@(url)@Model.SelectedTopic.PreviousTopic.SlugSafe" title="@Model.SelectedTopic.PreviousTopic.Title">Previous</a>
             </div>
         }
         @if (Model.SelectedTopic.NextTopic != null)
         {
-            <div class="navigateNext">
+            <div class="navigate-next">
                 <a href="@(url)@Model.SelectedTopic.NextTopic.SlugSafe" title="@Model.SelectedTopic.NextTopic.Title">Next</a>
             </div>
         }

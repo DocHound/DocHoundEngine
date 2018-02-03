@@ -1,4 +1,5 @@
 @using DocHound.Classes;
+@using DocHound.Interfaces
 @model DocHound.Models.Docs.TopicViewModel
 
 <div id="outline" style="display: none;">
@@ -15,4 +16,31 @@
             <li><a href="/@TopicHelper.GetNormalizedName(seeAlso.Link)">@seeAlso.Title</a></li>
         }
     </ul>
+}
+
+@if (Model.GetSetting<bool>(Settings.AllowThemeSwitching) || Model.GetSetting<bool>(Settings.AllowThemeColorSwitching) || Model.GetSetting<bool>(Settings.AllowSyntaxHighlightingThemeSwitching))
+{
+    <p style="font-weight: bold;">Options:</p>
+    if (Model.GetSetting<bool>(Settings.AllowThemeColorSwitching))
+    {
+        <p class="option-label">Theme Colors:<br/>
+            <select id="themeColorSelector">
+                @foreach (var availableColor in Model.AvailableThemeColors)
+                {
+                    <option value="@Model.GetThemeColorCss(availableColor)" @("Theme-Colors-" + availableColor == Model.ThemeColors ? "selected" : "")>@availableColor</option>
+                }
+            </select>
+        </p>
+    }
+    if (Model.GetSetting<bool>(Settings.AllowSyntaxHighlightingThemeSwitching))
+    {
+        <p class="option-label" id="syntaxThemeSelectorContainer" style="display: none;">Syntax Highlight Theme:<br/>
+            <select id="syntaxThemeSelector">
+                @foreach (var availableSyntaxColor in Model.AvailableSyntaxThemeColors)
+                {
+                    <option value="@Model.GetSyntaxThemeColorCss(availableSyntaxColor)" @(availableSyntaxColor.ToLowerInvariant() == Model.SyntaxTheme.ToLowerInvariant() ? "selected" : "")>@availableSyntaxColor</option>
+                }
+            </select>
+        </p>
+    }
 }

@@ -27,15 +27,15 @@
 </head>
 
 <body>
-    <nav class="mobileMenu">
+    <nav class="mobile-menu">
         {{Navigation.Menu}}
         {{Navigation.TableOfContents}}
     </nav>
     <header class="header headerLarge">
-        <i class="fas fa-bars mobileMenuIcon"></i>
+        <i class="fas fa-bars mobile-menu-icon"></i>
         <img class="logo" src="{{Topic.LogoUrl}}" />
         <div class="menu">
-            {{Navigation.MobileMenu}}
+            {{Navigation.mobile-menu}}
         </div>
     </header>
 

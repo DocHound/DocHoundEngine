@@ -1,4 +1,4 @@
-﻿/*Standard styles*/
+﻿/*Standard HTML styles*/
 * {
     padding: 0;
     margin: 0;
@@ -8,23 +8,89 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     height: 6px;
     width: 6px;
 }
--webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
-    background-color: #6e6e6e;
-    outline: 1px solid #333;
+
+a:link {
+    text-decoration: none;
 }
 
-/* Overall structure of the page */
+a:hover {
+    text-decoration: underline;
+}
+
+body {
+    font-size: 11pt;
+    font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+
+p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+    p code {
+        font-family: Consolas, monospace;
+        padding: 1px 5px;
+        font-weight: 600;
+        border-radius: 3px;
+    }
+
+ul, ol {
+    margin-bottom: 20px;
+    line-height: 1.3em;
+}
+
+li {
+    margin-top: .5em;
+    margin-left: 25px;
+    text-align: left;
+}
+
+img {
+    border: 0;
+}
+
+table {
+    width: 100%;
+    overflow: auto;
+    display: block;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+
+td, th {
+    padding: 6px 13px;
+    display: table-cell;
+    vertical-align: top;
+    line-height: 1.4em;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+blockquote {
+    padding: 16px 32px 8px 24px;
+    margin: 24px 16px;
+}
+
+h1, h2, h3, h4 {
+    text-align: left;
+}
 
 /* Table of Contents (complete tree) */
 
 .toc {
-    background: #efefef;
     position: fixed;
     width: 275px;
     top: 110px;
     bottom: 70px;
     overflow-y: auto;
-    box-shadow: 1px 0 20px rgba(0, 0, 0, .2);
     padding-right: 10px;
     padding-bottom: 20px;
     -ms-transition: top .3s;
@@ -56,7 +122,7 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     text-align: justify;
 }
 
-    .content-container.showMobileMenu {
+    .content-container.show-mobile-menu {
         margin-left: 300px;
         margin-right: -300px;
     }
@@ -74,7 +140,6 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     }
 
     .content-container h1 {
-        color: #1e88e5;
         font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
         font-weight: 300;
         font-size: 2.4em;
@@ -83,7 +148,6 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     }
 
     .content-container h2 {
-        color: #1e88e5;
         font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
         font-weight: 300;
         font-size: 1.8em;
@@ -92,7 +156,6 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
     }
 
     .content-container h3 {
-        color: #525252;
         font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
         font-weight: 300;
         font-size: 1.6em;
@@ -115,25 +178,6 @@ body::-webkit-scrollbar, ::-webkit-scrollbar {
         margin-top: 20px;
     }
 
-.navigation-footer {
-    clear: both;
-    margin-top: 50px;
-}
-
-li.kava-auto-link {
-    list-style-type: none;
-    padding: 10px 20px 10px 20px;
-    background-color: rgba(25,118,210,.05);
-    border-left: 8px solid #1e88e5;
-}
-    li.kava-auto-link a:link {
-        cursor: pointer;
-        color: black;
-    }
-    li.kava-auto-link a:visited {
-        cursor: pointer;
-        color: black;
-    }
 
 /* The header contains the menu, logo, and similar elements */
 
@@ -142,8 +186,6 @@ li.kava-auto-link {
     height: 110px;
     left: 0;
     right: 0;
-    background-color: #1e88e5;
-    background-color: #1e88e5de;
     -ms-transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s;
     -moz-transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s; /* Firefox 4 */
     -webkit-transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s; /* Safari and Chrome */
@@ -151,7 +193,7 @@ li.kava-auto-link {
     transition: height .3s, margin-left .3s, margin-right .3s, left .3s, right .3s;
 }
 
-    .header.showMobileMenu {
+    .header.show-mobile-menu {
         left: 300px;
         right: -300px;
     }
@@ -212,79 +254,27 @@ li.kava-auto-link {
 
                 .header .menu ul li a {
                     padding: 5px 10px;
-                    color: white;
                 }
 
                 .header .menu ul li a:hover {
                     text-decoration: none;
                 }
 
-                    .header .menu ul li .subMenu ul li:hover {
-                        background-color: #03142e;
-                        background-color: rgba(8, 57, 129, 0.5);
-                    }
-
-    .header .subMenu {
-        display: none;
-        clear: both;
-        padding: 0;
-        margin: 15px 0 0 -10px;
-        position: fixed;
-        background-color: rgb(64, 64, 64);
-        -webkit-box-shadow: 0 0 2px 2px #c5c5c5;
-        -webkit-box-shadow: 0 0 2px 2px rgba(197, 197, 197, 0.3);
-        -ms-box-shadow: 0 0 2px 2px #c5c5c5;
-        -ms-box-shadow: 0 0 2px 2px rgba(197, 197, 197, 0.3);
-        box-shadow: 0 0 2px 2px #c5c5c5;
-        box-shadow: 0 0 2px 2px rgba(197, 197, 197, 0.3);
-        -ms-border-radius: 10px;
-        border-radius: 6px;
-        font-size: 9pt;
-    }
-
-    .header .visibleSubMenu {
-        display: block;
-    }
-
-    .header .subMenu ul {
-        margin-top: 6px;
-        margin-bottom: 6px;
-    }
-
-        .header .subMenu ul li {
-            float: none !important;
-            margin: 0 !important;
-            padding: 8px 10px 8px 5px !important;
-        }
-
-            .header .subMenu ul li:hover {
-                background-color: #585858;
-                background-color: rgba(255,255,255,.15);
-            }
-
-            .header .subMenu ul li a {
-                border-bottom: 0 !important;
-                color: white !important;
-            }
-
-    .header .mobileMenuIcon {
+    .header .mobile-menu-icon {
         display: none;
         float: left;
         cursor: pointer;
         margin: 16px 10px;
-        color: white;
         font-size: 1.2em;
     }
         
-    .mobileMenu {
+    .mobile-menu {
         display: none;
         position: fixed;
         top: 0;
         left: 0;
         width: 290px;
         bottom: 0;
-        background-color: rgb(39, 39, 39);
-        color: white;
         overflow-x: hidden;
         overflow-y: auto;
         -webkit-user-select: none;
@@ -296,21 +286,17 @@ li.kava-auto-link {
         padding-right: 10px;
     }
 
-    .mobile-menu-items {
-        border-bottom: 1px solid white;
-    }
-
-        .mobileMenu.showMobileMenu {
+        .mobile-menu.show-mobile-menu {
             display: block;
         }
 
-        .mobileMenu ul li .subMenu {
+        .mobile-menu ul li .sub-menu {
             display: block;
             width: 285px;
             padding: 5px 0 5px 0;
         }
     
-            .mobileMenu ul li .subMenu ul {
+            .mobile-menu ul li .sub-menu ul {
                 list-style: none;
                 padding-left: 0;
                 padding-top: 5px;
@@ -318,19 +304,19 @@ li.kava-auto-link {
                 width: 200px;
             }
     
-                .mobileMenu ul li .subMenu ul li {
+                .mobile-menu ul li .sub-menu ul li {
                     border-bottom: 0;
                     padding: 7px 0 7px 20px;
                     margin-left: 0;
                 }
     
-        .mobileMenu ul {
+        .mobile-menu ul {
             list-style: none;
             padding-left: 0;
             padding-top: 5px;
         }
     
-            .mobileMenu ul li {
+            .mobile-menu ul li {
                 list-style: none;
                 text-indent: 0;
                 margin-left: 0;
@@ -343,23 +329,60 @@ li.kava-auto-link {
                 cursor: pointer;
             }
     
-                .mobileMenu ul li a, .mobileMenu ul li a:visited, .mobileMenu ul li a:hover {
-                    color: white;
+                .mobile-menu ul li a, .mobile-menu ul li a:visited, .mobile-menu ul li a:hover {
                     text-decoration: none;
                 }
     
-                .mobileMenu ul li.neutralMenuSelected {
-                    border-left: 4px solid rgb(8, 57, 129);
-                    background-color: #03142e;
-                    background-color: rgba(8, 57, 129, 0.2);
-                }
-    
-                .mobileMenu ul li.neutralMenu:hover {
-                    border-left: 4px solid rgb(8, 57, 129);
-                    padding: 9px 20px 9px 11px;
-                }
 
-/* Markdown checked lists                 */
+/* Footer */
+
+.navigation-footer {
+    clear: both;
+    margin-top: 50px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
+    -ms-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
+    -moz-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Firefox 4 */
+    -webkit-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Safari and Chrome */
+    -o-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Opera */
+}
+
+    .footer.show-mobile-menu {
+        left: 300px;
+        right: -300px;
+    }
+
+
+/* Auto generated tags */
+
+li.kava-auto-link {
+    list-style-type: none;
+    padding: 10px 20px 10px 20px;
+}
+    li.kava-auto-link a:link {
+        cursor: pointer;
+    }
+    li.kava-auto-link a:visited {
+        cursor: pointer;
+    }
+
+.kava-recursive-topic {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+
+/* Special markdown features */
 .task-list-item {
     list-style-type: none;
 }
@@ -393,6 +416,29 @@ li.kava-auto-link {
     transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s;
 }
 
+    .sidebar select {
+        display: inline-block;
+        overflow: auto;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 30px 0 6px;
+        vertical-align: middle;
+        height: 28px;
+        font-size: .75rem;
+        line-height: 16px;
+        outline: 0;
+        text-overflow: ellipsis;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+        background-image: -webkit-linear-gradient(45deg,transparent 50%,#707070 0),-webkit-linear-gradient(315deg,#707070 50%,transparent 0);
+        background-image: linear-gradient(45deg,transparent 50%,#707070 0),linear-gradient(135deg,#707070 50%,transparent 0);
+        background-position: -webkit-calc(100% - 13px) 11px,-webkit-calc(100% - 8px) 11px;
+        background-position: calc(100% - 13px) 11px,calc(100% - 8px) 11px;
+        background-size: 5px 5px,5px 6px;
+        background-repeat: no-repeat;
+    }
+
     .sidebar.scrolled {
         top: 70px;
     }
@@ -412,63 +458,37 @@ li.kava-auto-link {
             margin-left: 5px;
             margin-top: 0px;
             margin-bottom: 0px;
-            border-left: 1px solid #dddddd;
         }
 
             .sidebar li a:link {
                 cursor: pointer;
                 text-decoration: none;
-                color: black;
             }
 
             .sidebar li a:visited {
                 cursor: pointer;
                 text-decoration: none;
-                color: black;
             }
 
             .sidebar li a:hover {
                 cursor: pointer;
                 text-decoration: none;
-                color: rgb(8, 57, 129);
             }
 
-.sidebar li.outlineLevel1 {
-    font-weight: bold;
-}
-.sidebar li.outlineLevel2 {
-    padding-left: 20px;
-}
-.sidebar li.outlineLevel3 {
-    padding-left: 30px;
-}
+            .sidebar li.outline-level-1 {
+                font-weight: bold;
+            }
+            .sidebar li.outline-level-2 {
+                padding-left: 20px;
+            }
+            .sidebar li.outline-level-3 {
+                padding-left: 30px;
+            }
 
-/* Page Footer */
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.9);
-    text-align: center;
-    color: rgb(201, 201, 201);
-    padding-top: 10px;
-    padding-bottom: 10px;
-    transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
-    -ms-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
-    -moz-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Firefox 4 */
-    -webkit-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Safari and Chrome */
-    -o-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Opera */
-}
-
-    .footer.showMobileMenu {
-        left: 300px;
-        right: -300px;
-    }
 
 
 /* Narrow desktop display */
+
 @media only screen and (max-width : 1200px) {
     .sidebar {
         display: none;
@@ -480,7 +500,8 @@ li.kava-auto-link {
     }
 }
 
-/* Tablets Portrait or Landscape */
+/* Tablets Portrait or Landscape and everything smaller */
+
 @media only screen and (max-width: 1024px) {
     .header .menu {
         display: none !important;
@@ -495,7 +516,7 @@ li.kava-auto-link {
         max-height: 40px;
     }
 
-    .header .mobileMenuIcon {
+    .header .mobile-menu-icon {
         display: block !important;
     }
 
@@ -506,7 +527,6 @@ li.kava-auto-link {
     .content-container {
         margin-left: 0px;
         padding-top: 70px;
-        background-color: white;
     }
 
     .footer.scrolled {
@@ -519,63 +539,53 @@ li.kava-auto-link {
     }
 }
 
-/* Styles associated with content within elements */
-/* .topicList {
-} */
 
-/* .topicListLevel0 {
-} */
+/* Kava Docs specific styles */
 
-.topicLink {
+.topic-link {
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
 }
 
-    .topicLink a:link {
+    .topic-link a:link {
         cursor: pointer;
         text-decoration: none;
-        color: black;
     }
 
-    .topicLink a:visited {
+    .topic-link a:visited {
         cursor: pointer;
         text-decoration: none;
-        color: black;
     }
 
-    .topicLink a:hover {
+    .topic-link a:hover {
         cursor: pointer;
         text-decoration: none;
-        color: rgb(8, 57, 129);
     }
 
-    .mobileMenu .topicLink a:link {
+    .mobile-menu .topic-link a:link {
         cursor: pointer;
         text-decoration: none;
-        color: white;
     }
 
-    .mobileMenu .topicLink a:visited {
+    .mobile-menu .topic-link a:visited {
         cursor: pointer;
         text-decoration: none;
-        color: white;
     }
 
-    .mobileMenu .topicLink a:hover {
+    .mobile-menu .topic-link a:hover {
         cursor: pointer;
         text-decoration: none;
-        color: white;
     }
 
-.topicLevel0 {
+.topic-level-0 {
     font-size: 11pt;
     line-height: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-.topicLevel1, .topicLevel2, .topicLevel3, .topicLevel4, .topicLevel5 {
+.topic-level-1, .topic-level-2, .topic-level-3, .topic-level-4, .topic-level-5 {
     font-size: 9pt;
     line-height: 18px;
     padding-top: 5px;
@@ -584,29 +594,30 @@ li.kava-auto-link {
     margin-left: 5px;
 }
 
-.topicExpanded {
+.option-label {
+    font-size: .8em;
+}
+
+.topic-expanded {
     transition: visibility .5s, opacity .5s ,max-height .5s;
     opacity: 1;
     display: block;
 }
 
-.topicCollapsed {
+.topic-collapsed {
     display: none;
     transition: visibility 275ms, opacity 275ms, max-height .28s;
     opacity: 0;
 }
 
-.selectedTopic>a {
+.selected-topic>a {
     font-weight: bold;
-    color: #1e88e5;
 }
-    .selectedTopic>a:visited {
+    .selected-topic>a:visited {
         font-weight: bold;
-        color: #1e88e5;
     }
-    .selectedTopic>a:link {
+    .selected-topic>a:link {
         font-weight: bold;
-        color: #1e88e5;
     }
 
 .caret {
@@ -621,116 +632,59 @@ li.kava-auto-link {
     width: 24px;
 }
 
-    .mobileMenu .caret {
+    .mobile-menu .caret {
         padding: 0 10px;
     }
 
-.caretExpanded {
+.caret-expanded {
     transform: rotate(90deg);
 }
 
-.caretCollapsed {
+.caret-collapsed {
     transform: rotate(0deg);
 }
 
-a.areaLink {
-    color: rgb(8, 57, 129);
-}
-
-    a.areaLink:visited {
-        color: rgb(8, 57, 129);
-    }
-
-figure {
-    color: rgb(8, 57, 129);
-}
-
-.navigatePrevious {
+.navigate-previous {
     float: left;
     padding: 5px 20px 5px 20px;
-    background-color: #edf0f2;
-    border-color: rgb(217, 220, 220);
-    border-style: solid;
-    border-width: 1px 1px 3px 1px;
 }
 
-    .navigatePrevious a:link {
+    .navigate-previous a:link {
         cursor: pointer;
         text-decoration: none;
-        color: black;
     }
 
-    .navigatePrevious a:visited {
+    .navigate-previous a:visited {
         cursor: pointer;
         text-decoration: none;
-        color: black;
     }
 
-    .navigatePrevious a:hover {
+    .navigate-previous a:hover {
         cursor: pointer;
         text-decoration: none;
-        color: rgb(8, 57, 129);
     }
 
-.navigateNext {
+.navigate-next {
     float: right;
     padding: 5px 20px 5px 20px;
-    background-color: #edf0f2;
-    border-color: rgb(217, 220, 220);
-    border-style: solid;
-    border-width: 1px 1px 3px 1px;
 }
 
-    .navigateNext a:link {
+    .navigate-next a:link {
         cursor: pointer;
         text-decoration: none;
-        color: black;
     }
 
-    .navigateNext a:visited {
+    .navigate-next a:visited {
         cursor: pointer;
         text-decoration: none;
-        color: black;
     }
 
-    .navigateNext a:hover {
+    .navigate-next a:hover {
         cursor: pointer;
         text-decoration: none;
-        color: rgb(8, 57, 129);
     }
 
-.root {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.contentContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    width: 100%;
-    height: 100%;
-    overflow-y: hidden;
-}
-
-
-.mainTopicContent {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100%;
-}
-
-.currentOutline {
-    flex: none;
+.current-outline {
     width: 240px;
     overflow: auto;
     padding-right: 10px;
@@ -738,148 +692,23 @@ figure {
     padding-bottom: 20px;
 }
 
-a:link {
-    color: #034af3;
-    text-decoration: none;
-}
-
-a:visited {
-    color: #034af3;
-}
-
-a:hover {
-    color: #1d60ff;
-    text-decoration: underline;
-}
-
-a:active {
-    color: #12eb87;
-}
-
-body {
-    background-color: white;
-    font-size: 11pt;
-    font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-    margin: 0;
-    padding: 0;
-    color: Black;
-    overflow-x: hidden;
-}
-
-
-p {
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
-    p code {
-        font-family: Consolas, monospace;
-        background-color: #f9f9f9;
-        color: #505050;
-        border: 1px solid rgb(230, 230, 230);
-        padding: 1px 5px;
-        font-weight: 600;
-        border-radius: 3px;
-    }
-
-ul, ol {
-    margin-bottom: 20px;
-    line-height: 1.3em;
-}
-
-li {
-    margin-top: .5em;
-    margin-left: 25px;
-    text-align: left;
-}
-
-img {
-    border: 0;
-}
-
-table {
-    width: 100%;
-    overflow: auto;
-    display: block;
-    border-spacing: 0;
-    border-collapse: collapse;
-    margin: 15px 0;
-    border-color: gray;
-}
-
-
-td, th {
-    border: 1px solid #ddd;
-    padding: 6px 13px;
-    display: table-cell;
-    vertical-align: top;
-    line-height: 1.4em;
-}
-
-th {
-    font-weight: bold;
-    color: white;
-    background: #555;
-}
-
-tbody>tr:nth-child(even) {
-    background: #eee;
-}
-
-blockquote {
-    color: #333;
-    background-color: rgba(25,118,210,.05);
-    border-left: 8px solid #1e88e5;
-    padding: 16px 32px 8px 24px;
-    margin: 24px 16px;
-}
 
 #tree-filter {
     width: calc(100% - 40px);
     padding: 8px 10px;
-    color: #555;
-    background-color: #fff;
     background-image: none;
-    border: 1px solid #ccc;
     border-radius: 4px;
     margin: 10px 0 20px 15px;
 }
 #tree-filter-mobile {
     width: calc(100% - 40px);
     padding: 8px 10px;
-    color: white;
-    background-color: #555;
     background-image: none;
-    border: 1px solid #ccc;
     border-radius: 4px;
     margin: 20px 0 10px 15px;
 }
-#tree-filter-mobile::placeholder {
-    color: rgb(213, 213, 213);
-}
-#tree-filter-mobile::-webkit-input-placeholder {
-    color: rgb(213, 213, 213);
-}
-#tree-filter-mobile:-moz-placeholder {
-    color: rgb(213, 213, 213);
-}
-#tree-filter-mobile::-moz-placeholder {
-    color: rgb(213, 213, 213);
-}
-#tree-filter-mobile::-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
-}
-#tree-filter-mobile:-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
-}
-
 
 div.nomnoml {
     max-width: 100%;
     overflow-x: auto;
-}
-
-.kava-recursive-topic {
-    font-weight: bold;
-    font-size: 1.5em;
-    color: red;
 }

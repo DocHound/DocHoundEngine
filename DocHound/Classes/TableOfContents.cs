@@ -253,14 +253,14 @@ namespace DocHound.Classes
         private static void AddTocItems(StringBuilder sb, IEnumerable<TableOfContentsItem> topics, int indentLevel, TableOfContentsItem selectedTopic, TableOfContentsItem parentTopic = null)
         {
             var ulClasses = "topicList topicListLevel" + indentLevel;
-            if (parentTopic != null) ulClasses += parentTopic.Expanded ? " topicExpanded" : " topicCollapsed";
+            if (parentTopic != null) ulClasses += parentTopic.Expanded ? " topic-expanded" : " topic-collapsed";
             sb.Append("<ul class=\"" + ulClasses + "\">");
 
             foreach (var topic in topics)
             {
-                var className = "topicLink topicLevel" + indentLevel;
+                var className = "topic-link topic-level-" + indentLevel;
 
-                if (topic == selectedTopic) className += " selectedTopic";
+                if (topic == selectedTopic) className += " selected-topic";
 
                 sb.Append("<li class=\"" + className + "\">");
 
@@ -270,7 +270,7 @@ namespace DocHound.Classes
                     var keywords = topic.Keywords;
                     if (!string.IsNullOrEmpty(keywords))
                         sb.Append($"<span style=\"display: none;\">{topic.Keywords}</span>");
-                    sb.Append("<span class=\"caret " + (topic.Expanded ? "caretExpanded" : "caretCollapsed") + "\"><svg xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" viewBox=\"0 0 24 24\"><path fill=\"black\" stroke=\"white\" d=\"M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z\"></path></svg></span>");
+                    sb.Append("<span class=\"caret " + (topic.Expanded ? "caret-expanded" : "caret-collapsed") + "\"><svg xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" viewBox=\"0 0 24 24\"><path fill=\"black\" stroke=\"white\" d=\"M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z\"></path></svg></span>");
 
                     AddTocItems(sb, topic.Topics, indentLevel + 1, selectedTopic, topic);
                 }
@@ -326,6 +326,22 @@ namespace DocHound.Classes
             }
 
             return "~/wwwroot/Themes/Default";
+        }
+
+        public static string GetThemeColorFromDynamicToc(dynamic dynamicToc)
+        {
+            if (dynamicToc.theme != null)
+            {
+                if (dynamicToc.theme.colors != null)
+                {
+                    var colors = ((string)dynamicToc.theme.colors).Trim();
+                    if (colors.ToLowerInvariant().EndsWith(".css"))
+                        return colors;
+                    return "Theme-Colors-" + colors;
+                }
+            }
+
+            return "Theme-Colors-Default";
         }
 
         public static string GetSyntaxThemeNameFromDynamicToc(dynamic dynamicToc)
