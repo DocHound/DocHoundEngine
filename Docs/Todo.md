@@ -41,8 +41,8 @@
     * [ ] Maybe we could even show the name of the language at the top of the snippet
     * [ ] Would be nice to have a setting that allows specifying the max height for a code snippet. If it is taller, it could show an expand/collapse button.
 * [ ] Markdown improvements
-    * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
     * [ ] Support FontAwesome
+    * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
     * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
@@ -73,13 +73,10 @@
    * [ ] The footer content needs to be customizable
    * [ ] Sidebar content needs to be customizable
    * [ ] The site icon needs to be customizable
-* [x] Should support slug better
 * [ ] Topics in the TOC should have a "visible" or "hidden" flag, so they can be managed in the tree (and be considered for URL patterns and such), but not displayed as part of the tree. This is useful in a number of scenarios. For instance, one could create a custom slug the topic can be found by, even though we may not want it in the tree (such as when embedding a document inside of another). It is also useful for tooling, such as when we want a tool that shows all files that are not yet referenced by the TOC (which could get annoying if you have files you really do not want to show up in the tree).
 * [ ] Should support a way to add custom themes and Razor templates without requiring a re-deploy
 * [ ] When there is a slug passed in that doesn't seem to go with a specific topic, we should show an appropriate message, rather than defaulting back to the first topic
 * [ ] Allow overriding of CSS styles on individual topics
-* [ ] Would be nice to support theme switching
-* [ ] Would be nice to support code-highlight theme switching for topics that have code
 * [ ] Would be nice to have the outline in the current document be a bit more interactive
 * [ ] Some themes may want the current-doc outline more in the document and below the first heading (or some other arbitrary place)
 * [ ] Maybe there should be a link to the next topic in the sidebar in some themes?
@@ -104,6 +101,9 @@
    * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
+* [x] Should support slug better
+* [x] Would be nice to support theme color switching
+* [x] Would be nice to support code-highlight theme switching for topics that have code
 * [x] Make the main menu configurable
 * [x] Allow overriding of CSS styles
 * [x] The tree should invisibly contain keywords so a tree filter will also include keywords
