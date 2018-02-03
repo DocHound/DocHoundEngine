@@ -11,7 +11,7 @@
     "customTemplate": null 
   },
   "settings": {
-    "allowableThemeColors", "Default, Dark, Sepia",
+    "allowableThemeColors": "Default, Dark, Sepia",
   },
   "menu": [
     {
