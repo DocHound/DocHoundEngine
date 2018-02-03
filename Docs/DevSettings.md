@@ -1,6 +1,6 @@
 # Development: Using the Settings/Configuration System
 
-The DocHound engine provides a standardized way to get configuration options (a.k.a. "settings"). Options can be set globally (currently in app settings, but this will change) as well as through a settings object on the TOC root and also on individual topis though the same settings. (See also: [TOC File Structure](TOC-File-Structure)
+The DocHound engine provides a standardized way to get configuration options (a.k.a. "settings"). Options can be set globally (currently in app settings, but this will change) as well as through a settings object on the TOC root and also on individual topis though the same settings. (See also: [TOC File Structure](TOC-File-Structure).
 
 ## The SettingsHelper Object
 
