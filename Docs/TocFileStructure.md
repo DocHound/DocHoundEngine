@@ -10,8 +10,8 @@ The following is an example of a TOC Json File structure:
   "version": "1.0",
   "requireHttps": "false",
   "theme": {
-    "standardTheme": "Default",
-    "themeColors": "Default",
+    "standardTheme": "Default", // Main theme name
+    "themeColors": "Default", // Color set within the theme
     "customeCss": null,
     "customTemplate": null 
   },
