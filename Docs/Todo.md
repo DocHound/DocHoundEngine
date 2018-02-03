@@ -52,6 +52,7 @@
     * [ ] Should we eliminate scripts from HTML topics?
 * [ ] Styling
     * [ ] Maybe text within tables should not be justified
+    * [ ] Heading tags def. should be left-aligned rather than justified
     * [x] Inline code should be a bit more visible
     * [x] Checkboxes (such as in this list) currently look pretty bad. (GitHub has a better style for these)
     * [x] H3 needs to get their own style
