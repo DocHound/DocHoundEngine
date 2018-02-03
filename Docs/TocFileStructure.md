@@ -11,6 +11,7 @@ The following is an example of a TOC Json File structure:
   "requireHttps": "false",
   "theme": {
     "standardTheme": "Default",
+    "themeColors": "Default",
     "customeCss": null,
     "customTemplate": null 
   },
