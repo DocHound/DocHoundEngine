@@ -6,8 +6,12 @@
   "requireHttps": true,
   "theme": {
     "standardTheme": "Default",
+    "colors": "Default",
     "customeCss": null,
     "customTemplate": null 
+  },
+  "settings": {
+    "allowableThemeColors": "", // Allows for all
   },
   "menu": [
     {
