@@ -1,4 +1,8 @@
-﻿$(function () {
+﻿$(function() {
+    processTopicLoad();
+});
+
+processTopicLoad = function() {
     $.expr[":"].contains = $.expr.createPseudo(function(arg) {
         return function( elem ) {
             return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
@@ -85,6 +89,7 @@
     // Creating a document outline for the local document content
     var headers = $('h1, h2, h3');
     if (headers.length > 1) {
+        var select = '<select id="outlineSelect">';
         var outline = '<ul>';
         for (var headerCounter = 0; headerCounter < headers.length; headerCounter++) {
             var header = headers[headerCounter];
@@ -92,20 +97,23 @@
                 var localOutline = '<li ';
                 if (header.tagName == 'H1') {
                     localOutline = localOutline + 'class="outline-level-1"';
+                    select += '<option value="' + header.id + '">' + header.innerText + '</option>';
                 } else if (header.tagName == 'H2') {
                     localOutline = localOutline + 'class="outline-level-2"';
+                    select += '<option value="' + header.id + '">&nbsp;&nbsp;&nbsp;' + header.innerText + '</option>';
                 } else if (header.tagName == 'H3') {
                     localOutline = localOutline + 'class="outline-level-3"';
+                    select += '<option value="' + header.id + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + header.innerText + '</option>';
                 }
                 localOutline = localOutline + '><a data-id="' + header.id + '">' + header.innerText + '</a></li>';
                 outline = outline + localOutline;
             }
         }
         outline = outline + '</ul>';
-        $('#outlineContent').html(outline);
+        select = select + '</select>';
+        $('#outlineContent').html(select + outline);
         $('#outline').show();
-        $('#outlineContent').on('click',
-            'li>a',
+        $('#outlineContent').on('click', 'li>a',
             function() {
                 headerId = $.trim($(this).data('id'));
                 var target = $('#' + headerId)[0];
@@ -180,4 +188,4 @@
     var paddingTop = $('.content-container').css('padding-top').replace('px','');
     var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
     $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
-});
+};

@@ -485,7 +485,9 @@ li.kava-auto-link {
                 padding-left: 30px;
             }
 
-
+#outlineSelect {
+    display: none;
+}
 
 /* Narrow desktop display */
 
