@@ -74,6 +74,7 @@
 
 ## Overall Processing
 
+* [ ] Would be really nice to support translations right inline in a document.
 * [ ] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl
 * [ ] No hardcoding of any elements
    * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
