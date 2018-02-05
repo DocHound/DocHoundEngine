@@ -20,6 +20,8 @@
 
 * [ ] Dynamically loaded documents do not yet get their theme selectors set correctly.
 * [ ] Must set selected topic (with extended ability to find what's selected) and scroll it into view (and expand it if need be) when loading typics dynamically
+* [ ] Next/Previous buttons do not yet participate in loading topics dynamically
+* [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right.
 * [ ] Themes
     * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
     * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
