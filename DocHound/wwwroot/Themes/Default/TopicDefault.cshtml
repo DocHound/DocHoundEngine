@@ -35,7 +35,6 @@ else
 }
 
 @*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
-<div id="page-scripts" style="display: none">
 @if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
 {
     <script src="~/css/highlightjs/highlight.pack.js"></script>
@@ -67,4 +66,3 @@ else
 {
     <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
 }
-</div>

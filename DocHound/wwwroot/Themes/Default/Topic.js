@@ -51,14 +51,16 @@
     };
     userSettings.load();
 
-    window.onpopstate = function (event) {
-        if (history.state.URL)
+    // Forward and backward navigation through the browser
+    window.onpopstate = function () {
+        if (history.state && history.state.URL) 
             loadTopicAjax(history.state.URL, true);
     }
 
     // We trap all navigations on anchor tags so we can intercept all navigation on the current domain and handle it in-place
     interceptNavigation();
 
+    // Running everything that needs to be done when a new topic loads
     processTopicLoad();
 
     // Add click behavior to tree "arrows"
@@ -160,6 +162,7 @@
     setContentContainerMinHeight(); // We set it right away so it is right initially
 });
 
+// Scrolls the selected topic into view if need be
 ensureSelectedTocEntryVisible = function() {
     var selectedTopics = $('.selected-topic');
     if (selectedTopics.length > 0) {
@@ -167,6 +170,7 @@ ensureSelectedTocEntryVisible = function() {
     }
 }
 
+// Everything that needs to happen the first time the page loads, as well as every time a topic is loaded dynamiclly
 processTopicLoad = function() {
     // Hooking up various options (if they are present)
     $('#themeColorSelector').change(function () {
@@ -232,6 +236,7 @@ processTopicLoad = function() {
     }
 };
 
+// This method wires up the click event of anchor tags within the given context to prevent navitation and instead load topics inline if possible.
 interceptNavigation = function($referenceObject) {
     if (!$referenceObject) $referenceObject = $(document);
 
@@ -253,41 +258,60 @@ interceptNavigation = function($referenceObject) {
     });
 }
 
+// Loads a topic dynamically through Ajax and displays it inline
 loadTopicAjax = function(href, noPushState) {
     $.get(href, function(data, status) {
         if (status == 'success') {
-            var $html = $('<div>' + data + '</div>');
-            var $content = $html.find('.content-container');
-            if ($content.length > 0) {
-                $('.content-container').html($content.html());
-            }
-            var $sidebar = $html.find('aside');
-            if ($sidebar.length > 0) {
-                $('aside').html($sidebar.html());
-            }
-            $('page-scripts').html('');
+            var $html = $('<div>' + data + '</div>'); // This is kind of a hack, but we need to elevate everything within the returned concent one level so jquery actually finds everything
+            
+            // We merge in the main content
+            var $content = $html.find('article.content-container');
+            if ($content.length > 0) $('article.content-container').html($content.html());
+
+            // We also merge in the sidebar
+            var $sidebar = $html.find('aside.sidebar');
+            if ($sidebar.length > 0)  $('aside.sidebar').html($sidebar.html());
+
+            // We take all the scripts from the new topic and move them into the main content
             var $scripts = $html.find('script');
             $scripts.each(function() {
                 var scriptSrc = this.src;
                 var scriptSrcLower = scriptSrc.toLowerCase();
-                if (scriptSrcLower.endsWith('jsmath/easy/load.js')) {
+                if (scriptSrcLower.endsWith('jsmath/easy/load.js')) { // jsmath doesn't work within this context, so we have to force a reload of the page.
                     window.location.href = href;
                     return;
                 }
                 if (!scriptSrcLower.endsWith('/topic.js')) { // Note: We can't reload this file itself, as it would trigger document-ready stuff we do not want
-                    $('script[src="' + scriptSrc + '"]').remove();
+                    $('script[src="' + scriptSrc + '"]').remove(); // If the script already exists, we remove it, so we can add it back in. (Note: We MUST add it back in, because it may have code that needs to re-run immediately!!!)
                     try {
-                        $('body').append(this);
+                        $('body').append(this); // We are adding the new script into the main document. If it contains auto-run code, it will run
                     } catch (ex) {
-                        window.location.href = href;
+                        window.location.href = href; // If there is an issue with all this, we are triggering a full navigation to the current page
                     }
                 }
             });
+
+            // We now also look at all the links. If they are not yet loaded, we load them now.
+            var $links = $html.find('link');
+            $links.each(function() {
+                var linkHref = this.href;
+                if (linkHref.startsWith(window.location.origin))
+                    linkHref = linkHref.substring(window.location.origin.length);
+                var existingLinks = $('link[href="' + linkHref + '"]');
+                if (existingLinks.length < 1) {
+                    // The link doesn't yet exist, so we add it
+                    $('head').append(this);
+                }
+            });
+
+
+            // We set the browser URL. This happens on most dynamic topic loads, except when the forward or back button is pushed in the browser
             if (!noPushState && window.history.pushState) {
                 var title = $html.find('title').text();
                 window.history.pushState({ title: title, URL: href }, "", href);
                 document.title = title;
             }
+            // We give everything a moment to load, and then wire up the newly loaded content and intercept navigation within this content
             setTimeout(function() {
                 processTopicLoad();
                 interceptNavigation($('.content-container'));
@@ -301,6 +325,7 @@ loadTopicAjax = function(href, noPushState) {
     });
 }
 
+// Handles page resize and sets the min height of the main content container, which prevents visual glitches in the mobile version when the mobile menu is open.
 setContentContainerMinHeight = function() {
     var paddingTop = $('.content-container').css('padding-top').replace('px','');
     var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
