@@ -18,6 +18,7 @@
 
 ## Rendering Engine
 
+* [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
 * [ ] Dynamically loaded documents do not yet get their theme selectors set correctly.
 * [ ] Must set selected topic (with extended ability to find what's selected) and scroll it into view (and expand it if need be) when loading typics dynamically
 * [ ] Next/Previous buttons do not yet participate in loading topics dynamically
@@ -56,6 +57,7 @@
     * [ ] Only use HTML body
     * [ ] Should we eliminate scripts from HTML topics?
 * [ ] Styling
+    * [ ] For mobile devices, we should use slightly larger font. Ours seems to be smaller than that found in other docs.
     * [x] Maybe text within tables should not be justified
     * [x] Heading tags def. should be left-aligned rather than justified
     * [x] Inline code should be a bit more visible
