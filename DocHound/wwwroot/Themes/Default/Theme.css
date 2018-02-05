@@ -350,11 +350,11 @@ h1, h2, h3, h4 {
     text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
-    -ms-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s;
-    -moz-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Firefox 4 */
-    -webkit-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Safari and Chrome */
-    -o-transition: margin, width, top, left, right, bottom, height, max-width, max-height .3s; /* Opera */
+    transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s;
+    -ms-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s;
+    -moz-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Firefox 4 */
+    -webkit-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Safari and Chrome */
+    -o-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Opera */
 }
 
     .footer.show-mobile-menu {

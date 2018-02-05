@@ -1,22 +1,68 @@
 ﻿$(function() {
-    processTopicLoad();
-});
 
-processTopicLoad = function() {
     $.expr[":"].contains = $.expr.createPseudo(function(arg) {
         return function( elem ) {
             return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
         };
     });
 
-    // Make sure the selected topic is visible
-    var selectedTopics = $('.selected-topic');
-    if (selectedTopics.length > 0) {
-        selectedTopics[0].scrollIntoView();
+    // Saving some configuration in local storage
+    userSettings = {
+        themeColorCss: '',
+        syntaxHighlightCss: '',
+        
+        save: function userData_save() {                
+            if (localStorage)
+                localStorage.setItem('KavaDocsUserSettings', JSON.stringify(userSettings));
+        },
+        load: function userData_load() {
+            if (!localStorage)
+                return;                
+            var data = localStorage.getItem('KavaDocsUserSettings');
+            if (data) {
+                try {
+                    data = JSON.parse(data);
+                    $.extend(userSettings, data);
+                }
+                catch (ex) { localStorage.removeItem('KavaDocsUserSettings') };
+            }
+
+            if (userSettings.themeColorCss.length > 0) {
+                $('#themeColorSelector option').removeAttr('selected');
+                var $selectedOption = $('#themeColorSelector option[value="'+userSettings.themeColorCss+'"]');
+                if ($selectedOption.length > 0) {
+                    $selectedOption.attr('selected','');
+                    setTimeout(function() {
+                        $selectedOption.trigger('change');
+                    });
+                }
+            }
+            if (userSettings.syntaxHighlightCss.length > 0) {
+                $('#syntaxThemeSelector option').removeAttr('selected');
+                var $selectedOption2 = $('#syntaxThemeSelector option[value="'+userSettings.syntaxHighlightCss+'"]');
+                if ($selectedOption2.length > 0) {
+                    $selectedOption2.attr('selected','');
+                    setTimeout(function() {
+                        $selectedOption2.trigger('change');
+                    });
+                }
+            }
+        }
+    };
+    userSettings.load();
+
+    window.onpopstate = function (event) {
+        if (history.state.URL)
+            loadTopicAjax(history.state.URL, true);
     }
 
+    // We trap all navigations on anchor tags so we can intercept all navigation on the current domain and handle it in-place
+    interceptNavigation();
+
+    processTopicLoad();
+
     // Add click behavior to tree "arrows"
-    $('.caret').click(function () {
+    $(document.body).on('click', '.caret', function () {
         var parent = $(this).parent();
         if ($(this).hasClass('caret-expanded')) {
             $(this).removeClass('caret-expanded');
@@ -64,10 +110,70 @@ processTopicLoad = function() {
         }
     });
 
+    // Reacting to various things when the page scrolls
+    $(document).on('scroll', function () {
+        if ($(document).scrollTop() > 60) {
+            $('.header').addClass('scrolled');
+            $('.toc').addClass('scrolled');
+            $('.sidebar').addClass('scrolled');
+            $('.logo').addClass('scrolled');
+            $('.footer').addClass('scrolled');
+        } else {
+            $('.header').removeClass('scrolled');
+            $('.toc').removeClass('scrolled');
+            $('.sidebar').removeClass('scrolled');
+            $('.logo').removeClass('scrolled');
+            $('.footer').removeClass('scrolled');
+        }
+    });
+
+    // Opening the hamburger/mobile menu
+    $('.mobile-menu-icon').on('click', function () {
+        if (!$('body').hasClass('show-mobile-menu')) {
+            $('body').addClass('show-mobile-menu');
+            $('.header').addClass('show-mobile-menu');
+            $('.mobile-menu').addClass('show-mobile-menu');
+            $('.content-container').addClass('show-mobile-menu');
+            $('.footer').addClass('show-mobile-menu');
+            $('.mobile-menu').css('display', 'block');
+            setTimeout(function () {
+                $('.mobile-menu').css('z-index', 10000);
+            }, 300);
+        } else {
+            $('body').removeClass('show-mobile-menu');
+            $('.header').removeClass('show-mobile-menu');
+            $('.content-container').removeClass('show-mobile-menu');
+            $('.footer').removeClass('show-mobile-menu');
+            $('.mobile-menu').removeClass('show-mobile-menu');
+            $('.mobile-menu').css('z-index', -10000);
+            setTimeout(function () {
+                $('.mobile-menu').css('display', 'none');
+            }, 300);
+        }
+    });
+
+    // Make sure the selected topic is visible
+    ensureSelectedTocEntryVisible();
+    
+    // Making sure the main content has a minimum height set, so we do not get visual glitches when the mobile menu opens
+    $(window).on('resize', setContentContainerMinHeight); // We set it every time a resize happens
+    setContentContainerMinHeight(); // We set it right away so it is right initially
+});
+
+ensureSelectedTocEntryVisible = function() {
+    var selectedTopics = $('.selected-topic');
+    if (selectedTopics.length > 0) {
+        selectedTopics[0].scrollIntoView();
+    }
+}
+
+processTopicLoad = function() {
     // Hooking up various options (if they are present)
     $('#themeColorSelector').change(function () {
         // First, we disable all color CSS links
         var selectedValue = $('#themeColorSelector option:selected').val();
+        userSettings.themeColorCss = selectedValue;
+        userSettings.save();
         $('#themeColorSelector option').each(function () {
             var cssUrl = $(this).val();
             var existingLinks = $("link[href='" + cssUrl + "']");
@@ -124,68 +230,79 @@ processTopicLoad = function() {
                 window.history.pushState({ title: '', URL: href }, "", href);
             });
     }
+};
 
-    // Reacting to various things when the page scrolls
-    $(document).on('scroll', function () {
-        if ($(document).scrollTop() > 60) {
-            $('.header').addClass('scrolled');
-            $('.toc').addClass('scrolled');
-            $('.sidebar').addClass('scrolled');
-            $('.logo').addClass('scrolled');
-            $('.footer').addClass('scrolled');
+interceptNavigation = function($referenceObject) {
+    if (!$referenceObject) $referenceObject = $(document);
+
+    $referenceObject.on('click', 'a', function() {
+        $('.toc .selected-topic').removeClass('selected-topic');
+        if ($(this).parent().hasClass('topic-link')) {
+            $(this).parent().addClass('selected-topic');
         } else {
-            $('.header').removeClass('scrolled');
-            $('.toc').removeClass('scrolled');
-            $('.sidebar').removeClass('scrolled');
-            $('.logo').removeClass('scrolled');
-            $('.footer').removeClass('scrolled');
+            // TODO: We need to try to find the item anyway
+        }
+        ensureSelectedTocEntryVisible();
+
+        var href = $(this).attr('href');
+        var hrefLower = href.toLowerCase();
+        if (!hrefLower.startsWith('http://') && !hrefLower.startsWith('https://') && !hrefLower.startsWith('#') && hrefLower.length > 0) {
+            loadTopicAjax(href);
+            return false;
         }
     });
+}
 
-    // Closing the menu when the header areas is clicked
-    $('.header').on('click', function() {
-        $('.sub-menu').removeClass('visible-sub-menu');
-    });
-    $('.menu>ul>li').on('mouseenter', function () {
-        $('.sub-menu').removeClass('visible-sub-menu');
-        $(this).find('.sub-menu').addClass('visible-sub-menu');
-    });
-    $('body').on('mouseenter', function () {
-        $('.sub-menu').removeClass('visible-sub-menu');
-    });
-
-    // Opening the hamburger/mobile menu
-    $('.mobile-menu-icon').on('click', function () {
-        if (!$('body').hasClass('show-mobile-menu')) {
-            $('body').addClass('show-mobile-menu');
-            $('.header').addClass('show-mobile-menu');
-            $('.mobile-menu').addClass('show-mobile-menu');
-            $('.content-container').addClass('show-mobile-menu');
-            $('.footer').addClass('show-mobile-menu');
-            $('.mobile-menu').css('display', 'block');
-            setTimeout(function () {
-                $('.mobile-menu').css('z-index', 10000);
-            }, 300);
+loadTopicAjax = function(href, noPushState) {
+    $.get(href, function(data, status) {
+        if (status == 'success') {
+            var $html = $('<div>' + data + '</div>');
+            var $content = $html.find('.content-container');
+            if ($content.length > 0) {
+                $('.content-container').html($content.html());
+            }
+            var $sidebar = $html.find('aside');
+            if ($sidebar.length > 0) {
+                $('aside').html($sidebar.html());
+            }
+            $('page-scripts').html('');
+            var $scripts = $html.find('script');
+            $scripts.each(function() {
+                var scriptSrc = this.src;
+                var scriptSrcLower = scriptSrc.toLowerCase();
+                if (scriptSrcLower.endsWith('jsmath/easy/load.js')) {
+                    window.location.href = href;
+                    return;
+                }
+                if (!scriptSrcLower.endsWith('/topic.js')) { // Note: We can't reload this file itself, as it would trigger document-ready stuff we do not want
+                    $('script[src="' + scriptSrc + '"]').remove();
+                    try {
+                        $('body').append(this);
+                    } catch (ex) {
+                        window.location.href = href;
+                    }
+                }
+            });
+            if (!noPushState && window.history.pushState) {
+                var title = $html.find('title').text();
+                window.history.pushState({ title: title, URL: href }, "", href);
+                document.title = title;
+            }
+            setTimeout(function() {
+                processTopicLoad();
+                interceptNavigation($('.content-container'));
+                interceptNavigation($('aside'));
+                window.scrollTo(0, 0);
+            });
         } else {
-            $('body').removeClass('show-mobile-menu');
-            $('.header').removeClass('show-mobile-menu');
-            $('.content-container').removeClass('show-mobile-menu');
-            $('.footer').removeClass('show-mobile-menu');
-            $('.mobile-menu').removeClass('show-mobile-menu');
-            $('.mobile-menu').css('z-index', -10000);
-            setTimeout(function () {
-                $('.mobile-menu').css('display', 'none');
-            }, 300);
+            // TODO: We should handle this better :-)
+            alert('The requested topic is not available.');
         }
     });
+}
 
-    // Making sure the main content has a minimum height set, so we do not get visual glitches when the mobile menu opens
-    $(window).on('resize', function(){
-        var paddingTop = $('.content-container').css('padding-top').replace('px','');
-        var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
-        $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
-    });
+setContentContainerMinHeight = function() {
     var paddingTop = $('.content-container').css('padding-top').replace('px','');
     var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
     $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
-};
+}
