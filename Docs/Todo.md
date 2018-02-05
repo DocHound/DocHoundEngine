@@ -96,6 +96,8 @@
     * [ ] We want to do the same inside a topic by having a special placeholder in the doc (we are thinking about a kava-topic HTML tag
 * [ ] Edit link right in the topic
 * [ ] Threaded discussions, or at least comments
+    * [ ] Microsoft docs even allow comments right within a topic. Should we support that?
+        ![](ToDo1.png)
 * [ ] Would be nice to support cool interactions with linked source code. For instance, could we pull all source files that are flagged for code-review and show them inside the docs, so people authorized to review code could look through the code right there and approve it?
 * [ ] Would be nice to somehow support "try it now" for JavaScript examples (and such)
 * [ ] PDF export
