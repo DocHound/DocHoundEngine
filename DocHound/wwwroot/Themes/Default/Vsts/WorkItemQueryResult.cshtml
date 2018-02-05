@@ -45,7 +45,7 @@
 
                                         if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
                                         {
-                                            var url = $"{Context.Request.Scheme}://{Context.Request.Host}/{Model.CurrentSlug}";
+                                            var url = $"/{Model.CurrentSlug}";
                                             url += "?workitemnumber=" + fields["System.Id"];
                                             <a href="@url">@displayValue</a>
                                         }
@@ -106,7 +106,7 @@ else
 
                                 if ((column.referenceName == "System.Id" || column.referenceName == "System.Title") && fields["System.Id"] != null)
                                 {
-                                    var url = $"{Context.Request.Scheme}://{Context.Request.Host}/{Model.CurrentSlug}";
+                                    var url = $"/{Model.CurrentSlug}";
                                     url += "?workitemnumber=" + fields["System.Id"];
                                     <a href="@url">@displayValue</a>
                                 }

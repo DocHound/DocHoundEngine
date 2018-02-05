@@ -11,6 +11,8 @@ if ($('pre code').length > 0) {
     $('#syntaxThemeSelector').change(function () {
         // First, we disable all color CSS links
         var selectedValue = $('#syntaxThemeSelector option:selected').val();
+        userSettings.syntaxHighlightCss = selectedValue;
+        userSettings.save();
         $('#syntaxThemeSelector option').each(function () {
             var cssUrl = $(this).val();
             var existingLinks = $("link[href='" + cssUrl + "']");
