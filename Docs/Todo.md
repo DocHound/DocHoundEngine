@@ -22,6 +22,7 @@
 * [ ] Must set selected topic (with extended ability to find what's selected) and scroll it into view (and expand it if need be) when loading typics dynamically
 * [ ] Next/Previous buttons do not yet participate in loading topics dynamically
 * [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right.
+* [ ] Need a loading indicator for dynamic topics showing up when loading takes longer than a half a second (or so)
 * [ ] Themes
     * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
     * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
