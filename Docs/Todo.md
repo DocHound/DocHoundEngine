@@ -19,7 +19,6 @@
 ## Rendering Engine
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
-* [ ] Dynamically loaded documents do not yet get their theme selectors set correctly.
 * [ ] Must set selected topic (with extended ability to find what's selected) and scroll it into view (and expand it if need be) when loading typics dynamically
 * [ ] Next/Previous buttons do not yet participate in loading topics dynamically
 * [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right.
@@ -58,7 +57,7 @@
     * [ ] Only use HTML body
     * [ ] Should we eliminate scripts from HTML topics?
 * [ ] Styling
-    * [ ] For mobile devices, we should use slightly larger font. Ours seems to be smaller than that found in other docs.
+    * [x] For mobile devices, we should use slightly larger font. Ours seems to be smaller than that found in other docs. (Note: Ended up updating all fonts to fit more what Microsoft is doing on their docs).
     * [x] Maybe text within tables should not be justified
     * [x] Heading tags def. should be left-aligned rather than justified
     * [x] Inline code should be a bit more visible
@@ -68,6 +67,7 @@
     * [x] Need good default style for blockquotes
     * [x] Should have better styles for the links to sub-topics created automatically when a parent topic is empty.
     * [x] Text within tables doesn't look all that great and should be improved
+* [x] Dynamically loaded documents do not yet get their theme selectors set correctly.
 * [x] Showing the outline with indent levels
 * [x] Make the current tab work on mobile (responsive)
 * [x] Handle image paths relative to documents stored in root folders properly
