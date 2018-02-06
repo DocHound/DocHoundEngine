@@ -26,7 +26,9 @@
                 }
                 catch (ex) { localStorage.removeItem('KavaDocsUserSettings') };
             }
-
+            userSettings.refreshTargets();
+        },
+        refreshTargets: function userData_refresh() {
             if (userSettings.themeColorCss.length > 0) {
                 $('#themeColorSelector option').removeAttr('selected');
                 var $selectedOption = $('#themeColorSelector option[value="'+userSettings.themeColorCss+'"]');
@@ -313,9 +315,10 @@ loadTopicAjax = function(href, noPushState) {
             }
             // We give everything a moment to load, and then wire up the newly loaded content and intercept navigation within this content
             setTimeout(function() {
-                processTopicLoad();
-                interceptNavigation($('.content-container'));
-                interceptNavigation($('aside'));
+                processTopicLoad(); // Makes sure everything going on in the new topics is properly processed (such as syntax highlighting, or a table of contents,...)
+                userSettings.refreshTargets(); // Makes sure that everything that got newly loaded that may need user data is refreshes
+                interceptNavigation($('article.content-container')); // Wires up all anchor tag navigation within the main content
+                interceptNavigation($('aside.sidebar')); // Wires up all anchor tag navigation within the sidebar content
                 window.scrollTo(0, 0);
             });
         } else {
