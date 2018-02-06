@@ -143,8 +143,8 @@
     ensureSelectedTocEntryVisible();
     
     // Making sure the main content has a minimum height set, so we do not get visual glitches when the mobile menu opens
-    $(window).on('resize', setContentContainerMinHeight); // We set it every time a resize happens
-    setContentContainerMinHeight(); // We set it right away so it is right initially
+    $(window).on('resize', handleWindowResize); // We set it every time a resize happens
+    handleWindowResize(); // We set it right away so it is right initially
 });
 
 showMobileMenu = function() {
@@ -169,6 +169,20 @@ hideMobileMenu = function() {
     setTimeout(function () {
         $('.mobile-menu').css('display', 'none');
     }, 300);
+}
+
+// Makes sure that the specified topic is visible (all the parents are expanded) and that it is scrolled into view
+ensureTopicIsExpandedAndVisible = function($topic) {
+    var filter = $topic.text();
+    var matches = $('.topicList li:contains("' + filter + '")');
+    matches.parent().removeClass('topic-collapsed');
+    matches.addClass('topic-expanded');
+    matches.parent().addClass('topic-expanded');
+    matches.show();
+    var carets = $('.topic-expanded>.caret.caret-collapsed');
+    carets.removeClass('caret-collapsed');
+    carets.addClass('caret-expanded');
+    ensureSelectedTocEntryVisible();
 }
 
 // Scrolls the selected topic into view if need be
@@ -250,27 +264,24 @@ interceptNavigation = function($referenceObject) {
     if (!$referenceObject) $referenceObject = $(document);
 
     $referenceObject.on('click', 'a', function() {
-        var href = $(this).attr('href');
-        
-        $('.toc .selected-topic').removeClass('selected-topic');
-        if ($(this).parent().hasClass('topic-link')) {
-            $(this).parent().addClass('selected-topic');
+        // Regardless of anything else, we can now close the mobile menu
+        if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 
-            // We also make sure we close the mobile menu, if it was open
-            if ($('body').hasClass('show-mobile-menu')) {
-                hideMobileMenu();
-            }
-        } else {
+        var href = $(this).attr('href');
+
+        $('.selected-topic').removeClass('selected-topic');
+        if ($(this).parent().hasClass('topic-link')) 
+            $(this).parent().addClass('selected-topic');
+        else {
             var found = false;
             var currentSlug = href;
-            var allTocLinks = $('.toc .topic-link a');
+            var allTocLinks = $('.topic-link a');
             for (var counter = 0; counter < allTocLinks.length; counter++){
                 var $currentTopic = $(allTocLinks[counter]);
                 if (slugMatchesTopic(currentSlug, $currentTopic)) {
                     $currentTopic.parent().addClass('selected-topic');
                     ensureTopicIsExpandedAndVisible($currentTopic);
                     found = true;
-                    break;
                 }
             }
             if (!found) { // Since we haven't found anythign yet, we run a more lenient search
@@ -279,7 +290,6 @@ interceptNavigation = function($referenceObject) {
                     if (linkMatchesTopic(currentSlug, $currentTopic)) {
                         $currentTopic.parent().addClass('selected-topic');
                         ensureTopicIsExpandedAndVisible($currentTopic);
-                        break;
                     }
                 }
             }
@@ -292,16 +302,6 @@ interceptNavigation = function($referenceObject) {
             return false;
         }
     });
-}
-
-ensureTopicIsExpandedAndVisible = function($topic) {
-    var filter = $topic.text();
-    var matches = $('.topicList li:contains("' + filter + '")');
-    matches.parent().removeClass('topic-collapsed');
-    matches.addClass('topic-expanded');
-    matches.parent().addClass('topic-expanded');
-    matches.show();
-
 }
 
 // This method mirrors TopicHelper.SlugMatchesTopic() on the server. The two methods should be kept in sync functionally
@@ -415,6 +415,8 @@ loadTopicAjax = function(href, noPushState) {
     } else {
         href += '?notoc=true';
     }
+    $('article.content-container').css('opacity', '0');
+    $('aside.sidebar').css('opacity', '0');
 
     $.get(href, function(data, status) {
         if (status == 'success') {
@@ -422,11 +424,17 @@ loadTopicAjax = function(href, noPushState) {
             
             // We merge in the main content
             var $content = $html.find('article.content-container');
-            if ($content.length > 0) $('article.content-container').html($content.html());
+            if ($content.length > 0) {
+                $('article.content-container').html($content.html());
+                $('article.content-container').css('opacity', '1');
+            }
 
             // We also merge in the sidebar
             var $sidebar = $html.find('aside.sidebar');
-            if ($sidebar.length > 0)  $('aside.sidebar').html($sidebar.html());
+            if ($sidebar.length > 0) {
+                $('aside.sidebar').html($sidebar.html());
+                $('aside.sidebar').css('opacity', '1');
+            }
 
             // We take all the scripts from the new topic and move them into the main content
             var $scripts = $html.find('script');
@@ -484,8 +492,10 @@ loadTopicAjax = function(href, noPushState) {
 }
 
 // Handles page resize and sets the min height of the main content container, which prevents visual glitches in the mobile version when the mobile menu is open.
-setContentContainerMinHeight = function() {
+handleWindowResize = function() {
     var paddingTop = $('.content-container').css('padding-top').replace('px','');
     var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
     $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
+
+    if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 }

@@ -4,18 +4,17 @@
 
 @if (Model.SelectedTopic != null && (Model.SelectedTopic.PreviousTopic != null || Model.SelectedTopic.NextTopic != null))
 {
-    var url = $"{Context.Request.Scheme}://{Context.Request.Host}";
     <div class="navigation-footer">
         @if (Model.SelectedTopic.PreviousTopic != null)
         {
             <div class="navigate-previous">
-                <a href="@(url)@Model.SelectedTopic.PreviousTopic.SlugSafe" title="@Model.SelectedTopic.PreviousTopic.Title">Previous</a>
+                <a href="@Model.SelectedTopic.PreviousTopic.SlugSafe" title="@Model.SelectedTopic.PreviousTopic.Title">Previous</a>
             </div>
         }
         @if (Model.SelectedTopic.NextTopic != null)
         {
             <div class="navigate-next">
-                <a href="@(url)@Model.SelectedTopic.NextTopic.SlugSafe" title="@Model.SelectedTopic.NextTopic.Title">Next</a>
+                <a href="@Model.SelectedTopic.NextTopic.SlugSafe" title="@Model.SelectedTopic.NextTopic.Title">Next</a>
             </div>
         }
         <div style="clear: both"></div>

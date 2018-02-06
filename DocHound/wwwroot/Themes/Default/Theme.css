@@ -113,11 +113,11 @@ h1, h2, h3, h4 {
     padding-right: 330px;
     padding-bottom: 100px;
     overflow-x: hidden;
-    -ms-transition: top .3s, margin-left .3s, margin-right .3s;
-    -moz-transition: top .3s, margin-left .3s, margin-right .3s; /* Firefox 4 */
-    -webkit-transition: top .3s, margin-left .3s, margin-right .3s; /* Safari and Chrome */
-    -o-transition: top .3s, margin-left .3s, margin-right .3s; /* Opera */
-    transition: top .3s, margin-left .3s, margin-right .3s;
+    -ms-transition: top .3s, margin-left .3s, margin-right .3s, opacity .2s;
+    -moz-transition: top .3s, margin-left .3s, margin-right .3s, opacity .2s; /* Firefox 4 */
+    -webkit-transition: top .3s, margin-left .3s, margin-right .3s, opacity .2s; /* Safari and Chrome */
+    -o-transition: top .3s, margin-left .3s, margin-right .3s, opacity .2s; /* Opera */
+    transition: top .3s, margin-left .3s, margin-right .3s, opacity .2s;
     line-height: 1.7;
     text-align: justify;
 }
@@ -409,11 +409,11 @@ li.kava-auto-link {
     top: 130px;
     bottom: 50px;
     overflow-y: auto;
-    -ms-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s;
-    -moz-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Firefox 4 */
-    -webkit-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Safari and Chrome */
-    -o-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s; /* Opera */
-    transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s;
+    -ms-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s, opacity .2s;
+    -moz-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s, opacity .2s; /* Firefox 4 */
+    -webkit-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s, opacity .2s; /* Safari and Chrome */
+    -o-transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s, opacity .2s; /* Opera */
+    transition: margin .3s, width .3s, top .3s, left .3s, right .3s, bottom .3s, height .3s, max-width .3s, max-height .3s, opacity .2s;
 }
 
     .sidebar select {
