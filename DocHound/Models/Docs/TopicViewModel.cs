@@ -22,6 +22,7 @@ namespace DocHound.Models.Docs
         public VstsOutputHelper Vsts { get; }
 
         public bool RenderTopicOnly { get; set; }
+        public bool HideTableOfContents { get; set; }
 
         public TopicViewModel(string slug, HttpContext context)
         {
@@ -31,6 +32,8 @@ namespace DocHound.Models.Docs
 
             if (HttpContext.Request.Query.ContainsKey("contentonly"))
                 RenderTopicOnly = context.Request.Query["contentonly"] == "true";
+            if (HttpContext.Request.Query.ContainsKey("notoc"))
+                HideTableOfContents = context.Request.Query["notoc"] == "true";
         }
 
         public async Task LoadData(bool buildToc = true, bool buildHtml = true)
@@ -557,16 +560,23 @@ namespace DocHound.Models.Docs
 
         public List<MainMenuItem> MainMenu { get; set; }
 
-        private static string GetRealLink(IEnumerable<TableOfContentsItem> topics, string name)
+        public string GetMenu(MenuMode mode = MenuMode.Top)
         {
-            foreach (var topic in topics)
+            if (MainMenu.Count < 1) return string.Empty;
+
+            var sb = new StringBuilder();
+            sb.Append("<ul>");
+            foreach (var item in MainMenu)
             {
-                if (TopicHelper.LinkMatchesTopic(name, topic)) return topic.Link;
-                var childLink = GetRealLink(topic.Topics, name);
-                if (!string.IsNullOrEmpty(childLink)) return childLink;
+                sb.Append("<li>");
+                sb.Append("<a class=\"area-link\" href=\"" + item.Link + "\">" + item.Title + "</a>");
+                sb.Append("</li>");
             }
-            return string.Empty;
+            sb.Append("</ul>");
+            return sb.ToString();
         }
+
+        public string GetToCHtml() => HideTableOfContents ? string.Empty : TableOfContentsHelper.GetToCHtml(Topics, SelectedTopic);
 
         public List<TableOfContentsItem> Topics { get; set; } = new List<TableOfContentsItem>();
         public List<TableOfContentsItem> FlatTopics { get; set; }
@@ -698,5 +708,11 @@ namespace DocHound.Models.Docs
         public string Link { get; set; }
         public string Tag { get; set; }
         public HtmlNode Node { get; set; }
+    }
+
+    public enum MenuMode
+    {
+        Top,
+        Mobile
     }
 }

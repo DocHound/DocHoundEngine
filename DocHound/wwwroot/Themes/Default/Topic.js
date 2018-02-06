@@ -133,27 +133,10 @@
 
     // Opening the hamburger/mobile menu
     $('.mobile-menu-icon').on('click', function () {
-        if (!$('body').hasClass('show-mobile-menu')) {
-            $('body').addClass('show-mobile-menu');
-            $('.header').addClass('show-mobile-menu');
-            $('.mobile-menu').addClass('show-mobile-menu');
-            $('.content-container').addClass('show-mobile-menu');
-            $('.footer').addClass('show-mobile-menu');
-            $('.mobile-menu').css('display', 'block');
-            setTimeout(function () {
-                $('.mobile-menu').css('z-index', 10000);
-            }, 300);
-        } else {
-            $('body').removeClass('show-mobile-menu');
-            $('.header').removeClass('show-mobile-menu');
-            $('.content-container').removeClass('show-mobile-menu');
-            $('.footer').removeClass('show-mobile-menu');
-            $('.mobile-menu').removeClass('show-mobile-menu');
-            $('.mobile-menu').css('z-index', -10000);
-            setTimeout(function () {
-                $('.mobile-menu').css('display', 'none');
-            }, 300);
-        }
+        if (!$('body').hasClass('show-mobile-menu')) 
+            showMobileMenu();
+        else 
+            hideMobileMenu();
     });
 
     // Make sure the selected topic is visible
@@ -163,6 +146,30 @@
     $(window).on('resize', setContentContainerMinHeight); // We set it every time a resize happens
     setContentContainerMinHeight(); // We set it right away so it is right initially
 });
+
+showMobileMenu = function() {
+    $('body').addClass('show-mobile-menu');
+    $('.header').addClass('show-mobile-menu');
+    $('.mobile-menu').addClass('show-mobile-menu');
+    $('.content-container').addClass('show-mobile-menu');
+    $('.footer').addClass('show-mobile-menu');
+    $('.mobile-menu').css('display', 'block');
+    setTimeout(function () {
+        $('.mobile-menu').css('z-index', 10000);
+    }, 300);
+}
+
+hideMobileMenu = function() {
+    $('body').removeClass('show-mobile-menu');
+    $('.header').removeClass('show-mobile-menu');
+    $('.content-container').removeClass('show-mobile-menu');
+    $('.footer').removeClass('show-mobile-menu');
+    $('.mobile-menu').removeClass('show-mobile-menu');
+    $('.mobile-menu').css('z-index', -10000);
+    setTimeout(function () {
+        $('.mobile-menu').css('display', 'none');
+    }, 300);
+}
 
 // Scrolls the selected topic into view if need be
 ensureSelectedTocEntryVisible = function() {
@@ -243,15 +250,42 @@ interceptNavigation = function($referenceObject) {
     if (!$referenceObject) $referenceObject = $(document);
 
     $referenceObject.on('click', 'a', function() {
+        var href = $(this).attr('href');
+        
         $('.toc .selected-topic').removeClass('selected-topic');
         if ($(this).parent().hasClass('topic-link')) {
             $(this).parent().addClass('selected-topic');
+
+            // We also make sure we close the mobile menu, if it was open
+            if ($('body').hasClass('show-mobile-menu')) {
+                hideMobileMenu();
+            }
         } else {
-            // TODO: We need to try to find the item anyway
+            var found = false;
+            var currentSlug = href;
+            var allTocLinks = $('.toc .topic-link a');
+            for (var counter = 0; counter < allTocLinks.length; counter++){
+                var $currentTopic = $(allTocLinks[counter]);
+                if (slugMatchesTopic(currentSlug, $currentTopic)) {
+                    $currentTopic.parent().addClass('selected-topic');
+                    ensureTopicIsExpandedAndVisible($currentTopic);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) { // Since we haven't found anythign yet, we run a more lenient search
+                for (var counter = 0; counter < allTocLinks.length; counter++){
+                    var $currentTopic = $(allTocLinks[counter]);
+                    if (linkMatchesTopic(currentSlug, $currentTopic)) {
+                        $currentTopic.parent().addClass('selected-topic');
+                        ensureTopicIsExpandedAndVisible($currentTopic);
+                        break;
+                    }
+                }
+            }
         }
         ensureSelectedTocEntryVisible();
 
-        var href = $(this).attr('href');
         var hrefLower = href.toLowerCase();
         if (!hrefLower.startsWith('http://') && !hrefLower.startsWith('https://') && !hrefLower.startsWith('#') && hrefLower.length > 0) {
             loadTopicAjax(href);
@@ -260,8 +294,128 @@ interceptNavigation = function($referenceObject) {
     });
 }
 
+ensureTopicIsExpandedAndVisible = function($topic) {
+    var filter = $topic.text();
+    var matches = $('.topicList li:contains("' + filter + '")');
+    matches.parent().removeClass('topic-collapsed');
+    matches.addClass('topic-expanded');
+    matches.parent().addClass('topic-expanded');
+    matches.show();
+
+}
+
+// This method mirrors TopicHelper.SlugMatchesTopic() on the server. The two methods should be kept in sync functionally
+slugMatchesTopic = function(slug, $topicLink)
+{
+    // This is a more discriminating version of linkMatchesTopic()
+
+    if (!slug) return false;
+    if (!$topicLink) return false;
+
+    var topicSlug = $topicLink.attr('data-slug')
+    if (!topicSlug) return false;
+
+    slug = slug.toLowerCase();
+    topicSlug = topicSlug.toLowerCase();
+
+    while (slug.length > 0 && slug.startsWith('/')) slug = slug.Substring(1);
+    while (topicSlug.length > 0 && topicSlug.startsWith('/')) topicSlug = topicSlug.Substring(1);
+
+    return slug === topicSlug;
+}
+
+// This method mirrors TopicHelper.LinkMatchesTopic() on the server. The two methods should be kept in sync functionally
+linkMatchesTopic = function(link, $topicLink)
+{
+    if (link == null) return false;
+    if ($topicLink == null) return false;
+
+    var normalizedLink = getNormalizedName(link).toLowerCase();
+
+    // We run all kinds of things we can compare to
+    var topicSlug = $topicLink.attr('data-slug');
+    if (topicSlug) {
+        topicSlug = getNormalizedName(topicSlug).toLowerCase();
+        if (topicSlug === normalizedLink) return true;
+    }
+
+    var topicLink = $topicLink.attr('data-link');
+    if (topicLink) {
+        topicLink = getNormalizedName(topicLink).toLowerCase();
+        if (topicLink === normalizedLink) return true;
+    }
+
+    var topicHref = $topicLink.attr('href');
+    if (topicHref) {
+        topicHref = getNormalizedName(topicHref).toLowerCase();
+        if (topicHref === normalizedLink) return true;
+    }
+
+    var topicText = $topicLink.text();
+    if (topicText) {
+        topicText = getNormalizedName(topicText).toLowerCase();
+        if (topicText === normalizedLink) return true;
+    }
+
+    // We run them all again, but this time we trim out potential file extensions
+    var topicSlug = $topicLink.attr('data-slug');
+    if (topicSlug) {
+        if (topicSlug.indexOf('.') > -1) topicSlug = topicSlug.split('.')[0];
+        topicSlug = getNormalizedName(topicSlug).toLowerCase();
+        if (topicSlug === normalizedLink) return true;
+    }
+
+    var topicLink = $topicLink.attr('data-link');
+    if (topicLink) {
+        if (topicLink.indexOf('.') > -1) topicLink = topicLink.split('.')[0];
+        topicLink = getNormalizedName(topicLink).toLowerCase();
+        if (topicLink === normalizedLink) return true;
+    }
+
+    var topicHref = $topicLink.attr('href');
+    if (topicHref) {
+        if (topicHref.indexOf('.') > -1) topicHref = topicHref.split('.')[0];
+        topicHref = getNormalizedName(topicHref).toLowerCase();
+        if (topicHref === normalizedLink) return true;
+    }
+
+    var topicText = $topicLink.text();
+    if (topicText) {
+        if (topicText.indexOf('.') > -1) topicText = topicText.split('.')[0];
+        topicText = getNormalizedName(topicText).toLowerCase();
+        if (topicText === normalizedLink) return true;
+    }
+    
+    return false;
+}
+
+// This method mirrors TopicHelper.GetNormalizedName() on the server. The two methods should be kept in sync functionally
+getNormalizedName = function(name)
+{
+    if (!name) return '';
+
+    var normalizedName = name;
+    while (normalizedName.indexOf(' ') > -1) normalizedName = normalizedName.replace(" ", "-");
+    while (normalizedName.indexOf('%20') > -1) normalizedName = normalizedName.replace("%20", "-");
+    while (normalizedName.indexOf(',') > -1) normalizedName = normalizedName.replace(",", '');
+    while (normalizedName.indexOf('(') > -1) normalizedName = normalizedName.replace("(", '');
+    while (normalizedName.indexOf(')') > -1) normalizedName = normalizedName.replace(")", '');
+    while (normalizedName.indexOf('?') > -1) normalizedName = normalizedName.replace("?", '');
+    while (normalizedName.indexOf(':') > -1) normalizedName = normalizedName.replace(":", '');
+    while (normalizedName.indexOf('#') > -1) normalizedName = normalizedName.replace("#", '');
+    while (normalizedName.indexOf('&') > -1) normalizedName = normalizedName.replace("&", '');
+    while (normalizedName.indexOf('/') > -1) normalizedName = normalizedName.replace("/", '');
+    return normalizedName;
+}
+
 // Loads a topic dynamically through Ajax and displays it inline
 loadTopicAjax = function(href, noPushState) {
+    if (href.indexOf('?') !== -1) {
+        href += '&notoc=true';
+    } else {
+        href += '?notoc=true';
+    }
+
     $.get(href, function(data, status) {
         if (status == 'success') {
             var $html = $('<div>' + data + '</div>'); // This is kind of a hack, but we need to elevate everything within the returned concent one level so jquery actually finds everything
@@ -310,6 +464,7 @@ loadTopicAjax = function(href, noPushState) {
             // We set the browser URL. This happens on most dynamic topic loads, except when the forward or back button is pushed in the browser
             if (!noPushState && window.history.pushState) {
                 var title = $html.find('title').text();
+                href = href.replace('&notoc=true', '').replace('?notoc=true', '')
                 window.history.pushState({ title: title, URL: href }, "", href);
                 document.title = title;
             }
@@ -319,7 +474,7 @@ loadTopicAjax = function(href, noPushState) {
                 userSettings.refreshTargets(); // Makes sure that everything that got newly loaded that may need user data is refreshes
                 interceptNavigation($('article.content-container')); // Wires up all anchor tag navigation within the main content
                 interceptNavigation($('aside.sidebar')); // Wires up all anchor tag navigation within the sidebar content
-                window.scrollTo(0, 0);
+                window.scrollTo(0, 0); // Scrolling the newly loaded content back to the very top
             });
         } else {
             // TODO: We should handle this better :-)

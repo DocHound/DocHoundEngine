@@ -266,7 +266,7 @@ namespace DocHound.Classes
 
                 if (topic.Topics.Count > 0)
                 {
-                    sb.Append($"<a href=\"{topic.SlugSafe}\">{topic.Title}</a>");
+                    sb.Append($"<a href=\"{topic.SlugSafe}\" data-slug=\"{topic.Slug}\" data-link=\"{topic.Link}\">{topic.Title}</a>");
                     var keywords = topic.Keywords;
                     if (!string.IsNullOrEmpty(keywords))
                         sb.Append($"<span style=\"display: none;\">{topic.Keywords}</span>");
@@ -276,7 +276,7 @@ namespace DocHound.Classes
                 }
                 else
                 {
-                    sb.Append($"<a href=\"{topic.SlugSafe}\">{topic.Title}</a>");
+                    sb.Append($"<a href=\"{topic.SlugSafe}\" data-slug=\"{topic.Slug}\" data-link=\"{topic.Link}\">{topic.Title}</a>");
                     var keywords = topic.Keywords;
                     if (!string.IsNullOrEmpty(keywords))
                         sb.Append("<span style=\"display: none;\">" + topic.Keywords + "</span>");
@@ -440,7 +440,7 @@ namespace DocHound.Classes
 
     public static class TopicHelper
     {
-        public static string GetNormalizedName(string name)
+        public static string GetNormalizedName(string name) // This method also exists in topic.js as getNormalizedName() and should be kept in sync with this method.
         {
             if (string.IsNullOrEmpty(name)) return string.Empty;
 
@@ -458,7 +458,7 @@ namespace DocHound.Classes
             return normalizedName;
         }
 
-        public static bool SlugMatchesTopic(string slug, IHaveTopics topic, bool ignoreCase = false)
+        public static bool SlugMatchesTopic(string slug, IHaveTopics topic, bool ignoreCase = false) // This method also exists in topic.js as slugMatchesTopic() and should be kept in sync with this method.
         {
             // This is a more discriminating version of LinkMatchesTopic()
 
@@ -480,7 +480,7 @@ namespace DocHound.Classes
             return slug == topicSlug;
         }
 
-        public static bool LinkMatchesTopic(string link, IHaveTopics topic)
+        public static bool LinkMatchesTopic(string link, IHaveTopics topic) // This method also exists in topic.js as linkMatchesTopic() and should be kept in sync with this method.
         {
             if (link == null) return false;
             if (topic == null) return false;

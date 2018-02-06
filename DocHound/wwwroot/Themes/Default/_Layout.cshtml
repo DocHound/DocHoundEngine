@@ -41,22 +41,22 @@
 
     <nav class="mobile-menu">
         <div class="mobile-menu-items">
-            @Html.Raw(MenuHelper.GetMenu(Html, Model.MainMenu, MenuMode.Mobile))
+            @Html.Raw(Model.GetMenu(MenuMode.Mobile))
         </div>
         <input type="text" id="tree-filter-mobile" placeholder="Filter Topic Tree"/>
-        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopic))
+        @Html.Raw(Model.GetToCHtml())
     </nav>
     <header class="header headerLarge">
         <i class="fas fa-bars mobile-menu-icon"></i>
         <img class="logo" src="@Model.LogoUrl" />
         <div class="menu">
-            @Html.Raw(MenuHelper.GetMenu(Html, Model.MainMenu))
+            @Html.Raw(Model.GetMenu())
         </div>
     </header>
 
     <nav class="toc">
         <input type="text" id="tree-filter" placeholder="Filter Topic Tree"/>
-        @Html.Raw(TableOfContentsHelper.GetToCHtml(Model.Topics, Model.SelectedTopic))
+        @Html.Raw(Model.GetToCHtml())
     </nav>
 
     @RenderBody()
