@@ -19,8 +19,7 @@
 ## Rendering Engine
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
-* [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right.
-* [ ] Need a loading indicator for dynamic topics showing up when loading takes longer than a half a second (or so)
+* [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right. (Note: This may not be an issue anymore... we'll keep an eye on it)
 * [ ] Themes
     * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
     * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
@@ -65,6 +64,7 @@
     * [x] Need good default style for blockquotes
     * [x] Should have better styles for the links to sub-topics created automatically when a parent topic is empty.
     * [x] Text within tables doesn't look all that great and should be improved
+* [x] Need a loading indicator for dynamic topics showing up when loading takes longer than a half a second (or so)
 * [x] Next/Previous buttons do not yet participate in loading topics dynamically
 * [x] Must set selected topic (with extended ability to find what's selected) and scroll it into view (and expand it if need be) when loading typics dynamically
 * [x] Dynamically loaded documents do not yet get their theme selectors set correctly.
