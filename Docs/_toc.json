@@ -146,6 +146,15 @@
           "link": "SupportedVSTSFeatures.md"
         }
       ]
+    },
+    {
+        "title": "Assets",
+        "topics": [
+            {
+                "title": "Logos",
+                "link": "Logos.md"
+            }
+            ]
     }
   ]
 }
