@@ -1,3 +1,28 @@
 .header {
-    background-color: black;
+    background-color: rgb(43, 46, 52);
+}
+
+.content-container h1 {
+    color: rgb(227, 44, 26);
+}
+
+.content-container h2 {
+    color: rgb(226, 50, 56);
+}
+
+blockquote {
+    border-left-color: rgb(226, 50, 56);
+    background-color: rgba(226, 50, 56, .05);
+}
+
+li.kava-auto-link {
+    border-left-color: rgb(226, 50, 56);
+    background-color: rgba(226, 50, 56, .05);
+}
+
+.selectedTopic>a:link {
+    color: rgb(227, 44, 26);
+}
+.selectedTopic>a:visited {
+    color: rgb(227, 44, 26);
 }
