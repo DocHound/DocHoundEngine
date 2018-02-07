@@ -271,3 +271,7 @@ figure {
 #tree-filter-mobile:-ms-inputplaceholder {
     color: black;
 }
+
+#load-indicator {
+    color: #444;
+}
