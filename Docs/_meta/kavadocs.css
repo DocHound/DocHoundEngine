@@ -31,26 +31,26 @@
 }
 
 .content-container h1 {
-    color: rgb(227, 44, 26);
+    color: #E2001A;
 }
 
 .content-container h2 {
-    color: rgb(226, 50, 56);
+    color: #E2001A;
 }
 
 blockquote {
-    border-left-color: rgb(226, 50, 56);
-    background-color: rgba(226, 50, 56, .05);
+    border-left-color: #E2001A;
+    background-color: rgba(226, 0, 26, .05);
 }
 
 li.kava-auto-link {
-    border-left-color: rgb(226, 50, 56);
-    background-color: rgba(226, 50, 56, .05);
+    border-left-color: #E2001A;
+    background-color: rgba(226, 0, 26, .05);
 }
 
 .selectedTopic>a:link {
-    color: rgb(227, 44, 26);
+    color: #E2001A;
 }
 .selectedTopic>a:visited {
-    color: rgb(227, 44, 26);
+    color: #E2001A;
 }
