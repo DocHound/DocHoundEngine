@@ -92,14 +92,14 @@ namespace DocHound.Models.Docs
         {
             var rawTopic = new TopicInformation {OriginalName = SelectedTopic.Title, Type = SelectedTopic.Type};
 
-            var imageRootUrl = string.Empty;
+            ImageRootUrl = string.Empty;
 
             var normalizedLink = SelectedTopic.LinkPure.ToLowerInvariant();
             if (normalizedLink.StartsWith("https://") || normalizedLink.StartsWith("http://"))
             {
                 // This is an absolute link, so we can just try to load it
                 rawTopic.OriginalContent = await WebClientEx.GetStringAsync(SelectedTopic.Link);
-                imageRootUrl = StringHelper.JustPath(SelectedTopic.Link) + "/";
+                ImageRootUrl = StringHelper.JustPath(SelectedTopic.Link) + "/";
             }
             else if (!string.IsNullOrEmpty(normalizedLink))
             {
@@ -119,16 +119,16 @@ namespace DocHound.Models.Docs
                             rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
                         else if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.ImageUrl))
                             rawTopic.OriginalContent = fullGitHubRawUrl;
-                        imageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
-                        if (!string.IsNullOrEmpty(imageRootUrl) && !imageRootUrl.EndsWith("/")) imageRootUrl += "/";
+                        ImageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
+                        if (!string.IsNullOrEmpty(ImageRootUrl) && !ImageRootUrl.EndsWith("/")) ImageRootUrl += "/";
                         break;
 
                     case RepositoryTypes.VstsGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
                             rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
-                        imageRootUrl = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsGit + "&path=";
+                        ImageRootUrl = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsGit + "&path=";
                         if (SelectedTopic.LinkPure.Contains("/"))
-                            imageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
+                            ImageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
 
                     case RepositoryTypes.VstsWorkItemTracking:
@@ -176,12 +176,12 @@ namespace DocHound.Models.Docs
 
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
 
-            var intermediateHtml = renderer.RenderToHtml(rawTopic, imageRootUrl, this);
+            var intermediateHtml = renderer.RenderToHtml(rawTopic, ImageRootUrl, this);
             intermediateHtml = await ProcessKavaTopic(intermediateHtml);
-            intermediateHtml = ProcessBrokenImageLinks(intermediateHtml, imageRootUrl);
+            intermediateHtml = ProcessBrokenImageLinks(intermediateHtml, ImageRootUrl);
             Html = intermediateHtml;
 
-            Json = renderer.RenderToJson(rawTopic, imageRootUrl, this);
+            Json = renderer.RenderToJson(rawTopic, ImageRootUrl, this);
             TemplateName = renderer.GetTemplateName(rawTopic, TemplateName, this);
 
             if (string.IsNullOrEmpty(Html) && SelectedTopic != null)
@@ -204,6 +204,22 @@ namespace DocHound.Models.Docs
                 }
 
                 Html = sb.ToString();
+            }
+        }
+
+        public string ImageRootUrl { get; set; } = string.Empty;
+
+        public string Icon
+        {
+            get
+            {
+                var icon = GetSetting<string>(Settings.SiteIcon);
+                if (icon.StartsWith("~/")) return icon.Substring(1); // This is probably our default site icon
+
+                var lowerIcon = icon.ToLowerInvariant();
+                if (lowerIcon.StartsWith("https://") || lowerIcon.StartsWith("http://")) return icon; // Full path to the actual icon, so we are good to go
+
+                return ImageRootUrl + icon;
             }
         }
 

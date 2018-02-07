@@ -220,13 +220,16 @@ namespace DocHound.Interfaces
         VstsDocsFolder,
         VstsProjectName,
 
-        // General topic settings
+        // General topic toggle settings
         [DefaultValue(true)] UseSyntaxHighlighting,
         [DefaultValue(false)] AllowThemeSwitching,
         [DefaultValue("")] AllowableThemeColors,
         [DefaultValue(true)] AllowThemeColorSwitching,
         [DefaultValue(true)] AllowSyntaxHighlightingThemeSwitching,
         [DefaultValue("")] AllowableSyntaxHighlightingThemes,
+
+        // Content settings
+        [DefaultValue("~/Images/SiteIcon.png")] SiteIcon,
 
         // Markdown related settings
         [DefaultValue(true)] UseAbbreviations,

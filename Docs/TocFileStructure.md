@@ -170,6 +170,7 @@ The settings object can be set on the root or an individual topic. Settings on a
 | allowableThemeColors | Defines the list of color sets allowed (if color switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "Default, Sepia, Dark" | No |
 | allowSyntaxHighlightingThemeSwitching | Defines whether the user is allowed to switch the color theme for syntax highlighting (if applicable) | true (default) or false  | No |
 | allowableSyntaxHighlightingThemes | Defines the list of syntax highlight themes the user can switch to (if theme switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "kavadocs, kavadocsdark, vs, vs2017" | No |
+| siteIcon | Relative or absolute path to a custom size icon (replaces the KavaDocs logo icon) | Path to a PNG file  | No |
 | useAbbreviations | Should abbreviations be used? | true (default) or false  | No |
 | useAutoIdentifiers | Should headings automatically be generated with id attributes? | true (default) or false  | No |
 | useAutoLinks | Should URLs be automatically turned into links? | true (default) or false  | No |
