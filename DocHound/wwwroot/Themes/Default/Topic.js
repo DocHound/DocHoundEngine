@@ -443,7 +443,9 @@ getNormalizedName = function(name)
 }
 
 // Loads a topic dynamically through Ajax and displays it inline
-loadTopicAjax = function(href, noPushState) {
+
+loadTopicAjax = function (href, noPushState) {
+
     if (href.indexOf('?') !== -1) {
         href += '&notoc=true';
     } else {
@@ -465,9 +467,11 @@ loadTopicAjax = function(href, noPushState) {
 
     window.lastAjaxLoadUrl = href;
 
-    $.get(href, function(data, status) {
-        // if (href === window.lastAjaxLoadUrl && status == 'success') {
-        if (status == 'success') {
+    $.get(href, function (data, status) {
+
+        console.log("request urls: ajax: ",window.lastAjaxLoadUrl, href);
+         if (href == window.lastAjaxLoadUrl && status == 'success') {
+        //if (status == 'success') {
             window.newContentLoading = false;
             $('#load-indicator').css('display', 'none');
 
@@ -523,7 +527,13 @@ loadTopicAjax = function(href, noPushState) {
             // We set the browser URL. This happens on most dynamic topic loads, except when the forward or back button is pushed in the browser
             if (!noPushState && window.history.pushState) {
                 var title = $html.find('title').text();
-                href = href.replace('&notoc=true', '').replace('?notoc=true', '')
+                // TODO: Need to fix the querystring if there are other QS parameters
+                href = href.replace('&notoc=true', '').replace('?notoc=true', '?').replace('?&', '?').replace("&&", "&");
+                // TODO: Ends With not supported in IE 11
+                if (href.endsWith("?") || href.endsWith("&"))
+                    href = href.substring(0, href.length - 1);
+                //href = setUrlEncodedKey("notoc", "", href);                
+
                 window.history.pushState({ title: title, URL: href }, "", href);
                 document.title = title;
             }
@@ -537,10 +547,33 @@ loadTopicAjax = function(href, noPushState) {
             });
         } else {
             // TODO: We should handle this better :-)
-            alert('The requested topic is not available.');
+            //alert('The requested topic is not available.');
+             console.log('The requested topic is not available.');
         }
     });
+
+
 }
+
+
+
+debounce = function (func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow)
+            func.apply(context, args);
+    };
+};
+
+
 
 // Handles page resize and sets the min height of the main content container, which prevents visual glitches in the mobile version when the mobile menu is open.
 handleWindowResize = function() {

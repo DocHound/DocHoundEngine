@@ -22,49 +22,60 @@
 
                 // Title
                 var title = fields["System.Title"].ToString().Trim();
-                if (fields["System.WorkItemType"] != null) {
+                if (fields["System.WorkItemType"] != null)
+                {
                     title = fields["System.WorkItemType"].ToString().Trim() + ": " + title;
                 }
                 <h1 id="@TopicHelper.GetNormalizedName(title)">@title</h1>
 
                 // Header info table
                 <div class="vsts-workitem-statearea">
-                <table>
-                @if (fields["System.AssignedTo"] != null) {
-                    <tr><td class="vsts-workitem-label">Assigned To:</td><td class="vsts-workitem-data">@fields["System.AssignedTo"]</td></tr>            
-                }
-                @if (fields["System.WorkItemType"] != null) {
-                    <tr><td class="vsts-workitem-label">Work Item Type:</td><td class="vsts-workitem-data">@fields["System.WorkItemType"]</td></tr>            
-                }
-                @if (fields["System.TeamProject"] != null) {
-                    <tr><td class="vsts-workitem-label">Team Project:</td><td class="vsts-workitem-data">@fields["System.TeamProject"]</td></tr>            
-                }
-                @if (fields["System.AreaPath"] != null) {
-                    <tr><td class="vsts-workitem-label">Area Path:</td><td class="vsts-workitem-data">@fields["System.AreaPath"]</td></tr>            
-                }
-                @if (fields["System.IterationPath"] != null) {
-                    <tr><td class="vsts-workitem-label">Iteration Path:</td><td class="vsts-workitem-data">@fields["System.IterationPath"]</td></tr>            
-                }
-                @if (fields["System.State"] != null) {
-                    <tr><td class="vsts-workitem-label">State:</td><td class="vsts-workitem-data">@fields["System.State"]</td></tr>            
-                }
-                @if (fields["System.Reason"] != null) {
-                    <tr><td class="vsts-workitem-label">Reason:</td><td class="vsts-workitem-data">@fields["System.Reason"]</td></tr>            
-                }
-                </table>
+                    <table>
+                        @if (fields["System.AssignedTo"] != null)
+                        {
+                            <tr><td class="vsts-workitem-label">Assigned To:</td><td class="vsts-workitem-data">@fields["System.AssignedTo"]</td></tr>
+                        }
+                        @if (fields["System.WorkItemType"] != null)
+                        {
+                            <tr><td class="vsts-workitem-label">Work Item Type:</td><td class="vsts-workitem-data">@fields["System.WorkItemType"]</td></tr>
+                        }
+                        @if (fields["System.TeamProject"] != null)
+                        {
+                            <tr><td class="vsts-workitem-label">Team Project:</td><td class="vsts-workitem-data">@fields["System.TeamProject"]</td></tr>
+                        }
+                        @if (fields["System.AreaPath"] != null)
+                        {
+                            <tr><td class="vsts-workitem-label">Area Path:</td><td class="vsts-workitem-data">@fields["System.AreaPath"]</td></tr>
+                        }
+                        @if (fields["System.IterationPath"] != null)
+                        {
+                            <tr><td class="vsts-workitem-label">Iteration Path:</td><td class="vsts-workitem-data">@fields["System.IterationPath"]</td></tr>
+                        }
+                        @if (fields["System.State"] != null)
+                        {
+                            <tr><td class="vsts-workitem-label">State:</td><td class="vsts-workitem-data">@fields["System.State"]</td></tr>
+                        }
+                        @if (fields["System.Reason"] != null)
+                        {
+                            <tr><td class="vsts-workitem-label">Reason:</td><td class="vsts-workitem-data">@fields["System.Reason"]</td></tr>
+                        }
+                    </table>
                 </div>
 
                 // Description
                 <h2 id="workitemdescription">Description</h2>
-                if (fields["System.Description"] != null) {
+                if (fields["System.Description"] != null)
+                {
                     @Html.Raw(Model.Vsts.FixHtml(fields["System.Description"]))
                 }
-                else {
+                else
+                {
                     <p><i>n/a</i></p>
                 }
 
                 // Description
-                if (fields["Microsoft.VSTS.Common.AcceptanceCriteria"] != null) {
+                if (fields["Microsoft.VSTS.Common.AcceptanceCriteria"] != null)
+                {
                     <h2 id="acceptancecriteria">Acceptance Criteria</h2>
                     @Html.Raw(Model.Vsts.FixHtml(fields["Microsoft.VSTS.Common.AcceptanceCriteria"]))
                 }
@@ -76,6 +87,43 @@
     <aside class="sidebar">
         @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
     </aside>
+
+
+
+    /// Special links we may want to turn on and off based on settings, so we only load what is really needed
+    if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+    {
+        <script src="~/css/highlightjs/highlight.pack.js"></script>
+    }
+    if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
+    {
+        <script src="~/script/mermaid/mermaid.min.js"></script>
+    }
+    if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
+    {
+        <script src="~/script/lodash/lodash.min.js"></script>
+        <script src="~/script/dagre/dagre.min.js"></script>
+        <script src="~/script/nomnoml/nomnoml.js"></script>
+    }
+
+    if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+    {
+        <script src="~/script/Feature-Highlight.js"></script>
+    }
+    if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
+    {
+        <script src="~/script/Feature-Mermaid.js"></script>
+    }
+    if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
+    {
+        <script src="~/script/Feature-Nomnoml.js"></script>
+    }
+    if (Model.GetSetting<bool>(Settings.UseMathematics))
+    {
+        <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
+    }
+
+
 }
 else
 {
@@ -135,37 +183,4 @@ else
         }
     }
 
-}
-
-@*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
-@if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
-{
-    <script src="~/css/highlightjs/highlight.pack.js"></script>
-}
-@if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
-{
-    <script src="~/script/mermaid/mermaid.min.js"></script>
-}
-@if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
-{
-    <script src="~/script/lodash/lodash.min.js"></script>
-    <script src="~/script/dagre/dagre.min.js"></script>
-    <script src="~/script/nomnoml/nomnoml.js"></script>
-}
-
-@if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
-{
-    <script src="~/script/Feature-Highlight.js"></script>
-}
-@if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
-{
-    <script src="~/script/Feature-Mermaid.js"></script>
-}
-@if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
-{
-    <script src="~/script/Feature-Nomnoml.js"></script>
-}
-@if (Model.GetSetting<bool>(Settings.UseMathematics))
-{
-    <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
 }
