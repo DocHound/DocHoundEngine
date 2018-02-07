@@ -7,7 +7,7 @@
   "theme": {
     "standardTheme": "Default",
     "colors": "Default",
-    "customeCss": null,
+    "customCss": "_meta/kavadocs.css",
     "customTemplate": null 
   },
   "settings": {
