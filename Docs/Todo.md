@@ -76,7 +76,6 @@
 ## Overall Processing
 
 * [ ] Would be really nice to support translations right inline in a document.
-* [ ] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl
 * [ ] No hardcoding of any elements
    * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
    * [ ] The footer content needs to be customizable
@@ -86,7 +85,6 @@
 * [ ] Should support a way to add custom themes and Razor templates without requiring a re-deploy
 * [ ] When there is a slug passed in that doesn't seem to go with a specific topic, we should show an appropriate message, rather than defaulting back to the first topic
 * [ ] Allow overriding of CSS styles on individual topics
-* [ ] Would be nice to have the outline in the current document be a bit more interactive
 * [ ] Some themes may want the current-doc outline more in the document and below the first heading (or some other arbitrary place)
 * [ ] Maybe there should be a link to the next topic in the sidebar in some themes?
 * [ ] The fav-icon needs to be configurable
@@ -111,7 +109,9 @@
    * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
+* [x] Would be nice to have the outline in the current document be a bit more interactive
 * [x] Should support slug better
+* [x] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl
 * [x] Would be nice to support theme color switching
 * [x] Would be nice to support code-highlight theme switching for topics that have code
 * [x] Make the main menu configurable
