@@ -417,9 +417,26 @@ loadTopicAjax = function(href, noPushState) {
     }
     $('article.content-container').css('opacity', '0');
     $('aside.sidebar').css('opacity', '0');
+    setTimeout(function() {
+        $('article.content-container').html('');
+        $('aside.sidebar').html('');
+        $('article.content-container').css('opacity', '1');
+        $('aside.sidebar').css('opacity', '1');
+    },200);
 
-    $.get(href, function(data, status) {
+    window.newContentLoading = true;
+    setTimeout(function() {
+        if (window.newContentLoading) $('#load-indicator').css('display', 'block');
+    },1000);
+
+    window.lastAjaxLoadUrl = href;
+
+    $.get(href, function(data, status, url) {
+        //if (url === window.lastAjaxLoadUrl && status == 'success') {
         if (status == 'success') {
+            window.newContentLoading = false;
+            $('#load-indicator').css('display', 'none');
+
             var $html = $('<div>' + data + '</div>'); // This is kind of a hack, but we need to elevate everything within the returned concent one level so jquery actually finds everything
             
             // We merge in the main content

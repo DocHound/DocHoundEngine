@@ -253,3 +253,7 @@ figure {
 #tree-filter-mobile:-ms-inputplaceholder {
     color: rgb(213, 213, 213);
 }
+
+#load-indicator {
+    color: black;
+}
