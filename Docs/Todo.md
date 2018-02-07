@@ -80,7 +80,7 @@
    * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
    * [ ] The footer content needs to be customizable
    * [ ] Sidebar content needs to be customizable
-   * [ ] The site icon needs to be customizable
+   * [x] The site icon needs to be customizable
 * [ ] Topics in the TOC should have a "visible" or "hidden" flag, so they can be managed in the tree (and be considered for URL patterns and such), but not displayed as part of the tree. This is useful in a number of scenarios. For instance, one could create a custom slug the topic can be found by, even though we may not want it in the tree (such as when embedding a document inside of another). It is also useful for tooling, such as when we want a tool that shows all files that are not yet referenced by the TOC (which could get annoying if you have files you really do not want to show up in the tree).
 * [ ] Should support a way to add custom themes and Razor templates without requiring a re-deploy
 * [ ] When there is a slug passed in that doesn't seem to go with a specific topic, we should show an appropriate message, rather than defaulting back to the first topic
