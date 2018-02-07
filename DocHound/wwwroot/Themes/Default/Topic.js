@@ -465,8 +465,8 @@ loadTopicAjax = function(href, noPushState) {
 
     window.lastAjaxLoadUrl = href;
 
-    $.get(href, function(data, status, url) {
-        //if (url === window.lastAjaxLoadUrl && status == 'success') {
+    $.get(href, function(data, status) {
+        // if (href === window.lastAjaxLoadUrl && status == 'success') {
         if (status == 'success') {
             window.newContentLoading = false;
             $('#load-indicator').css('display', 'none');
