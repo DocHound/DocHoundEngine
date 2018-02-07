@@ -121,6 +121,14 @@ li.kava-auto-link a:visited {
 .sidebar li {
     border-left: 1px solid #dddddd;
 }
+.sidebar li.selected {
+    background-color: black;
+    color: #dddddd;
+}
+.sidebar li.selected a:hover {
+    background-color: black;
+    color: white;
+}
 
 .sidebar li a:link {
     color: black;
@@ -166,14 +174,19 @@ li.kava-auto-link a:visited {
     color: white;
 }
 
-.selected-topic>a {
-    color: black;
+li.selected-topic {
+    background-color: black;
+    color: white;
 }
-    .selected-topic>a:visited {
-        color: black;
+
+li.selected-topic a {
+    color: white;
+}
+    li.selected-topic a:visited {
+        color: white;
     }
-    .selected-topic>a:link {
-        color: black;
+    li.selected-topic a:link {
+        color: white;
     }
 
 a.area-link {

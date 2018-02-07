@@ -116,7 +116,8 @@
 
     // Reacting to various things when the page scrolls
     $(document).on('scroll', function () {
-        if ($(document).scrollTop() > 60) {
+        //We assign a scrolled class to all kinds of elements so they can react when the page isn't at the very top
+        if ($(document).scrollTop() > 50) {
             $('.header').addClass('scrolled');
             $('.toc').addClass('scrolled');
             $('.sidebar').addClass('scrolled');
@@ -129,7 +130,9 @@
             $('.logo').removeClass('scrolled');
             $('.footer').removeClass('scrolled');
         }
+        highlightActiveOutlineHeading();
     });
+    window.highlightNextOutlineScroll = true;
 
     // Opening the hamburger/mobile menu
     $('.mobile-menu-icon').on('click', function () {
@@ -146,6 +149,25 @@
     $(window).on('resize', handleWindowResize); // We set it every time a resize happens
     handleWindowResize(); // We set it right away so it is right initially
 });
+
+highlightActiveOutlineHeading = function() {
+    if (!window.highlightNextOutlineScroll) return;
+    
+    // Looking for the closest heading to the top, or the one that is the bottom most one that has scrolled off
+    var contentHeadings = $('.content-container h1, .content-container h2, .content-container h3');
+    var $activeHeading = null;
+    for (var counter = 0; counter < contentHeadings.length; counter++) {
+        if (!$activeHeading) $activeHeading = $(contentHeadings[counter]);
+        var clientRect = contentHeadings[counter].getBoundingClientRect();
+        if (clientRect.bottom < 50) $activeHeading = $(contentHeadings[counter]);
+        if (clientRect.top > 50) break;
+    }
+    if ($activeHeading && $activeHeading.length > 0) {
+        var headingId = $activeHeading[0].id;
+        $('#outline-content li').removeClass('selected');
+        $('#outline-content li[data-id="' + headingId + '"]').addClass('selected');
+    }
+}
 
 showMobileMenu = function() {
     $('body').addClass('show-mobile-menu');
@@ -227,7 +249,7 @@ processTopicLoad = function() {
         for (var headerCounter = 0; headerCounter < headers.length; headerCounter++) {
             var header = headers[headerCounter];
             if (header.id) {
-                var localOutline = '<li ';
+                var localOutline = '<li data-id="' + header.id + '" ';
                 if (header.tagName == 'H1') {
                     localOutline = localOutline + 'class="outline-level-1"';
                     select += '<option value="' + header.id + '">' + header.innerText + '</option>';
@@ -238,16 +260,18 @@ processTopicLoad = function() {
                     localOutline = localOutline + 'class="outline-level-3"';
                     select += '<option value="' + header.id + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + header.innerText + '</option>';
                 }
-                localOutline = localOutline + '><a data-id="' + header.id + '">' + header.innerText + '</a></li>';
+                localOutline = localOutline + '><a data-id="' + header.id + '" class="local-outline-jump">' + header.innerText + '</a></li>';
                 outline = outline + localOutline;
             }
         }
         outline = outline + '</ul>';
         select = select + '</select>';
-        $('#outlineContent').html(select + outline);
+        $('#outline-content').html(select + outline);
         $('#outline').show();
-        $('#outlineContent').on('click', 'li>a',
+        $('#outline-content').on('click', 'li>a',
             function() {
+                window.highlightNextOutlineScroll = false; // All of this will also cause a scroll operation. We do not want that scroll to trigger a different heading to be selected
+                
                 headerId = $.trim($(this).data('id'));
                 var target = $('#' + headerId)[0];
                 target.scrollIntoView();
@@ -255,8 +279,16 @@ processTopicLoad = function() {
                 doc.scrollTop(doc.scrollTop() - $('header').height() - 10);
                 var href = '#' + headerId;
                 window.history.pushState({ title: '', URL: href }, "", href);
+                
+                $('#outline-content li').removeClass('selected');
+                $(this).parent().addClass('selected');
+
+                setTimeout(function() {
+                    window.highlightNextOutlineScroll = true; // A half a second later, we should be able to process regular scrolling again
+                },500);
             });
     }
+    highlightActiveOutlineHeading();
 };
 
 // This method wires up the click event of anchor tags within the given context to prevent navitation and instead load topics inline if possible.
@@ -267,7 +299,9 @@ interceptNavigation = function($referenceObject) {
         // Regardless of anything else, we can now close the mobile menu
         if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 
-        var href = $(this).attr('href');
+        var $anchor = $(this);
+        if ($anchor.hasClass('local-outline-jump')) return; // 
+        var href = $anchor.attr('href');
 
         $('.selected-topic').removeClass('selected-topic');
         if ($(this).parent().hasClass('topic-link')) 
@@ -513,6 +547,8 @@ handleWindowResize = function() {
     var paddingTop = $('.content-container').css('padding-top').replace('px','');
     var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
     $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
+
+    highlightActiveOutlineHeading();
 
     if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 }

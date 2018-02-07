@@ -130,7 +130,11 @@ li.kava-auto-link a:visited {
 
 
 .sidebar li {
-    border-left: 1px solid #1e88e5;
+    border-left: 1px solid rgb(203, 203, 203);
+    color: rgb(203, 203, 203);
+}
+.sidebar li.selected {
+    border-left: 2px solid #1e88e5;
     color: #1e88e5;
 }
 
