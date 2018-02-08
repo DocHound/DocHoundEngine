@@ -300,12 +300,26 @@ interceptNavigation = function($referenceObject) {
         if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 
         var $anchor = $(this);
-        if ($anchor.hasClass('local-outline-jump')) return; // 
+        if ($anchor.hasClass('local-outline-jump')) return; // Since this click handler is not meant for local outline navigation, we do not want to handle it here
         var href = $anchor.attr('href');
 
         $('.selected-topic').removeClass('selected-topic');
-        if ($(this).parent().hasClass('topic-link')) 
-            $(this).parent().addClass('selected-topic');
+        var $parent = $(this).parent();
+        if ($parent.hasClass('topic-link')) {
+            $parent.addClass('selected-topic');
+            var expandCaret = $parent.find('>span.caret');
+            if (expandCaret.length > 0) {
+                // This node has sub-nodes
+                expandCaret.removeClass('caret-collapsed');
+                expandCaret.addClass('caret-expanded');
+            }
+            var expandTopicList = $parent.find('>ul.topicList');
+            if (expandTopicList.length > 0) {
+                // This node has sub-nodes
+                expandTopicList.removeClass('topic-collapsed');
+                expandTopicList.addClass('topic-expanded');
+            }
+        }
         else {
             var found = false;
             var currentSlug = href;
@@ -454,6 +468,7 @@ loadTopicAjax = function (href, noPushState) {
     $('article.content-container').css('opacity', '0');
     $('aside.sidebar').css('opacity', '0');
     setTimeout(function() {
+        if (!window.newContentLoading) return; // If content loading is already done, we are not messing with this anymore
         $('article.content-container').html('');
         $('aside.sidebar').html('');
         $('article.content-container').css('opacity', '1');

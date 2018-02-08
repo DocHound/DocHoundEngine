@@ -601,15 +601,11 @@ li.kava-auto-link {
 }
 
 .topic-expanded {
-    transition: visibility .5s, opacity .5s ,max-height .5s;
-    opacity: 1;
     display: block;
 }
 
 .topic-collapsed {
     display: none;
-    transition: visibility 275ms, opacity 275ms, max-height .28s;
-    opacity: 0;
 }
 
 .selected-topic>a {
