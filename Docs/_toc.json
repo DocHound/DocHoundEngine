@@ -3,15 +3,8 @@
   "owner": "Kava Docs Inc.",
   "language": "en-US",
   "version": "1.0",
-  "requireHttps": true,
-  "theme": {
-    "standardTheme": "Default",
-    "colors": "Default",
-    "customCss": "_meta/kavadocs.css",
-    "customTemplate": null 
-  },
   "settings": {
-    "allowableThemeColors": "", // Allows for all
+    "customCssPath": "_meta/kavadocs.css",
   },
   "menu": [
     {
