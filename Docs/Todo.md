@@ -93,7 +93,8 @@
 * [ ] Maybe listing contributors to a topic or all the docs (optional)
 * [ ] Maybe we could also show last-edited date on a topic
 * [ ] Microsoft shows “estimated time to read” at the top of topics
-* [ ] Sharing of documents would be nice
+* [ ] Sharing of documents would be nice (Facebook, Twitter, ... the usual)
+* [ ] Flagging topics as favorites would be a nice feature
 * [ ] Need to be able to refer to other TOC files as a single node from within a TOC file
     * [ ] We want to do the same inside a topic by having a special placeholder in the doc (we are thinking about a kava-topic HTML tag
 * [ ] Edit link right in the topic
