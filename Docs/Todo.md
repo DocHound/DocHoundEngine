@@ -10,6 +10,7 @@
     * [x] VSTS Work Items (almost done, except for fringe features)
     * [ ] ...?
 * [x] Themes
+* [ ] We need to be able to have private repositories that only authorized users can see
 * [ ] Full index search
 * [ ] Analytics integration (probably support different ones)
 * [x] Wildcard domain support
