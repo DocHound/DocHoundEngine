@@ -145,9 +145,12 @@
         "topics": [
             {
                 "title": "Logos",
-                "link": "Logos.md"
+                "link": "Logos.md",
+                "settings": {
+                  "showEstimatedReadingTime": false
+                }
             }
-            ]
+        ]
     }
   ]
 }
