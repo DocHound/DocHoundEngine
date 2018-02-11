@@ -49,6 +49,7 @@ The following topic types are currently being considered. Those with a checkmark
     * [ ] General Git
     * [ ] Other source control systems such as Mercurial
 * [ ] Evernote
+* [ ] BitBucket
 * [ ] Github Issues
 * [ ] Github Wiki
 * [ ] Help Monster/Builder

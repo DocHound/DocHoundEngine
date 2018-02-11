@@ -1,4 +1,4 @@
-﻿# KavaDocs Logos and Art Assets
+﻿# Kava Docs Logos and Art Assets
 
 ## Color Definitions
 
@@ -6,9 +6,9 @@ Standard CSS Color definition:
 
 ```css
 {
-    color: #E2001A; // KavaDocs Red
-    color: #1A181C; // KavaDocs Black
-    color: #00ADEE; // KavaDocs Blue
+    color: #E2001A; // Kava Docs Red
+    color: #1A181C; // Kava Docs Black
+    color: #00ADEE; // Kava Docs Blue
 }
 ```
 

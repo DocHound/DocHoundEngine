@@ -10,6 +10,7 @@
     * [x] VSTS Work Items (almost done, except for fringe features)
     * [ ] ...?
 * [x] Themes
+* [ ] We need to be able to have private repositories that only authorized users can see
 * [ ] Full index search
 * [ ] Analytics integration (probably support different ones)
 * [x] Wildcard domain support
@@ -93,7 +94,8 @@
 * [ ] Maybe listing contributors to a topic or all the docs (optional)
 * [ ] Maybe we could also show last-edited date on a topic
 * [ ] Microsoft shows “estimated time to read” at the top of topics
-* [ ] Sharing of documents would be nice
+* [ ] Sharing of documents would be nice (Facebook, Twitter, ... the usual)
+* [ ] Flagging topics as favorites would be a nice feature
 * [ ] Need to be able to refer to other TOC files as a single node from within a TOC file
     * [ ] We want to do the same inside a topic by having a special placeholder in the doc (we are thinking about a kava-topic HTML tag
 * [ ] Edit link right in the topic
@@ -127,3 +129,5 @@
 ## Other Ideas
 
 * [ ] It would be nice if Doc Hound could serve up a few non-doc pages also, allowing people to build their entire site with Kava Docs. (Example: http://aurelia.io could be almost entirely done in Kava Docs, if we only allowed a few more other pages to be added in interesting ways).
+* [ ] We need to make sure that people can export all the content
+* [ ] Would be nice to allow users to subscribe to changes and be notified.
