@@ -45,7 +45,7 @@
     * [ ] Maybe we could even show the name of the language at the top of the snippet
     * [ ] Would be nice to have a setting that allows specifying the max height for a code snippet. If it is taller, it could show an expand/collapse button.
 * [ ] Markdown improvements
-    * [ ] Support FontAwesome
+    * [x] Support FontAwesome (so @ icon-info-circle turns into this: @icon-info-circle)
     * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
     * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [x] Would be nice to support math notation

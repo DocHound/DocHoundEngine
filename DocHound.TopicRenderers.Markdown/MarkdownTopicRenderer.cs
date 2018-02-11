@@ -26,7 +26,10 @@ namespace DocHound.TopicRenderers.Markdown
             var pipeline = builder.Build();
             string html = Markdig.Markdown.ToHtml(markdown, pipeline);
 
-            return ParseFontAwesomeIcons(html);
+            if (settings.GetSetting<bool>(Settings.UseFontAwesomeInMarkdown))
+                html = ParseFontAwesomeIcons(html);
+
+            return html;
         }
 
 
