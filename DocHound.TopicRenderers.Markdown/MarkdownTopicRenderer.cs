@@ -1,4 +1,5 @@
-﻿using DocHound.Interfaces;
+﻿using System.Text.RegularExpressions;
+using DocHound.Interfaces;
 using Markdig;
 
 namespace DocHound.TopicRenderers.Markdown
@@ -23,8 +24,34 @@ namespace DocHound.TopicRenderers.Markdown
             var builder = new MarkdownPipelineBuilder();
             BuildPipeline(builder, settings, markdown);
             var pipeline = builder.Build();
-            return Markdig.Markdown.ToHtml(markdown, pipeline);
+            string html = Markdig.Markdown.ToHtml(markdown, pipeline);
+
+            return ParseFontAwesomeIcons(html);
         }
+
+
+        public static Regex fontAwesomeIconRegEx = new Regex(@"@icon-.*?[\s|\.|\,|\<]");
+
+
+        /// <summary>
+        /// Post processing routine that post-processes the HTML and 
+        /// replaces @icon- with fontawesome icons
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        protected string ParseFontAwesomeIcons(string html)
+        {
+            var matches = fontAwesomeIconRegEx.Matches(html);
+            foreach (Match match in matches)
+            {
+                string iconblock = match.Value.Substring(0, match.Value.Length - 1);
+                string icon = iconblock.Replace("@icon-", "");
+                html = html.Replace(iconblock, "<i class=\"fa fa-" + icon + "\"></i> ");
+            }
+
+            return html;
+        }
+
 
         protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder, ISettingsProvider settings, string markdown)
         {
