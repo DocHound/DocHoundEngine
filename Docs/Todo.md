@@ -92,7 +92,6 @@
 * [ ] It would be nice to be able to get away with just once instance of the tree in the document
 * [ ] Maybe listing contributors to a topic or all the docs (optional)
 * [ ] Maybe we could also show last-edited date on a topic
-* [ ] Microsoft shows “estimated time to read” at the top of topics
 * [ ] Sharing of documents would be nice (Facebook, Twitter, ... the usual)
 * [ ] Flagging topics as favorites would be a nice feature
 * [ ] Need to be able to refer to other TOC files as a single node from within a TOC file
@@ -110,6 +109,7 @@
    * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
+* [x] Microsoft shows “estimated time to read” at the top of topics
 * [x] Would be nice to have the outline in the current document be a bit more interactive
 * [x] Should support slug better
 * [x] The MasterUrl settting used by GitHubRaw, should probably be renamed to GitHubMasterUrl

@@ -172,6 +172,7 @@ The settings object can be set on the root or an individual topic. Settings on a
 | allowableSyntaxHighlightingThemes | Defines the list of syntax highlight themes the user can switch to (if theme switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "kavadocs, kavadocsdark, vs, vs2017" | No |
 | footerHtml | Text to be displayed in the page footer. Used as raw HTML. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | HTML  | No |
 | logoPath | Path (URL) for the main logo file of the docs. Can be an absolute path, or a relative path within the current repository. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | URL (defaults to '''_meta/_logo.png''')  | No |
+| showEstimatedReadingTime | When set to true, displays an estimate for the time it will take to read the topic | true (default) or false  | No |
 | siteIcon | Relative or absolute path to a custom size icon (replaces the KavaDocs logo icon) | Path to a PNG file  | No |
 | useAbbreviations | Should abbreviations be used? | true (default) or false  | No |
 | useAutoIdentifiers | Should headings automatically be generated with id attributes? | true (default) or false  | No |

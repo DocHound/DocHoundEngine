@@ -61,6 +61,10 @@
     {
         <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
     }
+    if (Model.GetSetting<bool>(Settings.ShowEstimatedReadingTime))
+    {
+        <SCRIPT SRC="~/script/Feature-EstimatedReadingTime.js"></SCRIPT>
+    }
 }
 else
 {

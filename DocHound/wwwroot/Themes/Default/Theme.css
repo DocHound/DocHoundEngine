@@ -721,3 +721,8 @@ div.nomnoml {
     margin-left: -40px;
     display: none;
 }
+
+.features-container {
+    margin-top: -15px;
+    margin-bottom: 30px;
+}

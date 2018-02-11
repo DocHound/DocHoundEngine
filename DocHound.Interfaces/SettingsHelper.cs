@@ -237,6 +237,7 @@ namespace DocHound.Interfaces
         [DefaultValue("Default")] ThemeColors,
         [DefaultValue("")] CustomCssPath,
         [DefaultValue("KavaDocs")] SyntaxTheme,
+        [DefaultValue(true)] ShowEstimatedReadingTime,
 
         // Markdown related settings
         [DefaultValue(true)] UseAbbreviations,

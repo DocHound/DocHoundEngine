@@ -62,6 +62,11 @@
     <aside class="sidebar">
         @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
     </aside>
+
+    @if (Model.GetSetting<bool>(Settings.ShowEstimatedReadingTime))
+    {
+        <SCRIPT SRC="~/script/Feature-EstimatedReadingTime.js"></SCRIPT>
+    }
 }
 else
 {

@@ -1,4 +1,5 @@
 @using Newtonsoft.Json.Linq;
+@using DocHound.Interfaces
 
 @model DocHound.Models.Docs.TopicViewModel
 
@@ -72,6 +73,11 @@
     <aside class="sidebar">
         @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
     </aside>
+    
+    if (Model.GetSetting<bool>(Settings.ShowEstimatedReadingTime))
+    {
+        <SCRIPT SRC="~/script/Feature-EstimatedReadingTime.js"></SCRIPT>
+    }
 }
 else
 {
