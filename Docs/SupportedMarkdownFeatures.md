@@ -23,5 +23,6 @@ The following is a list of features either supported, or on the list to be suppo
    * [x] SmartyPants (https://github.com/lunet-io/markdig/blob/master/src/Markdig.Tests/Specs/SmartyPantsSpecs.md)
    * [x] Task lists (https://github.com/lunet-io/markdig/blob/master/src/Markdig.Tests/Specs/TaskListSpecs.md)
    * [x] YAML Front Matter (https://github.com/lunet-io/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md)
+   * [x] Font Awesome, using the same syntax as Markdown Mosnter (https://markdownmonster.west-wind.com/docs/_4ue01xl6q.htm)
    * [ ] Pragma lines - should we support this?
    * [ ] JIRA Links - might be interesting, but we should probably integrate that more directly
