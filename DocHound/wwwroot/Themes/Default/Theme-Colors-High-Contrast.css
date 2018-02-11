@@ -101,6 +101,18 @@ blockquote {
     background-color: rgba(0, 0, 0, 0.9);
     color: rgb(201, 201, 201);
 }
+    .footer a {
+        color: rgb(201, 201, 201);
+    }
+    .footer a:link {
+        color: rgb(201, 201, 201);
+    }
+    .footer a:visited {
+        color: rgb(201, 201, 201);
+    }
+    .footer a:hover {
+        color: rgb(201, 201, 201);
+    }
 
 li.kava-auto-link {
     background-color: rgba(0, 0, 0, 0.05);

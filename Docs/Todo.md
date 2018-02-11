@@ -44,13 +44,6 @@
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
     * [ ] Would be nice to have a setting that allows specifying the max height for a code snippet. If it is taller, it could show an expand/collapse button.
-* [ ] Markdown improvements
-    * [x] Support FontAwesome (so @ icon-info-circle turns into this: @icon-info-circle )
-    * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features))
-    * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
-    * [x] Would be nice to support math notation
-    * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
-    * [x] Markdown needs to do a better job of fixing up image links
 * [ ] Html
     * [ ] For HTML, we currently bring in the entire provided content (which may have it's own HTML tag and head and body section) and use it as is. Question is: Should we only use the body tag contents? But then we would not have the header, which would nuke things like style sheets. Or maybe we should get the body but move style sheets and scripts into the content? One could do cool things if scripts can be included, but it could also be a security problem...
 * [ ] Styling
@@ -64,6 +57,13 @@
     * [x] Need good default style for blockquotes
     * [x] Should have better styles for the links to sub-topics created automatically when a parent topic is empty.
     * [x] Text within tables doesn't look all that great and should be improved
+* [x] Markdown improvements
+    * [x] Support FontAwesome (so @ icon-info-circle turns into this: @icon-info-circle )
+    * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features) )
+    * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
+    * [x] Would be nice to support math notation
+    * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
+    * [x] Markdown needs to do a better job of fixing up image links
 * [x] Need a loading indicator for dynamic topics showing up when loading takes longer than a half a second (or so)
 * [x] Next/Previous buttons do not yet participate in loading topics dynamically
 * [x] Must set selected topic (with extended ability to find what's selected) and scroll it into view (and expand it if need be) when loading typics dynamically
