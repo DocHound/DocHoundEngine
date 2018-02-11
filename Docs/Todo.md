@@ -59,7 +59,7 @@
     * [x] Text within tables doesn't look all that great and should be improved
 * [x] Markdown improvements
     * [x] Support FontAwesome (so @ icon-info-circle turns into this: @icon-info-circle )
-    * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported Markdown Features) )
+    * [x] Would be nice to have options for all markdown extensions (like SmartyPants and all that... see also: [Supported Markdown Features](Supported%20Markdown%20Features))
     * [x] Take a look at all the standard (optional) Markdig features to see what should be supported in ours (probably a lot)
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
