@@ -47,8 +47,8 @@ namespace DocHound.TopicRenderers.Markdown
             var matches = fontAwesomeIconRegEx.Matches(html);
             foreach (Match match in matches)
             {
-                string iconblock = match.Value.Substring(0, match.Value.Length - 1);
-                string icon = iconblock.Replace("@icon-", "");
+                var iconblock = match.Value.Substring(0, match.Value.Length - 1);
+                var icon = iconblock.Replace("@icon-", "");
                 html = html.Replace(iconblock, "<i class=\"fa fa-" + icon + "\"></i> ");
             }
 
