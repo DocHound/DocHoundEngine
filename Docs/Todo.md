@@ -52,8 +52,7 @@
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
     * [x] Markdown needs to do a better job of fixing up image links
 * [ ] Html
-    * [ ] Only use HTML body
-    * [ ] Should we eliminate scripts from HTML topics?
+    * [ ] For HTML, we currently bring in the entire provided content (which may have it's own HTML tag and head and body section) and use it as is. Question is: Should we only use the body tag contents? But then we would not have the header, which would nuke things like style sheets. Or maybe we should get the body but move style sheets and scripts into the content? One could do cool things if scripts can be included, but it could also be a security problem...
 * [ ] Styling
     * [x] For mobile devices, we should use slightly larger font. Ours seems to be smaller than that found in other docs. (Note: Ended up updating all fonts to fit more what Microsoft is doing on their docs).
     * [x] Maybe text within tables should not be justified
@@ -78,9 +77,9 @@
 
 * [ ] Would be really nice to support translations right inline in a document.
 * [ ] No hardcoding of any elements
-   * [ ] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
-   * [ ] The footer content needs to be customizable
    * [ ] Sidebar content needs to be customizable
+   * [x] The name of the logo file shouldn't be hardcoded, but a setting in the TOC file instead. (We can still use the current approach as a fall-back)
+   * [x] The footer content needs to be customizable
    * [x] The site icon needs to be customizable
 * [ ] Topics in the TOC should have a "visible" or "hidden" flag, so they can be managed in the tree (and be considered for URL patterns and such), but not displayed as part of the tree. This is useful in a number of scenarios. For instance, one could create a custom slug the topic can be found by, even though we may not want it in the tree (such as when embedding a document inside of another). It is also useful for tooling, such as when we want a tool that shows all files that are not yet referenced by the TOC (which could get annoying if you have files you really do not want to show up in the tree).
 * [ ] Should support a way to add custom themes and Razor templates without requiring a re-deploy
@@ -88,7 +87,6 @@
 * [ ] Allow overriding of CSS styles on individual topics
 * [ ] Some themes may want the current-doc outline more in the document and below the first heading (or some other arbitrary place)
 * [ ] Maybe there should be a link to the next topic in the sidebar in some themes?
-* [ ] The fav-icon needs to be configurable
 * [ ] Make sure that all the data in the topic is data-driven (from the repository)
 * [ ] It would be nice to be able to get away with just once instance of the tree in the document
 * [ ] Maybe listing contributors to a topic or all the docs (optional)

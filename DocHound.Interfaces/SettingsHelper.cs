@@ -231,6 +231,8 @@ namespace DocHound.Interfaces
 
         // Content and theme settings
         [DefaultValue("~/Images/SiteIcon.png")] SiteIcon,
+        [DefaultValue("_meta/_logo.png")] LogoPath,
+        [DefaultValue("<p>Documentation engine provided by <a href=\"https://kavadocs.com\">Kava Docs</a>.,<br /><i class=\"fa fa-heart\"></i> Made with Aloha in Maui, Hawaii.</p>")] FooterHtml,
         [DefaultValue("Default")] Theme,
         [DefaultValue("Default")] ThemeColors,
         [DefaultValue("")] CustomCssPath,
@@ -257,6 +259,7 @@ namespace DocHound.Interfaces
         [DefaultValue(true)] UsePragmaLines,
         [DefaultValue(true)] UseSmartyPants,
         [DefaultValue(true)] UseTaskLists,
-        [DefaultValue(true)] UseYamlFrontMatter
+        [DefaultValue(true)] UseYamlFrontMatter,
+        [DefaultValue(true)] UseFontAwesomeInMarkdown
     }
 }

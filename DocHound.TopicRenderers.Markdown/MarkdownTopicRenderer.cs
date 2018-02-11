@@ -28,8 +28,6 @@ namespace DocHound.TopicRenderers.Markdown
 
         protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder, ISettingsProvider settings, string markdown)
         {
-            // TODO: We should be able to drive all of this through settings that are defined either per-document or inherit from further up in the tree
-
             if (settings.GetSetting<bool>(Settings.UseAbbreviations)) builder = builder.UseAbbreviations();
             if (settings.GetSetting<bool>(Settings.UseAutoIdentifiers)) builder = builder.UseAutoIdentifiers();
             if (settings.GetSetting<bool>(Settings.UseAutoLinks)) builder = builder.UseAutoLinks();

@@ -66,9 +66,8 @@
     </div>
 
     <footer class="footer">
-        <p>(c) by Markus Egger Inc.</p>
+        @Html.Raw(Model.FooterHtml)
     </footer>
-
 
     @RenderSection("Scripts", false)
 </body>

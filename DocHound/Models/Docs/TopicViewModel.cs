@@ -46,15 +46,24 @@ namespace DocHound.Models.Docs
             string tocJson = null;
 
             var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+
+            var logoUrl = GetSetting<string>(Settings.LogoPath);
+            var logoUrlLower = logoUrl.ToLowerInvariant();
+            var logoUrlIsAbsolute = true;
+            if (!logoUrl.StartsWith("http://") && !logoUrl.StartsWith("https://")) logoUrlIsAbsolute = false;
+            LogoUrl = logoUrl;
+
             switch (repositoryType)
             {
                 case RepositoryTypes.GitHubRaw:
                     tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
-                    LogoUrl = GitHubMasterUrlRaw + "_meta/_logo.png";
+                    if (!logoUrlIsAbsolute)
+                        LogoUrl = GitHubMasterUrlRaw + logoUrl;
                     break;
                 case RepositoryTypes.VstsGit:
                     tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
-                    LogoUrl = "/___FileProxy___?mode=vstsgit&path=_meta/_logo.png";
+                    if (!logoUrlIsAbsolute)
+                        LogoUrl = $"/___FileProxy___?mode=vstsgit&path={logoUrl}";
                     break;
             }
             if (string.IsNullOrEmpty(tocJson)) return;
@@ -545,6 +554,7 @@ namespace DocHound.Models.Docs
             return "/css/highlightjs/styles/" + colorLabel.Replace(" ", "-").ToLowerInvariant() + ".css";
         }
 
+        public string FooterHtml => GetSetting<string>(Settings.FooterHtml);
 
         private string _templateName = "TopicDefault";
 

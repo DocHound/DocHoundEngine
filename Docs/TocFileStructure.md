@@ -99,21 +99,21 @@ The following is an example of a TOC Json File structure:
                 "title": "Mermaid Charts",
                 "link": "Mermaid.md",
                 "settings": {
-              | DiagramsMermaid": true
+                  "useDiagramsMermaid": true
                 }
               }, 
               {
                 "title": "Nomnoml Charts",
                 "link": "Nomnoml.md",
                 "settings": {
-              | DiagramsNomnoml": true
+                  "useDiagramsNomnoml": true
                 }
               },
               {
                 "title": "Mathematics (LaTeX)",
                 "link": "Mathematics.md",
                 "settings": {
-              | Mathematics": true
+                  "useMathematics": true
                 }
               }
           ]
@@ -170,6 +170,8 @@ The settings object can be set on the root or an individual topic. Settings on a
 | allowableThemeColors | Defines the list of color sets allowed (if color switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "Default, Sepia, Dark" | No |
 | allowSyntaxHighlightingThemeSwitching | Defines whether the user is allowed to switch the color theme for syntax highlighting (if applicable) | true (default) or false  | No |
 | allowableSyntaxHighlightingThemes | Defines the list of syntax highlight themes the user can switch to (if theme switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "kavadocs, kavadocsdark, vs, vs2017" | No |
+| footerHtml | Text to be displayed in the page footer. Used as raw HTML. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | HTML  | No |
+| logoPath | Path (URL) for the main logo file of the docs. Can be an absolute path, or a relative path within the current repository. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | URL (defaults to '''_meta/_logo.png''')  | No |
 | siteIcon | Relative or absolute path to a custom size icon (replaces the KavaDocs logo icon) | Path to a PNG file  | No |
 | useAbbreviations | Should abbreviations be used? | true (default) or false  | No |
 | useAutoIdentifiers | Should headings automatically be generated with id attributes? | true (default) or false  | No |
@@ -182,6 +184,7 @@ The settings object can be set on the root or an individual topic. Settings on a
 | useEmphasisExtras | Support extra emphasis? | true (default) or false  | No |
 | useFigures | Support figures? | true (default) or false  | No |
 | useFootnotes | Support footnotes? | true (default) or false  | No |
+| useFontAwesomeInMarkdown | Should font-awesome tags in markdown automatically be turned into the Font Awesome icons? | true (default) or false  | No |
 | useGenericAttributes | Support generic attributes? | true (default) or false  | No |
 | useGridTables | Support grid tables? | true (default) or false  | No |
 | useListExtras | Support list extras? | true (default) or false  | No |
