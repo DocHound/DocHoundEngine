@@ -129,7 +129,7 @@ namespace DocHound.Classes
             if (sb == null)
             {
                 sb = new StringBuilder();
-                sb.Append("{ \"title\": \"" + url + "\", \"topics\": [");
+                sb.Append($"{{ \"title\": \"{url}\", \"topics\": [");
                 sbWasNull = true;
             }
 
@@ -252,7 +252,7 @@ namespace DocHound.Classes
 
         private static void AddTocItems(StringBuilder sb, IEnumerable<TableOfContentsItem> topics, int indentLevel, TableOfContentsItem selectedTopic, TableOfContentsItem parentTopic = null)
         {
-            var ulClasses = "topicList topicListLevel" + indentLevel;
+            var ulClasses = "topic-list topic-list-level" + indentLevel;
             if (parentTopic != null) ulClasses += parentTopic.Expanded ? " topic-expanded" : " topic-collapsed";
             sb.Append("<ul class=\"" + ulClasses + "\">");
 
@@ -315,52 +315,52 @@ namespace DocHound.Classes
                 EnsureExpanded(parentTableOfContentsItem);
         }
 
-        public static string GetThemeFolderFromDynamicToc(dynamic dynamicToc)
-        {
-            if (dynamicToc.theme != null)
-            {
-                if (dynamicToc.theme.standardTheme != null)
-                    return "~/wwwroot/Themes/" + ((string)dynamicToc.theme.standardTheme).Trim();
+        //public static string GetThemeFolderFromDynamicToc(dynamic dynamicToc)
+        //{
+        //    if (dynamicToc.theme != null)
+        //    {
+        //        if (dynamicToc.theme.standardTheme != null)
+        //            return "~/wwwroot/Themes/" + ((string)dynamicToc.theme.standardTheme).Trim();
 
-                // TODO: Allow for more theme settings...
-            }
+        //        // TODO: Allow for more theme settings...
+        //    }
 
-            return "~/wwwroot/Themes/Default";
-        }
+        //    return "~/wwwroot/Themes/Default";
+        //}
 
-        public static string GetThemeColorFromDynamicToc(dynamic dynamicToc)
-        {
-            if (dynamicToc.theme != null)
-            {
-                if (dynamicToc.theme.colors != null)
-                {
-                    var colors = ((string)dynamicToc.theme.colors).Trim();
-                    if (colors.ToLowerInvariant().EndsWith(".css"))
-                        return colors;
-                    return "Theme-Colors-" + colors;
-                }
-            }
+        //public static string GetThemeColorFromDynamicToc(dynamic dynamicToc)
+        //{
+        //    if (dynamicToc.theme != null)
+        //    {
+        //        if (dynamicToc.theme.colors != null)
+        //        {
+        //            var colors = ((string)dynamicToc.theme.colors).Trim();
+        //            if (colors.ToLowerInvariant().EndsWith(".css"))
+        //                return colors;
+        //            return "Theme-Colors-" + colors;
+        //        }
+        //    }
 
-            return "Theme-Colors-Default";
-        }
+        //    return "Theme-Colors-Default";
+        //}
 
-        public static string GetSyntaxThemeNameFromDynamicToc(dynamic dynamicToc)
-        {
-            if (dynamicToc.theme != null)
-                if (dynamicToc.theme.syntaxTheme != null)
-                    return ((string) dynamicToc.theme.syntaxTheme).Trim();
+        //public static string GetSyntaxThemeNameFromDynamicToc(dynamic dynamicToc)
+        //{
+        //    if (dynamicToc.theme != null)
+        //        if (dynamicToc.theme.syntaxTheme != null)
+        //            return ((string) dynamicToc.theme.syntaxTheme).Trim();
 
-            return string.Empty;
-        }
+        //    return string.Empty;
+        //}
 
-        public static string GetCustomCssFromDynamicToc(dynamic dynamicToc)
-        {
-            if (dynamicToc.theme != null)
-                if (dynamicToc.theme.customCss != null)
-                    return ((string)dynamicToc.theme.customCss).Trim();
+        //public static string GetCustomCssFromDynamicToc(dynamic dynamicToc)
+        //{
+        //    if (dynamicToc.theme != null)
+        //        if (dynamicToc.theme.customCss != null)
+        //            return ((string)dynamicToc.theme.customCss).Trim();
 
-            return string.Empty;
-        }
+        //    return string.Empty;
+        //}
     }
 
     public interface IHaveTopics

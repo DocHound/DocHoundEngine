@@ -227,9 +227,14 @@ namespace DocHound.Interfaces
         [DefaultValue(true)] AllowThemeColorSwitching,
         [DefaultValue(true)] AllowSyntaxHighlightingThemeSwitching,
         [DefaultValue("")] AllowableSyntaxHighlightingThemes,
+        [DefaultValue(true)] RequireHttps,
 
-        // Content settings
+        // Content and theme settings
         [DefaultValue("~/Images/SiteIcon.png")] SiteIcon,
+        [DefaultValue("Default")] Theme,
+        [DefaultValue("Default")] ThemeColors,
+        [DefaultValue("")] CustomCssPath,
+        [DefaultValue("KavaDocs")] SyntaxTheme,
 
         // Markdown related settings
         [DefaultValue(true)] UseAbbreviations,

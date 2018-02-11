@@ -89,10 +89,10 @@
         var filter = $('#tree-filter').val();
 
         if (filter == '') {
-            $('.topicList li').show();
+            $('.topic-list li').show();
         } else {
-            $('.topicList li').hide();
-            var matches = $('.topicList li:contains("' + filter + '")');
+            $('.topic-list li').hide();
+            var matches = $('.topic-list li:contains("' + filter + '")');
             matches.parent().removeClass('topic-collapsed');
             matches.addClass('topic-expanded');
             matches.parent().addClass('topic-expanded');
@@ -103,10 +103,10 @@
         var filter = $('#tree-filter-mobile').val();
 
         if (filter == '') {
-            $('.topicList li').show();
+            $('.topic-list li').show();
         } else {
-            $('.topicList li').hide();
-            var matches = $('.topicList li:contains("' + filter + '")');
+            $('.topic-list li').hide();
+            var matches = $('.topic-list li:contains("' + filter + '")');
             matches.parent().removeClass('topic-collapsed');
             matches.addClass('topic-expanded');
             matches.parent().addClass('topic-expanded');
@@ -196,7 +196,7 @@ hideMobileMenu = function() {
 // Makes sure that the specified topic is visible (all the parents are expanded) and that it is scrolled into view
 ensureTopicIsExpandedAndVisible = function($topic) {
     var filter = $topic.text();
-    var matches = $('.topicList li:contains("' + filter + '")');
+    var matches = $('.topic-list li:contains("' + filter + '")');
     matches.parent().removeClass('topic-collapsed');
     matches.addClass('topic-expanded');
     matches.parent().addClass('topic-expanded');
@@ -313,7 +313,7 @@ interceptNavigation = function($referenceObject) {
                 expandCaret.removeClass('caret-collapsed');
                 expandCaret.addClass('caret-expanded');
             }
-            var expandTopicList = $parent.find('>ul.topicList');
+            var expandTopicList = $parent.find('>ul.topic-list');
             if (expandTopicList.length > 0) {
                 // This node has sub-nodes
                 expandTopicList.removeClass('topic-collapsed');
@@ -512,7 +512,7 @@ loadTopicAjax = function (href, noPushState) {
                 var scriptSrc = this.src;
                 var scriptSrcLower = scriptSrc.toLowerCase();
                 if (scriptSrcLower.endsWith('jsmath/easy/load.js')) { // jsmath doesn't work within this context, so we have to force a reload of the page.
-                    window.location.href = href;
+                    window.location.href = trimNoToc(href);
                     return;
                 }
                 if (!scriptSrcLower.endsWith('/topic.js')) { // Note: We can't reload this file itself, as it would trigger document-ready stuff we do not want
@@ -542,14 +542,7 @@ loadTopicAjax = function (href, noPushState) {
             // We set the browser URL. This happens on most dynamic topic loads, except when the forward or back button is pushed in the browser
             if (!noPushState && window.history.pushState) {
                 var title = $html.find('title').text();
-                // TODO: Need to fix the querystring if there are other QS parameters
-                href = href.replace('&notoc=true', '').replace('?notoc=true', '?').replace('?&', '?').replace("&&", "&");
-                // TODO: Ends With not supported in IE 11
-                if (href.endsWith("?") || href.endsWith("&"))
-                    href = href.substring(0, href.length - 1);
-                //href = setUrlEncodedKey("notoc", "", href);                
-
-                window.history.pushState({ title: title, URL: href }, "", href);
+                window.history.pushState({ title: title, URL: href }, "", trimNoToc(href));
                 document.title = title;
             }
             // We give everything a moment to load, and then wire up the newly loaded content and intercept navigation within this content
@@ -566,11 +559,16 @@ loadTopicAjax = function (href, noPushState) {
              console.log('The requested topic is not available.');
         }
     });
-
-
 }
 
-
+trimNoToc = function(href) {
+    // TODO: Need to fix the querystring if there are other QS parameters
+    href = href.replace('&notoc=true', '').replace('?notoc=true', '?').replace('?&', '?').replace("&&", "&");
+    // TODO: Ends With not supported in IE 11
+    if (href.endsWith("?") || href.endsWith("&"))
+        href = href.substring(0, href.length - 1);
+    return href;
+}
 
 debounce = function (func, wait, immediate) {
     var timeout;

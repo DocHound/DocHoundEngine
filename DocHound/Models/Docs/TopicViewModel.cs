@@ -17,7 +17,6 @@ namespace DocHound.Models.Docs
     public class TopicViewModel : IHaveTopics, IHaveSelectedTopic, ISettingsProvider
     {
         private TableOfContentsItem _selectedTopic;
-        private string _syntaxTheme;
         public HttpContext HttpContext { get; }
         public VstsOutputHelper Vsts { get; }
 
@@ -64,15 +63,10 @@ namespace DocHound.Models.Docs
 
             if (dynamicToc.title != null) RepositoryTitle = dynamicToc.title;
             if (dynamicToc.owner != null) Owner = dynamicToc.owner;
-            if (dynamicToc.requireHttps != null) RequireHttps = dynamicToc.requireHttps;
 
             Topics = TableOfContentsHelper.BuildTocFromDynamicToc(dynamicToc, this, CurrentSlug, out List<TableOfContentsItem> flatTopicList);
             FlatTopics = flatTopicList;
             MainMenu = TableOfContentsHelper.BuildMainMenuStructureFromDynamicToc(dynamicToc);
-            ThemeFolder = TableOfContentsHelper.GetThemeFolderFromDynamicToc(dynamicToc);
-            ThemeColors = TableOfContentsHelper.GetThemeColorFromDynamicToc(dynamicToc);
-            SyntaxTheme = TableOfContentsHelper.GetSyntaxThemeNameFromDynamicToc(dynamicToc);
-            CustomCss = TableOfContentsHelper.GetCustomCssFromDynamicToc(dynamicToc);
 
             var matchingTopic = FlatTopics.FirstOrDefault(t => TopicHelper.SlugMatchesTopic(CurrentSlug, t));
             if (matchingTopic == null) matchingTopic = FlatTopics.FirstOrDefault(t => TopicHelper.SlugMatchesTopic(CurrentSlug, t, true));
@@ -86,7 +80,7 @@ namespace DocHound.Models.Docs
             CurrentTopicSettings = SelectedTopic?.SettingsDynamic;
         }
 
-        public bool RequireHttps { get; set; } = true;
+        public bool RequireHttps => GetSetting<bool>(Settings.RequireHttps);
 
         private async Task GetHtmlContent()
         {
@@ -454,53 +448,44 @@ namespace DocHound.Models.Docs
                 _cachedSettings.Add(setting, value);
         }
 
-        public string CustomCss { get; set; }
+        public string CustomCss => GetSetting<string>(Settings.CustomCssPath);
 
         public string CustomCssFullPath
         {
             get
             {
-                if (string.IsNullOrEmpty(CustomCss)) return string.Empty;
+                var customCss = CustomCss;
+                if (string.IsNullOrEmpty(customCss)) return string.Empty;
 
-                if (CustomCss.ToLowerInvariant().StartsWith("http://") || CustomCss.ToLowerInvariant().StartsWith("https://"))
-                    return CustomCss;
+                if (customCss.ToLowerInvariant().StartsWith("http://") || customCss.ToLowerInvariant().StartsWith("https://"))
+                    return customCss;
 
                 var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
                 switch (repositoryType)
                 {
                     case RepositoryTypes.GitHubRaw:
-                        return "/___FileProxy___?path=" + GitHubMasterUrlRaw + CustomCss;
+                        return "/___FileProxy___?path=" + GitHubMasterUrlRaw + customCss;
                     case RepositoryTypes.VstsGit:
-                        return "/___FileProxy___?mode=vstsgit&path=" + CustomCss;
+                        return "/___FileProxy___?mode=vstsgit&path=" + customCss;
                 }
-                return String.Empty;
+                return string.Empty;
             }
         }
 
-        public string SyntaxTheme
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_syntaxTheme)) return "kavadocs";
-                return _syntaxTheme.ToLowerInvariant();
-            }
-            set { _syntaxTheme = value; }
-        }
-
-        public string ThemeFolder { get; set; }
+        public string SyntaxTheme => GetSetting<string>(Settings.SyntaxTheme).ToLowerInvariant();
+        public string Theme => GetSetting<string>(Settings.Theme);
+        public string ThemeFolder => $"~/wwwroot/Themes/{Theme}";
         public string ThemeFolderRaw => ThemeFolder.Replace("~/wwwroot/", "/");
-        public string ThemeCss => ThemeFolderRaw + "/Theme.css";
-
-        public string ThemeColors { get; set; }
+        public string ThemeCss => $"{ThemeFolderRaw}/Theme.css";
+        public string ThemeColors => GetSetting<string>(Settings.ThemeColors);
 
         public string ThemeColorsCss
         {
             get
             {
                 var colors =  ThemeColors;
-                if (colors.ToLowerInvariant().EndsWith(".css"))
-                    return colors;
-                return ThemeFolderRaw + "/" + colors + ".css";
+                if (colors.ToLowerInvariant().EndsWith(".css")) return colors;
+                return $"{ThemeFolderRaw}/Theme-Colors-{colors}.css";
             }
         }
     
