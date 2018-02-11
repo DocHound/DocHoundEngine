@@ -330,6 +330,7 @@ interceptNavigation = function($referenceObject) {
                     $currentTopic.parent().addClass('selected-topic');
                     ensureTopicIsExpandedAndVisible($currentTopic);
                     found = true;
+                    break;
                 }
             }
             if (!found) { // Since we haven't found anythign yet, we run a more lenient search
@@ -338,6 +339,7 @@ interceptNavigation = function($referenceObject) {
                     if (linkMatchesTopic(currentSlug, $currentTopic)) {
                         $currentTopic.parent().addClass('selected-topic');
                         ensureTopicIsExpandedAndVisible($currentTopic);
+                        break;
                     }
                 }
             }
@@ -366,8 +368,8 @@ slugMatchesTopic = function(slug, $topicLink)
     slug = slug.toLowerCase();
     topicSlug = topicSlug.toLowerCase();
 
-    while (slug.length > 0 && slug.startsWith('/')) slug = slug.Substring(1);
-    while (topicSlug.length > 0 && topicSlug.startsWith('/')) topicSlug = topicSlug.Substring(1);
+    while (slug.length > 0 && slug.startsWith('/')) slug = slug.substring(1);
+    while (topicSlug.length > 0 && topicSlug.startsWith('/')) topicSlug = topicSlug.substring(1);
 
     return slug === topicSlug;
 }
