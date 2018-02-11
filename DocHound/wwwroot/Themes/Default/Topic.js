@@ -556,7 +556,7 @@ loadTopicAjax = function (href, noPushState) {
         } else {
             // TODO: We should handle this better :-)
             //alert('The requested topic is not available.');
-             console.log('The requested topic is not available.');
+            console.log('The requested topic is not available.');
         }
     });
 }

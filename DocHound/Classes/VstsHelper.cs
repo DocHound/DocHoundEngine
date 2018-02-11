@@ -282,7 +282,6 @@ namespace DocHound.Classes
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
             return client;
-
         }
 
         private static async Task<VstsProjectInfo> GetProjectsJson(HttpClient httpClient, string projectName)
