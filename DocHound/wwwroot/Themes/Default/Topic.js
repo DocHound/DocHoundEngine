@@ -117,19 +117,10 @@
     // Reacting to various things when the page scrolls
     $(document).on('scroll', function () {
         //We assign a scrolled class to all kinds of elements so they can react when the page isn't at the very top
-        if ($(document).scrollTop() > 50) {
-            $('.header').addClass('scrolled');
-            $('.toc').addClass('scrolled');
-            $('.sidebar').addClass('scrolled');
-            $('.logo').addClass('scrolled');
-            $('.footer').addClass('scrolled');
-        } else {
-            $('.header').removeClass('scrolled');
-            $('.toc').removeClass('scrolled');
-            $('.sidebar').removeClass('scrolled');
-            $('.logo').removeClass('scrolled');
-            $('.footer').removeClass('scrolled');
-        }
+        if ($(document).scrollTop() > 50) 
+            $('.header, .toc, .sidebar, .logo, .footer').addClass('scrolled');
+        else 
+            $('.header, .toc, .sidebar, .logo, .footer').removeClass('scrolled');
         highlightActiveOutlineHeading();
     });
     window.highlightNextOutlineScroll = true;
@@ -170,11 +161,7 @@ highlightActiveOutlineHeading = function() {
 }
 
 showMobileMenu = function() {
-    $('body').addClass('show-mobile-menu');
-    $('.header').addClass('show-mobile-menu');
-    $('.mobile-menu').addClass('show-mobile-menu');
-    $('.content-container').addClass('show-mobile-menu');
-    $('.footer').addClass('show-mobile-menu');
+    $('body, .header, .mobile-menu, .content-container, .footer').addClass('show-mobile-menu');
     $('.mobile-menu').css('display', 'block');
     setTimeout(function () {
         $('.mobile-menu').css('z-index', 10000);
@@ -182,11 +169,7 @@ showMobileMenu = function() {
 }
 
 hideMobileMenu = function() {
-    $('body').removeClass('show-mobile-menu');
-    $('.header').removeClass('show-mobile-menu');
-    $('.content-container').removeClass('show-mobile-menu');
-    $('.footer').removeClass('show-mobile-menu');
-    $('.mobile-menu').removeClass('show-mobile-menu');
+    $('body, .header, .mobile-menu, .content-container, .footer').removeClass('show-mobile-menu');
     $('.mobile-menu').css('z-index', -10000);
     setTimeout(function () {
         $('.mobile-menu').css('display', 'none');
@@ -462,11 +445,10 @@ getNormalizedName = function(name)
 
 loadTopicAjax = function (href, noPushState) {
 
-    if (href.indexOf('?') !== -1) {
+    if (href.indexOf('?') !== -1)
         href += '&notoc=true';
-    } else {
+    else
         href += '?notoc=true';
-    }
     $('article.content-container').css('opacity', '0');
     $('aside.sidebar').css('opacity', '0');
     setTimeout(function() {
@@ -485,15 +467,20 @@ loadTopicAjax = function (href, noPushState) {
     window.lastAjaxLoadUrl = href;
 
     $.get(href, function (data, status) {
-
-        console.log("request urls: ajax: ",window.lastAjaxLoadUrl, href);
          if (href == window.lastAjaxLoadUrl && status == 'success') {
-        //if (status == 'success') {
             window.newContentLoading = false;
             $('#load-indicator').css('display', 'none');
 
             var $html = $('<div>' + data + '</div>'); // This is kind of a hack, but we need to elevate everything within the returned concent one level so jquery actually finds everything
-            
+
+            // We grab all the references we need later
+            var $scripts = $html.find('script');
+            var $links = $html.find('link');
+
+            // We remove scripts and links from the content we merge, since we are merging them into the main content and we do not want to have these elements twice
+            $html.find('script').remove();
+            $html.find('link').remove();
+
             // We merge in the main content
             var $content = $html.find('article.content-container');
             if ($content.length > 0) {
@@ -508,27 +495,7 @@ loadTopicAjax = function (href, noPushState) {
                 $('aside.sidebar').css('opacity', '1');
             }
 
-            // We take all the scripts from the new topic and move them into the main content
-            var $scripts = $html.find('script');
-            $scripts.each(function() {
-                var scriptSrc = this.src;
-                var scriptSrcLower = scriptSrc.toLowerCase();
-                if (scriptSrcLower.endsWith('jsmath/easy/load.js')) { // jsmath doesn't work within this context, so we have to force a reload of the page.
-                    window.location.href = trimNoToc(href);
-                    return;
-                }
-                if (!scriptSrcLower.endsWith('/topic.js')) { // Note: We can't reload this file itself, as it would trigger document-ready stuff we do not want
-                    $('script[src="' + scriptSrc + '"]').remove(); // If the script already exists, we remove it, so we can add it back in. (Note: We MUST add it back in, because it may have code that needs to re-run immediately!!!)
-                    try {
-                        $('body').append(this); // We are adding the new script into the main document. If it contains auto-run code, it will run
-                    } catch (ex) {
-                        window.location.href = href; // If there is an issue with all this, we are triggering a full navigation to the current page
-                    }
-                }
-            });
-
-            // We now also look at all the links. If they are not yet loaded, we load them now.
-            var $links = $html.find('link');
+            // We look at all the links. If they are not yet loaded, we load them now. If they are already there, we are good to go and do not need to load them again.
             $links.each(function() {
                 var linkHref = this.href;
                 if (linkHref.startsWith(window.location.origin))
@@ -539,7 +506,32 @@ loadTopicAjax = function (href, noPushState) {
                     $('head').append(this);
                 }
             });
-
+            
+            // We take all the scripts from the new topic and move them into the main content
+            // Note that we need to add them, even if they are already there, because the scripts may need to run again
+            $scripts.each(function() {
+                var scriptSrc = this.src;
+                var scriptSrcLower = scriptSrc.toLowerCase();
+                if (scriptSrcLower.endsWith('jsmath/easy/load.js')) { // jsmath doesn't work within this context, so we have to force a reload of the page.
+                    window.location.href = trimNoToc(href);
+                    return;
+                }
+                if (!scriptSrcLower.endsWith('/topic.js')) { // Note: We can't reload this file itself, as it would trigger document-ready stuff we do not want
+                    try {
+                        // We look for all existing scripts and unload them. Note that we have to do this manually, because the src attribute does not necessarily come back clean if we just look by selector.
+                        var $existingScripts = $('script');
+                        for (var scriptCounter = 0; scriptCounter < $existingScripts.length; scriptCounter++) {
+                            var existingScriptSource = $existingScripts[scriptCounter].src;
+                            var scriptSrcLower = scriptSrc.toLowerCase();
+                            if (existingScriptSource.toLowerCase() == scriptSrcLower)
+                            $existingScripts[scriptCounter].remove(); // If the script already exists, we remove it, so we can add it back in. (Note: We MUST add it back in, because it may have code that needs to re-run immediately!!!)
+                        }
+                        $('body').append(this); // We are adding the new script into the main document. If it contains auto-run code, it will run
+                    } catch (ex) {
+                        window.location.href = href; // If there is an issue with all this, we are triggering a full navigation to the current page
+                    }
+                }
+            });
 
             // We set the browser URL. This happens on most dynamic topic loads, except when the forward or back button is pushed in the browser
             if (!noPushState && window.history.pushState) {
@@ -556,10 +548,11 @@ loadTopicAjax = function (href, noPushState) {
                 window.scrollTo(0, 0); // Scrolling the newly loaded content back to the very top
             });
         } else {
-            // TODO: We should handle this better :-)
-            //alert('The requested topic is not available.');
-            console.log('The requested topic is not available.');
-        }
+            // The requested topic does not seem to be available. Maybe there is some sort of in-place navigation problem. 
+            // Therefore, we trigger a full navigation in the hopes that that may go better.
+            window.location.href = trimNoToc(href);
+            return;
+}
     });
 }
 

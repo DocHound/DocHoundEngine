@@ -151,15 +151,15 @@ li.kava-auto-link a:visited {
 }
 
 .sidebar li a:link {
-    color: black;
+        color: rgb(203, 203, 203);
 }
 
 .sidebar li a:visited {
-    color: black;
+        color: rgb(203, 203, 203);
 }
 
 .sidebar li a:hover {
-    color: white;
+        color: rgb(203, 203, 203);
 }
 
 .sidebar select {
