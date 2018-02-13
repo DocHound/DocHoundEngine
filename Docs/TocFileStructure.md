@@ -194,7 +194,7 @@ The settings object can be set on the root or an individual topic. Settings on a
 | vstsPat | Personal Access Token for the VSTS server (see also: [Configuring Personal Access Tokens in VSTS](https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate)) | string | Yes, if using a VSTS feature |
 | vstsProjectName | Name of the VSTS Project containing the topic or repository | string | Yes, if using a VSTS feature |
 
-## Topics Collection
+## Topics Collection 
 
 | Property     | Description                              | Values | Required |
 |--------------|------------------------------------------|--------|----------|
