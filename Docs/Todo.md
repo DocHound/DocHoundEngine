@@ -20,7 +20,6 @@
 ## Rendering Engine
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
-* [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right. (Note: This may not be an issue anymore... we'll keep an eye on it)
 * [ ] Themes
     * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
     * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
@@ -39,7 +38,6 @@
     * [ ] People seem to like http://en.cppreference.com/w/
     * [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
     * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
-* [ ] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
@@ -64,6 +62,8 @@
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
     * [x] Markdown needs to do a better job of fixing up image links
+* [x] Seems when navigating within VSTS topics, going back doesn't always seem to work right. (Note: This may not be an issue anymore... we'll keep an eye on it)
+* [x] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [x] Need a loading indicator for dynamic topics showing up when loading takes longer than a half a second (or so)
 * [x] Next/Previous buttons do not yet participate in loading topics dynamically
 * [x] Must set selected topic (with extended ability to find what's selected) and scroll it into view (and expand it if need be) when loading typics dynamically
@@ -88,7 +88,6 @@
 * [ ] Allow overriding of CSS styles on individual topics
 * [ ] Some themes may want the current-doc outline more in the document and below the first heading (or some other arbitrary place)
 * [ ] Maybe there should be a link to the next topic in the sidebar in some themes?
-* [ ] Make sure that all the data in the topic is data-driven (from the repository)
 * [ ] It would be nice to be able to get away with just once instance of the tree in the document
 * [ ] Maybe listing contributors to a topic or all the docs (optional)
 * [ ] Maybe we could also show last-edited date on a topic
