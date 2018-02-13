@@ -88,7 +88,6 @@
 * [ ] Allow overriding of CSS styles on individual topics
 * [ ] Some themes may want the current-doc outline more in the document and below the first heading (or some other arbitrary place)
 * [ ] Maybe there should be a link to the next topic in the sidebar in some themes?
-* [ ] Make sure that all the data in the topic is data-driven (from the repository)
 * [ ] It would be nice to be able to get away with just once instance of the tree in the document
 * [ ] Maybe listing contributors to a topic or all the docs (optional)
 * [ ] Maybe we could also show last-edited date on a topic
