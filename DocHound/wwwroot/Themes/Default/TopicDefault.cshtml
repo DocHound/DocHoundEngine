@@ -15,7 +15,7 @@
 }
 @if (!string.IsNullOrEmpty(Model.CustomCss))
 {
-    <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" />
+    <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" kava-custom="true" />
 }
 
 @if (!Model.RenderTopicOnly)

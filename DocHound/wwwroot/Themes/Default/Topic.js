@@ -275,10 +275,8 @@ processTopicLoad = function() {
 };
 
 // This method wires up the click event of anchor tags within the given context to prevent navitation and instead load topics inline if possible.
-interceptNavigation = function($referenceObject) {
-    if (!$referenceObject) $referenceObject = $(document);
-
-    $referenceObject.on('click', 'a', function() {
+interceptNavigation = function() {
+    $(document).on('click', 'a', function() {
         // Regardless of anything else, we can now close the mobile menu
         if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 
@@ -310,19 +308,19 @@ interceptNavigation = function($referenceObject) {
             for (var counter = 0; counter < allTocLinks.length; counter++){
                 var $currentTopic = $(allTocLinks[counter]);
                 if (slugMatchesTopic(currentSlug, $currentTopic)) {
-                    $currentTopic.parent().addClass('selected-topic');
+                    var currentParent = $currentTopic.parent();
+                    currentParent.addClass('selected-topic');
                     ensureTopicIsExpandedAndVisible($currentTopic);
                     found = true;
-                    break;
                 }
             }
             if (!found) { // Since we haven't found anythign yet, we run a more lenient search
                 for (var counter = 0; counter < allTocLinks.length; counter++){
                     var $currentTopic = $(allTocLinks[counter]);
                     if (linkMatchesTopic(currentSlug, $currentTopic)) {
-                        $currentTopic.parent().addClass('selected-topic');
+                        var currentParent = $currentTopic.parent();
+                        currentParent.addClass('selected-topic');
                         ensureTopicIsExpandedAndVisible($currentTopic);
-                        break;
                     }
                 }
             }
@@ -495,6 +493,9 @@ loadTopicAjax = function (href, noPushState) {
                 $('aside.sidebar').css('opacity', '1');
             }
 
+            // We remove all the links that were custom-injected and may now not be needed anymore
+            $('link[kava-custom="true"').remove();
+
             // We look at all the links. If they are not yet loaded, we load them now. If they are already there, we are good to go and do not need to load them again.
             $links.each(function() {
                 var linkHref = this.href;
@@ -504,6 +505,9 @@ loadTopicAjax = function (href, noPushState) {
                 if (existingLinks.length < 1) {
                     // The link doesn't yet exist, so we add it
                     $('head').append(this);
+                    var custom = $(this).attr('kava-custom');
+                    if (custom.length < 1)
+                        $(this).attr('kava-custom', 'true');
                 }
             });
             
@@ -516,7 +520,8 @@ loadTopicAjax = function (href, noPushState) {
                     window.location.href = trimNoToc(href);
                     return;
                 }
-                if (!scriptSrcLower.endsWith('/topic.js')) { // Note: We can't reload this file itself, as it would trigger document-ready stuff we do not want
+                if (scriptSrcLower.indexOf('?') > -1) scriptSrcLower = scriptSrcLower.substring(0, scriptSrcLower.indexOf('?'));
+                if (!scriptSrcLower.endsWith('/topic.js') && !scriptSrcLower.endsWith('/topic.min.js') && !scriptSrcLower.endsWith('/jquery-3.2.1.min.js')) { // Note: We can't reload this file itself, as it would trigger document-ready stuff we do not want. We also have no need to reload jquery
                     try {
                         // We look for all existing scripts and unload them. Note that we have to do this manually, because the src attribute does not necessarily come back clean if we just look by selector.
                         var $existingScripts = $('script');
@@ -543,8 +548,8 @@ loadTopicAjax = function (href, noPushState) {
             setTimeout(function() {
                 processTopicLoad(); // Makes sure everything going on in the new topics is properly processed (such as syntax highlighting, or a table of contents,...)
                 userSettings.refreshTargets(); // Makes sure that everything that got newly loaded that may need user data is refreshes
-                interceptNavigation($('article.content-container')); // Wires up all anchor tag navigation within the main content
-                interceptNavigation($('aside.sidebar')); // Wires up all anchor tag navigation within the sidebar content
+                // interceptNavigation($('article.content-container')); // Wires up all anchor tag navigation within the main content
+                // interceptNavigation($('aside.sidebar')); // Wires up all anchor tag navigation within the sidebar content
                 window.scrollTo(0, 0); // Scrolling the newly loaded content back to the very top
             });
         } else {
