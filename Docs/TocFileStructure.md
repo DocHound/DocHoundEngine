@@ -148,17 +148,6 @@ Contains an array of menu items that are rendered as part of the documentationdo
 | title        | Menu item title                                 | string | Yes |
 | link         | The URL (or partial URL) the menu item links to | string | Yes |
 
-## Theme Object
-
-Contains individual settings that allow for theme customization.
-
-| Property       | Description                                     | Values | Required |
-|----------------|-------------------------------------------------|--------|----------|
-| standardTheme  | Name of the theme supported by Kava Docs        | Supported values: Default, Dark (more to come) | No |
-| customCss      | URL (relative or absolute) to a CSS file with CSS overrides | Partial URL or full URL | No |
-| customTemplate | *reserved for future use* |  | No |
-| syntaxTheme    | Name of the color theme for syntax highlighting | Supported values: **kavadocs**, **kavadocsdark**, brown-paper, brown-papersq, codepen-embed, color-brewer, darcula, dark, darkula, default, dracula, far, foundation, github, github-gist, cooglecode, grayscale, idea, ir-black, kimbie.dark, kimbie.light, magula, mono-blue, monokai, monokai-sublime, obsidian, paraiso-dark, paraiso-light, railcasts, rainbow, solarized-dark, solarized-light, sunburst, twilight, vs, vs2015, xcode, zenburn | No |
-
 ## Settings Object
 
 The settings object can be set on the root or an individual topic. Settings on a topic override the default settings in an additive fashion. Values that are set on the root but not on the topics are still respected for a topic, even if that topic overrides other settings.
@@ -170,10 +159,13 @@ The settings object can be set on the root or an individual topic. Settings on a
 | allowableThemeColors | Defines the list of color sets allowed (if color switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "Default, Sepia, Dark" | No |
 | allowSyntaxHighlightingThemeSwitching | Defines whether the user is allowed to switch the color theme for syntax highlighting (if applicable) | true (default) or false  | No |
 | allowableSyntaxHighlightingThemes | Defines the list of syntax highlight themes the user can switch to (if theme switching is allowed). If empty, all available color sets are allowed. | Coma-separated list of color set names, such as "kavadocs, kavadocsdark, vs, vs2017" | No |
+| customCssPath | URL (relative or absolute) to a CSS file with CSS overrides | Partial URL or full URL | No |
 | footerHtml | Text to be displayed in the page footer. Used as raw HTML. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | HTML  | No |
 | logoPath | Path (URL) for the main logo file of the docs. Can be an absolute path, or a relative path within the current repository. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | URL (defaults to '''_meta/_logo.png''')  | No |
 | showEstimatedReadingTime | When set to true, displays an estimate for the time it will take to read the topic | true (default) or false  | No |
 | siteIcon | Relative or absolute path to a custom size icon (replaces the KavaDocs logo icon) | Path to a PNG file  | No |
+| syntaxTheme    | Name of the color theme for syntax highlighting | Supported values: **kavadocs**, **kavadocsdark**, brown-paper, brown-papersq, codepen-embed, color-brewer, darcula, dark, darkula, default, dracula, far, foundation, github, github-gist, cooglecode, grayscale, idea, ir-black, kimbie.dark, kimbie.light, magula, mono-blue, monokai, monokai-sublime, obsidian, paraiso-dark, paraiso-light, railcasts, rainbow, solarized-dark, solarized-light, sunburst, twilight, vs, vs2015, xcode, zenburn | No |
+| theme  | Name of the theme supported by Kava Docs        | Supported values: Default, Dark (more to come) | No |
 | useAbbreviations | Should abbreviations be used? | true (default) or false  | No |
 | useAutoIdentifiers | Should headings automatically be generated with id attributes? | true (default) or false  | No |
 | useAutoLinks | Should URLs be automatically turned into links? | true (default) or false  | No |
