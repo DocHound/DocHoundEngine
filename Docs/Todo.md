@@ -20,7 +20,6 @@
 ## Rendering Engine
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
-* [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right. (Note: This may not be an issue anymore... we'll keep an eye on it)
 * [ ] Themes
     * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
     * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
@@ -63,6 +62,7 @@
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
     * [x] Markdown needs to do a better job of fixing up image links
+* [x] Seems when navigating within VSTS topics, going back doesn't always seem to work right. (Note: This may not be an issue anymore... we'll keep an eye on it)
 * [x] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [x] Need a loading indicator for dynamic topics showing up when loading takes longer than a half a second (or so)
 * [x] Next/Previous buttons do not yet participate in loading topics dynamically
