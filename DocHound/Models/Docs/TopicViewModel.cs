@@ -23,6 +23,9 @@ namespace DocHound.Models.Docs
         public bool RenderTopicOnly { get; set; }
         public bool HideTableOfContents { get; set; }
 
+        public string CurrentPrefix { get; set; } = "Docs";
+        public bool UseSqlServer { get; set; }
+
         public TopicViewModel(string slug, HttpContext context)
         {
             HttpContext = context;
@@ -53,19 +56,23 @@ namespace DocHound.Models.Docs
             if (!logoUrl.StartsWith("http://") && !logoUrl.StartsWith("https://")) logoUrlIsAbsolute = false;
             LogoUrl = logoUrl;
 
-            switch (repositoryType)
-            {
-                case RepositoryTypes.GitHubRaw:
-                    tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
-                    if (!logoUrlIsAbsolute)
-                        LogoUrl = GitHubMasterUrlRaw + logoUrl;
-                    break;
-                case RepositoryTypes.VstsGit:
-                    tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
-                    if (!logoUrlIsAbsolute)
-                        LogoUrl = $"/___FileProxy___?mode=vstsgit&path={logoUrl}";
-                    break;
-            }
+            if (UseSqlServer) // SQL server *may* provide a local tabe of contents that would override all others
+                tocJson = await SqlDataAccess.GetRepositoryLocalTableOfContents(CurrentPrefix);
+
+            if (string.IsNullOrEmpty(tocJson))
+                switch (repositoryType)
+                {
+                    case RepositoryTypes.GitHubRaw:
+                        tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
+                        if (!logoUrlIsAbsolute)
+                            LogoUrl = GitHubMasterUrlRaw + logoUrl;
+                        break;
+                    case RepositoryTypes.VstsGit:
+                        tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
+                        if (!logoUrlIsAbsolute)
+                            LogoUrl = $"/___FileProxy___?mode=vstsgit&path={logoUrl}";
+                        break;
+                }
             if (string.IsNullOrEmpty(tocJson)) return;
 
             var dynamicToc = TableOfContentsHelper.GetDynamicTocFromJson(tocJson);
