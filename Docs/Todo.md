@@ -60,7 +60,6 @@
 
 ## Overall Processing
 
-* [ ] Support a local TOC in the SQL Server configuration
 * [ ] Support a local CSS override in the SQL Server configuraiton
 * [ ] We need to make sure we generate all meta tags in the header we would like to have.
 * [ ] Would be really nice to support translations right inline in a document.
@@ -88,13 +87,14 @@
 * [ ] Would be nice to support cool interactions with linked source code. For instance, could we pull all source files that are flagged for code-review and show them inside the docs, so people authorized to review code could look through the code right there and approve it?
 * [ ] Would be nice to somehow support "try it now" for JavaScript examples (and such)
 * [ ] PDF export
-* [x] Would be nice to allow links to external markdown files (or really any other topic we support) to be brought inline on-demand (so it wouldn't always be there, but it could be 'expanded' in... a good example of this would be in our own [Supported Markdown Features topic](Supported Markdown Features), where I would like to pull in the externally linked explanations of markdown features)
+* [ ] Would be nice to allow links to external markdown files (or really any other topic we support) to be brought inline on-demand (so it wouldn't always be there, but it could be 'expanded' in... a good example of this would be in our own [Supported Markdown Features topic](Supported Markdown Features), where I would like to pull in the externally linked explanations of markdown features)
 * [ ] Need to get the search implemented
    * [ ] Need the more advanced ability to do a full search across all documents using Azure Search
    * [ ] Keywords and description need to be passed to the fully indexed search as relatively high priority fields
    * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
+* [x] Support a local TOC in the SQL Server configuration
 * [x] Microsoft shows “estimated time to read” at the top of topics
 * [x] Would be nice to have the outline in the current document be a bit more interactive
 * [x] Should support slug better
