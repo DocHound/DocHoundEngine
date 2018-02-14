@@ -20,24 +20,7 @@
 ## Rendering Engine
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
-* [ ] Themes
-    * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
-    * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
-    * [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
-    * [ ] Screencast has their own take on documentation: https://support.techsmith.com/hc/en-us/categories/203255908?utm_source=product&utm_medium=screencast&utm_campaign=unknown
-    * [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
-    * [ ] Maybe something more like an article (such as https://www.tomsguide.com/us/samsung-galaxy-s7-guide,review-3456.html)
-    * [ ] Would be nice to have a good theme for consumer related things, such as games (such as https://dev.battle.net/docs/read/oauth or even https://worldofwarcraft.com/en-us/game/new-players-guide). We will also need a better way to associate banner art with topics (and similar art customizations)
-    * [ ] Microsoft's consumer docs are slightly simpler than their other docs, and that might be good to support for us: https://support.microsoft.com/en-us/products/windows?os=windows-10
-    * [ ] Ionic has some interesting and clean stuff. Not too different from our standard theme, but some nice integration of a preview feature: https://ionicframework.com/docs/
-    * [ ] Twilio has some interesting stuff that looks a bit different: https://www.twilio.com/docs/sms
-    * [ ] Skype has some interesting stuff going: https://support.skype.com/en/skype/windows-desktop/start/
-    * [ ] Not sure if we should do something more old fashioned like this: https://docs.blesta.com/display/user/Overview
-    * [ ] Or another somewhat old fashioned option: https://docs.whmcs.com/Importing_Data
-    * [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
-    * [ ] People seem to like http://en.cppreference.com/w/
-    * [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
-    * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
+* [ ] Empty Topics should render the list of child topics more pleasingly
 * [ ] The [kava] placeholder should allow setting start and end delimiters and tags (handling HTML tags smartly, so it can find open and close tags and such).
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
@@ -125,6 +108,25 @@
 * [x] Switch from prettify to highlight
 * [x] URL parameters identifying topics should *not* be case sensitive
 * [x] Allow for settings on the entire TOC as well as on individual topics
+
+## Themes
+
+* [ ] Default theme (similar to the Docs used by MS, or Angular,...)
+* [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
+* [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
+* [ ] Screencast has their own take on documentation: https://support.techsmith.com/hc/en-us/categories/203255908?utm_source=product&utm_medium=screencast&utm_campaign=unknown
+* [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
+* [ ] Maybe something more like an article (such as https://www.tomsguide.com/us/samsung-galaxy-s7-guide,review-3456.html)    * [ ] Would be nice to have a good theme for consumer related things, such as games (such as https://dev.battle.net/docs/read/oauth or even https://worldofwarcraft.com/en-us/game/new-players-guide). We will also need a better way to associate banner art with topics (and similar art customizations)
+* [ ] Microsoft's consumer docs are slightly simpler than their other docs, and that might be good to support for us: https://support.microsoft.com/en-us/products/windows?os=windows-10
+* [ ] Ionic has some interesting and clean stuff. Not too different from our standard theme, but some nice integration of a preview feature: https://ionicframework.com/docs/
+* [ ] Twilio has some interesting stuff that looks a bit different: https://www.twilio.com/docs/sms
+* [ ] Skype has some interesting stuff going: https://support.skype.com/en/skype/windows-desktop/start/
+* [ ] Not sure if we should do something more old fashioned like this: https://docs.blesta.com/display/user/Overview
+* [ ] Or another somewhat old fashioned option: https://docs.whmcs.com/Importing_Data
+* [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
+* [ ] People seem to like http://en.cppreference.com/w/
+* [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
+* Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
 
 ## Other Ideas
 
