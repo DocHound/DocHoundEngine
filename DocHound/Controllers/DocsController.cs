@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using DocHound.Classes;
@@ -8,7 +6,6 @@ using DocHound.Models.Docs;
 using Microsoft.AspNetCore.Mvc;
 using DocHound.Interfaces;
 using Microsoft.AspNetCore.Routing;
-using Newtonsoft.Json.Linq;
 
 namespace DocHound.Controllers
 {
@@ -22,12 +19,15 @@ namespace DocHound.Controllers
 
             var vm = new TopicViewModel(topic, HttpContext);
 
-            if (!string.IsNullOrEmpty(SettingsHelper.GetSetting<string>(Settings.SqlConnectionString)))
+            if (SqlDataAccess.CanUseSql)
             {
-                var settings = await GetSqlRepositorySettings();
+                var prefix = GetCurrentDomainPrefix();
+                var settings = await SqlDataAccess.GetSqlRepositorySettings(prefix);
                 if (settings == null)
-                    return NotFound($"Document repository {GetCurrentDomainPrefix()} does not exist.");
+                    return NotFound($"Document repository {prefix} does not exist.");
                 vm.SetRootSettingsForRequest(settings);
+                vm.UseSqlServer = true;
+                vm.CurrentPrefix = prefix;
             }
 
             await vm.LoadData();
@@ -39,30 +39,6 @@ namespace DocHound.Controllers
             //    return Redirect(url);
             //}
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
-        }
-
-        private async Task<dynamic> GetSqlRepositorySettingsDynamic()
-        {
-            var settings = await GetSqlRepositorySettings();
-            if (string.IsNullOrEmpty(settings)) return null;
-            try
-            {
-                return JObject.Parse(settings);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        private async Task<string> GetSqlRepositorySettings()
-        {
-            if (!string.IsNullOrEmpty(SettingsHelper.GetSetting<string>(Settings.SqlConnectionString)))
-            {
-                var prefix = GetCurrentDomainPrefix();
-                return await GetRepositorySettings(prefix);
-            }
-            return string.Empty;
         }
 
         private string GetCurrentDomainPrefix()
@@ -81,24 +57,6 @@ namespace DocHound.Controllers
             return string.IsNullOrEmpty(defaultPrefix) ? "docs" : defaultPrefix;
         }
 
-        private static async Task<string> GetRepositorySettings(string prefix, string defaultPrefix = "docs")
-        {
-            if (string.IsNullOrEmpty(prefix)) prefix = defaultPrefix;
-
-            using (var connection = new SqlConnection(SettingsHelper.GetSetting<string>(Settings.SqlConnectionString)))
-            {
-                connection.Open();
-                if (connection.State == ConnectionState.Open)
-                    using (var command = new SqlCommand("SELECT Settings FROM Repositories WHERE Prefix = @Prefix"))
-                    {
-                        command.Connection = connection;
-                        command.Parameters.Add(new SqlParameter("@Prefix", prefix.Trim().ToLower()));
-                        return await command.ExecuteScalarAsync() as string;
-                    }
-                return null;
-            }
-        }
-
         // TODO: Need topics and toc to be individually accessible for AJAX calls
         //public async Task<IActionResult> TopicContentsOnly(string topicName)
         //{
@@ -113,11 +71,12 @@ namespace DocHound.Controllers
             if (RepositoryTypeHelper.IsMatch(mode, RepositoryTypeNames.VstsWorkItemTracking))
             {
                 var model = new TopicViewModel(topic, HttpContext);
-                if (!string.IsNullOrEmpty(SettingsHelper.GetSetting<string>(Settings.SqlConnectionString)))
+                if (SqlDataAccess.CanUseSql)
                 {
-                    var settings = await GetSqlRepositorySettingsDynamic();
+                    var prefix = GetCurrentDomainPrefix();
+                    var settings = await SqlDataAccess.GetSqlRepositorySettingsDynamic(prefix);
                     if (settings == null)
-                        return NotFound($"Document repository {GetCurrentDomainPrefix()} does not exist.");
+                        return NotFound($"Document repository {prefix} does not exist.");
                     model.SetRootSettingsForRequest(settings);
                 }
                 await model.LoadData(buildHtml: false, buildToc: true);
@@ -140,11 +99,12 @@ namespace DocHound.Controllers
             // If it is in a VSTS Git repository, we use the API to retrieve it
             if (RepositoryTypeHelper.IsMatch(mode, RepositoryTypeNames.VstsGit))
             {
-                if (!string.IsNullOrEmpty(SettingsHelper.GetSetting<string>(Settings.SqlConnectionString)))
+                if (SqlDataAccess.CanUseSql)
                 {
-                    var settings = await GetSqlRepositorySettingsDynamic();
+                    var prefix = GetCurrentDomainPrefix();
+                    var settings = await SqlDataAccess.GetSqlRepositorySettingsDynamic(prefix);
                     if (settings == null)
-                        return NotFound($"Document repository {GetCurrentDomainPrefix()} does not exist.");
+                        return NotFound($"Document repository {prefix} does not exist.");
                     var stream = await VstsHelper.GetFileStream(path,
                         SettingsHelper.GetSetting<string>(Settings.VstsInstance, requestRootSettings: settings),
                         SettingsHelper.GetSetting<string>(Settings.VstsProjectName, requestRootSettings: settings),

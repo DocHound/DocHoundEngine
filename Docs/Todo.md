@@ -20,31 +20,15 @@
 ## Rendering Engine
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
-* [ ] Seems when navigating within VSTS topics, going back doesn't always seem to work right. (Note: This may not be an issue anymore... we'll keep an eye on it)
-* [ ] Themes
-    * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
-    * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
-    * [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
-    * [ ] Screencast has their own take on documentation: https://support.techsmith.com/hc/en-us/categories/203255908?utm_source=product&utm_medium=screencast&utm_campaign=unknown
-    * [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
-    * [ ] Maybe something more like an article (such as https://www.tomsguide.com/us/samsung-galaxy-s7-guide,review-3456.html)
-    * [ ] Would be nice to have a good theme for consumer related things, such as games (such as https://dev.battle.net/docs/read/oauth or even https://worldofwarcraft.com/en-us/game/new-players-guide). We will also need a better way to associate banner art with topics (and similar art customizations)
-    * [ ] Microsoft's consumer docs are slightly simpler than their other docs, and that might be good to support for us: https://support.microsoft.com/en-us/products/windows?os=windows-10
-    * [ ] Ionic has some interesting and clean stuff. Not too different from our standard theme, but some nice integration of a preview feature: https://ionicframework.com/docs/
-    * [ ] Twilio has some interesting stuff that looks a bit different: https://www.twilio.com/docs/sms
-    * [ ] Skype has some interesting stuff going: https://support.skype.com/en/skype/windows-desktop/start/
-    * [ ] Not sure if we should do something more old fashioned like this: https://docs.blesta.com/display/user/Overview
-    * [ ] Or another somewhat old fashioned option: https://docs.whmcs.com/Importing_Data
-    * [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
-    * [ ] People seem to like http://en.cppreference.com/w/
-    * [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
-    * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
+* [ ] Empty Topics should render the list of child topics more pleasingly
+* [ ] The [kava] placeholder should allow setting start and end delimiters and tags (handling HTML tags smartly, so it can find open and close tags and such).
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
     * [ ] Maybe we could even show the name of the language at the top of the snippet
     * [ ] Would be nice to have a setting that allows specifying the max height for a code snippet. If it is taller, it could show an expand/collapse button.
 * [ ] Html
     * [ ] For HTML, we currently bring in the entire provided content (which may have it's own HTML tag and head and body section) and use it as is. Question is: Should we only use the body tag contents? But then we would not have the header, which would nuke things like style sheets. Or maybe we should get the body but move style sheets and scripts into the content? One could do cool things if scripts can be included, but it could also be a security problem...
+* [ ] Should have some way to "stack" the same code examples in different languages (like Microsoft does for C#, VB,...). Not ethat Microsoft uses this not just for code. For instance, check out the different explanations for VS and VS Code here: https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?tabs=visual-studio-code
 * [x] Styling
     * [x] For mobile devices, we should use slightly larger font. Ours seems to be smaller than that found in other docs. (Note: Ended up updating all fonts to fit more what Microsoft is doing on their docs).
     * [x] Maybe text within tables should not be justified
@@ -63,6 +47,7 @@
     * [x] Would be nice to support math notation
     * [x] Would be nice to support flow charts and other charts (such as UML) - (mermaid and nomnoml)
     * [x] Markdown needs to do a better job of fixing up image links
+* [x] Seems when navigating within VSTS topics, going back doesn't always seem to work right. (Note: This may not be an issue anymore... we'll keep an eye on it)
 * [x] Allow for different templates (or CSS styles) for different topics or topic trees. For instance, I would like to show the CODE Ohana booklet topics with a different page template (sepia Hawaiian theme) from other topics
 * [x] Need a loading indicator for dynamic topics showing up when loading takes longer than a half a second (or so)
 * [x] Next/Previous buttons do not yet participate in loading topics dynamically
@@ -75,6 +60,7 @@
 
 ## Overall Processing
 
+* [ ] Support a local CSS override in the SQL Server configuraiton
 * [ ] We need to make sure we generate all meta tags in the header we would like to have.
 * [ ] Would be really nice to support translations right inline in a document.
 * [ ] No hardcoding of any elements
@@ -101,13 +87,14 @@
 * [ ] Would be nice to support cool interactions with linked source code. For instance, could we pull all source files that are flagged for code-review and show them inside the docs, so people authorized to review code could look through the code right there and approve it?
 * [ ] Would be nice to somehow support "try it now" for JavaScript examples (and such)
 * [ ] PDF export
-* [x] Would be nice to allow links to external markdown files (or really any other topic we support) to be brought inline on-demand (so it wouldn't always be there, but it could be 'expanded' in... a good example of this would be in our own [Supported Markdown Features topic](Supported Markdown Features), where I would like to pull in the externally linked explanations of markdown features)
+* [ ] Would be nice to allow links to external markdown files (or really any other topic we support) to be brought inline on-demand (so it wouldn't always be there, but it could be 'expanded' in... a good example of this would be in our own [Supported Markdown Features topic](Supported Markdown Features), where I would like to pull in the externally linked explanations of markdown features)
 * [ ] Need to get the search implemented
    * [ ] Need the more advanced ability to do a full search across all documents using Azure Search
    * [ ] Keywords and description need to be passed to the fully indexed search as relatively high priority fields
    * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
+* [x] Support a local TOC in the SQL Server configuration
 * [x] Microsoft shows “estimated time to read” at the top of topics
 * [x] Would be nice to have the outline in the current document be a bit more interactive
 * [x] Should support slug better
@@ -123,6 +110,33 @@
 * [x] Switch from prettify to highlight
 * [x] URL parameters identifying topics should *not* be case sensitive
 * [x] Allow for settings on the entire TOC as well as on individual topics
+
+## Themes
+
+* [ ] Default theme (similar to the Docs used by MS, or Angular,...)
+* [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
+* [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
+* [ ] Screencast has their own take on documentation: https://support.techsmith.com/hc/en-us/categories/203255908?utm_source=product&utm_medium=screencast&utm_campaign=unknown
+* [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
+* [ ] Maybe something more like an article (such as https://www.tomsguide.com/us/samsung-galaxy-s7-guide,review-3456.html)    * [ ] Would be nice to have a good theme for consumer related things, such as games (such as https://dev.battle.net/docs/read/oauth or even https://worldofwarcraft.com/en-us/game/new-players-guide). We will also need a better way to associate banner art with topics (and similar art customizations)
+* [ ] Microsoft's consumer docs are slightly simpler than their other docs, and that might be good to support for us: https://support.microsoft.com/en-us/products/windows?os=windows-10
+* [ ] Ionic has some interesting and clean stuff. Not too different from our standard theme, but some nice integration of a preview feature: https://ionicframework.com/docs/
+* [ ] Twilio has some interesting stuff that looks a bit different: https://www.twilio.com/docs/sms
+* [ ] Skype has some interesting stuff going: https://support.skype.com/en/skype/windows-desktop/start/
+* [ ] Not sure if we should do something more old fashioned like this: https://docs.blesta.com/display/user/Overview
+* [ ] Or another somewhat old fashioned option: https://docs.whmcs.com/Importing_Data
+* [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
+* [ ] People seem to like http://en.cppreference.com/w/
+* [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
+* Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
+
+## Repository Management
+
+* [ ] Should have an in-place TOC editor of some kind
+* [ ] Should have a guided approach (wizard-ish) to add new repositories
+   * [ ] Including the ability to crawl a repository without a TOC
+* [ ] Would be nice to have a local place to set color overrides (CSS overrides of all kinds, really)
+   * [ ] This is also where we could auto-generate a repository color based on the repository logo (using the Azure Vision AI API)
 
 ## Other Ideas
 

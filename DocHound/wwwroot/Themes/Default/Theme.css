@@ -47,10 +47,6 @@ li {
     text-align: left;
 }
 
-/* p, ul, ol, blockquote, h1, h2, h3, h4, h5, h6 {
-    max-width: 1000px;
-} */
-
 img {
     border: 0;
 }
@@ -140,6 +136,7 @@ h1, h2, h3, h4 {
         overflow-y: hidden;
         padding-left: 8px;
         padding-right: 8px;
+        line-height: 1.5em;
     }
 
     .content-container h1 {
@@ -538,6 +535,31 @@ li.kava-auto-link {
     blockquote {
         padding: 16px 20px 8px 20px !important;
         margin: 24px 0 !important;
+    }
+
+    .content-container {
+        padding-top: 100px;
+    }
+
+    .content-container h1 {
+        font-size: 2.4em;
+        margin-top: 30px;
+        line-height: 1.5em;
+    }
+
+    .content-container h2 {
+        font-size: 1.6em;
+        line-height: 1.5em;
+    }
+
+    .content-container h3 {
+        font-size: 1.4em;
+        line-height: 1.5em;
+    }
+
+    .content-container pre code.hljs {
+        font-size: 1em !important;
+        line-height: 1.4em;
     }
 }
 
