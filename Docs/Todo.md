@@ -128,6 +128,7 @@
 * [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
 * [ ] People seem to like http://en.cppreference.com/w/
 * [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
+* [ ] Maybe something simple like the Trezor docs: https://doc.satoshilabs.com/trezor-user/
 * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
 
 ## Repository Management
