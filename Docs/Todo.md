@@ -60,6 +60,8 @@
 
 ## Overall Processing
 
+* [ ] Support a local TOC in the SQL Server configuration
+* [ ] Support a local CSS override in the SQL Server configuraiton
 * [ ] We need to make sure we generate all meta tags in the header we would like to have.
 * [ ] Would be really nice to support translations right inline in a document.
 * [ ] No hardcoding of any elements
