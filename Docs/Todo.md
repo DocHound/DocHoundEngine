@@ -128,6 +128,14 @@
 * [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
 * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
 
+## Repository Management
+
+* [ ] Should have an in-place TOC editor of some kind
+* [ ] Should have a guided approach (wizard-ish) to add new repositories
+   * [ ] Including the ability to crawl a repository without a TOC
+* [ ] Would be nice to have a local place to set color overrides (CSS overrides of all kinds, really)
+   * [ ] This is also where we could auto-generate a repository color based on the repository logo (using the Azure Vision AI API)
+
 ## Other Ideas
 
 * [ ] It would be nice if Doc Hound could serve up a few non-doc pages also, allowing people to build their entire site with Kava Docs. (Example: http://aurelia.io could be almost entirely done in Kava Docs, if we only allowed a few more other pages to be added in interesting ways).
