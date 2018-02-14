@@ -45,7 +45,7 @@
     * [ ] Would be nice to have a setting that allows specifying the max height for a code snippet. If it is taller, it could show an expand/collapse button.
 * [ ] Html
     * [ ] For HTML, we currently bring in the entire provided content (which may have it's own HTML tag and head and body section) and use it as is. Question is: Should we only use the body tag contents? But then we would not have the header, which would nuke things like style sheets. Or maybe we should get the body but move style sheets and scripts into the content? One could do cool things if scripts can be included, but it could also be a security problem...
-* [ ] Should have some way to "stack" the same code examples in different languages (like Microsoft does for C#, VB,...)
+* [ ] Should have some way to "stack" the same code examples in different languages (like Microsoft does for C#, VB,...). Not ethat Microsoft uses this not just for code. For instance, check out the different explanations for VS and VS Code here: https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?tabs=visual-studio-code
 * [x] Styling
     * [x] For mobile devices, we should use slightly larger font. Ours seems to be smaller than that found in other docs. (Note: Ended up updating all fonts to fit more what Microsoft is doing on their docs).
     * [x] Maybe text within tables should not be justified
