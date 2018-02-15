@@ -29,24 +29,34 @@
             userSettings.refreshTargets();
         },
         refreshTargets: function userData_refresh() {
+            userSettings.refreshThemeSelector('#themeColorSelector', true);
+            userSettings.refreshThemeSelector('#themeColorSelector2', true);
+            userSettings.refreshSyntaxThemeSelector('#syntaxThemeSelector', true);
+            userSettings.refreshSyntaxThemeSelector('#syntaxThemeSelector2', true);
+        },
+        refreshThemeSelector: function (id, triggerChange) {
             if (userSettings.themeColorCss.length > 0) {
-                $('#themeColorSelector option').removeAttr('selected');
-                var $selectedOption = $('#themeColorSelector option[value="'+userSettings.themeColorCss+'"]');
+                $(id + ' option').removeAttr('selected');
+                var $selectedOption = $(id + ' option[value="'+userSettings.themeColorCss+'"]');
                 if ($selectedOption.length > 0) {
                     $selectedOption.attr('selected','');
-                    setTimeout(function() {
-                        $selectedOption.trigger('change');
-                    });
+                    if (triggerChange && $(id).is(':visible')) // Only elements that are actually on screen can trigger change events, otherwise, these events will fire too often
+                        setTimeout(function() {
+                            $selectedOption.trigger('change');
+                        });
                 }
             }
+        },
+        refreshSyntaxThemeSelector: function(id, triggerChange) {
             if (userSettings.syntaxHighlightCss.length > 0) {
-                $('#syntaxThemeSelector option').removeAttr('selected');
-                var $selectedOption2 = $('#syntaxThemeSelector option[value="'+userSettings.syntaxHighlightCss+'"]');
+                $(id + ' option').removeAttr('selected');
+                var $selectedOption2 = $(id + ' option[value="'+userSettings.syntaxHighlightCss+'"]');
                 if ($selectedOption2.length > 0) {
                     $selectedOption2.attr('selected','');
-                    setTimeout(function() {
-                        $selectedOption2.trigger('change');
-                    });
+                    if (triggerChange && $(id).is(':visible')) // Only elements that are actually on screen can trigger change events, otherwise, these events will fire too often
+                        setTimeout(function() {
+                            $selectedOption2.trigger('change');
+                        });
                 }
             }
         }
@@ -161,18 +171,21 @@ highlightActiveOutlineHeading = function() {
 }
 
 showMobileMenu = function() {
-    $('body, .header, .mobile-menu, .content-container, .footer').addClass('show-mobile-menu');
-    $('.mobile-menu').css('display', 'block');
+    $('body, .header, .content-container, .footer, .toc, #tree-filter').addClass('show-mobile-menu');
+    $('.toc').addClass('mobile-styles-set');
+    $('.toc').css('display', 'block');
     setTimeout(function () {
-        $('.mobile-menu').css('z-index', 10000);
+        $('.toc').css('z-index', 10000);
     }, 300);
 }
 
 hideMobileMenu = function() {
-    $('body, .header, .mobile-menu, .content-container, .footer').removeClass('show-mobile-menu');
-    $('.mobile-menu').css('z-index', -10000);
+    $('body, .header, .content-container, .footer, #tree-filter').removeClass('show-mobile-menu');
+    $('.toc').addClass('mobile-styles-set');
+    $('.toc').css('z-index', -1);
     setTimeout(function () {
-        $('.mobile-menu').css('display', 'none');
+        $('.toc').removeClass('show-mobile-menu');
+        $('.toc').css('display', 'none');
     }, 300);
 }
 
@@ -200,28 +213,22 @@ ensureSelectedTocEntryVisible = function() {
 
 // Everything that needs to happen the first time the page loads, as well as every time a topic is loaded dynamiclly
 processTopicLoad = function() {
+    // If there is a theme-color selector, we also put it into the topic head
+    var $themeColorSelector = $('#themeColorSelector');
+    if ($themeColorSelector.length > 0) {
+        var themeColorSelectorHtml = $themeColorSelector[0].outerHTML;
+        themeColorSelectorHtml = themeColorSelectorHtml.replace('id="themeColorSelector"', 'id="themeColorSelector2"')
+        appendToSettingsContainer('<span class="option-label">Theme Colors:' + themeColorSelectorHtml + "</span>");
+    }
+
     // Hooking up various options (if they are present)
     $('#themeColorSelector').change(function () {
-        // First, we disable all color CSS links
-        var selectedValue = $('#themeColorSelector option:selected').val();
-        userSettings.themeColorCss = selectedValue;
-        userSettings.save();
-        $('#themeColorSelector option').each(function () {
-            var cssUrl = $(this).val();
-            var existingLinks = $("link[href='" + cssUrl + "']");
-            if (existingLinks.length > 0) {
-                existingLinks[0].disabled = selectedValue != cssUrl;
-            }
-        });
-
-        // Then, we either load or enable the selected one
-        $('#themeColorSelector option:selected').each(function () {
-            var cssUrl = $(this).val();
-            var existingLinks = $("link[href='" + cssUrl + "']");
-            if (existingLinks.length == 0) {
-                $('head').append('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" />');
-            }
-        });
+        if (handleThemeColorSelectorChange('#themeColorSelector'))
+            userSettings.refreshThemeSelector('#themeColorSelector2'); // We also refresh the "other" same selector
+    });
+    $('#themeColorSelector2').change(function () {
+        if (handleThemeColorSelectorChange('#themeColorSelector2'))
+            userSettings.refreshThemeSelector('#themeColorSelector'); // We also refresh the "other" same selector
     });
 
     // Creating a document outline for the local document content
@@ -273,6 +280,41 @@ processTopicLoad = function() {
     }
     highlightActiveOutlineHeading();
 };
+
+handleThemeColorSelectorChange = function(id) {
+    // First, we disable all color CSS links
+    var selectedValue = $(id + ' option:selected').val();
+
+    // Before we do anything, we make sure we are not already on the right CSS file
+    var alreadySelectedValue = $(id + ' option:selected').val();
+    var alreadyLoadedLinks = $("link[href='" + alreadySelectedValue + "']");
+    if (alreadyLoadedLinks.length > 0) {
+        if (!alreadyLoadedLinks[0].disabled)
+            return false; // The right style sheet is already loaded
+    }
+
+    userSettings.themeColorCss = selectedValue;
+    userSettings.save();
+
+    $(id + ' option').each(function () {
+        var cssUrl = $(this).val();
+        var existingLinks = $("link[href='" + cssUrl + "']");
+        if (existingLinks.length > 0) {
+            existingLinks[0].disabled = selectedValue != cssUrl;
+        }
+    });
+
+    // Then, we either load or enable the selected one
+    $(id + ' option:selected').each(function () {
+        var cssUrl = $(this).val();
+        var existingLinks = $("link[href='" + cssUrl + "']");
+        if (existingLinks.length == 0) {
+            $('head').append('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" />');
+        }
+    });
+
+    return true;
+}
 
 // This method wires up the click event of anchor tags within the given context to prevent navitation and instead load topics inline if possible.
 interceptNavigation = function() {
@@ -586,15 +628,73 @@ debounce = function (func, wait, immediate) {
     };
 };
 
-
-
-// Handles page resize and sets the min height of the main content container, which prevents visual glitches in the mobile version when the mobile menu is open.
 handleWindowResize = function() {
+    //Sets the min height of the main content container, which prevents visual glitches in the mobile version when the mobile menu is open.
     var paddingTop = $('.content-container').css('padding-top').replace('px','');
     var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
     $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
 
+    // Highlighting the current heading in the outline
     highlightActiveOutlineHeading();
 
+    // The mobile menu should never be open while resizing, since it can cause all kinds of weird behavior
     if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
+
+    var $mobileStylesSet = $('.toc.mobile-styles-set');
+    if ($mobileStylesSet.length > 0) {
+        $mobileStylesSet.css('display', '').css('z-index', '');
+        $mobileStylesSet.removeClass('mobile-styles-set');
+    }
+
+}
+
+// Returns (or creates) the container element that's right below the first heading which can contain information such as reading time, contributors, or other features of the content
+getFeaturesContainer = function() {
+    var existingFeaturesElement = $('article.content-container .features-container');
+    if (existingFeaturesElement.length < 1) {
+        var immediateContentElements = $('article.content-container>*');
+        if (immediateContentElements.length > 0) {
+            var firstElement = immediateContentElements[0];
+            if ($(firstElement).hasClass('settings-container') && immediateContentElements.length > 1)
+                firstElement = immediateContentElements[1];
+            if (firstElement.nodeName == 'H1' || firstElement.nodeName == 'H2' || firstElement.nodeName == 'H3') {
+                // The doc starts with a heading, so we inserts right after the heading
+                $('<div class="features-container"></div>').insertAfter(firstElement);
+            } else {
+                // THe doc starts with some regular content, so we add the features before that
+                $('<div class="features-container"></div>').insertBefore(firstElement);
+            }
+        }
+    }
+
+    return $('article.content-container .features-container');
+}
+
+// Appends to the container element that's right below the first heading which can contain information such as reading time, contributors, or other features of the content
+appendToFeaturesContainer = function(html) {
+    if (!html) return;
+    var $existingFeaturesElement = getFeaturesContainer();
+    if ($existingFeaturesElement.length > 0)
+        $existingFeaturesElement.append(html);
+}
+
+// Returns (or creates) the container element that's right above the first element, which can include various settings, such as themes
+getSettingsContainer = function() {
+    var existingSettingsElement = $('article.content-container .settings-container');
+    if (existingSettingsElement.length < 1) {
+        var immediateContentElements = $('article.content-container>*');
+        if (immediateContentElements.length > 0) {
+            $('<div class="settings-container"></div>').insertBefore(immediateContentElements[0]);
+        }
+    }
+
+    return $('article.content-container .settings-container');
+}
+
+// Appends to the container element that's right above the first element, which can include various settings, such as themes
+appendToSettingsContainer = function(html) {
+    if (!html) return;
+    var $existingSettingsElement = getSettingsContainer();
+    if ($existingSettingsElement.length > 0)
+        $existingSettingsElement.append(html);
 }
