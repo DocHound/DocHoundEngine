@@ -21,6 +21,7 @@
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
 * [ ] Empty Topics should render the list of child topics more pleasingly
+   * [ ] Also, these topics do not seem to send along the CSS override from the TOC properly
 * [ ] The [kava] placeholder should allow setting start and end delimiters and tags (handling HTML tags smartly, so it can find open and close tags and such).
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
@@ -60,7 +61,6 @@
 
 ## Overall Processing
 
-* [ ] Support a local CSS override in the SQL Server configuraiton
 * [ ] We need to make sure we generate all meta tags in the header we would like to have.
 * [ ] Would be really nice to support translations right inline in a document.
 * [ ] No hardcoding of any elements
@@ -92,6 +92,7 @@
    * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
+* [x] Support a local CSS override in the SQL Server configuraiton
 * [x] It would be nice to be able to get away with just once instance of the tree in the document
 * [x] Allow overriding of CSS styles on individual topics
 * [x] Support a local TOC in the SQL Server configuration
