@@ -73,5 +73,15 @@
     </footer>
 
     @RenderSection("Scripts", false)
+
+    @{
+        var localCssOverride = await Model.GetLocalCssOverride();
+        if (!string.IsNullOrEmpty(localCssOverride))
+        {
+            <style>
+                @Html.Raw(localCssOverride)
+            </style>
+        }
+    }
 </body>
 </html>
