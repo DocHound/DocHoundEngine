@@ -21,6 +21,7 @@
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
 * [ ] Empty Topics should render the list of child topics more pleasingly
+   * [ ] Also, these topics do not seem to send along the CSS override from the TOC properly
 * [ ] The [kava] placeholder should allow setting start and end delimiters and tags (handling HTML tags smartly, so it can find open and close tags and such).
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
