@@ -116,6 +116,7 @@ h1, h2, h3, h4 {
     margin-top: 30px;
     display: none;
     text-align: left;
+    font-size: .9em;
 }
 
     .settings-container .option-label {
@@ -550,7 +551,7 @@ li.kava-auto-link {
     }
 
     .content-container {
-        padding-top: 100px;
+        padding-top: 75px;
     }
 
     .content-container h1 {

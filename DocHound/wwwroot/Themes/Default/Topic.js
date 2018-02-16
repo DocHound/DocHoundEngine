@@ -6,6 +6,108 @@
         };
     });
 
+    // This object handles everything related to switching themes, theme colors, and syntax highlight themes
+    themeHandler = {
+        setSelectedThemeForElement: function(id) {
+            if (!id) id = '#themeColorSelector';
+
+            // First, we disable all color CSS links
+            var selectedCssUrl = $(id + ' option:selected').val();
+            var allAvailableUrls = themeHandler.getAllCssUrls(id);
+
+            // We save the theme setting away in the user settings in local storage
+            if (userSettings.themeColorCss != selectedCssUrl) {
+                userSettings.themeColorCss = selectedCssUrl;
+                userSettings.save();
+            }
+            
+            // Before we do anything, we make sure we are not already on the right CSS file
+            var currentlyActiveCssUrl = themeHandler.getActiveCssUrl(allAvailableUrls);
+            if (selectedCssUrl == currentlyActiveCssUrl) return false; // We are already on that theme, so we do not need to change anything
+
+            // We trigger an update to get the appropriate URL set
+            themeHandler.setActiveLinkUrl(selectedCssUrl, allAvailableUrls);
+        },
+
+        getAllCssUrls: function(id) {
+            var allCssUrls = [];
+            $(id + ' option').each(function() {
+                allCssUrls.push($(this).val());
+            });
+            return allCssUrls;
+        },
+                
+        setActiveLinkUrl: function(cssUrl, allCssUrls) {
+            // We look for all currently existing links and see if they should be enabled or disabled
+            for (var counter = 0; counter<allCssUrls.length; counter++) {
+                var existingUrl = allCssUrls[counter];
+                var existingLinks = $("link[href='" + existingUrl + "']");
+                if (existingLinks.length > 0)
+                    existingLinks[0].disabled = existingUrl != cssUrl;
+            }
+
+            // Then, we check whether the style sheet is already loaded (it may not have been part of the loop above the first time around) and if not, we load it in
+            var existingLinks = $("link[href='" + cssUrl + "']");
+            if (existingLinks.length == 0)
+                $('head').append('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" />');
+        },
+
+        getActiveCssUrl: function(allCssUrls) {
+            for (var counter = 0; counter<allCssUrls.length; counter++) {
+                var existingUrl = allCssUrls[counter];
+                var existingLinks = $("link[href='" + existingUrl + "']");
+                if (existingLinks.length > 0)
+                    if (!existingLinks[0].disabled)
+                        return existingUrl;
+            }
+            return '';
+        },
+
+        refreshThemeSelector: function (id) { // Makes sure the right option is selected in the drop-down
+            if (!id) id = '#themeColorSelector';
+            if (userSettings.themeColorCss.length > 0) {
+                $(id + ' option').removeAttr('selected');
+                var $selectedOption = $(id + ' option[value="'+userSettings.themeColorCss+'"]');
+                if ($selectedOption.length > 0)
+                    $selectedOption.attr('selected','');
+            }
+        },
+
+        setSelectedSyntaxThemeForElement: function(id) {
+            if (!id) id = '#syntaxThemeSelectorContainer';
+
+            // First, we disable all color CSS links
+            var selectedCssUrl = $(id + ' option:selected').val();
+            var allAvailableUrls = themeHandler.getAllCssUrls(id); // We can reuse the same method here that we call for the general page theme URLs
+
+            // We save the theme setting away in the user settings in local storage
+            if (userSettings.syntaxHighlightCss != selectedCssUrl) {
+                userSettings.syntaxHighlightCss = selectedCssUrl;
+                userSettings.save();
+            }
+
+            // Before we do anything, we make sure we are not already on the right CSS file
+            var currentlyActiveCssUrl = themeHandler.getActiveCssUrl(allAvailableUrls);
+            if (selectedCssUrl == currentlyActiveCssUrl) return false; // We are already on that theme, so we do not need to change anything
+
+            // We trigger an update to get the appropriate URL set
+            themeHandler.setActiveLinkUrl(selectedCssUrl, allAvailableUrls);
+            return true;
+        },
+
+        refreshSyntaxThemeSelector: function (id) { // Makes sure the right option is selected in the drop-down
+            if (!id) id = '#themeColorSelector';
+            if (userSettings.syntaxHighlightCss.length > 0) {
+                $(id + ' option').removeAttr('selected');
+                var $selectedOption = $(id + ' option[value="'+userSettings.syntaxHighlightCss+'"]');
+                if ($selectedOption.length > 0)
+                    $selectedOption.attr('selected','');
+            }
+        },
+
+    }
+
+
     // Saving some configuration in local storage
     userSettings = {
         themeColorCss: '',
@@ -29,36 +131,14 @@
             userSettings.refreshTargets();
         },
         refreshTargets: function userData_refresh() {
-            userSettings.refreshThemeSelector('#themeColorSelector', true);
-            userSettings.refreshThemeSelector('#themeColorSelector2', true);
-            userSettings.refreshSyntaxThemeSelector('#syntaxThemeSelector', true);
-            userSettings.refreshSyntaxThemeSelector('#syntaxThemeSelector2', true);
-        },
-        refreshThemeSelector: function (id, triggerChange) {
-            if (userSettings.themeColorCss.length > 0) {
-                $(id + ' option').removeAttr('selected');
-                var $selectedOption = $(id + ' option[value="'+userSettings.themeColorCss+'"]');
-                if ($selectedOption.length > 0) {
-                    $selectedOption.attr('selected','');
-                    if (triggerChange && $(id).is(':visible')) // Only elements that are actually on screen can trigger change events, otherwise, these events will fire too often
-                        handleThemeColorSelectorChange(id);
-                        // setTimeout(function() {
-                        //     $selectedOption.trigger('change');
-                        // });
-                }
-            }
-        },
-        refreshSyntaxThemeSelector: function(id, triggerChange) {
-            if (userSettings.syntaxHighlightCss.length > 0) {
-                $(id + ' option').removeAttr('selected');
-                var $selectedOption2 = $(id + ' option[value="'+userSettings.syntaxHighlightCss+'"]');
-                if ($selectedOption2.length > 0) {
-                    $selectedOption2.attr('selected','');
-                    if (triggerChange && $(id).is(':visible')) // Only elements that are actually on screen can trigger change events, otherwise, these events will fire too often
-                        setTimeout(function() {
-                            $selectedOption2.trigger('change');
-                        });
-                }
+            if (themeHandler) {
+                themeHandler.refreshThemeSelector('#themeColorSelector');
+                themeHandler.refreshThemeSelector('#themeColorSelector2');
+                themeHandler.setSelectedThemeForElement('#themeColorSelector');
+
+                themeHandler.refreshSyntaxThemeSelector('#syntaxThemeSelector');
+                themeHandler.refreshSyntaxThemeSelector('#syntaxThemeSelector2');
+                themeHandler.setSelectedSyntaxThemeForElement('#syntaxThemeSelector');
             }
         }
     };
@@ -219,17 +299,21 @@ processTopicLoad = function() {
     if ($themeColorSelector.length > 0) {
         var themeColorSelectorHtml = $themeColorSelector[0].outerHTML;
         themeColorSelectorHtml = themeColorSelectorHtml.replace('id="themeColorSelector"', 'id="themeColorSelector2"')
-        appendToSettingsContainer('<span class="option-label">Theme Colors:' + themeColorSelectorHtml + "</span>");
+        appendToSettingsContainer('<span class="option-label">Theme:' + themeColorSelectorHtml + "</span>");
     }
 
     // Hooking up various options (if they are present)
     $('#themeColorSelector').change(function () {
-        if (handleThemeColorSelectorChange('#themeColorSelector'))
-            userSettings.refreshThemeSelector('#themeColorSelector2'); // We also refresh the "other" same selector
+        if (themeHandler) {
+            themeHandler.setSelectedThemeForElement('#themeColorSelector');
+            themeHandler.refreshThemeSelector('#themeColorSelector2'); // Making sure the second selector is in sync with this one
+        }
     });
     $('#themeColorSelector2').change(function () {
-        if (handleThemeColorSelectorChange('#themeColorSelector2'))
-            userSettings.refreshThemeSelector('#themeColorSelector'); // We also refresh the "other" same selector
+        if (themeHandler) {
+            themeHandler.setSelectedThemeForElement('#themeColorSelector2');
+            themeHandler.refreshThemeSelector('#themeColorSelector'); // Making sure the second selector is in sync with this one
+        }
     });
 
     // Creating a document outline for the local document content
@@ -281,41 +365,6 @@ processTopicLoad = function() {
     }
     highlightActiveOutlineHeading();
 };
-
-handleThemeColorSelectorChange = function(id) {
-    // First, we disable all color CSS links
-    var selectedValue = $(id + ' option:selected').val();
-
-    // Before we do anything, we make sure we are not already on the right CSS file
-    var alreadySelectedValue = $(id + ' option:selected').val();
-    var alreadyLoadedLinks = $("link[href='" + alreadySelectedValue + "']");
-    if (alreadyLoadedLinks.length > 0) {
-        if (!alreadyLoadedLinks[0].disabled)
-            return false; // The right style sheet is already loaded
-    }
-
-    userSettings.themeColorCss = selectedValue;
-    userSettings.save();
-
-    $(id + ' option').each(function () {
-        var cssUrl = $(this).val();
-        var existingLinks = $("link[href='" + cssUrl + "']");
-        if (existingLinks.length > 0) {
-            existingLinks[0].disabled = selectedValue != cssUrl;
-        }
-    });
-
-    // Then, we either load or enable the selected one
-    $(id + ' option:selected').each(function () {
-        var cssUrl = $(this).val();
-        var existingLinks = $("link[href='" + cssUrl + "']");
-        if (existingLinks.length == 0) {
-            $('head').append('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" />');
-        }
-    });
-
-    return true;
-}
 
 // This method wires up the click event of anchor tags within the given context to prevent navitation and instead load topics inline if possible.
 interceptNavigation = function() {
