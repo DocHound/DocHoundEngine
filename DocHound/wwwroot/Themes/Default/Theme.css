@@ -116,7 +116,6 @@ h1, h2, h3, h4 {
     margin-top: 30px;
     display: none;
     text-align: left;
-    font-size: .9em;
 }
 
     .settings-container .option-label {
@@ -573,6 +572,10 @@ li.kava-auto-link {
     .content-container pre code.hljs {
         font-size: 1em !important;
         line-height: 1.4em;
+    }
+
+    .settings-container {
+        font-size: .9em;
     }
 }
 
