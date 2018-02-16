@@ -536,7 +536,7 @@ loadTopicAjax = function (href, noPushState) {
             }
 
             // We remove all the links that were custom-injected and may now not be needed anymore
-            $('link[kava-custom="true"').remove();
+            $('link[kava-custom="true"]').remove();
 
             // We look at all the links. If they are not yet loaded, we load them now. If they are already there, we are good to go and do not need to load them again.
             $links.each(function() {
