@@ -41,9 +41,10 @@
                 if ($selectedOption.length > 0) {
                     $selectedOption.attr('selected','');
                     if (triggerChange && $(id).is(':visible')) // Only elements that are actually on screen can trigger change events, otherwise, these events will fire too often
-                        setTimeout(function() {
-                            $selectedOption.trigger('change');
-                        });
+                        handleThemeColorSelectorChange(id);
+                        // setTimeout(function() {
+                        //     $selectedOption.trigger('change');
+                        // });
                 }
             }
         },
