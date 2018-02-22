@@ -3,7 +3,7 @@
 ## Must-Haves for Minimum Viable Product
 
 * [ ] Landing Page Web Site (www.kavadocs.com) 
-* [ ] Accounts and Log-Ins
+* [x] Accounts and Log-Ins
 * [ ] We really need a good way to edit the TOC file
 * [ ] A few more supported sources
     * [ ] DOCX
