@@ -6,6 +6,108 @@
         };
     });
 
+    // This object handles everything related to switching themes, theme colors, and syntax highlight themes
+    themeHandler = {
+        setSelectedThemeForElement: function(id) {
+            if (!id) id = '#themeColorSelector';
+
+            // First, we disable all color CSS links
+            var selectedCssUrl = $(id + ' option:selected').val();
+            var allAvailableUrls = themeHandler.getAllCssUrls(id);
+
+            // We save the theme setting away in the user settings in local storage
+            if (userSettings.themeColorCss != selectedCssUrl) {
+                userSettings.themeColorCss = selectedCssUrl;
+                userSettings.save();
+            }
+            
+            // Before we do anything, we make sure we are not already on the right CSS file
+            var currentlyActiveCssUrl = themeHandler.getActiveCssUrl(allAvailableUrls);
+            if (selectedCssUrl == currentlyActiveCssUrl) return false; // We are already on that theme, so we do not need to change anything
+
+            // We trigger an update to get the appropriate URL set
+            themeHandler.setActiveLinkUrl(selectedCssUrl, allAvailableUrls);
+        },
+
+        getAllCssUrls: function(id) {
+            var allCssUrls = [];
+            $(id + ' option').each(function() {
+                allCssUrls.push($(this).val());
+            });
+            return allCssUrls;
+        },
+                
+        setActiveLinkUrl: function(cssUrl, allCssUrls) {
+            // We look for all currently existing links and see if they should be enabled or disabled
+            for (var counter = 0; counter<allCssUrls.length; counter++) {
+                var existingUrl = allCssUrls[counter];
+                var existingLinks = $("link[href='" + existingUrl + "']");
+                if (existingLinks.length > 0)
+                    existingLinks[0].disabled = existingUrl != cssUrl;
+            }
+
+            // Then, we check whether the style sheet is already loaded (it may not have been part of the loop above the first time around) and if not, we load it in
+            var existingLinks = $("link[href='" + cssUrl + "']");
+            if (existingLinks.length == 0)
+                $('head').append('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" />');
+        },
+
+        getActiveCssUrl: function(allCssUrls) {
+            for (var counter = 0; counter<allCssUrls.length; counter++) {
+                var existingUrl = allCssUrls[counter];
+                var existingLinks = $("link[href='" + existingUrl + "']");
+                if (existingLinks.length > 0)
+                    if (!existingLinks[0].disabled)
+                        return existingUrl;
+            }
+            return '';
+        },
+
+        refreshThemeSelector: function (id) { // Makes sure the right option is selected in the drop-down
+            if (!id) id = '#themeColorSelector';
+            if (userSettings.themeColorCss.length > 0) {
+                $(id + ' option').removeAttr('selected');
+                var $selectedOption = $(id + ' option[value="'+userSettings.themeColorCss+'"]');
+                if ($selectedOption.length > 0)
+                    $selectedOption.attr('selected','');
+            }
+        },
+
+        setSelectedSyntaxThemeForElement: function(id) {
+            if (!id) id = '#syntaxThemeSelectorContainer';
+
+            // First, we disable all color CSS links
+            var selectedCssUrl = $(id + ' option:selected').val();
+            var allAvailableUrls = themeHandler.getAllCssUrls(id); // We can reuse the same method here that we call for the general page theme URLs
+
+            // We save the theme setting away in the user settings in local storage
+            if (userSettings.syntaxHighlightCss != selectedCssUrl) {
+                userSettings.syntaxHighlightCss = selectedCssUrl;
+                userSettings.save();
+            }
+
+            // Before we do anything, we make sure we are not already on the right CSS file
+            var currentlyActiveCssUrl = themeHandler.getActiveCssUrl(allAvailableUrls);
+            if (selectedCssUrl == currentlyActiveCssUrl) return false; // We are already on that theme, so we do not need to change anything
+
+            // We trigger an update to get the appropriate URL set
+            themeHandler.setActiveLinkUrl(selectedCssUrl, allAvailableUrls);
+            return true;
+        },
+
+        refreshSyntaxThemeSelector: function (id) { // Makes sure the right option is selected in the drop-down
+            if (!id) id = '#themeColorSelector';
+            if (userSettings.syntaxHighlightCss.length > 0) {
+                $(id + ' option').removeAttr('selected');
+                var $selectedOption = $(id + ' option[value="'+userSettings.syntaxHighlightCss+'"]');
+                if ($selectedOption.length > 0)
+                    $selectedOption.attr('selected','');
+            }
+        },
+
+    }
+
+
     // Saving some configuration in local storage
     userSettings = {
         themeColorCss: '',
@@ -29,25 +131,14 @@
             userSettings.refreshTargets();
         },
         refreshTargets: function userData_refresh() {
-            if (userSettings.themeColorCss.length > 0) {
-                $('#themeColorSelector option').removeAttr('selected');
-                var $selectedOption = $('#themeColorSelector option[value="'+userSettings.themeColorCss+'"]');
-                if ($selectedOption.length > 0) {
-                    $selectedOption.attr('selected','');
-                    setTimeout(function() {
-                        $selectedOption.trigger('change');
-                    });
-                }
-            }
-            if (userSettings.syntaxHighlightCss.length > 0) {
-                $('#syntaxThemeSelector option').removeAttr('selected');
-                var $selectedOption2 = $('#syntaxThemeSelector option[value="'+userSettings.syntaxHighlightCss+'"]');
-                if ($selectedOption2.length > 0) {
-                    $selectedOption2.attr('selected','');
-                    setTimeout(function() {
-                        $selectedOption2.trigger('change');
-                    });
-                }
+            if (themeHandler) {
+                themeHandler.refreshThemeSelector('#themeColorSelector');
+                themeHandler.refreshThemeSelector('#themeColorSelector2');
+                themeHandler.setSelectedThemeForElement('#themeColorSelector');
+
+                themeHandler.refreshSyntaxThemeSelector('#syntaxThemeSelector');
+                themeHandler.refreshSyntaxThemeSelector('#syntaxThemeSelector2');
+                themeHandler.setSelectedSyntaxThemeForElement('#syntaxThemeSelector');
             }
         }
     };
@@ -65,6 +156,12 @@
     // Running everything that needs to be done when a new topic loads
     processTopicLoad();
 
+    // Making sure the mobile menu doesn't stay open when people tap on the main topic
+    $(document).on('click', '.content-container', function() {
+        // Regardless of anything else, we can now close the mobile menu
+        if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
+    });
+    
     // Add click behavior to tree "arrows"
     $(document.body).on('click', '.caret', function () {
         var parent = $(this).parent();
@@ -92,25 +189,14 @@
             $('.topic-list li').show();
         } else {
             $('.topic-list li').hide();
-            var matches = $('.topic-list li:contains("' + filter + '")');
-            matches.parent().removeClass('topic-collapsed');
-            matches.addClass('topic-expanded');
-            matches.parent().addClass('topic-expanded');
-            matches.show();
-        }
-    });
-    $('#tree-filter-mobile').keyup(function() {
-        var filter = $('#tree-filter-mobile').val();
-
-        if (filter == '') {
-            $('.topic-list li').show();
-        } else {
-            $('.topic-list li').hide();
-            var matches = $('.topic-list li:contains("' + filter + '")');
-            matches.parent().removeClass('topic-collapsed');
-            matches.addClass('topic-expanded');
-            matches.parent().addClass('topic-expanded');
-            matches.show();
+            var $matches = $('.topic-list li:contains("' + filter + '")');
+            var $caretMatches = $('.caret', $matches);
+            $matches.parent().removeClass('topic-collapsed');
+            $caretMatches.removeClass('caret-collapsed');
+            $matches.addClass('topic-expanded');
+            $matches.parent().addClass('topic-expanded');
+            $caretMatches.addClass('caret-expanded');
+            $matches.show();
         }
     });
 
@@ -161,18 +247,21 @@ highlightActiveOutlineHeading = function() {
 }
 
 showMobileMenu = function() {
-    $('body, .header, .mobile-menu, .content-container, .footer').addClass('show-mobile-menu');
-    $('.mobile-menu').css('display', 'block');
+    $('body, .header, .content-container, .footer, .toc, #tree-filter').addClass('show-mobile-menu');
+    $('.toc').addClass('mobile-styles-set');
+    $('.toc').css('display', 'block');
     setTimeout(function () {
-        $('.mobile-menu').css('z-index', 10000);
+        $('.toc').css('z-index', 10000);
     }, 300);
 }
 
 hideMobileMenu = function() {
-    $('body, .header, .mobile-menu, .content-container, .footer').removeClass('show-mobile-menu');
-    $('.mobile-menu').css('z-index', -10000);
+    $('body, .header, .content-container, .footer, #tree-filter').removeClass('show-mobile-menu');
+    $('.toc').addClass('mobile-styles-set');
+    $('.toc').css('z-index', -1);
     setTimeout(function () {
-        $('.mobile-menu').css('display', 'none');
+        $('.toc').removeClass('show-mobile-menu');
+        $('.toc').css('display', 'none');
     }, 300);
 }
 
@@ -200,28 +289,27 @@ ensureSelectedTocEntryVisible = function() {
 
 // Everything that needs to happen the first time the page loads, as well as every time a topic is loaded dynamiclly
 processTopicLoad = function() {
+    // If there is a theme-color selector, we also put it into the topic head
+    var $themeColorSelector = $('#themeColorSelector');
+    if ($themeColorSelector.length > 0) {
+        var themeColorSelectorHtml = $themeColorSelector[0].outerHTML;
+        themeColorSelectorHtml = themeColorSelectorHtml.replace('id="themeColorSelector"', 'id="themeColorSelector2"')
+        removeFromSettingsContainer('.theme-color-selector-setting');
+        appendToSettingsContainer('<div class="option-label theme-color-selector-setting"><div>Theme:</div>' + themeColorSelectorHtml + '</div>', '.syntax-theme-selector-setting', true);
+    }
+
     // Hooking up various options (if they are present)
     $('#themeColorSelector').change(function () {
-        // First, we disable all color CSS links
-        var selectedValue = $('#themeColorSelector option:selected').val();
-        userSettings.themeColorCss = selectedValue;
-        userSettings.save();
-        $('#themeColorSelector option').each(function () {
-            var cssUrl = $(this).val();
-            var existingLinks = $("link[href='" + cssUrl + "']");
-            if (existingLinks.length > 0) {
-                existingLinks[0].disabled = selectedValue != cssUrl;
-            }
-        });
-
-        // Then, we either load or enable the selected one
-        $('#themeColorSelector option:selected').each(function () {
-            var cssUrl = $(this).val();
-            var existingLinks = $("link[href='" + cssUrl + "']");
-            if (existingLinks.length == 0) {
-                $('head').append('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" />');
-            }
-        });
+        if (themeHandler) {
+            themeHandler.setSelectedThemeForElement('#themeColorSelector');
+            themeHandler.refreshThemeSelector('#themeColorSelector2'); // Making sure the second selector is in sync with this one
+        }
+    });
+    $('#themeColorSelector2').change(function () {
+        if (themeHandler) {
+            themeHandler.setSelectedThemeForElement('#themeColorSelector2');
+            themeHandler.refreshThemeSelector('#themeColorSelector'); // Making sure the second selector is in sync with this one
+        }
     });
 
     // Creating a document outline for the local document content
@@ -494,7 +582,7 @@ loadTopicAjax = function (href, noPushState) {
             }
 
             // We remove all the links that were custom-injected and may now not be needed anymore
-            $('link[kava-custom="true"').remove();
+            $('link[kava-custom="true"]').remove();
 
             // We look at all the links. If they are not yet loaded, we load them now. If they are already there, we are good to go and do not need to load them again.
             $links.each(function() {
@@ -586,15 +674,92 @@ debounce = function (func, wait, immediate) {
     };
 };
 
-
-
-// Handles page resize and sets the min height of the main content container, which prevents visual glitches in the mobile version when the mobile menu is open.
 handleWindowResize = function() {
+    //Sets the min height of the main content container, which prevents visual glitches in the mobile version when the mobile menu is open.
     var paddingTop = $('.content-container').css('padding-top').replace('px','');
     var paddingBottom = $('.content-container').css('padding-bottom').replace('px','');
     $('.content-container').css('min-height', ($(window).height() - paddingTop - paddingBottom) + 'px');
 
+    // Highlighting the current heading in the outline
     highlightActiveOutlineHeading();
 
+    // The mobile menu should never be open while resizing, since it can cause all kinds of weird behavior
     if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
+
+    if ($(window).width() > 1024) 
+        setTimeout(function() {
+            $('.toc').css('display', '').css('z-index', '');
+        }, 500);
+
+    var $mobileStylesSet = $('.toc.mobile-styles-set');
+    if ($mobileStylesSet.length > 0) {
+        $mobileStylesSet.css('display', '').css('z-index', '');
+        $mobileStylesSet.removeClass('mobile-styles-set');
+    }
+}
+
+// Returns (or creates) the container element that's right below the first heading which can contain information such as reading time, contributors, or other features of the content
+getFeaturesContainer = function() {
+    var existingFeaturesElement = $('article.content-container .features-container');
+    if (existingFeaturesElement.length < 1) {
+        var immediateContentElements = $('article.content-container>*');
+        if (immediateContentElements.length > 0) {
+            var firstElement = immediateContentElements[0];
+            if ($(firstElement).hasClass('settings-container') && immediateContentElements.length > 1)
+                firstElement = immediateContentElements[1];
+            if (firstElement.nodeName == 'H1' || firstElement.nodeName == 'H2' || firstElement.nodeName == 'H3') {
+                // The doc starts with a heading, so we inserts right after the heading
+                $('<div class="features-container"></div>').insertAfter(firstElement);
+            } else {
+                // THe doc starts with some regular content, so we add the features before that
+                $('<div class="features-container"></div>').insertBefore(firstElement);
+            }
+        }
+    }
+
+    return $('article.content-container .features-container');
+}
+
+// Appends to the container element that's right below the first heading which can contain information such as reading time, contributors, or other features of the content
+appendToFeaturesContainer = function(html) {
+    if (!html) return;
+    var $existingFeaturesElement = getFeaturesContainer();
+    if ($existingFeaturesElement.length > 0)
+        $existingFeaturesElement.append(html);
+}
+
+// Returns (or creates) the container element that's right above the first element, which can include various settings, such as themes
+getSettingsContainer = function() {
+    var existingSettingsElement = $('.toc .settings-container');
+    if (existingSettingsElement.length < 1) {
+        var immediateContentElements = $('.toc input');
+        if (immediateContentElements.length > 0) {
+            $('<div class="settings-container"></div>').insertBefore(immediateContentElements[0]);
+        }
+    }
+
+    return $('.toc .settings-container');
+}
+
+// Appends to the container element that's right above the first element, which can include various settings, such as themes
+appendToSettingsContainer = function(html, appendSelector, insertBefore) {
+    if (!html) return;
+    var $existingSettingsElement = getSettingsContainer();
+    if ($existingSettingsElement.length > 0) {
+        if (appendSelector) {
+            $referenceElement = $(appendSelector, $existingSettingsElement);
+            if ($referenceElement.length > 0) {
+                if (!insertBefore)
+                    $(html).insertAfter($referenceElement);
+                else
+                    $(html).insertBefore($referenceElement);
+                return;
+            }
+        }
+        $existingSettingsElement.append(html);
+    }
+}
+
+removeFromSettingsContainer = function(selector) {
+    $(selector, getSettingsContainer()).remove();
 }

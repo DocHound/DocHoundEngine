@@ -3,11 +3,7 @@
     outline: 1px solid #333;
 }
 
-a:link {
-    color: #034af3;
-}
-
-a:visited {
+a:link, a:visited {
     color: #034af3;
 }
 
@@ -23,7 +19,6 @@ body {
     background-color: white;
     color: Black;
 }
-
 
 p code {
     background-color: #f9f9f9;
@@ -58,11 +53,7 @@ blockquote {
     box-shadow: 1px 0 20px rgba(0, 0, 0, .2);
 }
 
-.content-container h1 {
-    color: #1e88e5;
-}
-
-.content-container h2 {
+.content-container h1, .content-container h2 {
     color: #1e88e5;
 }
 
@@ -83,45 +74,39 @@ blockquote {
     color: white;
 }
         
-.mobile-menu {
+.toc.show-mobile-menu {
     color: white;
     background-color: rgb(39, 39, 39);
 }
 
 .mobile-menu-items {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgb(203, 203, 203);
 }
 
-.mobile-menu ul li a, .mobile-menu ul li a:visited, .mobile-menu ul li a:hover {
+.settings-container {
+    border-bottom: 1px solid rgb(203, 203, 203);
+}
+
+.mobile-menu-items ul li a, .mobile-menu-items ul li a:visited, .mobile-menu-items ul li a:hover {
     color: white;
 }
-    
-.mobile-menu ul li.neutral-menu-selected {
+
+.toc.show-mobile-menu ul li.neutral-menu-selected {
     border-left: 4px solid rgb(8, 57, 129);
     background-color: #03142e;
     background-color: rgba(8, 57, 129, 0.2);
 }
     
-.mobile-menu ul li.neutral-menu:hover {
+.toc.show-mobile-menu ul li.neutral-menu:hover {
     border-left: 4px solid rgb(8, 57, 129);
 }
-
 
 .footer {
     background-color: rgba(0, 0, 0, 0.9);
     color: rgb(201, 201, 201);
 }
 
-    .footer a {
-        color: rgb(201, 201, 201);
-    }
-    .footer a:link {
-        color: rgb(201, 201, 201);
-    }
-    .footer a:visited {
-        color: rgb(201, 201, 201);
-    }
-    .footer a:hover {
+    .footer a, .footer a:link, .footer a:visited, .footer a:hover {
         color: rgb(201, 201, 201);
     }
 
@@ -129,17 +114,13 @@ li.kava-auto-link {
     background-color: rgba(25,118,210,.05);
     border-left: 8px solid #1e88e5;
 }
-li.kava-auto-link a:link {
-    color: black;
-}
-li.kava-auto-link a:visited {
+li.kava-auto-link a:link, li.kava-auto-link a:visited {
     color: black;
 }
 
 .kava-recursive-topic {
     color: red;
 }
-
 
 .sidebar li {
     border-left: 1px solid #dddddd;
@@ -150,11 +131,7 @@ li.kava-auto-link a:visited {
     color: #1e88e5;
 }
 
-.sidebar li a:link {
-    color: black;
-}
-
-.sidebar li a:visited {
+.sidebar li a:link, .sidebar li a:visited {
     color: black;
 }
 
@@ -168,6 +145,11 @@ li.kava-auto-link a:visited {
     border: 1px solid #888;
 }
 
+.settings-container select {
+    background-color: #1a1a1a;
+    color: rgb(203, 203, 203);
+    border: 1px solid #2e2e2e;
+}
 
 @media only screen and (max-width: 1024px) {
     .content-container {
@@ -175,12 +157,7 @@ li.kava-auto-link a:visited {
     }
 }
 
-
-.topic-link a:link {
-    color: black;
-}
-
-.topic-link a:visited {
+.topic-link a:link, .topic-link a:visited {
     color: black;
 }
 
@@ -188,105 +165,67 @@ li.kava-auto-link a:visited {
     color: rgb(8, 57, 129);
 }
 
-.mobile-menu .topic-link a:link {
+.toc.show-mobile-menu .topic-link a:link, .toc.show-mobile-menu .topic-link a:visited, .toc.show-mobile-menu .topic-link a:hover {
     color: white;
 }
 
-.mobile-menu .topic-link a:visited {
-    color: white;
-}
-
-.mobile-menu .topic-link a:hover {
-    color: white;
-}
-
-.selected-topic>a {
+.selected-topic>a, .selected-topic>a:visited, .selected-topic>a:link {
     color: #1e88e5;
 }
-    .selected-topic>a:visited {
-        color: #1e88e5;
-    }
-    .selected-topic>a:link {
-        color: #1e88e5;
-    }
 
-a.area-link {
+a.area-link, a.area-link:visited {
     color: rgb(8, 57, 129);
 }
-
-    a.area-link:visited {
-        color: rgb(8, 57, 129);
-    }
 
 figure {
     color: rgb(8, 57, 129);
 }
 
-.navigate-previous {
+.navigate-previous, .navigate-next {
     background-color: #edf0f2;
     border-color: rgb(217, 220, 220);
     border-style: solid;
     border-width: 1px 1px 3px 1px;
 }
 
-    .navigate-previous a:link {
+    .navigate-previous a:link, .navigate-previous a:visited, .navigate-next a:link, .navigate-next a:visited {
         color: black;
     }
 
-    .navigate-previous a:visited {
-        color: black;
-    }
-
-    .navigate-previous a:hover {
+    .navigate-previous a:hover, .navigate-next a:hover {
         color: rgb(8, 57, 129);
     }
 
-.navigate-next {
-    background-color: #edf0f2;
-    border-color: rgb(217, 220, 220);
-    border-style: solid;
-    border-width: 1px 1px 3px 1px;
-}
-
-    .navigate-next a:link {
-        color: black;
-    }
-
-    .navigate-next a:visited {
-        color: black;
-    }
-
-    .navigate-next a:hover {
-        color: rgb(8, 57, 129);
-    }
 #tree-filter {
     color: #555;
     background-color: #fff;
     border: 1px solid #ccc;
 }
-#tree-filter-mobile {
+.show-mobile-menu #tree-filter {
     color: white;
     background-color: #555;
-    border: 1px solid #ccc;
+    border: 1px solid #2e2e2e;
 }
-#tree-filter-mobile::placeholder {
-    color: rgb(213, 213, 213);
+    
+.show-mobile-menu #tree-filter::placeholder {
+    color: rgb(146, 146, 146);
 }
-#tree-filter-mobile::-webkit-input-placeholder {
-    color: rgb(213, 213, 213);
+.show-mobile-menu #tree-filter::-webkit-input-placeholder {
+    color: rgb(146, 146, 146);
 }
-#tree-filter-mobile:-moz-placeholder {
-    color: rgb(213, 213, 213);
+.show-mobile-menu #tree-filter:-moz-placeholder {
+    color: rgb(146, 146, 146);
 }
-#tree-filter-mobile::-moz-placeholder {
-    color: rgb(213, 213, 213);
+.show-mobile-menu #tree-filter::-moz-placeholder {
+    color: rgb(146, 146, 146);
 }
-#tree-filter-mobile::-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
+.show-mobile-menu #tree-filter::-ms-inputplaceholder {
+    color: rgb(146, 146, 146);
 }
-#tree-filter-mobile:-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
+.show-mobile-menu #tree-filter:-ms-inputplaceholder {
+    color: rgb(146, 146, 146);
 }
+
 
 #load-indicator {
     color: #bbb;

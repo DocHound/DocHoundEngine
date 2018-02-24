@@ -529,6 +529,20 @@ namespace DocHound.Models.Docs
             return ThemeFolderRaw + "/Theme-Colors-" + colorLabel.Replace(" ", "-") + ".css";
         }
 
+        private string _localCssOverride = null;
+        public async Task<string> GetLocalCssOverride()
+        {
+            if (_localCssOverride == null)
+            {
+                if (SqlDataAccess.CanUseSql)
+                    _localCssOverride = await SqlDataAccess.GetRepositoryLocalCssOverrides(CurrentPrefix);
+                else
+                    _localCssOverride = string.Empty;
+            }
+
+            return _localCssOverride;
+        }
+
         // TODO: This needs to be done more sophisticated by automatically figuring out what the theme supports
         public List<string> AvailableSyntaxThemeColors
         {

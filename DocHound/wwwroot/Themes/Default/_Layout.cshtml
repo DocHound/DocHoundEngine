@@ -38,7 +38,7 @@
 
 <body>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    @*Must have file that goes with the theme*@
+    @*Must have Topic.js file that goes with the theme. Note that different themes will have their own file, so it is fine that we hardcode this one here*@
     <environment include="Development">
         <script src="~/Themes/Default/Topic.js" asp-append-version="true"></script>
     </environment>
@@ -46,13 +46,15 @@
         <script src="~/Themes/Default/Topic.min.js" asp-append-version="true"></script>
     </environment>
 
-    <nav class="mobile-menu">
+    <nav class="toc">
         <div class="mobile-menu-items">
             @Html.Raw(Model.GetMenu(MenuMode.Mobile))
         </div>
-        <input type="text" id="tree-filter-mobile" placeholder="Filter Topic Tree"/>
+        <div class="settings-container"></div>
+        <input type="text" id="tree-filter" placeholder="Filter Topic Tree"/>
         @Html.Raw(Model.GetToCHtml())
     </nav>
+
     <header class="header headerLarge">
         <i class="fas fa-bars mobile-menu-icon"></i>
         <img class="logo" src="@Model.LogoUrl" />
@@ -60,11 +62,6 @@
             @Html.Raw(Model.GetMenu())
         </div>
     </header>
-
-    <nav class="toc">
-        <input type="text" id="tree-filter" placeholder="Filter Topic Tree"/>
-        @Html.Raw(Model.GetToCHtml())
-    </nav>
 
     @RenderBody()
     
@@ -77,5 +74,15 @@
     </footer>
 
     @RenderSection("Scripts", false)
+
+    @{
+        var localCssOverride = await Model.GetLocalCssOverride();
+        if (!string.IsNullOrEmpty(localCssOverride))
+        {
+            <style>
+                @Html.Raw(localCssOverride)
+            </style>
+        }
+    }
 </body>
 </html>

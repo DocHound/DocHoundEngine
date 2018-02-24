@@ -62,3 +62,4 @@ The following topic types are currently being considered. Those with a checkmark
 * [ ] Stack Overflow
 * [ ] LaTeX
 * [ ] NuGet (so people can document things one needs to get from NuGet and how to get it)
+* [ ] Maybe http://stepshot.net/ could somehow be integrated?

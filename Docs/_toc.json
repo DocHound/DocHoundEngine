@@ -3,9 +3,6 @@
   "owner": "Kava Docs Inc.",
   "language": "en-US",
   "version": "1.0",
-  "settings": {
-    "customCssPath": "_meta/kavadocs.css",
-  },
   "menu": [
     {
       "title": "Docs Home",

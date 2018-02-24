@@ -3,7 +3,8 @@
 ## Must-Haves for Minimum Viable Product
 
 * [ ] Landing Page Web Site (www.kavadocs.com) 
-* [ ] Accounts and Log-Ins
+* [x] Accounts and Log-Ins
+* [ ] We really need a good way to edit the TOC file
 * [ ] A few more supported sources
     * [ ] DOCX
     * [ ] OneNote
@@ -21,6 +22,7 @@
 
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
 * [ ] Empty Topics should render the list of child topics more pleasingly
+   * [ ] Also, these topics do not seem to send along the CSS override from the TOC properly
 * [ ] The [kava] placeholder should allow setting start and end delimiters and tags (handling HTML tags smartly, so it can find open and close tags and such).
 * [ ] Code
     * [ ] Support copy & Paste of code snippets (have an icon in the header that people can click on to copy)
@@ -60,7 +62,6 @@
 
 ## Overall Processing
 
-* [ ] Support a local CSS override in the SQL Server configuraiton
 * [ ] We need to make sure we generate all meta tags in the header we would like to have.
 * [ ] Would be really nice to support translations right inline in a document.
 * [ ] No hardcoding of any elements
@@ -71,10 +72,8 @@
 * [ ] Topics in the TOC should have a "visible" or "hidden" flag, so they can be managed in the tree (and be considered for URL patterns and such), but not displayed as part of the tree. This is useful in a number of scenarios. For instance, one could create a custom slug the topic can be found by, even though we may not want it in the tree (such as when embedding a document inside of another). It is also useful for tooling, such as when we want a tool that shows all files that are not yet referenced by the TOC (which could get annoying if you have files you really do not want to show up in the tree).
 * [ ] Should support a way to add custom themes and Razor templates without requiring a re-deploy
 * [ ] When there is a slug passed in that doesn't seem to go with a specific topic, we should show an appropriate message, rather than defaulting back to the first topic
-* [ ] Allow overriding of CSS styles on individual topics
 * [ ] Some themes may want the current-doc outline more in the document and below the first heading (or some other arbitrary place)
 * [ ] Maybe there should be a link to the next topic in the sidebar in some themes?
-* [ ] It would be nice to be able to get away with just once instance of the tree in the document
 * [ ] Maybe listing contributors to a topic or all the docs (optional)
 * [ ] Maybe we could also show last-edited date on a topic
 * [ ] Sharing of documents would be nice (Facebook, Twitter, ... the usual)
@@ -94,6 +93,9 @@
    * [ ] Need to be able to search for KavaDocs repositories in the main KavaDocs.com site
    * [x] Need the basic ability to filter the tree
    * [x] Tree filtering should respect keywords
+* [x] Support a local CSS override in the SQL Server configuraiton
+* [x] It would be nice to be able to get away with just once instance of the tree in the document
+* [x] Allow overriding of CSS styles on individual topics
 * [x] Support a local TOC in the SQL Server configuration
 * [x] Microsoft shows “estimated time to read” at the top of topics
 * [x] Would be nice to have the outline in the current document be a bit more interactive
@@ -128,6 +130,7 @@
 * [ ] Stripes: Should we support something like this? https://stripe.com/docs/api/curl#authentication
 * [ ] People seem to like http://en.cppreference.com/w/
 * [ ] Should we support something similar to the Wikipedia format? It's a format a lot of people know...
+* [ ] Maybe something simple like the Trezor docs: https://doc.satoshilabs.com/trezor-user/
 * Maybe we can find some more inspiration here: https://documentor.in/2148/best-examples-product-documentation-guides/
 
 ## Repository Management
