@@ -14,7 +14,8 @@ if ($('pre code').length > 0) {
         if ($syntaxThemeColorSelector.length > 0) {
             var syntaxThemeColorSelectorHtml = $syntaxThemeColorSelector[0].outerHTML;
             syntaxThemeColorSelectorHtml = syntaxThemeColorSelectorHtml.replace('id="syntaxThemeSelector"', 'id="syntaxThemeSelector2"')
-            appendToSettingsContainer('<span class="option-label">Code:' + syntaxThemeColorSelectorHtml + "</span>");
+            removeFromSettingsContainer('.syntax-theme-selector-setting');
+            appendToSettingsContainer('<div class="option-label syntax-theme-selector-setting"><div>Code:</div>' + syntaxThemeColorSelectorHtml + '</div>', '.theme-color-selector-setting', true);
         }
     }
     

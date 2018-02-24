@@ -80,7 +80,11 @@ blockquote {
 }
 
 .mobile-menu-items {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgb(203, 203, 203);
+}
+
+.settings-container {
+    border-bottom: 1px solid rgb(203, 203, 203);
 }
 
 .mobile-menu-items ul li a, .mobile-menu-items ul li a:visited, .mobile-menu-items ul li a:hover {
@@ -135,10 +139,16 @@ li.kava-auto-link a:link, li.kava-auto-link a:visited {
     color: rgb(8, 57, 129);
 }
 
-.sidebar select, .settings-container select {
+.sidebar select {
     background-color: white;
     color: black;
     border: 1px solid #888;
+}
+
+.settings-container select {
+    background-color: #1a1a1a;
+    color: rgb(203, 203, 203);
+    border: 1px solid #2e2e2e;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -194,26 +204,28 @@ figure {
 .show-mobile-menu #tree-filter {
     color: white;
     background-color: #555;
-    border: 1px solid #ccc;
+    border: 1px solid #2e2e2e;
 }
+    
 .show-mobile-menu #tree-filter::placeholder {
-    color: rgb(213, 213, 213);
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter::-webkit-input-placeholder {
-    color: rgb(213, 213, 213);
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter:-moz-placeholder {
-    color: rgb(213, 213, 213);
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter::-moz-placeholder {
-    color: rgb(213, 213, 213);
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter::-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter:-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
+    color: rgb(146, 146, 146);
 }
+
 
 #load-indicator {
     color: #bbb;

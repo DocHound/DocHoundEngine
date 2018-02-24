@@ -76,13 +76,12 @@ blockquote {
     border-bottom: 1px solid white;
 }
 
+.settings-container {
+    border-bottom: 1px solid white;
+}
+
 .toc.show-mobile-menu ul li a, .toc.show-mobile-menu ul li a:visited, .toc.show-mobile-menu ul li a:hover {
     color: white;
-}
-    
-.toc.show-mobile-menu ul li.neutral-menu-selected {
-    border-left: 4px solid Red;
-    background-color: #03142e;
 }
     
 .footer {
@@ -140,12 +139,12 @@ li.kava-auto-link a:link, li.kava-auto-link a:visited {
 }
 
 li.selected-topic {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 li.selected-topic a, li.selected-topic a:visited, li.selected-topic a:link {
-    color: white;
+    color: black !important;
 }
 
 a.area-link, a.area-link:visited {
@@ -177,27 +176,27 @@ figure {
     border: 1px solid #ccc;
 }
 .show-mobile-menu #tree-filter {
-    color: white;
-    background-color: #555;
-    border: 1px solid #ccc;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
 }
 .show-mobile-menu #tree-filter::placeholder {
-    color: rgb(213, 213, 213);
+    color: black;
 }
 .show-mobile-menu #tree-filter::-webkit-input-placeholder {
-    color: rgb(213, 213, 213);
+    color: black;
 }
 .show-mobile-menu #tree-filter:-moz-placeholder {
-    color: rgb(213, 213, 213);
+    color: black;
 }
 .show-mobile-menu #tree-filter::-moz-placeholder {
-    color: rgb(213, 213, 213);
+    color: black;
 }
 .show-mobile-menu #tree-filter::-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
+    color: black;
 }
 .show-mobile-menu #tree-filter:-ms-inputplaceholder {
-    color: rgb(213, 213, 213);
+    color: black;
 }
 
 #load-indicator {

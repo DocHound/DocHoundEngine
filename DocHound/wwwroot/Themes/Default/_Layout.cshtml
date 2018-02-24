@@ -50,6 +50,7 @@
         <div class="mobile-menu-items">
             @Html.Raw(Model.GetMenu(MenuMode.Mobile))
         </div>
+        <div class="settings-container"></div>
         <input type="text" id="tree-filter" placeholder="Filter Topic Tree"/>
         @Html.Raw(Model.GetToCHtml())
     </nav>

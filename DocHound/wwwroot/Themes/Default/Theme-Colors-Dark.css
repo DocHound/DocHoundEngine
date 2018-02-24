@@ -80,6 +80,10 @@ blockquote {
     border-bottom: 1px solid rgb(203, 203, 203);
 }
 
+.settings-container {
+    border-bottom: 1px solid rgb(203, 203, 203);
+}
+
 .toc.show-mobile-menu ul li a, .toc.show-mobile-menu ul li a:visited, .toc.show-mobile-menu ul li a:hover {
     color: rgb(203, 203, 203);
 }
@@ -178,33 +182,33 @@ figure {
         color: #1e88e5;
     }
 
-    #tree-filter {
+#tree-filter {
     color: white;
     background-color: #555;
     border: 1px solid #222222;
 }
 .show-mobile-menu #tree-filter {
-    color: white;
-    background-color: #555;
-    border: 1px solid #ccc;
+    background-color: #1a1a1a;
+    color: rgb(203, 203, 203);
+    border: 1px solid #2e2e2e;
 }
 .show-mobile-menu #tree-filter::placeholder {
-    color: black;
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter::-webkit-input-placeholder {
-    color: black;
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter:-moz-placeholder {
-    color: black;
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter::-moz-placeholder {
-    color: black;
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter::-ms-inputplaceholder {
-    color: black;
+    color: rgb(146, 146, 146);
 }
 .show-mobile-menu #tree-filter:-ms-inputplaceholder {
-    color: black;
+    color: rgb(146, 146, 146);
 }
 
 #load-indicator {

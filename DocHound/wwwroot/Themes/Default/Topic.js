@@ -156,6 +156,12 @@
     // Running everything that needs to be done when a new topic loads
     processTopicLoad();
 
+    // Making sure the mobile menu doesn't stay open when people tap on the main topic
+    $(document).on('click', '.content-container', function() {
+        // Regardless of anything else, we can now close the mobile menu
+        if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
+    });
+    
     // Add click behavior to tree "arrows"
     $(document.body).on('click', '.caret', function () {
         var parent = $(this).parent();
@@ -183,25 +189,14 @@
             $('.topic-list li').show();
         } else {
             $('.topic-list li').hide();
-            var matches = $('.topic-list li:contains("' + filter + '")');
-            matches.parent().removeClass('topic-collapsed');
-            matches.addClass('topic-expanded');
-            matches.parent().addClass('topic-expanded');
-            matches.show();
-        }
-    });
-    $('#tree-filter-mobile').keyup(function() {
-        var filter = $('#tree-filter-mobile').val();
-
-        if (filter == '') {
-            $('.topic-list li').show();
-        } else {
-            $('.topic-list li').hide();
-            var matches = $('.topic-list li:contains("' + filter + '")');
-            matches.parent().removeClass('topic-collapsed');
-            matches.addClass('topic-expanded');
-            matches.parent().addClass('topic-expanded');
-            matches.show();
+            var $matches = $('.topic-list li:contains("' + filter + '")');
+            var $caretMatches = $('.caret', $matches);
+            $matches.parent().removeClass('topic-collapsed');
+            $caretMatches.removeClass('caret-collapsed');
+            $matches.addClass('topic-expanded');
+            $matches.parent().addClass('topic-expanded');
+            $caretMatches.addClass('caret-expanded');
+            $matches.show();
         }
     });
 
@@ -299,7 +294,8 @@ processTopicLoad = function() {
     if ($themeColorSelector.length > 0) {
         var themeColorSelectorHtml = $themeColorSelector[0].outerHTML;
         themeColorSelectorHtml = themeColorSelectorHtml.replace('id="themeColorSelector"', 'id="themeColorSelector2"')
-        appendToSettingsContainer('<span class="option-label">Theme:' + themeColorSelectorHtml + "</span>");
+        removeFromSettingsContainer('.theme-color-selector-setting');
+        appendToSettingsContainer('<div class="option-label theme-color-selector-setting"><div>Theme:</div>' + themeColorSelectorHtml + '</div>', '.syntax-theme-selector-setting', true);
     }
 
     // Hooking up various options (if they are present)
@@ -690,12 +686,16 @@ handleWindowResize = function() {
     // The mobile menu should never be open while resizing, since it can cause all kinds of weird behavior
     if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 
+    if ($(window).width() > 1024) 
+        setTimeout(function() {
+            $('.toc').css('display', '').css('z-index', '');
+        }, 500);
+
     var $mobileStylesSet = $('.toc.mobile-styles-set');
     if ($mobileStylesSet.length > 0) {
         $mobileStylesSet.css('display', '').css('z-index', '');
         $mobileStylesSet.removeClass('mobile-styles-set');
     }
-
 }
 
 // Returns (or creates) the container element that's right below the first heading which can contain information such as reading time, contributors, or other features of the content
@@ -730,21 +730,36 @@ appendToFeaturesContainer = function(html) {
 
 // Returns (or creates) the container element that's right above the first element, which can include various settings, such as themes
 getSettingsContainer = function() {
-    var existingSettingsElement = $('article.content-container .settings-container');
+    var existingSettingsElement = $('.toc .settings-container');
     if (existingSettingsElement.length < 1) {
-        var immediateContentElements = $('article.content-container>*');
+        var immediateContentElements = $('.toc input');
         if (immediateContentElements.length > 0) {
             $('<div class="settings-container"></div>').insertBefore(immediateContentElements[0]);
         }
     }
 
-    return $('article.content-container .settings-container');
+    return $('.toc .settings-container');
 }
 
 // Appends to the container element that's right above the first element, which can include various settings, such as themes
-appendToSettingsContainer = function(html) {
+appendToSettingsContainer = function(html, appendSelector, insertBefore) {
     if (!html) return;
     var $existingSettingsElement = getSettingsContainer();
-    if ($existingSettingsElement.length > 0)
+    if ($existingSettingsElement.length > 0) {
+        if (appendSelector) {
+            $referenceElement = $(appendSelector, $existingSettingsElement);
+            if ($referenceElement.length > 0) {
+                if (!insertBefore)
+                    $(html).insertAfter($referenceElement);
+                else
+                    $(html).insertBefore($referenceElement);
+                return;
+            }
+        }
         $existingSettingsElement.append(html);
+    }
+}
+
+removeFromSettingsContainer = function(selector) {
+    $(selector, getSettingsContainer()).remove();
 }
