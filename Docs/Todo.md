@@ -117,6 +117,7 @@
 
 * [ ] Default theme (similar to the Docs used by MS, or Angular,...)
 * [ ] Sepia theme (similar to https://www.raspberrypi.org/documentation/)
+* [ ] Slack actually has relatively nice docs: https://get.slack.help/hc/en-us/articles/216771908
 * [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
 * [ ] Screencast has their own take on documentation: https://support.techsmith.com/hc/en-us/categories/203255908?utm_source=product&utm_medium=screencast&utm_campaign=unknown
 * [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
