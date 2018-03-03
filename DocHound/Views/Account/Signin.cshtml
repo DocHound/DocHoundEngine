@@ -1,0 +1,94 @@
+﻿@using DocHound.Views.Account
+@model DocHound.Views.Account.SigninViewModel
+
+@{
+    Layout = "~/Views/Account/_AccountLayout.cshtml";
+    ViewData["Title"] = "Sign in";
+    var appUser = User.GetAppUser();
+}
+
+<div class="content-container" style="max-width: 600px">
+    <h1 class="page-header-text">
+        <i class="fas fa-sign-in"></i>
+        Sign in
+    </h1>
+
+    <p class="margin-bottom-2x">
+        Please sign into your account to access this repository.
+        If you don't have an account yet <a href="https://kavadocs.com/account/profile">create one to get started</a>.
+    </p>
+
+    <error-display error-display-model="Model.ErrorDisplay"></error-display>
+
+    <form name="form1" asp-action="Signin">
+
+        <div class="form-group">
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="fa fa-fw fa-envelope input-group-text"></i>
+                </div>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Enter your email address"
+                       asp-for="Email"
+                       aria-label="Email"
+                       autocapitalize="off"
+                       autocomplete="off"
+                       spellcheck="false"
+                       autocorrect="off" required />
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="fa fa-fw fa-unlock-alt input-group-text"></i>
+                </div>
+                <input type="password"
+                       class="form-control"
+                       placeholder="Enter your password"
+                       asp-for="Password"
+                       autocapitalize="off"
+                       autocomplete="off"
+                       spellcheck="false"
+                       autocorrect="off"
+                       required />
+            </div>
+        </div>
+
+
+        <div class="margin-top">
+            <button class="btn btn-primary  " style="display: block; width: 210px;"
+                    type="submit"
+                    [disabled]="form1.invalid || form1.pristine">
+                <i class="far fa-sign-in" style="font-size: 1.1em"></i>
+                Sign in
+            </button>
+
+            @if (appUser.IsAuthenticated())
+            {
+                <div class="float-right" *ngIf="!isForgotPassword">
+                    <a asp-action="Signout" class="btn btn-block btn-sm float-right"
+                       style="display: block; width: 220px;">
+                        <i class="fa fa-lock-alt"></i>
+                        Sign out
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="margin-top" *ngIf="!isForgotPassword">
+            <a href="https://kavadocs.com/account/PasswordRecoverySendEmail">I forgot my password</a>
+        </div>
+        <hr />
+
+        <p>Don't have an account yet? No problem, create one - it's FREE and easy.</p>
+        <a href="https://kavadocs.com/account/profile" class="btn btn-primary" routerLink="/profile">
+            <i class="fa fa-pencil"></i>
+            Create a new Account
+        </a>
+
+    </form>
+</div>

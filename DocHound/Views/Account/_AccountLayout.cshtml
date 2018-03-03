@@ -1,0 +1,145 @@
+﻿@using Westwind.AspNetCore
+@using Westwind.AspNetCore.Services
+@model Westwind.AspNetCore.BaseViewModel
+@{
+    var appUser = Context.User.GetAppUser();
+    var title = ViewData["Title"] as string;
+    if (string.IsNullOrEmpty(title) || title == "Kava Docs")
+    {
+        title = "Kava Docs";
+    }
+    else
+    {
+        title = $"{title} - Kava Docs";
+    }
+    bool isHomePage = Context.Request.Path == "/";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@title</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome-all.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/application-bootstrap.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/application-reset.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/application.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome-all.min.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              asp-fallback-href="~/css/application-bootstrap.min.css"
+              rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="~/css/application-bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/application-reset.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/application.min.css" asp-append-version="true" />
+    </environment>
+    @RenderSection("Headers", required: false)
+</head>
+<body>
+
+    <nav class="navbar-top">
+        <div class="navbar-header float-left"
+             style="cursor: pointer" aria-controls="button"
+             onclick="window.location = '@Url.Content("~/")'">
+            <img src="~/images/KavaDocsHeaderLogo.png"
+                 class="navbar-icon @(isHomePage ? "invisible" : "")" />
+        </div>
+
+        <div class="navbar-links float-right">
+
+            <div class="btn-group" role="group">
+                @if (!appUser.IsAuthenticated())
+                {
+                    <a href="~/" class="btn btn-default" style="margin-right:2px;">
+                        <i class="fa fa-unlock"></i>
+                        Home
+                    </a>
+                    <div class="btn" style="font-weight: bold; width: auto; min-width: 0; margin-left: -15px; margin-right: -10px;">or</div>
+                    <a href="https://kavadocs.com/account/profile" class="btn btn-default">
+                        <i class="fa fa-user"></i>
+                        Sign up
+                    </a>
+                }
+                else
+                {
+
+           
+
+                    <button id="btnProfileDropDown" type="button" class="btn btn-secondary dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@appUser.Username">
+                        <img src="@Gravatar.GetGravatarLink(appUser.Email, 23)" />
+                        <span class="hidable-xs">@appUser.Username</span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnProfileDropDown">
+                        <a href="https://kavadocs.com/account/profile/@(appUser.UserId)"
+                           class="dropdown-item">
+                            Your Profile
+                        </a>
+                        @if (appUser.IsAdmin)
+                        {
+
+                            <a href="@Url.Action("Index", "Admin")"
+                               class="dropdown-item">
+                                Administration
+                            </a>
+                        }
+                        <hr />
+                        <a href="@Url.Action("Signout", "Account")"
+                           class="dropdown-item">
+                            Sign out
+                        </a>
+
+
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </nav>
+
+    <div class="body-content">
+
+        @RenderBody()
+    </div>
+
+
+    <footer>
+        <div class="float-right">
+            <a href="http://docs.kavadocs.com" class="dark" style="color: "><i class="fa fa-question-circle text-info"></i> Kava Docs Documentation</a>
+        </div>
+        <p>&copy; KavaDocs Inc, 2017-@(DateTime.Now.Year)</p>
+    </footer>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/ww.jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous">
+        </script>
+        <script src="~/lib/ww.jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous">
+        </script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
