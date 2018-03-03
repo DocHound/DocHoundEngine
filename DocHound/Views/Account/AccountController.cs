@@ -20,6 +20,7 @@ namespace DocHound.Views.Account
         public ActionResult Signin()
         {
             var model = CreateViewModel<SigninViewModel>();
+            model.ReturnUrl = Request.Query["ReturnUrl"];
             return View("SignIn", model);
         }
 

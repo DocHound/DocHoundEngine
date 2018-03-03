@@ -29,6 +29,8 @@ namespace DocHound.Models
         public string Email => GetClaim("Email");
 
         public bool IsAdmin => HasRole(RoleNames.Administrators);
+        public bool IsOwner => HasRole(RoleNames.Owner);
+        public bool IsContributor => HasRole(RoleNames.Contributor);
 
         public static ClaimsIdentity GetClaimsIdentityFromUser(User user)
         {
@@ -36,9 +38,15 @@ namespace DocHound.Models
             identity.AddClaim(new Claim("Email", user.Email));
             identity.AddClaim(new Claim("Username", user.UserDisplayName));
             identity.AddClaim(new Claim("UserId", user.Id.ToString()));
-
+            
             if (user.IsAdmin)
                 identity.AddClaim(new Claim(ClaimTypes.Role, RoleNames.Administrators));
+
+            if (user.CurrentRepository.UserType == RepositoryUserType.Owner)
+                identity.AddClaim(new Claim(ClaimTypes.Role, RoleNames.Owner));
+
+            if (user.CurrentRepository.UserType == RepositoryUserType.Contributor || user.CurrentRepository.UserType == RepositoryUserType.Owner)
+                identity.AddClaim(new Claim(ClaimTypes.Role, RoleNames.Contributor));
 
             return identity;
         }
@@ -58,6 +66,8 @@ namespace DocHound.Models
     {
 
         public const string Administrators = "Administrators";
+        public const string Owner = "Owner";
+        public const string Contributor = "Contributor";
 
     }
 }
