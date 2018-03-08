@@ -19,7 +19,7 @@ namespace DocHound.Controllers
         public async Task<IActionResult> Topic()
         {
             // TODO: How do we get the repository Auth Requirement from the db or local settings?
-            bool requireAuth = true;
+            bool requireAuth = false;   // how do we get the repo info here?
             if (requireAuth)
                 CheckAuthentication();
             
@@ -39,18 +39,9 @@ namespace DocHound.Controllers
                 vm.UseSqlServer = true;
                 vm.CurrentPrefix = prefix;               
             }
-
-            
-
+           
             await vm.LoadData();
 
-            // TODO: Put this back in once we have our cert on Kavadocs.com
-            // RAS: We don't need that - Azure will do that for us
-            //if (vm.RequireHttps && !HttpContext.Request.IsHttps && !HttpContext.Request.Host.Host.StartsWith("localhost"))
-            //{
-            //    var url = $"https://{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}";
-            //    return Redirect(url);
-            //}
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
         }
 
@@ -84,6 +75,7 @@ namespace DocHound.Controllers
             if (!appUser.IsAuthenticated())
                 Response.Redirect(Url.Action("Signin", "Account",new { ReturnUrl=GetUrl(Request)}));
         }
+
         static string GetUrl(HttpRequest request)
         {
             return $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}";
