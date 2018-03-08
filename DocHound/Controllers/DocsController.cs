@@ -18,16 +18,14 @@ namespace DocHound.Controllers
         //public async Task<IActionResult> Topic(string fragment1 = null, string fragment2 = null, string fragment3 = null, string fragment4 = null, string fragment5 = null, string fragment6 = null, string fragment7 = null, string fragment8 = null, string fragment9 = null, string fragment10 = null)
         public async Task<IActionResult> Topic()
         {
-            // TODO: How do we get the repository Auth Requirement from the db or local settings?
-            bool requireAuth = false;   // how do we get the repo info here?
-            if (requireAuth)
-                CheckAuthentication();
-            
+           
+
 
             var routeCollection = HttpContext.GetRouteData();
             var topic = routeCollection.Values.Values.FirstOrDefault()?.ToString();
 
             var vm = new TopicViewModel(topic, HttpContext);
+           
 
             if (SqlDataAccess.CanUseSql)
             {
@@ -37,9 +35,18 @@ namespace DocHound.Controllers
                     return NotFound($"Document repository {prefix} does not exist.");
                 vm.SetRootSettingsForRequest(settings);
                 vm.UseSqlServer = true;
-                vm.CurrentPrefix = prefix;               
+                vm.CurrentPrefix = prefix;
+  
             }
-           
+
+            // TODO: How do we get the repository Auth Requirement from the db or local settings?
+            if (vm.GetSetting<bool>(Settings.RequireAuthentication))
+                CheckAuthentication();
+
+            var appUser = User.GetAppUser();
+            vm.AppUser = appUser;
+
+
             await vm.LoadData();
 
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
@@ -71,11 +78,11 @@ namespace DocHound.Controllers
 
         private void CheckAuthentication()
         {
-            var appUser = User.GetAppUser();            
+            var appUser = User.GetAppUser();
             if (!appUser.IsAuthenticated())
-                Response.Redirect(Url.Action("Signin", "Account",new { ReturnUrl=GetUrl(Request)}));
+                Response.Redirect($"/___account___/signin?returnurl={GetUrl(Request)}");
         }
-
+        
         static string GetUrl(HttpRequest request)
         {
             return $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}";

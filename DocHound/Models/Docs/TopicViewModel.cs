@@ -11,6 +11,7 @@ using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using Westwind.AspNetCore.Services;
 
 namespace DocHound.Models.Docs
 {
@@ -604,6 +605,19 @@ namespace DocHound.Models.Docs
                 sb.Append("<a class=\"area-link\" href=\"" + item.Link + "\">" + item.Title + "</a>");
                 sb.Append("</li>");
             }
+
+
+            if (AppUser.IsAuthenticated())
+            {
+                sb.Append($"<li>" +
+                          Gravatar.GetGravatarImage(AppUser.Email,20, "R") +
+                          $" <a class=\"area-link\" href=\"https://kavadocs.com/account/profile/{AppUser.UserId}\">{AppUser.Username}</a></li>");
+                
+                sb.Append("<li>");
+                sb.Append("<a class=\"area-link\" href=\"/___account___/signout\">Sign out</a>");
+                sb.Append("</li>");
+            }
+            
             sb.Append("</ul>");
             return sb.ToString();
         }
@@ -732,6 +746,7 @@ namespace DocHound.Models.Docs
         }
 
         public dynamic CurrentRequestRootSettings { get; set; }
+        public AppUser AppUser { get; internal set; }
     }
 
     public class OutlineItem

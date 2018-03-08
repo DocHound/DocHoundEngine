@@ -26,6 +26,7 @@ namespace DocHound.Models
 
         public bool IsActive { get; set; }
 
+
         public RepositoryUserType UserType { get; set; } = RepositoryUserType.Owner;
 
         public bool IsEmpty()

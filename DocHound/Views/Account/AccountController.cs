@@ -16,7 +16,7 @@ namespace DocHound.Views.Account
     public class AccountController : BaseController
     {
         [HttpGet]
-        [Route("account/signin")]
+        //[Route("account/signin")]
         public ActionResult Signin()
         {
             var model = CreateViewModel<SigninViewModel>();
@@ -26,7 +26,7 @@ namespace DocHound.Views.Account
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("account/signin")]
+        //[Route("__account/signin")]
         public async Task<ActionResult> SignIn(SigninViewModel model)
         {
             InitializeViewModel(model);

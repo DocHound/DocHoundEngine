@@ -220,7 +220,8 @@ namespace DocHound.Interfaces
         VstsDocsFolder,
         VstsProjectName,
 
-        // General topic toggle settings
+        // General topic toggle setting 
+        [DefaultValue(false)] RequireAuthentication,
         [DefaultValue(true)] UseSyntaxHighlighting,
         [DefaultValue(false)] AllowThemeSwitching,
         [DefaultValue("")] AllowableThemeColors,

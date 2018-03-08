@@ -26,8 +26,8 @@ namespace DocHound
 
                 .AddCookie(o =>
                 {
-                    o.LoginPath = "/account/signin";
-                    o.LogoutPath = "/account/signout";
+                    o.LoginPath = "/___account___/signin";
+                    o.LogoutPath = "/___account___/signout";
                     o.SlidingExpiration = true;
                     o.ExpireTimeSpan = new TimeSpan(2, 0, 0, 0);
                 });
@@ -54,7 +54,7 @@ namespace DocHound
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("account", "account/{action}/{id?}", new {controller = "Account", action = "Signin"});
+                routes.MapRoute("account", "___{controller}___/{action}/{id?}", new {controller = "Account", action = "Signin"});
                 routes.MapRoute("fileproxy", "___FileProxy___", new {controller = "Docs", action = nameof(DocsController.FileProxy)});
                 routes.MapRoute("docs", "{*url}", new {controller = "Docs", action = nameof(DocsController.Topic)});
             });
