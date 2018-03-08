@@ -364,7 +364,7 @@ processTopicLoad = function() {
 
 // This method wires up the click event of anchor tags within the given context to prevent navitation and instead load topics inline if possible.
 interceptNavigation = function() {
-    $(document).on('click', 'a', function() {
+    $(document).on('click', 'a:not(a.area-link)', function() { 
         // Regardless of anything else, we can now close the mobile menu
         if ($('body').hasClass('show-mobile-menu')) hideMobileMenu();
 

@@ -6,6 +6,10 @@ using DocHound.Models.Docs;
 using Microsoft.AspNetCore.Mvc;
 using DocHound.Interfaces;
 using Microsoft.AspNetCore.Routing;
+using DocHound.Models;
+using Westwind.AspNetCore.Extensions;
+using Westwind.AspNetCore;
+using Microsoft.AspNetCore.Http;
 
 namespace DocHound.Controllers
 {
@@ -14,10 +18,14 @@ namespace DocHound.Controllers
         //public async Task<IActionResult> Topic(string fragment1 = null, string fragment2 = null, string fragment3 = null, string fragment4 = null, string fragment5 = null, string fragment6 = null, string fragment7 = null, string fragment8 = null, string fragment9 = null, string fragment10 = null)
         public async Task<IActionResult> Topic()
         {
+           
+
+
             var routeCollection = HttpContext.GetRouteData();
             var topic = routeCollection.Values.Values.FirstOrDefault()?.ToString();
 
             var vm = new TopicViewModel(topic, HttpContext);
+           
 
             if (SqlDataAccess.CanUseSql)
             {
@@ -28,16 +36,19 @@ namespace DocHound.Controllers
                 vm.SetRootSettingsForRequest(settings);
                 vm.UseSqlServer = true;
                 vm.CurrentPrefix = prefix;
+  
             }
+
+            // TODO: How do we get the repository Auth Requirement from the db or local settings?
+            if (vm.GetSetting<bool>(Settings.RequireAuthentication))
+                CheckAuthentication();
+
+            var appUser = User.GetAppUser();
+            vm.AppUser = appUser;
+
 
             await vm.LoadData();
 
-            // TODO: Put this back in once we have our cert on Kavadocs.com
-            //if (vm.RequireHttps && !HttpContext.Request.IsHttps && !HttpContext.Request.Host.Host.StartsWith("localhost"))
-            //{
-            //    var url = $"https://{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}";
-            //    return Redirect(url);
-            //}
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
         }
 
@@ -65,8 +76,21 @@ namespace DocHound.Controllers
         //    return Content(vm.Html);
         //}
 
+        private void CheckAuthentication()
+        {
+            var appUser = User.GetAppUser();
+            if (!appUser.IsAuthenticated())
+                Response.Redirect($"/___account___/signin?returnurl={GetUrl(Request)}");
+        }
+        
+        static string GetUrl(HttpRequest request)
+        {
+            return $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}";
+        }
+
         public async Task<IActionResult> FileProxy(string mode, string path, string topic = "", string fileName = "")
         {
+          
             // Special processing for file retrieval of attachments to TFS work items. This is mainly used to return images in item descriptions.
             if (RepositoryTypeHelper.IsMatch(mode, RepositoryTypeNames.VstsWorkItemTracking))
             {

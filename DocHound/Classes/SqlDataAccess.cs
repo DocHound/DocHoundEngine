@@ -11,7 +11,7 @@ namespace DocHound.Classes
     {
         public static bool CanUseSql => !string.IsNullOrEmpty(GetConnectionString());
 
-        private static string GetConnectionString()
+        public static string GetConnectionString()
         {
             var connectionString = SettingsHelper.GetSetting<string>(Settings.SqlConnectionString);
             return connectionString;

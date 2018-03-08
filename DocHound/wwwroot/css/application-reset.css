@@ -1,0 +1,299 @@
+﻿html {
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5em;    
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5 {
+    /*font-family: Trebuchet,'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+    font-weight: 600;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+    color: #d50017;
+}
+
+hr {
+    margin: 12px 0;
+}
+
+h1 {
+    font-size: 2em;
+    padding-bottom: 10px;    
+    border-bottom: 1px solid #eee;
+}
+
+h2 {    
+    font-size: 1.5em;
+}
+
+h3 {    
+    font-size: 1.3em;
+}
+
+h4, h5, h6 {
+    color: #2D2A2A;
+    font-size: 1.1em;
+}
+
+h5, h6 {
+    font-size: 1em;
+}
+
+a {
+    font-weight: 600;
+}
+a.dark,a.dark:visited {
+    color: #eee;
+    text-decoration: none;
+}
+    a.dark:hover {
+        color: khaki;
+        text-decoration: none;
+    }
+
+[v-cloak] > * {
+    display: none
+}
+
+[v-cloak]::before {
+    content: "loading…"
+}
+
+
+/* flows child elements evenly to fill 100%*/
+.responsive-container {
+    display: flex;        
+}
+.responsive-container>* {
+    margin-right: 3px;
+}
+.responsive-container>*:last-child {
+    margin-right: 0;
+}
+@media(max-width: 768px) {
+    .responsive-container {
+        flex-direction: column;        
+    }
+    .responsive-container>* {
+        margin-right: 0;
+        margin-top: 4px;
+        width: 100% !important;
+    }
+}
+
+
+
+@media(max-width: 767px) {
+    .hidable {
+        display: none !important;
+    }
+}
+
+@media(max-width: 500px) {
+    .hidable-xs {
+        display: none !important;
+    }
+}
+
+.right-align {
+    text-align: right;
+}
+
+.margin-top {
+    margin-top: 1em;
+}
+
+.margin-top-2x {
+    margin-top: 2em;
+}
+
+.margin-bottom {
+    margin-bottom: 1em;
+}
+
+.margin-bottom-2x {
+    margin-bottom: 2em;
+}
+
+.margin-right {
+    margin-right: 1.2em;
+}
+
+.margin-right-2x {
+    margin-right: 2.4em;
+}
+
+.indented {
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.indented-2x {
+    margin-left: 8%;
+    margin-right: 8%;
+}
+
+@media(max-width: 768px) {
+    .indented {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    .indented-2x {
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+}
+
+.green-text {
+    color: rgb(22, 191, 22) !important;
+}
+
+.orange-text {
+    color: organge;
+}
+
+.red-text {
+    color: firebrick;
+}
+.gray-text {
+    color: #999;
+}
+
+
+.error {
+    font-weight: bold !important;
+    color: firebrick !important;
+}
+
+.visible {
+    display: block !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    opacity: 0;
+}
+
+.visually-hidden {
+    /* hides an element without taking it out of the document flow 
+        parsers see it as still present and 'visible' but it doesn't render */
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.subtle-highlight {
+    background: #fdf2f3;    
+}
+.hover:hover {
+    background: #f8f8f8 !important;
+}
+
+
+
+.list {
+    border: 1px #eee solid;
+    margin-top: 40px;
+    margin-bottom:30px;    
+    border-radius: 4px;
+}
+
+.list-header {
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 14px;
+    background:#656565;
+    color: #eee;
+    border-radius: 4px 4px 0 0;
+}
+.list-item {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.list-item.alternate {
+    background: #f2f2f2;
+}
+.list-item.active {
+    background: lightsteelblue;
+}
+label {
+    font-weight: 600;
+    font-size: 1.1em;
+}
+input:not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio]):not([type='file']), select, textarea {
+
+    font-size: 1.05em !important;
+    font-weight: 600 !important;    
+}
+
+::-webkit-input-placeholder {
+    color: #999 !important;
+    font-weight: 300;
+    font-style: italic;
+}
+::-moz-placeholder {
+    color: #999 !important;
+}
+/* Font-awsome based radios and checkboxes */
+input[type=radio].with-font,
+input[type=checkbox].with-font {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+    input[type=radio].with-font ~ label:before,
+    input[type=checkbox].with-font ~ label:before {
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f1db"; /* fa-circle-thin */
+        letter-spacing: 10px;
+        font-size: 1.2em;
+        color: #535353;
+        width: 1.4em; /* reduce bounce */
+    }
+
+    input[type=radio].with-font:checked ~ label:before,
+    input[type=checkbox].with-font:checked ~ label:before {
+        content: "\f14a"; /* fa-check */
+        font-size: 1.2em;
+        color: darkgreen;
+        letter-spacing: 5px;
+    }
+
+    input[type=checkbox].with-font ~ label:before {
+        content: "\f0c8"; /* fa-square-o */
+    }
+
+    input[type=checkbox].with-font:checked ~ label:before {
+        content: "\f046"; /* fa-check-square-o */
+        color: darkgreen;
+    }
+
+    input[type=radio].with-font:focus ~ label:before,
+    input[type=checkbox].with-font:focus ~ label:before,
+    input[type=radio].with-font:focus ~ label,
+    input[type=checkbox].with-font:focus ~ label {
+        color: green; /* highlight both box and label */
+    }
+
+
+.number {
+    text-align: right;
+}

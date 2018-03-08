@@ -1,0 +1,70 @@
+{
+  "_from": "v-autocomplete",
+  "_id": "v-autocomplete@1.8.2",
+  "_inBundle": false,
+  "_integrity": "sha1-lmx7PtosdN1oORERSiAoTNCWlh8=",
+  "_location": "/v-autocomplete",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "v-autocomplete",
+    "name": "v-autocomplete",
+    "escapedName": "v-autocomplete",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/v-autocomplete/-/v-autocomplete-1.8.2.tgz",
+  "_shasum": "966c7b3eda2c74dd683911114a20284cd096961f",
+  "_spec": "v-autocomplete",
+  "_where": "C:\\projects2010\\KavaDocsUserManager\\KavaDocsUserManager.Web",
+  "author": {
+    "name": "Marcos Paliari",
+    "email": "marcos@paliari.com.br"
+  },
+  "bugs": {
+    "url": "https://github.com/paliari/v-autocomplete/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Autocomplete component for Vue.js",
+  "devDependencies": {
+    "poi": "^9.4.3",
+    "pug": "^2.0.0-rc.4",
+    "serve": "^6.3.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1"
+  },
+  "files": [
+    "dist/"
+  ],
+  "homepage": "https://github.com/paliari/v-autocomplete#readme",
+  "keywords": [
+    "vue",
+    "autocomplete",
+    "vue-autocomplete",
+    "autocomplete-vue",
+    "v-autocomplete"
+  ],
+  "license": "MIT",
+  "main": "dist/v-autocomplete.js",
+  "name": "v-autocomplete",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paliari/v-autocomplete.git"
+  },
+  "scripts": {
+    "demo:open": "open 'http://localhost:5000/'; serve ./docs/",
+    "dev": "poi build ./demo/index.js --config ./demo/build.config.js --filename.css paliari-vue.css --no-sourceMap --no-minimize --dist ./docs",
+    "dist": "poi build ./src/v-autocomplete.js --format umd --module-name VAutocomplete --filename.js v-autocomplete.js --filename.css v-autocomplete.css --no-sourceMap --no-html",
+    "dist:demo": "poi build ./demo/index.js --config ./demo/build.config.js --filename.css v-autocomplete.css --no-sourceMap --dist ./docs",
+    "release": "rm -rf dist && yarn dist",
+    "start": "yarn dev"
+  },
+  "version": "1.8.2"
+}

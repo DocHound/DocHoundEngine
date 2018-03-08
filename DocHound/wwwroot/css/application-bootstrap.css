@@ -1,0 +1,39 @@
+﻿
+.btn-primary, .btn-primary:focus {
+    background: firebrick;
+    border-color: #d50017;
+}
+
+    .btn-primary:hover {
+        background: firebrick;
+        border-color: #d50017;
+        opacity: 0.85;
+        transition: opacity linear 0.3s;
+    }
+
+
+.btn-primary, .btn-success {
+    min-width: 150px;
+    padding: 0.65rem 1rem;
+    color: white !important;
+    font-weight: 600;
+}
+
+.list-group-item.active {
+    background: steelblue;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fdf2f3;    
+}
+
+
+/* font-awesome overrides */
+
+.fa, .far, .fas, .fal {
+    padding-right: 0.2em;
+}
+
+/* Bootstrap customizations */
+.input-group-prepend .fa {
+    width: 40px;
+}
