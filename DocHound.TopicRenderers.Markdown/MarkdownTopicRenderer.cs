@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using DocHound.Interfaces;
 using Markdig;
+using Markdig.Extensions.AutoIdentifiers;
 
 namespace DocHound.TopicRenderers.Markdown
 {
@@ -59,7 +60,7 @@ namespace DocHound.TopicRenderers.Markdown
         protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder, ISettingsProvider settings, string markdown)
         {
             if (settings.GetSetting<bool>(Settings.UseAbbreviations)) builder = builder.UseAbbreviations();
-            if (settings.GetSetting<bool>(Settings.UseAutoIdentifiers)) builder = builder.UseAutoIdentifiers();
+            if (settings.GetSetting<bool>(Settings.UseAutoIdentifiers)) builder = builder.UseAutoIdentifiers(AutoIdentifierOptions.GitHub);
             if (settings.GetSetting<bool>(Settings.UseAutoLinks)) builder = builder.UseAutoLinks();
             if (settings.GetSetting<bool>(Settings.UseCitations)) builder = builder.UseCitations();
             if (settings.GetSetting<bool>(Settings.UseCustomContainers)) builder = builder.UseCustomContainers();
