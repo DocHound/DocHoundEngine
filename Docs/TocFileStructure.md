@@ -190,6 +190,7 @@ The settings object can be set on the root or an individual topic. Settings on a
 | useSyntaxHighlighting | Support source code syntax highlighting? | true (default) or false  | No |
 | useTaskLists | Support task lists? | true (default) or false  | No |
 | useYamlFrontMatter | Support YAML FrontMatter? | true (default) or false  | No |
+| vstsApiVersion | API Version supported by your VSTS/TFS instance. (See also: https://docs.microsoft.com/en-us/vsts/integrate/concepts/rest-api-versioning) | string (default: "4.1-preview") | No |
 | vstsDocsFolder | Folder containing the documentation files in a VSTS Git repository | string | No |
 | vstsInstance | Instance name of a VSTS server (such as https://myserver.visualstudio.com) | string | Yes, if using a VSTS feature |
 | vstsPat | Personal Access Token for the VSTS server (see also: [Configuring Personal Access Tokens in VSTS](https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate)) | string | Yes, if using a VSTS feature |
