@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using DocHound.Interfaces;
 using Microsoft.AspNetCore.Routing;
 using DocHound.Models;
-using Westwind.AspNetCore.Extensions;
-using Westwind.AspNetCore;
 using Microsoft.AspNetCore.Http;
 
 namespace DocHound.Controllers
@@ -18,9 +16,6 @@ namespace DocHound.Controllers
         //public async Task<IActionResult> Topic(string fragment1 = null, string fragment2 = null, string fragment3 = null, string fragment4 = null, string fragment5 = null, string fragment6 = null, string fragment7 = null, string fragment8 = null, string fragment9 = null, string fragment10 = null)
         public async Task<IActionResult> Topic()
         {
-           
-
-
             var routeCollection = HttpContext.GetRouteData();
             var topic = routeCollection.Values.Values.FirstOrDefault()?.ToString();
 
@@ -133,12 +128,18 @@ namespace DocHound.Controllers
                         SettingsHelper.GetSetting<string>(Settings.VstsInstance, requestRootSettings: settings),
                         SettingsHelper.GetSetting<string>(Settings.VstsProjectName, requestRootSettings: settings),
                         SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder, requestRootSettings: settings),
-                        SettingsHelper.GetSetting<string>(Settings.VstsPat, requestRootSettings: settings));
+                        SettingsHelper.GetSetting<string>(Settings.VstsPat, requestRootSettings: settings),
+                        SettingsHelper.GetSetting<string>(Settings.VstsApiVersion, requestRootSettings: settings));
                     return File(stream, GetContentTypeFromUrl(path), StringHelper.JustFileName(path));
                 }
                 else
                 {
-                    var stream = await VstsHelper.GetFileStream(path, SettingsHelper.GetSetting<string>(Settings.VstsInstance), SettingsHelper.GetSetting<string>(Settings.VstsProjectName), SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder), SettingsHelper.GetSetting<string>(Settings.VstsPat));
+                    var stream = await VstsHelper.GetFileStream(path, 
+                        SettingsHelper.GetSetting<string>(Settings.VstsInstance), 
+                        SettingsHelper.GetSetting<string>(Settings.VstsProjectName), 
+                        SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder), 
+                        SettingsHelper.GetSetting<string>(Settings.VstsPat),
+                        SettingsHelper.GetSetting<string>(Settings.VstsApiVersion));
                     return File(stream, GetContentTypeFromUrl(path), StringHelper.JustFileName(path));
                 }
             }

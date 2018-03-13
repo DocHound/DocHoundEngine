@@ -69,7 +69,7 @@ namespace DocHound.Models.Docs
                             LogoUrl = GitHubMasterUrlRaw + logoUrl;
                         break;
                     case RepositoryTypes.VstsGit:
-                        tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
+                        tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
                         if (!logoUrlIsAbsolute)
                             LogoUrl = $"/___FileProxy___?mode=vstsgit&path={logoUrl}";
                         break;
@@ -136,7 +136,7 @@ namespace DocHound.Models.Docs
 
                     case RepositoryTypes.VstsGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
-                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat));
+                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
                         ImageRootUrl = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsGit + "&path=";
                         if (SelectedTopic.LinkPure.Contains("/"))
                             ImageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
@@ -154,12 +154,15 @@ namespace DocHound.Models.Docs
                         {
                             // The current node is a list of work item queries, but we use it as a context to run the actual query
                             var queryId = HttpContext.Request.Query["queryid"];
-                            var queryInfoJson = await VstsHelper.GetWorkItemQueriesJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                            var queryInfoJson = await VstsHelper.GetWorkItemQueriesJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
                             dynamic queryInfo = JObject.Parse(queryInfoJson);
                             if (queryInfo != null)
                                 Title = "Query: " + queryInfo.name;
-                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
-                            rawTopic.Type = TopicTypeNames.VstsWorkItemQuery;
+                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                            if (rawTopic.OriginalContent.StartsWith("{"))
+                                rawTopic.Type = TopicTypeNames.VstsWorkItemQuery;
+                            else
+                                rawTopic.Type = TopicTypeNames.Markdown; // Something went wrong, but one way or another, we didn't end up with JSON
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItem))
                         {
@@ -170,13 +173,13 @@ namespace DocHound.Models.Docs
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries))
                         {
                             // Plain work item queries
-                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemQueriesJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemQueriesJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
                             Title = SelectedTopic.Title;
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery))
                         {
                             // Plain work item query
-                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat));
+                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
                             Title = SelectedTopic.Title;
                         }
 

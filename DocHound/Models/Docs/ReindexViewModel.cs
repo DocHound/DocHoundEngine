@@ -31,7 +31,7 @@ namespace DocHound.Models.Docs
                     tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
                     break;
                 case RepositoryTypes.VstsGit:
-                    tocJson = await VstsHelper.GetTocJson(VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
+                    tocJson = await VstsHelper.GetTocJson(VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat, VstsApiVersion);
                     break;
             }
             if (string.IsNullOrEmpty(tocJson)) return;
@@ -153,6 +153,17 @@ namespace DocHound.Models.Docs
             }
         }
 
+        public string _vstsApiVersion = null;
+        public string VstsApiVersion
+        {
+            get
+            {
+                if (_vstsApiVersion == null)
+                    _vstsApiVersion = SettingsHelper.GetSetting<string>(Settings.VstsApiVersion);
+                return _vstsApiVersion;
+            }
+        }
+
         public async Task Reindex()
         {
             if (Topics == null || Topics.Count < 1) return;
@@ -176,7 +187,7 @@ namespace DocHound.Models.Docs
                             break;
                         case RepositoryTypes.VstsGit:
                             if (!string.IsNullOrEmpty(nextTopic.LinkPure))
-                                content = await VstsHelper.GetFileContents(nextTopic.LinkPure, VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat);
+                                content = await VstsHelper.GetFileContents(nextTopic.LinkPure, VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat, VstsApiVersion);
                             break;
                     }
                 }

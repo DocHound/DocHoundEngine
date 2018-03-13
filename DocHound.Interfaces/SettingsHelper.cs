@@ -219,6 +219,7 @@ namespace DocHound.Interfaces
         VstsPat,
         VstsDocsFolder,
         VstsProjectName,
+        [DefaultValue("4.1-preview")]VstsApiVersion,
 
         // General topic toggle setting 
         [DefaultValue(false)] RequireAuthentication,

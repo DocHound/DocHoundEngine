@@ -31,14 +31,15 @@ namespace DocHound.Models.Docs
                     var instance = _parent.GetSetting<string>(Settings.VstsInstance);
                     var projectName = _parent.GetSetting<string>(Settings.VstsProjectName);
                     var personalAccessToken = _parent.GetSetting<string>(Settings.VstsPat);
-                    var workItemTypesJson = VstsHelper.GetWorkItemTypes(instance, projectName, personalAccessToken).Result;
+                    var apiVersion = _parent.GetSetting<string>(Settings.VstsApiVersion);
+                    var workItemTypesJson = VstsHelper.GetWorkItemTypes(instance, projectName, personalAccessToken, apiVersion).Result;
                     if (!string.IsNullOrEmpty(workItemTypesJson))
                     {
                         dynamic workItemTypes = JObject.Parse(workItemTypesJson);
                         foreach (var workItemType in workItemTypes.value)
                         {
                             var workItemTypeName = (string) workItemType.name;
-                            var workItemStateJson = VstsHelper.GetWorkItemTypeStates(workItemTypeName, instance, projectName, personalAccessToken).Result;
+                            var workItemStateJson = VstsHelper.GetWorkItemTypeStates(workItemTypeName, instance, projectName, personalAccessToken, apiVersion).Result;
                             if (!string.IsNullOrEmpty(workItemStateJson))
                             {
                                 dynamic workItemStates = JObject.Parse(workItemStateJson);
