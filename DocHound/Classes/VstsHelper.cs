@@ -145,7 +145,7 @@ namespace DocHound.Classes
                             while (workItemIds.Count > 0)
                             {
                                 // We can retrieve up to 20 items in a batch
-                                var resultJson = await GetWorkItemsJson(workItemIds.Take(20), instance, personalAccessToken, fieldList2);
+                                var resultJson = await GetWorkItemsJson(workItemIds.Take(20), instance, personalAccessToken, apiVersion, fieldList2);
                                 dynamic queryResultItems = JObject.Parse(resultJson);
                                 foreach (var resultItem in queryResultItems.value)
                                     resultSets.Add(resultItem);
@@ -173,9 +173,9 @@ namespace DocHound.Classes
             }
         }
 
-        public static async Task<string> GetWorkItemJson(int workItemNumber, string instance, string personalAccessToken, string fieldList = "")
+        public static async Task<string> GetWorkItemJson(int workItemNumber, string instance, string personalAccessToken, string apiVersion, string fieldList = "")
         {
-            return await GetWorkItemsJson(new[] {workItemNumber}, instance, personalAccessToken, fieldList);
+            return await GetWorkItemsJson(new[] {workItemNumber}, instance, personalAccessToken, apiVersion, fieldList);
         }
         public static async Task<string> GetWorkItemsJson(IEnumerable<int> workItemNumbers, string instance, string personalAccessToken, string apiVersion, string fieldList = "")
         {

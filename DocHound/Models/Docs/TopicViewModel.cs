@@ -147,7 +147,7 @@ namespace DocHound.Models.Docs
                         {
                             // The current node is a work item query, but we use it as a context to get the actual work item
                             var itemNumber = int.Parse(HttpContext.Request.Query["workitemnumber"]);
-                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
                             rawTopic.Type = TopicTypeNames.VstsWorkItem;
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries) && HttpContext.Request.Query.ContainsKey("queryid"))
@@ -168,7 +168,7 @@ namespace DocHound.Models.Docs
                         {
                             // Plain work item node
                             var itemNumber = int.Parse(SelectedTopic.Link);
-                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat));
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
                         }
                         else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries))
                         {
