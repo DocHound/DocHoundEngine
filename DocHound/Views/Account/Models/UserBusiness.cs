@@ -64,7 +64,7 @@ namespace DocHound.Models
                         command.Parameters.Add(new SqlParameter("@domain", domain));
 
                         var reader = await command.ExecuteReaderAsync();
-                        if (reader == null)
+                        if (reader == null || !reader.HasRows)
                             return null;
 
                         reader.Read();
