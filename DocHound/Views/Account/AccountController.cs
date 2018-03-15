@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DocHound.Controllers;
 using DocHound.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -39,7 +40,9 @@ namespace DocHound.Views.Account
             }
 
             var userBus = new UserBusiness();
-            var user = await userBus.Authenticate(model.Email, model.Password);
+            var user = await userBus.Authenticate(model.Email, model.Password, 
+                                                 ControllerHelper.GetCurrentDomainPrefix(HttpContext.Request),
+                                                 "kavadocs.com");
             if (user == null)
             {
                 model.ErrorDisplay.ShowError(userBus.ErrorMessage);

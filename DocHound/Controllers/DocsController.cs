@@ -24,7 +24,7 @@ namespace DocHound.Controllers
 
             if (SqlDataAccess.CanUseSql)
             {
-                var prefix = GetCurrentDomainPrefix();
+                var prefix = ControllerHelper.GetCurrentDomainPrefix(HttpContext.Request);
                 var settings = await SqlDataAccess.GetSqlRepositorySettings(prefix);
                 if (settings == null)
                     return NotFound($"Document repository {prefix} does not exist.");
@@ -47,21 +47,21 @@ namespace DocHound.Controllers
             return View(vm.ThemeFolder + "/" + vm.TemplateName + ".cshtml", vm);
         }
 
-        private string GetCurrentDomainPrefix()
-        {
-            if (Request.Host.Host.ToLowerInvariant() != "localhost")
-            {
-                var hostParts = Request.Host.Host.Split('.');
-                if (hostParts.Length > 2)
-                {
-                    var usableHostParts = hostParts.Take(hostParts.Length - 2);
-                    var prefix = string.Join('.', usableHostParts).ToLowerInvariant();
-                    return prefix;
-                }
-            }
-            var defaultPrefix = SettingsHelper.GetGlobalSetting("DefaultDomainPrefix");
-            return string.IsNullOrEmpty(defaultPrefix) ? "docs" : defaultPrefix;
-        }
+        //private string GetCurrentDomainPrefix()
+        //{
+        //    if (Request.Host.Host.ToLowerInvariant() != "localhost")
+        //    {
+        //        var hostParts = Request.Host.Host.Split('.');
+        //        if (hostParts.Length > 2)
+        //        {
+        //            var usableHostParts = hostParts.Take(hostParts.Length - 2);
+        //            var prefix = string.Join('.', usableHostParts).ToLowerInvariant();
+        //            return prefix;
+        //        }
+        //    }
+        //    var defaultPrefix = SettingsHelper.GetGlobalSetting("DefaultDomainPrefix");
+        //    return string.IsNullOrEmpty(defaultPrefix) ? "docs" : defaultPrefix;
+        //}
 
         // TODO: Need topics and toc to be individually accessible for AJAX calls
         //public async Task<IActionResult> TopicContentsOnly(string topicName)
@@ -92,7 +92,7 @@ namespace DocHound.Controllers
                 var model = new TopicViewModel(topic, HttpContext);
                 if (SqlDataAccess.CanUseSql)
                 {
-                    var prefix = GetCurrentDomainPrefix();
+                    var prefix = ControllerHelper.GetCurrentDomainPrefix(HttpContext.Request);
                     var settings = await SqlDataAccess.GetSqlRepositorySettingsDynamic(prefix);
                     if (settings == null)
                         return NotFound($"Document repository {prefix} does not exist.");
@@ -120,7 +120,7 @@ namespace DocHound.Controllers
             {
                 if (SqlDataAccess.CanUseSql)
                 {
-                    var prefix = GetCurrentDomainPrefix();
+                    var prefix = ControllerHelper.GetCurrentDomainPrefix(HttpContext.Request);
                     var settings = await SqlDataAccess.GetSqlRepositorySettingsDynamic(prefix);
                     if (settings == null)
                         return NotFound($"Document repository {prefix} does not exist.");
@@ -167,6 +167,26 @@ namespace DocHound.Controllers
             await vm.LoadData();
             await vm.Reindex();
             return Content("Done.");
+        }
+    }
+
+    public static class ControllerHelper
+    {
+
+        public static string GetCurrentDomainPrefix(HttpRequest request)
+        {
+            if (request.Host.Host.ToLowerInvariant() != "localhost")
+            {
+                var hostParts = request.Host.Host.Split('.');
+                if (hostParts.Length > 2)
+                {
+                    var usableHostParts = hostParts.Take(hostParts.Length - 2);
+                    var prefix = string.Join('.', usableHostParts).ToLowerInvariant();
+                    return prefix;
+                }
+            }
+            var defaultPrefix = SettingsHelper.GetGlobalSetting("DefaultDomainPrefix");
+            return string.IsNullOrEmpty(defaultPrefix) ? "docs" : defaultPrefix;
         }
     }
 }

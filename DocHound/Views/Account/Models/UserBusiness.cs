@@ -12,7 +12,7 @@ namespace DocHound.Models
         public string ErrorMessage { get; set; }
 
         public async Task<DocHound.Models.User> Authenticate(string username, string password, 
-                                 string prefix = "docs", string domain="kavadocs.com")
+                                 string prefix, string domain="kavadocs.com")
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
@@ -21,7 +21,7 @@ namespace DocHound.Models
             }
 
             // assumes only no dupe email addresses
-            var user = await GetUserByEmail(username);
+            var user = await GetUserByEmail(username, prefix, domain);
             if(user == null)
             {
                 ErrorMessage = "Invalid username or password.";
@@ -40,7 +40,7 @@ namespace DocHound.Models
 
 
         public async Task<DocHound.Models.User> GetUserByEmail(string email, 
-            string domainPrefix = "docs",
+            string domainPrefix,
             string domain = "kavadocs.com")
         {
             string sql = @"select UR.UserType, U.Id, U.email, U.UserDisplayName, U.Company,
