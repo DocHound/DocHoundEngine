@@ -5,17 +5,25 @@
     Layout = "~/Views/Account/_AccountLayout.cshtml";
     ViewData["Title"] = "Sign in";
     var appUser = User.GetAppUser();
-}
 
-<div class="content-container" style="max-width: 600px">
+    // figure out return URL for external links
+    var request = Context.Request;
+    string externalReturnUrl = Model.ReturnUrl;
+    if (string.IsNullOrEmpty(Model.ReturnUrl))
+    {
+        externalReturnUrl = $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}";
+    }
+    
+}
+    <div class="content-container" style="max-width: 600px">
     <h1 class="page-header-text">
         <i class="fas fa-sign-in"></i>
         Sign in
     </h1>
 
-    <p class="margin-bottom-2x">
+    <p class="margin-bottom-2x">                
         Please sign into your account to access this repository.
-        If you don't have an account yet <a href="https://kavadocs.com/account/profile">create one to get started</a>.
+        If you don't have an account yet <a href="https://kavadocs.com/account/profile?ReturnUrl=@externalReturnUrl">create one to get started</a>.
     </p>
 
     <error-display error-display-model="Model.ErrorDisplay"></error-display>
@@ -79,13 +87,13 @@
                 </div>
             }
         </div>
-        <div class="margin-top" *ngIf="!isForgotPassword">
-            <a href="https://kavadocs.com/account/recover">I forgot my password</a>
+        <div class="margin-top">
+            <a href="https://kavadocs.com/account/recover?ReturnUrl=@externalReturnUrl">I forgot my password</a>
         </div>
         <hr />
 
         <p>Don't have an account yet? No problem, create one - it's FREE and easy.</p>
-        <a href="https://kavadocs.com/account/profile" class="btn btn-primary" routerLink="/profile">
+        <a href="https://kavadocs.com/account/profile?ReturnUrl=@externalReturnUrl" class="btn btn-primary" routerLink="/profile">
             <i class="fa fa-pencil"></i>
             Create a new Account
         </a>
