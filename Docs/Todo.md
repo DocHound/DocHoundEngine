@@ -148,3 +148,4 @@
 * [ ] It would be nice if Doc Hound could serve up a few non-doc pages also, allowing people to build their entire site with Kava Docs. (Example: http://aurelia.io could be almost entirely done in Kava Docs, if we only allowed a few more other pages to be added in interesting ways).
 * [ ] We need to make sure that people can export all the content
 * [ ] Would be nice to allow users to subscribe to changes and be notified.
+* [ ] Would be nice to support course-ware of some sort, like http://courses.planetary.org or even something like a "Pluralsight light".
