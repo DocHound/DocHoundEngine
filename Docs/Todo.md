@@ -149,3 +149,4 @@
 * [ ] We need to make sure that people can export all the content
 * [ ] Would be nice to allow users to subscribe to changes and be notified.
 * [ ] Would be nice to support course-ware of some sort, like http://courses.planetary.org or even something like a "Pluralsight light".
+  * [ ] Would be nice to track which documents (or "lessons") a user has already read and/or completed. This would be nice for courses, but it coudl also be useful for other things. Plus, it could be useful for "go back to where I left off".
