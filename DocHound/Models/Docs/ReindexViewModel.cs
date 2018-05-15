@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
+using DocHound.ContentLoaders;
 using DocHound.Interfaces;
 using HtmlAgilityPack;
 using Markdig;
@@ -28,7 +29,7 @@ namespace DocHound.Models.Docs
             switch (RepositoryType)
             {
                 case RepositoryTypes.GitHubRaw:
-                    tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
+                    // TODO: tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
                     break;
                 case RepositoryTypes.VstsGit:
                     tocJson = await VstsHelper.GetTocJson(VstsInstance, VstsProjectName, VstsDocsFolder, VstsPat, VstsApiVersion);

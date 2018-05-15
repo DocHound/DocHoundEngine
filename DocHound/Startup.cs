@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DocHound.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using DocHound.ContentLoaders;
+using DocHound.ContentLoaders.GitHub;
 
 namespace DocHound
 {
@@ -58,6 +60,9 @@ namespace DocHound
                 routes.MapRoute("fileproxy", "___FileProxy___", new {controller = "Docs", action = nameof(DocsController.FileProxy)});
                 routes.MapRoute("docs", "{*url}", new {controller = "Docs", action = nameof(DocsController.Topic)});
             });
+
+            // Configuring all the content loaders (content sources) we support
+            ContentLoaderFactory.RegisterLoader<GitHubRawContentLoader>(RepositoryTypes.GitHubRaw);
         }
     }
 }

@@ -18,6 +18,7 @@
     <Folder Include="wwwroot\css\jsmath\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DocHound.ContentLoaders.GitHub\DocHound.ContentLoaders.GitHub.csproj" />
     <ProjectReference Include="..\DocHound.Interfaces\DocHound.Interfaces.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj" />

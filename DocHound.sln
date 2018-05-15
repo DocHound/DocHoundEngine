@@ -5,15 +5,23 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound", "DocHound\DocHound.csproj", "{25715F5F-247A-4516-90EB-DC30E7726591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.Interfaces", "DocHound.Interfaces\DocHound.Interfaces.csproj", "{5E9554CB-FB6E-497F-8DB5-9BBFFAB62EA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.Interfaces", "DocHound.Interfaces\DocHound.Interfaces.csproj", "{5E9554CB-FB6E-497F-8DB5-9BBFFAB62EA5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Topic Renderers", "Topic Renderers", "{7CE42800-AC30-4E47-A669-117BDE152221}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.Html", "DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj", "{910163B1-AEF9-482A-8054-C84360DD5C80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.TopicRenderers.Html", "DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj", "{910163B1-AEF9-482A-8054-C84360DD5C80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.Markdown", "DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj", "{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.TopicRenderers.Markdown", "DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj", "{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.VisualStudioTeamSystem", "DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj", "{101CEAE5-E939-42B8-89AE-AA433B3D6471}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.TopicRenderers.VisualStudioTeamSystem", "DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj", "{101CEAE5-E939-42B8-89AE-AA433B3D6471}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content Loaders", "Content Loaders", "{23768B3D-6549-4436-BB7D-4597BB1D5857}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.ContentLoaders.GitHub", "DocHound.ContentLoaders.GitHub\DocHound.ContentLoaders.GitHub.csproj", "{3BE535F8-5FE1-42DC-99C7-C22951924EC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.ContentLoaders", "DocHound.ContentLoaders\DocHound.ContentLoaders.csproj", "{54262CAF-1D3A-4746-A1C2-70A6081AE197}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.ContentLoaders.Vsts", "DocHound.ContentLoaders.Vsts\DocHound.ContentLoaders.Vsts.csproj", "{23B12C48-2684-4144-95E4-01BE12F74147}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +49,18 @@ Global
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BE535F8-5FE1-42DC-99C7-C22951924EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE535F8-5FE1-42DC-99C7-C22951924EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE535F8-5FE1-42DC-99C7-C22951924EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE535F8-5FE1-42DC-99C7-C22951924EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54262CAF-1D3A-4746-A1C2-70A6081AE197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54262CAF-1D3A-4746-A1C2-70A6081AE197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54262CAF-1D3A-4746-A1C2-70A6081AE197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54262CAF-1D3A-4746-A1C2-70A6081AE197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B12C48-2684-4144-95E4-01BE12F74147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B12C48-2684-4144-95E4-01BE12F74147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B12C48-2684-4144-95E4-01BE12F74147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B12C48-2684-4144-95E4-01BE12F74147}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +69,9 @@ Global
 		{910163B1-AEF9-482A-8054-C84360DD5C80} = {7CE42800-AC30-4E47-A669-117BDE152221}
 		{A3AE9E38-319F-47B1-AC12-24E0682C7E0D} = {7CE42800-AC30-4E47-A669-117BDE152221}
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471} = {7CE42800-AC30-4E47-A669-117BDE152221}
+		{3BE535F8-5FE1-42DC-99C7-C22951924EC1} = {23768B3D-6549-4436-BB7D-4597BB1D5857}
+		{54262CAF-1D3A-4746-A1C2-70A6081AE197} = {23768B3D-6549-4436-BB7D-4597BB1D5857}
+		{23B12C48-2684-4144-95E4-01BE12F74147} = {23768B3D-6549-4436-BB7D-4597BB1D5857}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ECF405A6-4BC2-4A47-A583-0DF2C2551E17}

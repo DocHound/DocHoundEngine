@@ -8,6 +8,7 @@ using DocHound.Interfaces;
 using Microsoft.AspNetCore.Routing;
 using DocHound.Models;
 using Microsoft.AspNetCore.Http;
+using DocHound.ContentLoaders;
 
 namespace DocHound.Controllers
 {

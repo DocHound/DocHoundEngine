@@ -1,7 +1,6 @@
-using DocHound.ContentLoaders;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace DocHound.Classes
+namespace DocHound.ContentLoaders
 {
     public static class ContentSniffer
     {

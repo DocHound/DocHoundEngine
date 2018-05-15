@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using DocHound.Classes;
+using DocHound.ContentLoaders;
+using DocHound.ContentLoaders.GitHub;
 using DocHound.Interfaces;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
@@ -51,29 +53,39 @@ namespace DocHound.Models.Docs
 
             var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
 
-            var logoUrl = GetSetting<string>(Settings.LogoPath);
-            var logoUrlLower = logoUrl.ToLowerInvariant();
-            var logoUrlIsAbsolute = true;
-            if (!logoUrl.StartsWith("http://") && !logoUrl.StartsWith("https://")) logoUrlIsAbsolute = false;
-            LogoUrl = logoUrl;
 
             if (UseSqlServer) // SQL server *may* provide a local tabe of contents that would override all others
                 tocJson = await SqlDataAccess.GetRepositoryLocalTableOfContents(CurrentPrefix);
 
             if (string.IsNullOrEmpty(tocJson))
-                switch (repositoryType)
-                {
-                    case RepositoryTypes.GitHubRaw:
-                        tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
-                        if (!logoUrlIsAbsolute)
-                            LogoUrl = GitHubMasterUrlRaw + logoUrl;
-                        break;
-                    case RepositoryTypes.VstsGit:
-                        tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
-                        if (!logoUrlIsAbsolute)
-                            LogoUrl = $"/___FileProxy___?mode=vstsgit&path={logoUrl}";
-                        break;
-                }
+            {
+                var loader = ContentLoaderFactory.GetContentLoader(repositoryType, this);
+                if (loader == null) return;
+                tocJson = await loader.GetTocJsonAsync();
+                LogoUrl = loader.GetLogoUrl();
+            }
+
+            //var logoUrl = GetSetting<string>(Settings.LogoPath);
+            //var logoUrlLower = logoUrl.ToLowerInvariant();
+            //var logoUrlIsAbsolute = true;
+            //if (!logoUrl.StartsWith("http://") && !logoUrl.StartsWith("https://")) logoUrlIsAbsolute = false;
+            //LogoUrl = logoUrl;
+
+            //if (string.IsNullOrEmpty(tocJson))
+            //    switch (repositoryType)
+            //    {
+            //        case RepositoryTypes.GitHubRaw:
+            //            tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubRaw(GitHubMasterUrlRaw);
+            //            if (!logoUrlIsAbsolute)
+            //                LogoUrl = GitHubMasterUrlRaw + logoUrl;
+            //            break;
+            //        case RepositoryTypes.VstsGit:
+            //            tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+            //            if (!logoUrlIsAbsolute)
+            //                LogoUrl = $"/___FileProxy___?mode=vstsgit&path={logoUrl}";
+            //            break;
+            //    }
+
             if (string.IsNullOrEmpty(tocJson)) return;
 
             var dynamicToc = TableOfContentsHelper.GetDynamicTocFromJson(tocJson);
@@ -121,25 +133,38 @@ namespace DocHound.Models.Docs
                 if (TopicTypeHelper.IsVstsWorkItemType(rawTopic?.Type))
                     repositoryType = RepositoryTypes.VstsWorkItemTracking;
 
+                if (string.IsNullOrEmpty(rawTopic.Type)) rawTopic.Type = TopicTypeHelper.GetTopicTypeFromLink(SelectedTopic.Link);
+
                 switch (repositoryType)
                 {
                     case RepositoryTypes.GitHubRaw:
-                        var fullGitHubRawUrl = GitHubMasterUrlRaw + SelectedTopic.Link;
-                        if (string.IsNullOrEmpty(rawTopic.Type)) rawTopic.Type = TopicTypeHelper.GetTopicTypeFromLink(fullGitHubRawUrl);
-                        if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Markdown) || TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Html))
-                            rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
-                        else if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.ImageUrl))
-                            rawTopic.OriginalContent = fullGitHubRawUrl;
-                        ImageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
-                        if (!string.IsNullOrEmpty(ImageRootUrl) && !ImageRootUrl.EndsWith("/")) ImageRootUrl += "/";
+                        var loader = ContentLoaderFactory.GetContentLoader(RepositoryTypes.GitHubRaw, this);
+                        rawTopic.OriginalContent = await loader?.GetContentStringAsync(SelectedTopic.Link, rawTopic.Type);
+                        ImageRootUrl = loader?.GetImageRootUrl(SelectedTopic.Link); // TODO: This probably doesn't work and needs the GitHub Root URL added
+
+                        //if (string.IsNullOrEmpty(rawTopic.Type)) rawTopic.Type = TopicTypeHelper.GetTopicTypeFromLink(SelectedTopic.Link);
+                        //if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Markdown) || TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Html))
+                        //{
+                        //    // TODO: Use a factory for this
+                        //    //rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
+                        //}
+                        //else if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.ImageUrl))
+                        //    rawTopic.OriginalContent = GitHubMasterUrlRaw + SelectedTopic.Link;
+
+                        //ImageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
+                        //if (!string.IsNullOrEmpty(ImageRootUrl) && !ImageRootUrl.EndsWith("/")) ImageRootUrl += "/";
                         break;
 
                     case RepositoryTypes.VstsGit:
-                        if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
-                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
-                        ImageRootUrl = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsGit + "&path=";
-                        if (SelectedTopic.LinkPure.Contains("/"))
-                            ImageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
+                        var loader2 = ContentLoaderFactory.GetContentLoader(RepositoryTypes.GitHubRaw, this);
+                        rawTopic.OriginalContent = await loader2?.GetContentStringAsync(SelectedTopic.Link, rawTopic.Type); // Note: Not sure if the regular link works, or whether we have to use the pure link
+                        ImageRootUrl = loader2?.GetImageRootUrl(SelectedTopic.Link);
+
+                        //if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
+                        //    rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                        //ImageRootUrl = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsGit + "&path=";
+                        //if (SelectedTopic.LinkPure.Contains("/"))
+                        //    ImageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
 
                     case RepositoryTypes.VstsWorkItemTracking:
@@ -359,7 +384,7 @@ namespace DocHound.Models.Docs
                     {
                         if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
                             slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{slug}?contentonly=true&recursion={recsEncoded}";
-                        var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, slug);
+                        var insertedHtml = await Classes.ContentSniffer.DownloadContent(Classes.DownloadMode.HttpGet, slug);
                         insertedHtml = AutoEncodeEmbedContent(insertedHtml, slug);
                         sb.Append(insertedHtml);
                     }
@@ -398,7 +423,7 @@ namespace DocHound.Models.Docs
                             {
                                 if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
                                     slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{slug}?contentonly=true&recursion={recsEncoded}";
-                                var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, slug);
+                                var insertedHtml = await Classes.ContentSniffer.DownloadContent(Classes.DownloadMode.HttpGet, slug);
                                 insertedHtml = AutoEncodeEmbedContent(insertedHtml, slug);
                                 sb.Append(insertedHtml);
                             }
@@ -427,7 +452,7 @@ namespace DocHound.Models.Docs
                                 {
                                     if (!slug.ToLowerInvariant().StartsWith("http://") && !slug.ToLowerInvariant().StartsWith("https://"))
                                         slug = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{slug}?contentonly=true";
-                                    var insertedHtml = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, slug);
+                                    var insertedHtml = await Classes.ContentSniffer.DownloadContent(Classes.DownloadMode.HttpGet, slug);
                                     insertedHtml = AutoEncodeEmbedContent(insertedHtml, slug);
                                     sb.Append(insertedHtml);
                                 }

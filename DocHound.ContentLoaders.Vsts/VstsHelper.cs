@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace DocHound.Classes
+namespace DocHound.ContentLoaders.Vsts
 {
-    // TODO: Remove this from here
     public static class VstsHelper
     {
         public static async Task<string> GetWorkItemTypes(string instance, string projectName, string personalAccessToken, string apiVersion)
@@ -176,7 +175,7 @@ namespace DocHound.Classes
 
         public static async Task<string> GetWorkItemJson(int workItemNumber, string instance, string personalAccessToken, string apiVersion, string fieldList = "")
         {
-            return await GetWorkItemsJson(new[] {workItemNumber}, instance, personalAccessToken, apiVersion, fieldList);
+            return await GetWorkItemsJson(new[] { workItemNumber }, instance, personalAccessToken, apiVersion, fieldList);
         }
         public static async Task<string> GetWorkItemsJson(IEnumerable<int> workItemNumbers, string instance, string personalAccessToken, string apiVersion, string fieldList = "")
         {
