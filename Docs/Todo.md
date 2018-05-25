@@ -62,6 +62,7 @@
 
 ## Overall Processing
 
+* [ ] Would be nice to support multiple slugs for a single topic. This would be especially useful when moving stuff around, but you still want to support the older slugs.
 * [ ] We need to make sure we generate all meta tags in the header we would like to have.
 * [ ] Would be really nice to support translations right inline in a document.
 * [ ] No hardcoding of any elements
