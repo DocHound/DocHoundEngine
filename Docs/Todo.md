@@ -151,3 +151,6 @@
 * [ ] Would be nice to allow users to subscribe to changes and be notified.
 * [ ] Would be nice to support course-ware of some sort, like http://courses.planetary.org or even something like a "Pluralsight light".
   * [ ] Would be nice to track which documents (or "lessons") a user has already read and/or completed. This would be nice for courses, but it coudl also be useful for other things. Plus, it could be useful for "go back to where I left off".
+* [ ] Perhaps some kind of bot or AI-based interaction with the help content would be a nice modern feature that helps you find information.
+  * [ ] This could then also be integrated with systems like Slack, Skype, or chat features on web sites
+* [ ] Some kind of "FAQtory" feature would be nice. Maybe we could keep track of things people search for often and thus automatically put it into an FAQ section that is essentially compiled by an AI. Or, perhaps we could come up with a list of things people look for but can't find, and thus should be put on the list of things to document.
