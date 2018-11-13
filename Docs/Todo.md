@@ -20,6 +20,8 @@
 
 ## Rendering Engine
 
+* [ ] Should have an option to automatically add a title to a topic (see also: https://github.com/DocHound/DocHoundEngine/issues/3 and https://github.com/DocHound/DocHoundEngine/issues/2)
+* [ ] URL based images have a problem (see also: https://github.com/DocHound/DocHoundEngine/issues/1)
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
 * [ ] Empty Topics should render the list of child topics more pleasingly
    * [ ] Also, these topics do not seem to send along the CSS override from the TOC properly
