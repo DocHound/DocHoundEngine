@@ -122,7 +122,7 @@ namespace DocHound.Interfaces
             if (settingsObject == null) return default(T);
 
             var settingsDictionary = settingsObject as IDictionary<string, JToken>;
-            if (settingsDictionary == null) 
+            if (settingsDictionary != null) 
                 return GetDictionarySetting<T>(setting, settingsDictionary);
 
             var settingsDictionary2 = settingsObject as IDictionary<string, object>;

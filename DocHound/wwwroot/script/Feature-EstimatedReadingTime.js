@@ -10,8 +10,8 @@ var readingTimeText = '';
 
 if (wordCount > wordsPerMinute) {
     var minutes = wordCount / wordsPerMinute;
-    var minutes = minutes.toFixed(0);
-    if (minutes == 1) readingTimeText = 'About 1 minute to read';
+    minutes = minutes.toFixed(0);
+    if (minutes === 1) readingTimeText = 'About 1 minute to read';
     else if (minutes < 9) readingTimeText = 'About ' + minutes + ' minutes to read';
     else if (minutes < 13) readingTimeText = 'About 10 minutes to read';
     else if (minutes < 18) readingTimeText = 'About 15 minutes to read';
