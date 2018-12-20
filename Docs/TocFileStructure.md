@@ -33,7 +33,7 @@ The following is an example of a TOC Json File structure:
     "useMathematics": false,
     "useMediaLinks": true,
     "usePipeTables": true,
-    "usePragmaLines": true,
+    "usePragmaLines": false,
     "useSmartyPants": true,
     "useSyntaxHighlighting": true,
     "useTaskLists": true,
@@ -162,6 +162,7 @@ The settings object can be set on the root or an individual topic. Settings on a
 | customCssPath | URL (relative or absolute) to a CSS file with CSS overrides | Partial URL or full URL | No |
 | footerHtml | Text to be displayed in the page footer. Used as raw HTML. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | HTML  | No |
 | logoPath | Path (URL) for the main logo file of the docs. Can be an absolute path, or a relative path within the current repository. Note: This value should probably only be set on the root of the documentation repository, otherwise it can lead to unexpected results. | URL (defaults to '''_meta/_logo.png''')  | No |
+| renderProjectTitle | When set to true, automatically renders a project title in the title area next to the logo | true or false default) | No |
 | requireAuthentication | When set to true, requires login and an account that is associated with the current repository | true or false (default)  | No |
 | showEstimatedReadingTime | When set to true, displays an estimate for the time it will take to read the topic | true (default) or false  | No |
 | siteIcon | Relative or absolute path to a custom size icon (replaces the KavaDocs logo icon) | Path to a PNG file  | No |
