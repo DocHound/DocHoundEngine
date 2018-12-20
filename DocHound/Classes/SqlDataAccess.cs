@@ -13,7 +13,7 @@ namespace DocHound.Classes
 
         public static string GetConnectionString()
         {
-            var connectionString = SettingsHelper.GetSetting<string>(Settings.SqlConnectionString);
+            var connectionString = SettingsHelper.GetSetting<string>(SettingsEnum.SqlConnectionString);
             return connectionString;
         }
 

@@ -9,9 +9,9 @@ namespace DocHound.TopicRenderers.VisualStudioTeamSystem
 
         public string GetTemplateName(TopicInformation topic, string suggestedTemplateName, ISettingsProvider settings = null)
         {
-            if (TopicTypeHelper.IsMatch(topic.Type, TopicTypeNames.VstsWorkItem)) return "Vsts/WorkItem";
-            if (TopicTypeHelper.IsMatch(topic.Type, TopicTypeNames.VstsWorkItemQuery)) return "Vsts/WorkItemQueryResult";
-            if (TopicTypeHelper.IsMatch(topic.Type, TopicTypeNames.VstsWorkItemQueries)) return "Vsts/WorkItemQueries";
+            if (TopicTypeHelper.IsMatch(topic.Type, TopicBodyFormats.VstsWorkItem)) return "Vsts/WorkItem";
+            if (TopicTypeHelper.IsMatch(topic.Type, TopicBodyFormats.VstsWorkItemQuery)) return "Vsts/WorkItemQueryResult";
+            if (TopicTypeHelper.IsMatch(topic.Type, TopicBodyFormats.VstsWorkItemQueries)) return "Vsts/WorkItemQueries";
             
             return suggestedTemplateName; // This is probably not good, but so be it
         }

@@ -27,7 +27,7 @@ namespace DocHound.TopicRenderers.Markdown
             var pipeline = builder.Build();
             string html = Markdig.Markdown.ToHtml(markdown, pipeline);
 
-            if (settings.GetSetting<bool>(Settings.UseFontAwesomeInMarkdown))
+            if (settings.GetSetting<bool>(SettingsEnum.UseFontAwesomeInMarkdown))
                 html = ParseFontAwesomeIcons(html);
 
             return html;
@@ -59,25 +59,25 @@ namespace DocHound.TopicRenderers.Markdown
 
         protected virtual MarkdownPipelineBuilder BuildPipeline(MarkdownPipelineBuilder builder, ISettingsProvider settings, string markdown)
         {
-            if (settings.GetSetting<bool>(Settings.UseAbbreviations)) builder = builder.UseAbbreviations();
-            if (settings.GetSetting<bool>(Settings.UseAutoIdentifiers)) builder = builder.UseAutoIdentifiers(AutoIdentifierOptions.GitHub);
-            if (settings.GetSetting<bool>(Settings.UseAutoLinks)) builder = builder.UseAutoLinks();
-            if (settings.GetSetting<bool>(Settings.UseCitations)) builder = builder.UseCitations();
-            if (settings.GetSetting<bool>(Settings.UseCustomContainers)) builder = builder.UseCustomContainers();
-            if (settings.GetSetting<bool>(Settings.UseEmojiAndSmiley)) builder = builder.UseEmojiAndSmiley();
-            if (settings.GetSetting<bool>(Settings.UseEmphasisExtras)) builder = builder.UseEmphasisExtras();
-            if (settings.GetSetting<bool>(Settings.UseFigures)) builder = builder.UseFigures();
-            if (settings.GetSetting<bool>(Settings.UseFootnotes)) builder = builder.UseFootnotes();
-            if (settings.GetSetting<bool>(Settings.UseGenericAttributes)) builder = builder.UseGenericAttributes();
-            if (settings.GetSetting<bool>(Settings.UseGridTables)) builder = builder.UseGridTables();
-            if (settings.GetSetting<bool>(Settings.UseListExtras)) builder = builder.UseListExtras();
-            if (settings.GetSetting<bool>(Settings.UseMathematics)) builder = builder.UseMathematics();
-            if (settings.GetSetting<bool>(Settings.UseMediaLinks)) builder = builder.UseMediaLinks();
-            if (settings.GetSetting<bool>(Settings.UsePipeTables)) builder = builder.UsePipeTables();
-            if (settings.GetSetting<bool>(Settings.UsePragmaLines)) builder = builder.UsePragmaLines();
-            if (settings.GetSetting<bool>(Settings.UseSmartyPants)) builder = builder.UseSmartyPants();
-            if (settings.GetSetting<bool>(Settings.UseTaskLists)) builder = builder.UseTaskLists();
-            if (settings.GetSetting<bool>(Settings.UseYamlFrontMatter)) builder = builder.UseYamlFrontMatter();
+            if (settings.GetSetting<bool>(SettingsEnum.UseAbbreviations)) builder = builder.UseAbbreviations();
+            if (settings.GetSetting<bool>(SettingsEnum.UseAutoIdentifiers)) builder = builder.UseAutoIdentifiers(AutoIdentifierOptions.GitHub);
+            if (settings.GetSetting<bool>(SettingsEnum.UseAutoLinks)) builder = builder.UseAutoLinks();
+            if (settings.GetSetting<bool>(SettingsEnum.UseCitations)) builder = builder.UseCitations();
+            if (settings.GetSetting<bool>(SettingsEnum.UseCustomContainers)) builder = builder.UseCustomContainers();
+            if (settings.GetSetting<bool>(SettingsEnum.UseEmojiAndSmiley)) builder = builder.UseEmojiAndSmiley();
+            if (settings.GetSetting<bool>(SettingsEnum.UseEmphasisExtras)) builder = builder.UseEmphasisExtras();
+            if (settings.GetSetting<bool>(SettingsEnum.UseFigures)) builder = builder.UseFigures();
+            if (settings.GetSetting<bool>(SettingsEnum.UseFootnotes)) builder = builder.UseFootnotes();
+            if (settings.GetSetting<bool>(SettingsEnum.UseGenericAttributes)) builder = builder.UseGenericAttributes();
+            if (settings.GetSetting<bool>(SettingsEnum.UseGridTables)) builder = builder.UseGridTables();
+            if (settings.GetSetting<bool>(SettingsEnum.UseListExtras)) builder = builder.UseListExtras();
+            if (settings.GetSetting<bool>(SettingsEnum.UseMathematics)) builder = builder.UseMathematics();
+            if (settings.GetSetting<bool>(SettingsEnum.UseMediaLinks)) builder = builder.UseMediaLinks();
+            if (settings.GetSetting<bool>(SettingsEnum.UsePipeTables)) builder = builder.UsePipeTables();
+            if (settings.GetSetting<bool>(SettingsEnum.UsePragmaLines)) builder = builder.UsePragmaLines();
+            if (settings.GetSetting<bool>(SettingsEnum.UseSmartyPants)) builder = builder.UseSmartyPants();
+            if (settings.GetSetting<bool>(SettingsEnum.UseTaskLists)) builder = builder.UseTaskLists();
+            if (settings.GetSetting<bool>(SettingsEnum.UseYamlFrontMatter)) builder = builder.UseYamlFrontMatter();
 
             var containsMermaid = markdown.Contains("```mermaid");
             var containsNomnoml = markdown.Contains("```nomnoml");
@@ -85,21 +85,21 @@ namespace DocHound.TopicRenderers.Markdown
             if (useDiagrams)
             {
                 // We need to check to make sure that it isn't specifically disabled
-                if (settings.IsSettingSpecified(Settings.UseDiagramsNomnoml) && !settings.GetSetting<bool>(Settings.UseDiagramsNomnoml))
+                if (settings.IsSettingSpecified(SettingsEnum.UseDiagramsNomnoml) && !settings.GetSetting<bool>(SettingsEnum.UseDiagramsNomnoml))
                     useDiagrams = false;
-                if (settings.IsSettingSpecified(Settings.UseDiagramsMermaid) && !settings.GetSetting<bool>(Settings.UseDiagramsMermaid))
+                if (settings.IsSettingSpecified(SettingsEnum.UseDiagramsMermaid) && !settings.GetSetting<bool>(SettingsEnum.UseDiagramsMermaid))
                     useDiagrams = false;
                 if (useDiagrams) // If we auto-use, we need to set the diagram settings to true in this instance, so subsequent processing will work correctly
                 {
                     if (containsMermaid)
-                        settings.OverrideSetting(Settings.UseDiagramsMermaid, true);
+                        settings.OverrideSetting(SettingsEnum.UseDiagramsMermaid, true);
                     if (containsNomnoml)
-                        settings.OverrideSetting(Settings.UseDiagramsNomnoml, true);
+                        settings.OverrideSetting(SettingsEnum.UseDiagramsNomnoml, true);
                 }
 
             }
             else
-                useDiagrams = settings.GetSetting<bool>(Settings.UseDiagramsMermaid) || settings.GetSetting<bool>(Settings.UseDiagramsNomnoml);
+                useDiagrams = settings.GetSetting<bool>(SettingsEnum.UseDiagramsMermaid) || settings.GetSetting<bool>(SettingsEnum.UseDiagramsNomnoml);
 
             if (useDiagrams) builder = builder.UseDiagrams();
 

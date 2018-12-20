@@ -49,9 +49,9 @@ namespace DocHound.Models.Docs
         {
             string tocJson = null;
 
-            var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+            var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(SettingsEnum.RepositoryType));
 
-            var logoUrl = GetSetting<string>(Settings.LogoPath);
+            var logoUrl = GetSetting<string>(SettingsEnum.LogoPath);
             var logoUrlLower = logoUrl.ToLowerInvariant();
             var logoUrlIsAbsolute = true;
             if (!logoUrl.StartsWith("http://") && !logoUrl.StartsWith("https://")) logoUrlIsAbsolute = false;
@@ -69,7 +69,7 @@ namespace DocHound.Models.Docs
                             LogoUrl = GitHubMasterUrlRaw + logoUrl;
                         break;
                     case RepositoryTypes.VstsGit:
-                        tocJson = await VstsHelper.GetTocJson(GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                        tocJson = await VstsHelper.GetTocJson(GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsDocsFolder), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                         if (!logoUrlIsAbsolute)
                             LogoUrl = $"/___FileProxy___?mode=vstsgit&path={logoUrl}";
                         break;
@@ -97,7 +97,7 @@ namespace DocHound.Models.Docs
             CurrentTopicSettings = SelectedTopic?.SettingsDynamic;
         }
 
-        public bool RequireHttps => GetSetting<bool>(Settings.RequireHttps);
+        public bool RequireHttps => GetSetting<bool>(SettingsEnum.RequireHttps);
 
         private async Task GetHtmlContent()
         {
@@ -114,7 +114,7 @@ namespace DocHound.Models.Docs
             }
             else if (!string.IsNullOrEmpty(normalizedLink))
             {
-                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(SettingsEnum.RepositoryType));
 
                 // Even if the overall repository type is something else, we will switch to different repository access for specific node types, 
                 // as they may point to other repositories or require different APIs even within the same repository
@@ -126,9 +126,9 @@ namespace DocHound.Models.Docs
                     case RepositoryTypes.GitHubRaw:
                         var fullGitHubRawUrl = GitHubMasterUrlRaw + SelectedTopic.Link;
                         if (string.IsNullOrEmpty(rawTopic.Type)) rawTopic.Type = TopicTypeHelper.GetTopicTypeFromLink(fullGitHubRawUrl);
-                        if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Markdown) || TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.Html))
+                        if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicBodyFormats.Markdown) || TopicTypeHelper.IsMatch(rawTopic.Type, TopicBodyFormats.Html))
                             rawTopic.OriginalContent = await WebClientEx.GetStringAsync(fullGitHubRawUrl);
-                        else if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicTypeNames.ImageUrl))
+                        else if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicBodyFormats.ImageUrl))
                             rawTopic.OriginalContent = fullGitHubRawUrl;
                         ImageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
                         if (!string.IsNullOrEmpty(ImageRootUrl) && !ImageRootUrl.EndsWith("/")) ImageRootUrl += "/";
@@ -136,50 +136,50 @@ namespace DocHound.Models.Docs
 
                     case RepositoryTypes.VstsGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
-                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsDocsFolder), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                            rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsDocsFolder), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                         ImageRootUrl = "/___FileProxy___?mode=" + RepositoryTypeNames.VstsGit + "&path=";
                         if (SelectedTopic.LinkPure.Contains("/"))
                             ImageRootUrl += StringHelper.JustPath(SelectedTopic.LinkPure) + "/";
                         break;
 
                     case RepositoryTypes.VstsWorkItemTracking:
-                        if ((TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery) || TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries)) && HttpContext.Request.Query.ContainsKey("workitemnumber"))
+                        if ((TopicTypeHelper.IsMatch(rawTopic?.Type, TopicBodyFormats.VstsWorkItemQuery) || TopicTypeHelper.IsMatch(rawTopic?.Type, TopicBodyFormats.VstsWorkItemQueries)) && HttpContext.Request.Query.ContainsKey("workitemnumber"))
                         {
                             // The current node is a work item query, but we use it as a context to get the actual work item
                             var itemNumber = int.Parse(HttpContext.Request.Query["workitemnumber"]);
-                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
-                            rawTopic.Type = TopicTypeNames.VstsWorkItem;
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
+                            rawTopic.Type = TopicBodyFormats.VstsWorkItem;
                         }
-                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries) && HttpContext.Request.Query.ContainsKey("queryid"))
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicBodyFormats.VstsWorkItemQueries) && HttpContext.Request.Query.ContainsKey("queryid"))
                         {
                             // The current node is a list of work item queries, but we use it as a context to run the actual query
                             var queryId = HttpContext.Request.Query["queryid"];
-                            var queryInfoJson = await VstsHelper.GetWorkItemQueriesJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                            var queryInfoJson = await VstsHelper.GetWorkItemQueriesJson(queryId, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                             dynamic queryInfo = JObject.Parse(queryInfoJson);
                             if (queryInfo != null)
                                 Title = "Query: " + queryInfo.name;
-                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(queryId, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(queryId, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                             if (rawTopic.OriginalContent.StartsWith("{"))
-                                rawTopic.Type = TopicTypeNames.VstsWorkItemQuery;
+                                rawTopic.Type = TopicBodyFormats.VstsWorkItemQuery;
                             else
-                                rawTopic.Type = TopicTypeNames.Markdown; // Something went wrong, but one way or another, we didn't end up with JSON
+                                rawTopic.Type = TopicBodyFormats.Markdown; // Something went wrong, but one way or another, we didn't end up with JSON
                         }
-                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItem))
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicBodyFormats.VstsWorkItem))
                         {
                             // Plain work item node
                             var itemNumber = int.Parse(SelectedTopic.Link);
-                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemJson(itemNumber, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                         }
-                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQueries))
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicBodyFormats.VstsWorkItemQueries))
                         {
                             // Plain work item queries
-                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemQueriesJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                            rawTopic.OriginalContent = await VstsHelper.GetWorkItemQueriesJson(SelectedTopic.Link, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                             Title = SelectedTopic.Title;
                         }
-                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicTypeNames.VstsWorkItemQuery))
+                        else if (TopicTypeHelper.IsMatch(rawTopic?.Type, TopicBodyFormats.VstsWorkItemQuery))
                         {
                             // Plain work item query
-                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(Settings.VstsInstance), GetSetting<string>(Settings.VstsProjectName), GetSetting<string>(Settings.VstsPat), GetSetting<string>(Settings.VstsApiVersion));
+                            rawTopic.OriginalContent = await VstsHelper.RunWorkItemQueryJson(SelectedTopic.Link, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                             Title = SelectedTopic.Title;
                         }
 
@@ -227,7 +227,7 @@ namespace DocHound.Models.Docs
         {
             get
             {
-                var icon = GetSetting<string>(Settings.SiteIcon);
+                var icon = GetSetting<string>(SettingsEnum.SiteIcon);
                 if (icon.StartsWith("~/")) return icon.Substring(1); // This is probably our default site icon
 
                 var lowerIcon = icon.ToLowerInvariant();
@@ -443,9 +443,9 @@ namespace DocHound.Models.Docs
             return sb.ToString();
         }
 
-        private readonly Dictionary<Settings, object> _cachedSettings = new Dictionary<Settings, object>();
+        private readonly Dictionary<SettingsEnum, object> _cachedSettings = new Dictionary<SettingsEnum, object>();
 
-        public T GetSetting<T>(Settings setting)
+        public T GetSetting<T>(SettingsEnum setting)
         {
             if (_cachedSettings.ContainsKey(setting)) return (T) _cachedSettings[setting];
 
@@ -458,9 +458,9 @@ namespace DocHound.Models.Docs
             return value;
         }
 
-        public bool IsSettingSpecified(Settings setting) => SettingsHelper.IsSettingSet(setting, TocSettings, CurrentTopicSettings);
+        public bool IsSettingSpecified(SettingsEnum setting) => SettingsHelper.IsSettingSet(setting, TocSettings, CurrentTopicSettings);
 
-        public void OverrideSetting<T>(Settings setting, T value)
+        public void OverrideSetting<T>(SettingsEnum setting, T value)
         {
             if (_cachedSettings.ContainsKey(setting))
                 _cachedSettings[setting] = value;
@@ -468,7 +468,7 @@ namespace DocHound.Models.Docs
                 _cachedSettings.Add(setting, value);
         }
 
-        public string CustomCss => GetSetting<string>(Settings.CustomCssPath);
+        public string CustomCss => GetSetting<string>(SettingsEnum.CustomCssPath);
 
         public string CustomCssFullPath
         {
@@ -480,7 +480,7 @@ namespace DocHound.Models.Docs
                 if (customCss.ToLowerInvariant().StartsWith("http://") || customCss.ToLowerInvariant().StartsWith("https://"))
                     return customCss;
 
-                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(SettingsEnum.RepositoryType));
                 switch (repositoryType)
                 {
                     case RepositoryTypes.GitHubRaw:
@@ -492,12 +492,12 @@ namespace DocHound.Models.Docs
             }
         }
 
-        public string SyntaxTheme => GetSetting<string>(Settings.SyntaxTheme).ToLowerInvariant();
-        public string Theme => GetSetting<string>(Settings.Theme);
+        public string SyntaxTheme => GetSetting<string>(SettingsEnum.SyntaxTheme).ToLowerInvariant();
+        public string Theme => GetSetting<string>(SettingsEnum.Theme);
         public string ThemeFolder => $"~/wwwroot/Themes/{Theme}";
         public string ThemeFolderRaw => ThemeFolder.Replace("~/wwwroot/", "/");
         public string ThemeCss => $"{ThemeFolderRaw}/Theme.css";
-        public string ThemeColors => GetSetting<string>(Settings.ThemeColors);
+        public string ThemeColors => GetSetting<string>(SettingsEnum.ThemeColors);
 
         public string ThemeColorsCss
         {
@@ -514,7 +514,7 @@ namespace DocHound.Models.Docs
         {
             get
             {
-                var allowableColors = GetSetting<string>(Settings.AllowableThemeColors);
+                var allowableColors = GetSetting<string>(SettingsEnum.AllowableThemeColors);
                 if (!string.IsNullOrEmpty(allowableColors))
                 {
                     var list = allowableColors.Split(',').ToList();
@@ -552,7 +552,7 @@ namespace DocHound.Models.Docs
         {
             get
             {
-                var allowableSyntaxThemeColors = GetSetting<string>(Settings.AllowableSyntaxHighlightingThemes);
+                var allowableSyntaxThemeColors = GetSetting<string>(SettingsEnum.AllowableSyntaxHighlightingThemes);
                 if (!string.IsNullOrEmpty(allowableSyntaxThemeColors))
                 {
                     var list = allowableSyntaxThemeColors.Split(',').ToList();
@@ -579,7 +579,7 @@ namespace DocHound.Models.Docs
             return "/css/highlightjs/styles/" + colorLabel.Replace(" ", "-").ToLowerInvariant() + ".css";
         }
 
-        public string FooterHtml => GetSetting<string>(Settings.FooterHtml);
+        public string FooterHtml => GetSetting<string>(SettingsEnum.FooterHtml);
 
         private string _templateName = "TopicDefault";
 
@@ -695,19 +695,19 @@ namespace DocHound.Models.Docs
         {
             get
             {
-                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(SettingsEnum.RepositoryType));
                 if (repositoryType != RepositoryTypes.GitHubRaw) return string.Empty;
 
                 if (_gitHubMasterUrlRaw == null)
                 {
-                    if (string.IsNullOrEmpty(GetSetting<string>(Settings.GitHubProject)))
+                    if (string.IsNullOrEmpty(GetSetting<string>(SettingsEnum.GitHubProject)))
                     {
                         var gitHubMasterUrlRaw = GitHubMasterUrl.Replace("https://github.com", "https://raw.githubusercontent.com/");
                         if (!GitHubMasterUrl.Contains("/master/")) gitHubMasterUrlRaw += "/master/";
                         _gitHubMasterUrlRaw = gitHubMasterUrlRaw;
                     }
                     else
-                        _gitHubMasterUrlRaw = "https://raw.githubusercontent.com/" + GetSetting<string>(Settings.GitHubProject) + "/master/";
+                        _gitHubMasterUrlRaw = "https://raw.githubusercontent.com/" + GetSetting<string>(SettingsEnum.GitHubProject) + "/master/";
                 }
 
                 return _gitHubMasterUrlRaw;
@@ -720,15 +720,15 @@ namespace DocHound.Models.Docs
         {
             get
             {
-                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(Settings.RepositoryType));
+                var repositoryType = RepositoryTypeHelper.GetTypeFromTypeName(GetSetting<string>(SettingsEnum.RepositoryType));
                 if (repositoryType != RepositoryTypes.GitHubRaw) return string.Empty;
 
                 if (_gitHubMasterUrl == null)
                 {
-                    if (string.IsNullOrEmpty(GetSetting<string>(Settings.GitHubProject)))
-                        _gitHubMasterUrl = GetSetting<string>(Settings.GitHubMasterUrl);
+                    if (string.IsNullOrEmpty(GetSetting<string>(SettingsEnum.GitHubProject)))
+                        _gitHubMasterUrl = GetSetting<string>(SettingsEnum.GitHubMasterUrl);
                     else
-                        _gitHubMasterUrl = "https://github.com/" + GetSetting<string>(Settings.GitHubProject);
+                        _gitHubMasterUrl = "https://github.com/" + GetSetting<string>(SettingsEnum.GitHubProject);
                 }
 
                 return _gitHubMasterUrl;

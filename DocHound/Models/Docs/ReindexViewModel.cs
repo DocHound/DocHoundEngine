@@ -49,7 +49,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (_repositoryTypes == RepositoryTypes.Undefined)
-                    _repositoryTypes = RepositoryTypeHelper.GetTypeFromTypeName(SettingsHelper.GetSetting<string>(Settings.RepositoryType));
+                    _repositoryTypes = RepositoryTypeHelper.GetTypeFromTypeName(SettingsHelper.GetSetting<string>(SettingsEnum.RepositoryType));
                 return _repositoryTypes;
             }
         }
@@ -60,7 +60,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (_gitHubProject == null)
-                    _gitHubProject = SettingsHelper.GetSetting<string>(Settings.GitHubProject);
+                    _gitHubProject = SettingsHelper.GetSetting<string>(SettingsEnum.GitHubProject);
                 return _gitHubProject;
             }
         }
@@ -99,7 +99,7 @@ namespace DocHound.Models.Docs
                 if (_gitHubMasterUrl == null)
                 {
                     if (string.IsNullOrEmpty(GitHubProject))
-                        _gitHubMasterUrl = SettingsHelper.GetSetting<string>(Settings.GitHubMasterUrl);
+                        _gitHubMasterUrl = SettingsHelper.GetSetting<string>(SettingsEnum.GitHubMasterUrl);
                     else
                         _gitHubMasterUrl = "https://github.com/" + GitHubProject;
                 }
@@ -115,7 +115,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (_vstsPat == null)
-                    _vstsPat = SettingsHelper.GetSetting<string>(Settings.VstsPat);
+                    _vstsPat = SettingsHelper.GetSetting<string>(SettingsEnum.VstsPat);
                 return _vstsPat;
             }
         }
@@ -126,7 +126,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (string.IsNullOrEmpty(_vstsInstance))
-                    _vstsInstance = SettingsHelper.GetSetting<string>(Settings.VstsInstance);
+                    _vstsInstance = SettingsHelper.GetSetting<string>(SettingsEnum.VstsInstance);
                 return _vstsInstance;
             }
         }
@@ -137,7 +137,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (_vstsDocsFolder == null)
-                    _vstsDocsFolder = SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder);
+                    _vstsDocsFolder = SettingsHelper.GetSetting<string>(SettingsEnum.VstsDocsFolder);
                 return _vstsDocsFolder;
             }
         }
@@ -148,7 +148,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (_vstsDocsProjectName == null)
-                    _vstsDocsProjectName = SettingsHelper.GetSetting<string>(Settings.VstsProjectName);
+                    _vstsDocsProjectName = SettingsHelper.GetSetting<string>(SettingsEnum.VstsProjectName);
                 return _vstsDocsProjectName;
             }
         }
@@ -159,7 +159,7 @@ namespace DocHound.Models.Docs
             get
             {
                 if (_vstsApiVersion == null)
-                    _vstsApiVersion = SettingsHelper.GetSetting<string>(Settings.VstsApiVersion);
+                    _vstsApiVersion = SettingsHelper.GetSetting<string>(SettingsEnum.VstsApiVersion);
                 return _vstsApiVersion;
             }
         }

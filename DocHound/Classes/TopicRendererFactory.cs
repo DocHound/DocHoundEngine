@@ -24,12 +24,12 @@ namespace DocHound.Classes
 
         private static readonly Dictionary<string, ITopicRenderer> RegisteredRenderers = new Dictionary<string, ITopicRenderer>
         {
-            {TopicTypeNames.Markdown, new MarkdownTopicRenderer()},
-            {TopicTypeNames.Html, new HtmlTopicRenderer()},
-            {TopicTypeNames.ImageUrl, new ImageTopicRenderer()},
-            {TopicTypeNames.VstsWorkItem, new WorkItemTopicRenderer()},
-            {TopicTypeNames.VstsWorkItemQueries, new WorkItemTopicRenderer()},
-            {TopicTypeNames.VstsWorkItemQuery, new WorkItemTopicRenderer()},
+            {TopicBodyFormats.Markdown, new MarkdownTopicRenderer()},
+            {TopicBodyFormats.Html, new HtmlTopicRenderer()},
+            {TopicBodyFormats.ImageUrl, new ImageTopicRenderer()},
+            {TopicBodyFormats.VstsWorkItem, new WorkItemTopicRenderer()},
+            {TopicBodyFormats.VstsWorkItemQueries, new WorkItemTopicRenderer()},
+            {TopicBodyFormats.VstsWorkItemQuery, new WorkItemTopicRenderer()},
         };
 
         public static ITopicRenderer GetRegisteredTopicRenderer(string typeName) 

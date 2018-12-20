@@ -28,10 +28,10 @@ namespace DocHound.Models.Docs
             lock (_workItemStatesLockDummy)
                 if (!_workItemStatesIsPopulated)
                 {
-                    var instance = _parent.GetSetting<string>(Settings.VstsInstance);
-                    var projectName = _parent.GetSetting<string>(Settings.VstsProjectName);
-                    var personalAccessToken = _parent.GetSetting<string>(Settings.VstsPat);
-                    var apiVersion = _parent.GetSetting<string>(Settings.VstsApiVersion);
+                    var instance = _parent.GetSetting<string>(SettingsEnum.VstsInstance);
+                    var projectName = _parent.GetSetting<string>(SettingsEnum.VstsProjectName);
+                    var personalAccessToken = _parent.GetSetting<string>(SettingsEnum.VstsPat);
+                    var apiVersion = _parent.GetSetting<string>(SettingsEnum.VstsApiVersion);
                     var workItemTypesJson = VstsHelper.GetWorkItemTypes(instance, projectName, personalAccessToken, apiVersion).Result;
                     if (!string.IsNullOrEmpty(workItemTypesJson))
                     {
@@ -73,7 +73,7 @@ namespace DocHound.Models.Docs
 
         public string FixHtml(string html)
         {
-            var instance = _parent.GetSetting<string>(Settings.VstsInstance);
+            var instance = _parent.GetSetting<string>(SettingsEnum.VstsInstance);
             var instanceNormalized = instance.ToLowerInvariant();
 
             if (html.Contains("src=\"" + instance + "/"))

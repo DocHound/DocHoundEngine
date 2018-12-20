@@ -35,7 +35,7 @@ namespace DocHound.Controllers
             }
 
             // TODO: How do we get the repository Auth Requirement from the db or local settings?
-            if (vm.GetSetting<bool>(Settings.RequireAuthentication))
+            if (vm.GetSetting<bool>(SettingsEnum.RequireAuthentication))
                 CheckAuthentication();
 
             var appUser = User.GetAppUser();
@@ -99,8 +99,8 @@ namespace DocHound.Controllers
                     model.SetRootSettingsForRequest(settings);
                 }
                 await model.LoadData(buildHtml: false, buildToc: true);
-                var instance = model.GetSetting<string>(Settings.VstsInstance);
-                var pat = model.GetSetting<string>(Settings.VstsPat);
+                var instance = model.GetSetting<string>(SettingsEnum.VstsInstance);
+                var pat = model.GetSetting<string>(SettingsEnum.VstsPat);
                 var stream = await VstsHelper.GetWorkItemAttachmentStream(path, instance, pat);
                 return File(stream, GetContentTypeFromUrl(fileName), fileName);
             }
@@ -125,21 +125,21 @@ namespace DocHound.Controllers
                     if (settings == null)
                         return NotFound($"Document repository {prefix} does not exist.");
                     var stream = await VstsHelper.GetFileStream(path,
-                        SettingsHelper.GetSetting<string>(Settings.VstsInstance, requestRootSettings: settings),
-                        SettingsHelper.GetSetting<string>(Settings.VstsProjectName, requestRootSettings: settings),
-                        SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder, requestRootSettings: settings),
-                        SettingsHelper.GetSetting<string>(Settings.VstsPat, requestRootSettings: settings),
-                        SettingsHelper.GetSetting<string>(Settings.VstsApiVersion, requestRootSettings: settings));
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsInstance, requestRootSettings: settings),
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsProjectName, requestRootSettings: settings),
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsDocsFolder, requestRootSettings: settings),
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsPat, requestRootSettings: settings),
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsApiVersion, requestRootSettings: settings));
                     return File(stream, GetContentTypeFromUrl(path), StringHelper.JustFileName(path));
                 }
                 else
                 {
                     var stream = await VstsHelper.GetFileStream(path, 
-                        SettingsHelper.GetSetting<string>(Settings.VstsInstance), 
-                        SettingsHelper.GetSetting<string>(Settings.VstsProjectName), 
-                        SettingsHelper.GetSetting<string>(Settings.VstsDocsFolder), 
-                        SettingsHelper.GetSetting<string>(Settings.VstsPat),
-                        SettingsHelper.GetSetting<string>(Settings.VstsApiVersion));
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsInstance), 
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsProjectName), 
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsDocsFolder), 
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsPat),
+                        SettingsHelper.GetSetting<string>(SettingsEnum.VstsApiVersion));
                     return File(stream, GetContentTypeFromUrl(path), StringHelper.JustFileName(path));
                 }
             }

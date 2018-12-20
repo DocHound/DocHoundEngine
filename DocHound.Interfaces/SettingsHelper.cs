@@ -36,7 +36,7 @@ namespace DocHound.Interfaces
             }
 
             // We still haven't found anything, so we check if the setting enum defines a default value for the current setting
-            var type = typeof(Settings);
+            var type = typeof(SettingsEnum);
             var memInfo = type.GetMembers().FirstOrDefault(m => SettingsHelper.IsMatch(setting, m.Name));
             if (memInfo != null)
             {
@@ -48,7 +48,7 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
-        public static T GetSetting<T>(Settings setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
+        public static T GetSetting<T>(SettingsEnum setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
         {
             // Topic-specific settings overrule everything else
             if (IsDynamicSettingSet(setting, topicSettings))
@@ -71,7 +71,7 @@ namespace DocHound.Interfaces
             }
 
             // We still haven't found anything, so we check if the setting enum defines a default value for the current setting
-            var type = typeof(Settings);
+            var type = typeof(SettingsEnum);
             var memInfo = type.GetMember(setting.ToString());
             if (memInfo.Length > 0)
             {
@@ -83,7 +83,7 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
-        public static bool IsSettingSet(Settings setting, dynamic repositorySettings = null, dynamic topicSettings = null)
+        public static bool IsSettingSet(SettingsEnum setting, dynamic repositorySettings = null, dynamic topicSettings = null)
         {
             // Topic-specific settings overrule everything else
             if (IsDynamicSettingSet(setting, topicSettings)) return true;
@@ -117,7 +117,7 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
-        private static T GetDynamicSetting<T>(Settings setting, dynamic settingsObject)
+        private static T GetDynamicSetting<T>(SettingsEnum setting, dynamic settingsObject)
         {
             if (settingsObject == null) return default(T);
 
@@ -132,7 +132,7 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
-        private static bool IsDynamicSettingSet(Settings setting, dynamic settingsObject)
+        private static bool IsDynamicSettingSet(SettingsEnum setting, dynamic settingsObject)
         {
             if (settingsObject == null) return false;
 
@@ -164,7 +164,7 @@ namespace DocHound.Interfaces
             return false;
         }
 
-        private static T GetDictionarySetting<T>(Settings setting, IDictionary<string, JToken> dictionary)
+        private static T GetDictionarySetting<T>(SettingsEnum setting, IDictionary<string, JToken> dictionary)
         {
             if (dictionary == null) return default(T);
 
@@ -175,7 +175,7 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
-        private static T GetDictionarySetting<T>(Settings setting, IDictionary<string, object> dictionary)
+        private static T GetDictionarySetting<T>(SettingsEnum setting, IDictionary<string, object> dictionary)
         {
             if (dictionary == null) return default(T);
 
@@ -208,19 +208,19 @@ namespace DocHound.Interfaces
 
         private static dynamic GlobalConfiguration;
 
-        public static Settings GetSettingFromSettingName(string settingName)
+        public static SettingsEnum GetSettingFromSettingName(string settingName)
         {
-            var settingEnumType = typeof(Settings);
-            var settingEnumNames = Enum.GetNames(typeof(Settings));
+            var settingEnumType = typeof(SettingsEnum);
+            var settingEnumNames = Enum.GetNames(typeof(SettingsEnum));
 
             foreach (var settingEnumName in settingEnumNames)
                 if (IsMatch(settingEnumName, settingName))
-                    return (Settings)Enum.Parse(typeof(Settings), settingEnumName);
+                    return (SettingsEnum)Enum.Parse(typeof(SettingsEnum), settingEnumName);
 
-            return Settings.Unknown;
+            return SettingsEnum.Unknown;
         }
 
-        public static string GetSettingNameFromSetting(Settings setting) => setting.ToString().Trim().ToLowerInvariant();
+        public static string GetSettingNameFromSetting(SettingsEnum setting) => setting.ToString().Trim().ToLowerInvariant();
 
         public static bool IsMatch(string settingName, string compareTo)
         {
