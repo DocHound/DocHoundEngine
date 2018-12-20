@@ -9,7 +9,7 @@
     }
 }
 
-@if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+@if (Model.GetSetting<bool>(SettingsEnum.UseSyntaxHighlighting))
 {
     <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
 }
@@ -30,38 +30,38 @@
     </aside>
 
     @*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
-    if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+    if (Model.GetSetting<bool>(SettingsEnum.UseSyntaxHighlighting))
     {
         <script src="~/css/highlightjs/highlight.pack.js"></script>
     }
-    if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
+    if (Model.GetSetting<bool>(SettingsEnum.UseDiagramsMermaid))
     {
         <script src="~/script/mermaid/mermaid.min.js"></script>
     }
-    if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
+    if (Model.GetSetting<bool>(SettingsEnum.UseDiagramsNomnoml))
     {
         <script src="~/script/lodash/lodash.min.js"></script>
         <script src="~/script/dagre/dagre.min.js"></script>
         <script src="~/script/nomnoml/nomnoml.js"></script>
     }
 
-    if (Model.GetSetting<bool>(Settings.UseSyntaxHighlighting))
+    if (Model.GetSetting<bool>(SettingsEnum.UseSyntaxHighlighting))
     {
         <script src="~/script/Feature-Highlight.js"></script>
     }
-    if (Model.GetSetting<bool>(Settings.UseDiagramsMermaid))
+    if (Model.GetSetting<bool>(SettingsEnum.UseDiagramsMermaid))
     {
         <script src="~/script/Feature-Mermaid.js"></script>
     }
-    if (Model.GetSetting<bool>(Settings.UseDiagramsNomnoml))
+    if (Model.GetSetting<bool>(SettingsEnum.UseDiagramsNomnoml))
     {
         <script src="~/script/Feature-Nomnoml.js"></script>
     }
-    if (Model.GetSetting<bool>(Settings.UseMathematics))
+    if (Model.GetSetting<bool>(SettingsEnum.UseMathematics))
     {
         <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
     }
-    if (Model.GetSetting<bool>(Settings.ShowEstimatedReadingTime))
+    if (Model.GetSetting<bool>(SettingsEnum.ShowEstimatedReadingTime))
     {
         <SCRIPT SRC="~/script/Feature-EstimatedReadingTime.js"></SCRIPT>
     }

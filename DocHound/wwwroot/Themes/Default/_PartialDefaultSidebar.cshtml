@@ -18,10 +18,10 @@
     </ul>
 }
 
-@if (Model.GetSetting<bool>(Settings.AllowThemeSwitching) || Model.GetSetting<bool>(Settings.AllowThemeColorSwitching) || Model.GetSetting<bool>(Settings.AllowSyntaxHighlightingThemeSwitching))
+@if (Model.GetSetting<bool>(SettingsEnum.AllowThemeSwitching) || Model.GetSetting<bool>(SettingsEnum.AllowThemeColorSwitching) || Model.GetSetting<bool>(SettingsEnum.AllowSyntaxHighlightingThemeSwitching))
 {
     <p style="font-weight: bold;">Options:</p>
-    if (Model.GetSetting<bool>(Settings.AllowThemeColorSwitching))
+    if (Model.GetSetting<bool>(SettingsEnum.AllowThemeColorSwitching))
     {
         <p class="option-label">Theme Colors:<br/>
             <select id="themeColorSelector">
@@ -32,7 +32,7 @@
             </select>
         </p>
     }
-    if (Model.GetSetting<bool>(Settings.AllowSyntaxHighlightingThemeSwitching))
+    if (Model.GetSetting<bool>(SettingsEnum.AllowSyntaxHighlightingThemeSwitching))
     {
         <p class="option-label" id="syntaxThemeSelectorContainer" style="display: none;">Syntax Highlight Theme:<br/>
             <select id="syntaxThemeSelector">

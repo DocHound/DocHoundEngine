@@ -73,7 +73,7 @@
         @Html.Partial("../_PartialDefaultSidebar.cshtml", Model)
     </aside>
     
-    if (Model.GetSetting<bool>(Settings.ShowEstimatedReadingTime))
+    if (Model.GetSetting<bool>(SettingsEnum.ShowEstimatedReadingTime))
     {
         <SCRIPT SRC="~/script/Feature-EstimatedReadingTime.js"></SCRIPT>
     }
