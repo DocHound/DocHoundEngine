@@ -20,7 +20,10 @@
 
 ## Rendering Engine
 
+* [ ] We are now using a \_kavadocs-project.json over \_toc.json (although we are still supporting the toc one as a secondary option too)
 * [ ] Should have an option to automatically add a title to a topic (see also: https://github.com/DocHound/DocHoundEngine/issues/3 and https://github.com/DocHound/DocHoundEngine/issues/2)
+* [ ] Would be nice to have a "macro" that renders a list of child topics. The syntax should be consistent with the [kava-topic] macro that embeds a whole topic. In this case, maybe it could be [kava-child-topic-list] or something like that. This can then be embedded in topic content for topics that have child topics, so people can easily navigate to them. (We already create the default list, but that is side-stepped if a manual topic is associated. This feature allows to still use that in that case).
+* [ ] Instead of \_meta, we now want to use a \_kavadocs folder. The old folder should not be supported anymore.
 * [ ] URL based images have a problem (see also: https://github.com/DocHound/DocHoundEngine/issues/1)
 * [ ] We shoudl allow setting font sizes. This would be especially useful on mobile devices, where people can't just zoom in.
 * [ ] Empty Topics should render the list of child topics more pleasingly
