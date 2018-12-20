@@ -63,6 +63,10 @@ blockquote {
     color: white;
 }
 
+.header .repositoryTitle {
+    color: white;
+}
+
 .header .mobile-menu-icon {
     color: white;
 }

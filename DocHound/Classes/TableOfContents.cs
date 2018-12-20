@@ -106,8 +106,10 @@ namespace DocHound.Classes
         /// <returns>Task&lt;System.String&gt;.</returns>
         public static async Task<string> GetTocJsonFromGitHubRaw(string gitHubRawUrl)
         {
-            var content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_toc.json");
-            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_meta/_toc.json");
+            var content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_kavadocs-project.json");
+            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_toc.json");
+            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_kavadocs/_toc.json");
+            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadContent(DownloadMode.HttpGet, gitHubRawUrl + "_meta/_toc.json"); // TODO: We can get rid of this one eventually
             if (!string.IsNullOrEmpty(content)) return content;
 
             // The TOC file didn't exist, so we try to scrape the repository

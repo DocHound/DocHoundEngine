@@ -204,9 +204,9 @@
     $(document).on('scroll', function () {
         //We assign a scrolled class to all kinds of elements so they can react when the page isn't at the very top
         if ($(document).scrollTop() > 50) 
-            $('.header, .toc, .sidebar, .logo, .footer').addClass('scrolled');
+            $('.header, .toc, .sidebar, .logo, .footer, .repositoryTitle').addClass('scrolled');
         else 
-            $('.header, .toc, .sidebar, .logo, .footer').removeClass('scrolled');
+            $('.header, .toc, .sidebar, .logo, .footer, .repositoryTitle').removeClass('scrolled');
         highlightActiveOutlineHeading();
     });
     window.highlightNextOutlineScroll = true;

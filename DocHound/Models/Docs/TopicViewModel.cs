@@ -192,6 +192,7 @@ namespace DocHound.Models.Docs
 
             var intermediateHtml = renderer.RenderToHtml(rawTopic, ImageRootUrl, this);
             intermediateHtml = await ProcessKavaTopic(intermediateHtml);
+            intermediateHtml = AutoGenerateTitle(intermediateHtml);
             intermediateHtml = ProcessBrokenImageLinks(intermediateHtml, ImageRootUrl);
             Html = intermediateHtml;
 
@@ -219,6 +220,23 @@ namespace DocHound.Models.Docs
 
                 Html = sb.ToString();
             }
+        }
+
+        private string AutoGenerateTitle(string intermediateHtml) 
+        {
+            var value = SettingsHelper.GetSetting<TrueFalseAuto>(SettingsEnum.RenderTitleInTopic, TocSettings, CurrentTopicSettings, CurrentRequestRootSettings);
+
+            // If it is false, we never do it, no matter what
+            if (value == TrueFalseAuto.False) return intermediateHtml;
+
+            // If the setting is auto, we only render the title if the topic doesn't start with an h1
+            if (value == TrueFalseAuto.Auto && intermediateHtml.Trim().StartsWith("<h1")) return intermediateHtml;
+            
+            // We need to auto-generate a title
+            var link = TopicHelper.GetNormalizedName(SelectedTopic.Title);
+            intermediateHtml = "<h1 id=\"" + link + "\">" + SelectedTopic.Title + "</h1>" + intermediateHtml;
+
+            return intermediateHtml;
         }
 
         public string ImageRootUrl { get; set; } = string.Empty;

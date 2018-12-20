@@ -66,6 +66,10 @@ blockquote {
     background-color: #1e88e5de;
 }
 
+.header .repositoryTitle {
+    color: white;
+}
+
 .header .menu ul li a {
     color: white;
 }

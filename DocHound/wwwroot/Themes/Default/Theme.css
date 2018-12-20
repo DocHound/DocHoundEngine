@@ -254,6 +254,27 @@ h1, h2, h3, h4 {
             max-height: 40px;
         }
 
+    .header .repositoryTitle {
+        font-size: 1.8em;
+        font-weight: 600;
+        float: left;
+        padding-left: 25px;
+        padding-top: 25px;
+        -ms-transition: padding .3s, font-size .3s;
+        -moz-transition: padding .3s, font-size .3s; /* Firefox 4 */
+        -webkit-transition: padding .3s, font-size .3s; /* Safari and Chrome */
+        -o-transition: padding .3s, font-size .3s; /* Opera */
+        transition: padding .3s, font-size .3s;
+        transition-timing-function: ease-in-out;
+    }
+
+    .header .repositoryTitle.scrolled {
+        font-size: 1.6em;
+        padding-left: 15px;
+        padding-top: 5px;
+    }
+
+
     .header .menu {
         display: block;
         max-height: 110px;
@@ -528,6 +549,12 @@ li.kava-auto-link {
     .header .logo {
         margin: 5px 0 0 10px;
         max-height: 40px;
+    }
+
+    .header .repositoryTitle {
+        font-size: 1.6em;
+        padding-left: 15px;
+        padding-top: 5px;
     }
 
     .header .mobile-menu-icon {

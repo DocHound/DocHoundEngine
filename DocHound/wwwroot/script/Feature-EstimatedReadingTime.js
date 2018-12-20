@@ -11,7 +11,7 @@ var readingTimeText = '';
 if (wordCount > wordsPerMinute) {
     var minutes = wordCount / wordsPerMinute;
     minutes = minutes.toFixed(0);
-    if (minutes === 1) readingTimeText = 'About 1 minute to read';
+    if (minutes == 1) readingTimeText = 'About 1 minute to read';
     else if (minutes < 9) readingTimeText = 'About ' + minutes + ' minutes to read';
     else if (minutes < 13) readingTimeText = 'About 10 minutes to read';
     else if (minutes < 18) readingTimeText = 'About 15 minutes to read';
@@ -26,6 +26,9 @@ if (wordCount > wordsPerMinute) {
     else if (minutes < 160) readingTimeText = 'About two and a half hours to read';
     else if (minutes < 190) readingTimeText = 'About three hours to read';
     else readingTimeText = 'More than three hours to read';
+}
+else if (wordCount > 150) {
+    readingTimeText = 'Less than 1 minute to read';
 }
 
 if (readingTimeText.length > 0)

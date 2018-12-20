@@ -58,6 +58,9 @@
     <header class="header headerLarge">
         <i class="fas fa-bars mobile-menu-icon"></i>
         <img class="logo" src="@Model.LogoUrl" />
+        @if (SettingsHelper.GetSetting<bool>(SettingsEnum.RenderProjectTitle, Model.CurrentTopicSettings, Model.TocSettings, Model.CurrentRequestRootSettings)) {
+            <header class="repositoryTitle">@Model.RepositoryTitle</header>
+        }
         <div class="menu">
             @Html.Raw(Model.GetMenu())
         </div>
