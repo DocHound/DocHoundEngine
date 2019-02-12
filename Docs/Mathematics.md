@@ -4,6 +4,8 @@ Kava Docs supports LaTeX Math markup. For specifics on this standard, see https:
 
 You can do things like $E=mc^2$.
 
+This expression: $\vec{F} = \frac{d \vec{p}}{dt} = m \frac{d \vec{v}}{dt} = m \vec{a}$
+
 $$
 \frac{n!}{k!(n-k)!} = \binom{n}{k}
 $$
