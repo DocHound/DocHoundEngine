@@ -2,6 +2,8 @@
 
 Kava Docs supports LaTeX Math markup. For specifics on this standard, see https://en.wikibooks.org/wiki/LaTeX/Mathematics
 
+You can do things like $E=mc^2$.
+
 $$
 \frac{n!}{k!(n-k)!} = \binom{n}{k}
 $$
