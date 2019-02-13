@@ -27,7 +27,7 @@ The following is an example of a TOC Json File structure:
     "useEmphasisExtras": true,
     "useFigures": true,
     "useFootnotes": true,
-    "useGenericAttributes": true,
+    "useGenericAttributes": false,
     "useGridTables": true,
     "useListExtras": true,
     "useMathematics": false,
@@ -180,7 +180,7 @@ The settings object can be set on the root or an individual topic. Settings on a
 | useFigures | Support figures? | true (default) or false  | No |
 | useFootnotes | Support footnotes? | true (default) or false  | No |
 | useFontAwesomeInMarkdown | Should font-awesome tags in markdown automatically be turned into the Font Awesome icons? | true (default) or false  | No |
-| useGenericAttributes | Support generic attributes? | true (default) or false  | No |
+| useGenericAttributes | Support generic attributes? | true or false (default) | No |
 | useGridTables | Support grid tables? | true (default) or false  | No |
 | useListExtras | Support list extras? | true (default) or false  | No |
 | useMathematics | Support LaTeX mathematics notation? | true or false (default) | No |
