@@ -1,6 +1,6 @@
-# Mathematics through LaTeX
+# Mathematics
 
-Kava Docs supports LaTeX Math markup. For specifics on this standard, see https://en.wikibooks.org/wiki/LaTeX/Mathematics
+Kava Docs supports mathematical equations supporting various standards such as (La)TeX Math markup. (For specifics on this standard, see https://en.wikibooks.org/wiki/LaTeX/Mathematics). Here are some examples you can use:
 
 ### HTML Math Markup
 Once hooked up, you can add math expressions using `<div class="math">` syntax as follows:
@@ -24,13 +24,10 @@ Once hooked up, you can add math expressions using `<div class="math">` syntax a
 ### Inline Expressions
 You can use inline expressions using a single `$` to delimit an expression:
 
----
 Who hasn't heard of $E=mc^2$? 
 
 This is another inline expression:  
 $\vec{F} = \frac{d \vec{p}}{dt} = m \frac{d \vec{v}}{dt} = m \vec{a}$
-
----
 
 **Created from:**
 
@@ -59,12 +56,9 @@ $$
 ### Mixed Inline and Block Expressions
 The following is a mixture of inline and block operations:
 
----
 When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
 
 $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
-
----
 
 **Created from:**   
 
@@ -101,8 +95,6 @@ A much longer expression:
 \end{align}
 </div>
 ```
-
-
 
 ### MathML
 The following is a **MathML** block:
