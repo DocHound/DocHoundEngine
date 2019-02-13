@@ -13,40 +13,40 @@ namespace DocHound.Interfaces
             GlobalConfiguration = configuration;
         }
 
-        //public static T GetSetting<T>(string setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
-        //{
-        //    // Topic-specific settings overrule everything else
-        //    if (IsDynamicSettingSet(setting, topicSettings))
-        //        return GetDynamicSetting<T>(setting, topicSettings);
+        public static T GetSetting<T>(string setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
+        {
+            // Topic-specific settings overrule everything else
+            if (IsDynamicSettingSet(setting, topicSettings))
+                return GetDynamicSetting<T>(setting, topicSettings);
 
-        //    // Settings for the whole repository still overrule app-global settings
-        //    if (IsDynamicSettingSet(setting, repositorySettings))
-        //        return GetDynamicSetting<T>(setting, repositorySettings);
+            // Settings for the whole repository still overrule app-global settings
+            if (IsDynamicSettingSet(setting, repositorySettings))
+                return GetDynamicSetting<T>(setting, repositorySettings);
 
-        //    // If we have request-specific root settings, we consider that
-        //    if (IsDynamicSettingSet(setting, requestRootSettings))
-        //        return GetDynamicSetting<T>(setting, requestRootSettings);
+            // If we have request-specific root settings, we consider that
+            if (IsDynamicSettingSet(setting, requestRootSettings))
+                return GetDynamicSetting<T>(setting, requestRootSettings);
 
-        //    // We haven't found anything yet, so we take a look at the global app settings
-        //    if (GlobalConfiguration != null)
-        //    {
-        //        var dynamicGlobalConfiguraiton = (dynamic)GlobalConfiguration;
-        //        var value = dynamicGlobalConfiguraiton[setting];
-        //        if (value != null) return value;
-        //    }
+            // We haven't found anything yet, so we take a look at the global app settings
+            if (GlobalConfiguration != null)
+            {
+                var dynamicGlobalConfiguraiton = (dynamic)GlobalConfiguration;
+                var value = dynamicGlobalConfiguraiton[setting];
+                if (value != null) return value;
+            }
 
-        //    // We still haven't found anything, so we check if the setting enum defines a default value for the current setting
-        //    var type = typeof(SettingsEnum);
-        //    var memInfo = type.GetMembers().FirstOrDefault(m => SettingsHelper.IsMatch(setting, m.Name));
-        //    if (memInfo != null)
-        //    {
-        //        var attributes = memInfo.GetCustomAttributes(typeof(DefaultValueAttribute), false);
-        //        if (attributes.Length > 0)
-        //            return (T)((DefaultValueAttribute)attributes[0]).Value;
-        //    }
+            // We still haven't found anything, so we check if the setting enum defines a default value for the current setting
+            var type = typeof(SettingsEnum);
+            var memInfo = type.GetMembers().FirstOrDefault(m => SettingsHelper.IsMatch(setting, m.Name));
+            if (memInfo != null)
+            {
+                var attributes = memInfo.GetCustomAttributes(typeof(DefaultValueAttribute), false);
+                if (attributes.Length > 0)
+                    return (T)((DefaultValueAttribute)attributes[0]).Value;
+            }
 
-        //    return default(T);
-        //}
+            return default(T);
+        }
 
         public static T GetSetting<T>(SettingsEnum setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
         {
@@ -102,20 +102,20 @@ namespace DocHound.Interfaces
             return false;
         }
 
-        //private static T GetDynamicSetting<T>(string setting, dynamic settingsObject)
-        //{
-        //    if (settingsObject == null) return default(T);
+        private static T GetDynamicSetting<T>(string setting, dynamic settingsObject)
+        {
+            if (settingsObject == null) return default(T);
 
-        //    var settingsDictionary = settingsObject as IDictionary<string, JToken>;
-        //    if (settingsDictionary != null) 
-        //        return GetDictionarySetting<T>(setting, settingsDictionary);
+            var settingsDictionary = settingsObject as IDictionary<string, JToken>;
+            if (settingsDictionary != null)
+                return GetDictionarySetting<T>(setting, settingsDictionary);
 
-        //    var settingsDictionary2 = settingsObject as IDictionary<string, object>;
-        //    if (settingsDictionary2 != null)
-        //        return GetDictionarySetting<T>(setting, settingsDictionary2);
+            var settingsDictionary2 = settingsObject as IDictionary<string, object>;
+            if (settingsDictionary2 != null)
+                return GetDictionarySetting<T>(setting, settingsDictionary2);
 
-        //    return default(T);
-        //}
+            return default(T);
+        }
 
         private static T GetDynamicSetting<T>(SettingsEnum setting, dynamic settingsObject)
         {
@@ -161,20 +161,33 @@ namespace DocHound.Interfaces
             return false;
         }
 
-        //private static bool IsDynamicSettingSet(string setting, dynamic settingsObject)
-        //{
-        //    if (settingsObject == null) return false;
+        private static bool IsDynamicSettingSet(string setting, dynamic settingsObject)
+        {
+            if (settingsObject == null) return false;
 
-        //    var settingsDictionary = settingsObject as IDictionary<string, JToken>;
-        //    if (settingsDictionary != null) 
-        //        return settingsDictionary.Keys.Any(k => IsMatch(k, setting));
+            var settingsDictionary = settingsObject as IDictionary<string, JToken>;
+            if (settingsDictionary != null)
+                if (settingsDictionary.Keys.Any(k => IsMatch(k, setting))) return true;
 
-        //    var settingsDictionary2 = settingsObject as IDictionary<string, object>;
-        //    if (settingsDictionary2 != null) 
-        //        return settingsDictionary2.Keys.Any(k => IsMatch(k, setting));
+            var settingsDictionary2 = settingsObject as IDictionary<string, object>;
+            if (settingsDictionary2 != null)
+                if (settingsDictionary2.Keys.Any(k => IsMatch(k, setting))) return true;
 
-        //    return false;
-        //}
+            var settingStrong = GetSettingFromSettingName(setting);
+            var alternateSettingNames = GetAllternateSettingNamesFromSetting(settingStrong);
+            foreach (var alternateSettingName in alternateSettingNames)
+            {
+                var settingsDictionary3 = settingsObject as IDictionary<string, JToken>;
+                if (settingsDictionary3 != null)
+                    if (settingsDictionary3.Keys.Any(k => IsMatch(k, alternateSettingName))) return true;
+
+                var settingsDictionary4 = settingsObject as IDictionary<string, object>;
+                if (settingsDictionary4 != null)
+                    if (settingsDictionary4.Keys.Any(k => IsMatch(k, alternateSettingName))) return true;
+            }
+
+            return false;
+        }
 
         private static T GetDictionarySetting<T>(SettingsEnum setting, IDictionary<string, JToken> dictionary)
         {
@@ -215,39 +228,57 @@ namespace DocHound.Interfaces
             return default(T);
         }
 
-        //private static T GetDictionarySetting<T>(string setting, IDictionary<string, JToken> dictionary)
-        //{
-        //    if (dictionary == null) return default(T);
+        private static T GetDictionarySetting<T>(string setting, IDictionary<string, JToken> dictionary)
+        {
+            if (dictionary == null) return default(T);
 
-        //    var settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, setting));
-        //    if (!string.IsNullOrEmpty(settingKey))
-        //        return dictionary[settingKey].Value<T>();
-        //    return default(T);
-        //}
+            var settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, setting));
+            if (!string.IsNullOrEmpty(settingKey))
+                return dictionary[settingKey].Value<T>();
 
-        //private static T GetDictionarySetting<T>(string setting, IDictionary<string, object> dictionary)
-        //{
-        //    if (dictionary == null) return default(T);
+            var strongSetting = GetSettingFromSettingName(setting);
+            var alternateSettingNames = GetAllternateSettingNamesFromSetting(strongSetting);
+            foreach (var alternateSettingName in alternateSettingNames)
+            {
+                settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, alternateSettingName));
+                if (!string.IsNullOrEmpty(settingKey))
+                    return dictionary[settingKey].Value<T>();
+            }
+            return default(T);
+        }
 
-        //    var settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, setting));
-        //    if (!string.IsNullOrEmpty(settingKey))
-        //        return (T)dictionary[settingKey];
-        //    return default(T);
-        //}
+        private static T GetDictionarySetting<T>(string setting, IDictionary<string, object> dictionary)
+        {
+            if (dictionary == null) return default(T);
+
+            var settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, setting));
+            if (!string.IsNullOrEmpty(settingKey))
+                return (T)dictionary[settingKey];
+
+            var strongSetting = GetSettingFromSettingName(setting);
+            var alternateSettingNames = GetAllternateSettingNamesFromSetting(strongSetting);
+            foreach (var alternateSettingName in alternateSettingNames)
+            {
+                settingKey = dictionary.Keys.FirstOrDefault(k => IsMatch(k, alternateSettingName));
+                if (!string.IsNullOrEmpty(settingKey))
+                    return (T)dictionary[settingKey];
+            }
+            return default(T);
+        }
 
         private static dynamic GlobalConfiguration;
 
-        //public static SettingsEnum GetSettingFromSettingName(string settingName)
-        //{
-        //    var settingEnumType = typeof(SettingsEnum);
-        //    var settingEnumNames = Enum.GetNames(typeof(SettingsEnum));
+        public static SettingsEnum GetSettingFromSettingName(string settingName)
+        {
+            var settingEnumType = typeof(SettingsEnum);
+            var settingEnumNames = Enum.GetNames(typeof(SettingsEnum));
 
-        //    foreach (var settingEnumName in settingEnumNames)
-        //        if (IsMatch(settingEnumName, settingName))
-        //            return (SettingsEnum)Enum.Parse(typeof(SettingsEnum), settingEnumName);
+            foreach (var settingEnumName in settingEnumNames)
+                if (IsMatch(settingEnumName, settingName))
+                    return (SettingsEnum)Enum.Parse(typeof(SettingsEnum), settingEnumName);
 
-        //    return SettingsEnum.Unknown;
-        //}
+            return SettingsEnum.Unknown;
+        }
 
         public static string GetSettingNameFromSetting(SettingsEnum setting) => setting.ToString().Trim().ToLowerInvariant();
         public static List<string> GetAllternateSettingNamesFromSetting(SettingsEnum setting)

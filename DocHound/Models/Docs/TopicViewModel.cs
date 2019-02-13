@@ -476,6 +476,13 @@ namespace DocHound.Models.Docs
             return value;
         }
 
+        public T GetSetting<T>(string setting)
+        {
+            var value = SettingsHelper.GetSetting<T>(setting, TocSettings, CurrentTopicSettings, CurrentRequestRootSettings);
+
+            return value;
+        }
+
         public bool IsSettingSpecified(SettingsEnum setting) => SettingsHelper.IsSettingSet(setting, TocSettings, CurrentTopicSettings);
 
         public void OverrideSetting<T>(SettingsEnum setting, T value)
