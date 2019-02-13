@@ -33,7 +33,7 @@ $\vec{F} = \frac{d \vec{p}}{dt} = m \frac{d \vec{v}}{dt} = m \vec{a}$
 
 **Created from:**
 
-```text
+```
 Who hasn't heard of $E=mc^2$? 
 
 This is another inline expression:  
@@ -49,7 +49,7 @@ $$
 
 Created from:
 
-```text
+```
 $$
 \frac{n!}{k!(n-k)!} = \binom{n}{k}
 $$
@@ -64,7 +64,7 @@ $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
 
 **Created from:**   
 
-```text
+```
 When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
 
 $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
