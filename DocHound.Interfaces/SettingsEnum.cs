@@ -58,7 +58,7 @@ namespace DocHound.Interfaces
         [DefaultValue(true)] UseEmphasisExtras,
         [DefaultValue(true)] UseFigures,
         [DefaultValue(true)] UseFootnotes,
-        [DefaultValue(true)] UseGenericAttributes,
+        [DefaultValue(false)] UseGenericAttributes,
         [DefaultValue(true)] UseGridTables,
         [DefaultValue(true)] UseListExtras,
         [DefaultValue(false)] UseMathematics,

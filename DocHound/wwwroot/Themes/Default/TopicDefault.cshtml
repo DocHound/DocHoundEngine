@@ -59,11 +59,27 @@
     }
     if (Model.GetSetting<bool>(SettingsEnum.UseMathematics))
     {
-        <SCRIPT SRC="~/script/jsmath/easy/load.js"></SCRIPT>
+        <script type="text/x-mathjax-config">
+            // enable inline parsing with single $ instead of /
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'],['\\(','\\)']],
+                    displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+                    processEscapes: true
+                },
+                asciimath2jax: {
+                    delimiters: [['`','`']]
+                },
+                TeX: {
+                    extensions: ["autoload-all.js"]
+                }
+           });
+        </script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
     }
     if (Model.GetSetting<bool>(SettingsEnum.ShowEstimatedReadingTime))
     {
-        <SCRIPT SRC="~/script/Feature-EstimatedReadingTime.js"></SCRIPT>
+        <script SRC="~/script/Feature-EstimatedReadingTime.js"></script>
     }
 }
 else

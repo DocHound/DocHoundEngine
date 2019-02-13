@@ -25,7 +25,7 @@ namespace DocHound.TopicRenderers.Markdown
             var builder = new MarkdownPipelineBuilder();
             BuildPipeline(builder, settings, markdown);
             var pipeline = builder.Build();
-            string html = Markdig.Markdown.ToHtml(markdown, pipeline);
+            var html = Markdig.Markdown.ToHtml(markdown, pipeline);
 
             if (settings.GetSetting<bool>(SettingsEnum.UseFontAwesomeInMarkdown))
                 html = ParseFontAwesomeIcons(html);
@@ -34,7 +34,7 @@ namespace DocHound.TopicRenderers.Markdown
         }
 
 
-        public static Regex fontAwesomeIconRegEx = new Regex(@"@icon-.*?[\s|\.|\,|\<]");
+        public static Regex FontAwesomeIconRegEx = new Regex(@"@icon-.*?[\s|\.|\,|\<]");
 
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace DocHound.TopicRenderers.Markdown
         /// <returns></returns>
         protected string ParseFontAwesomeIcons(string html)
         {
-            var matches = fontAwesomeIconRegEx.Matches(html);
+            var matches = FontAwesomeIconRegEx.Matches(html);
             foreach (Match match in matches)
             {
                 var iconblock = match.Value.Substring(0, match.Value.Length - 1);
@@ -68,10 +68,10 @@ namespace DocHound.TopicRenderers.Markdown
             if (settings.GetSetting<bool>(SettingsEnum.UseEmphasisExtras)) builder = builder.UseEmphasisExtras();
             if (settings.GetSetting<bool>(SettingsEnum.UseFigures)) builder = builder.UseFigures();
             if (settings.GetSetting<bool>(SettingsEnum.UseFootnotes)) builder = builder.UseFootnotes();
-            if (settings.GetSetting<bool>(SettingsEnum.UseGenericAttributes)) builder = builder.UseGenericAttributes();
+            if (settings.GetSetting<bool>(SettingsEnum.UseGenericAttributes) && !settings.GetSetting<bool>(SettingsEnum.UseMathematics)) builder = builder.UseGenericAttributes();
             if (settings.GetSetting<bool>(SettingsEnum.UseGridTables)) builder = builder.UseGridTables();
             if (settings.GetSetting<bool>(SettingsEnum.UseListExtras)) builder = builder.UseListExtras();
-            if (settings.GetSetting<bool>(SettingsEnum.UseMathematics)) builder = builder.UseMathematics();
+            //if (settings.GetSetting<bool>(SettingsEnum.UseMathematics)) builder = builder.UseMathematics();
             if (settings.GetSetting<bool>(SettingsEnum.UseMediaLinks)) builder = builder.UseMediaLinks();
             if (settings.GetSetting<bool>(SettingsEnum.UsePipeTables)) builder = builder.UsePipeTables();
             if (settings.GetSetting<bool>(SettingsEnum.UsePragmaLines)) builder = builder.UsePragmaLines();
