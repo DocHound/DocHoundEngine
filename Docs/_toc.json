@@ -126,7 +126,7 @@
                 "title": "Mathematics",
                 "link": "Mathematics.md",
                 "settings": {
-                  "useMathematics": true
+                  "useMath": true
                 }
               }
           ]
