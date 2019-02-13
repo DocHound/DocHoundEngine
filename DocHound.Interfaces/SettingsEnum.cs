@@ -61,7 +61,7 @@ namespace DocHound.Interfaces
         [DefaultValue(false)] UseGenericAttributes,
         [DefaultValue(true)] UseGridTables,
         [DefaultValue(true)] UseListExtras,
-        [DefaultValue(false)] UseMathematics,
+        [DefaultValue(false), AlternateName("UseMath")] UseMathematics,
         [DefaultValue(true)] UseMediaLinks,
         [DefaultValue(true)] UsePipeTables,
         [DefaultValue(false)] UsePragmaLines,
@@ -83,6 +83,17 @@ namespace DocHound.Interfaces
 
     }
 
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+    sealed class AlternateNameAttribute : Attribute
+    {
+        public string Name{ get; set; }
+
+        public AlternateNameAttribute(string name)
+        {
+            Name = name;
+        }
+    }
+
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     sealed class DocumentScopeAttribute : Attribute
     {
@@ -95,8 +106,6 @@ namespace DocHound.Interfaces
             Scope = scope;
         }
     }
-
-
 
     public enum DocumentScopes
     {
