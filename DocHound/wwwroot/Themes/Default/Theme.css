@@ -426,11 +426,6 @@ li.kava-auto-link {
     vertical-align: middle;
 }
 
-/* Math formulas hidden by default */
-.math {
-    display: none;
-}
-
 /* Right sidebar */
 
 .sidebar {
