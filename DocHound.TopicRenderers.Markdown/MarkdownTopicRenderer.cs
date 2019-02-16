@@ -71,7 +71,10 @@ namespace DocHound.TopicRenderers.Markdown
             if (settings.GetSetting<bool>(SettingsEnum.UseGenericAttributes) && !settings.GetSetting<bool>(SettingsEnum.UseMathematics)) builder = builder.UseGenericAttributes();
             if (settings.GetSetting<bool>(SettingsEnum.UseGridTables)) builder = builder.UseGridTables();
             if (settings.GetSetting<bool>(SettingsEnum.UseListExtras)) builder = builder.UseListExtras();
+            
             //if (settings.GetSetting<bool>(SettingsEnum.UseMathematics)) builder = builder.UseMathematics();
+            if (settings.GetSetting<bool>(SettingsEnum.UseMathematics)) builder = builder.UseMathJax();                 
+
             if (settings.GetSetting<bool>(SettingsEnum.UseMediaLinks)) builder = builder.UseMediaLinks();
             if (settings.GetSetting<bool>(SettingsEnum.UsePipeTables)) builder = builder.UsePipeTables();
             if (settings.GetSetting<bool>(SettingsEnum.UsePragmaLines)) builder = builder.UsePragmaLines();
