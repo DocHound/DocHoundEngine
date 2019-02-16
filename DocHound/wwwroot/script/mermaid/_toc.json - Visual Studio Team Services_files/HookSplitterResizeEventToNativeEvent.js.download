@@ -1,4 +1,0 @@
-//dependencies=
-// Copyright (C) Microsoft Corporation. All rights reserved.
-function hookSplitterResizeWithDetailsListListener(){$(window).on("resize",function(n){if(!n.originalEvent){n.stopPropagation();var t=document.createEvent("Event");t.initEvent("resize",!0,!0);window.dispatchEvent(t)}})}hookSplitterResizeWithDetailsListListener();
-//direct-dependencies=

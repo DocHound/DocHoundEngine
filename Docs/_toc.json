@@ -3,6 +3,7 @@
   "owner": "Kava Docs Inc.",
   "language": "en-US",
   "version": "1.0",
+  "siteIcon":"https://github.com/DocHound/DocHoundEngine/raw/master/Docs/Assets/SiteIcon.png",
   "menu": [
     {
       "title": "Docs Home",

@@ -1,4 +1,0 @@
-//dependencies=
-// Copyright (C) Microsoft Corporation. All rights reserved.
-define("VSSUI/Components/VssIcon/VssIcon.Props",["require","exports"],function(n,t){Object.defineProperty(t,"__esModule",{value:!0});var i;(function(n){n[n.fabric=0]="fabric";n[n.bowtie=1]="bowtie";n[n.image=3]="image"})(i=t.VssIconType||(t.VssIconType={}))});
-//direct-dependencies=
