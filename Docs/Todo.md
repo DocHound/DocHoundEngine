@@ -9,6 +9,7 @@
     * [ ] DOCX
     * [ ] OneNote
     * [x] VSTS Work Items (almost done, except for fringe features)
+    * [ ] MAML/AML files (Microsoft Help format from the Windows Vista days that is still used by Sandcastle)
     * [ ] ...?
 * [x] Themes
 * [ ] We need to be able to have private repositories that only authorized users can see
