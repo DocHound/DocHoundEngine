@@ -5,7 +5,7 @@
 * [ ] Landing Page Web Site (www.kavadocs.com) 
 * [x] Accounts and Log-Ins
 * [ ] We really need a good way to edit the TOC file
-* [ ] A few more supported sources
+* [ ] A few more supported sources (see also: [Supported Topic Types](Supported-Topic-Types))
     * [ ] DOCX
     * [ ] OneNote
     * [x] VSTS Work Items (almost done, except for fringe features)
