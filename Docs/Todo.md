@@ -5,7 +5,7 @@
 * [ ] Landing Page Web Site (www.kavadocs.com) 
 * [x] Accounts and Log-Ins
 * [ ] We really need a good way to edit the TOC file
-* [ ] A few more supported sources (see also: [Supported Topic Types](Supported-Topic-Types))
+* [ ] A few more supported sources (see also: [Supported Topic Types](Supported-Topic-Types)) (More info: https://en.wikipedia.org/wiki/Microsoft_Assistance_Markup_Language)
 * [x] Themes
 * [ ] We need to be able to have private repositories that only authorized users can see
 * [ ] Full index search
