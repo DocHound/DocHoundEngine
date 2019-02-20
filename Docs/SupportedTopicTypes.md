@@ -31,6 +31,7 @@ The following topic types are currently being considered. Those with a checkmark
 * [ ] Wiki formats (not sure what that would be exactly :-) )
 * [ ] Word
 * [ ] One Note
+* [ ] MAML/AML files (Microsoft Help format from the Windows Vista days that is still used by Sandcastle)
 * [ ] PDF
 * [ ] Power Point 
 * [ ] Excel
