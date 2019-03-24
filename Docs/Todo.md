@@ -122,6 +122,7 @@
 * [ ] Slack actually has relatively nice docs: https://get.slack.help/hc/en-us/articles/216771908
 * [ ] Check out the reCaptcha docs. They are simple, but I could see a need for exactly those kinds of docs: https://developers.google.com/recaptcha/docs/domain_validation 
 * [ ] Theme similar to ReadTheDocs.com (such as http://docs.smartthings.com/en/latest/)
+* [ ] Material Design: Design Docs are pretty nice: https://material.io/design/
 * [ ] Screencast has their own take on documentation: https://support.techsmith.com/hc/en-us/categories/203255908?utm_source=product&utm_medium=screencast&utm_campaign=unknown
 * [ ] Theme similar to Apple docs (such as https://help.apple.com/iphone/11/)
 * [ ] Maybe something more like an article (such as https://www.tomsguide.com/us/samsung-galaxy-s7-guide,review-3456.html)    * [ ] Would be nice to have a good theme for consumer related things, such as games (such as https://dev.battle.net/docs/read/oauth or even https://worldofwarcraft.com/en-us/game/new-players-guide). We will also need a better way to associate banner art with topics (and similar art customizations)
