@@ -7,12 +7,27 @@ namespace DocHound
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var builder = CreateWebHostBuilder(args);
+            builder.Build().Run();
         }
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+            var builder = WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
+            //.UseIIS()
+            //.UseHttpSys(options =>
+            //{
+            //    options.Authentication.Schemes = AuthenticationSchemes.None;
+            //    options.Authentication.AllowAnonymous = true;
+            //    options.MaxConnections = 100;
+            //    options.MaxRequestBodySize = 30000000;
+            //    options.UrlPrefixes.Add("http://localhost:5002");
+            //})
+
+
+            return builder;
+
+        }
     }
 }

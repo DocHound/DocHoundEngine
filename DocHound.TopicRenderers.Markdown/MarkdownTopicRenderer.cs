@@ -61,7 +61,7 @@ namespace DocHound.TopicRenderers.Markdown
         {
             if (settings.GetSetting<bool>(SettingsEnum.UseAbbreviations)) builder = builder.UseAbbreviations();
             if (settings.GetSetting<bool>(SettingsEnum.UseAutoIdentifiers)) builder = builder.UseAutoIdentifiers(AutoIdentifierOptions.GitHub);
-            //if (settings.GetSetting<bool>(SettingsEnum.UseAutoLinks)) builder = builder.UseAutoLinks();
+            if (settings.GetSetting<bool>(SettingsEnum.UseAutoLinks)) builder = builder.UseAutoLinks();
             if (settings.GetSetting<bool>(SettingsEnum.UseCitations)) builder = builder.UseCitations();
             if (settings.GetSetting<bool>(SettingsEnum.UseCustomContainers)) builder = builder.UseCustomContainers();
             if (settings.GetSetting<bool>(SettingsEnum.UseEmojiAndSmiley)) builder = builder.UseEmojiAndSmiley();
