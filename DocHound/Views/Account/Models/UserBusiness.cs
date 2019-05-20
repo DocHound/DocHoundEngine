@@ -48,7 +48,7 @@ namespace DocHound.Models
         {
             string sql = @"select UR.UserType, U.Id, U.email, U.UserDisplayName, U.Company,
           U.IsActive, U.IsAdmin, U.Password, UR.UserType, 
-          r.Title, r.Prefix, r.Domain, r.IsActive
+          r.Title,r.Id as RoleId, r.Prefix, r.Domain, r.IsActive
         FROM Users as U
         LEFT JOIN UserRepositories as UR ON UR.UserId = U.Id
         LEFT JOIN Repositories as R on UR.RepositoryId = R.Id
@@ -72,7 +72,7 @@ namespace DocHound.Models
                         var reader = await command.ExecuteReaderAsync();
                         if (reader == null || !reader.HasRows)
                             return null;
-
+                        
                         reader.Read();
 
 
@@ -87,8 +87,9 @@ namespace DocHound.Models
 
                         
                         var repo = user.CurrentRepository;
-                        if (repo != null && repo.Id != Guid.Empty)
+                        if (repo != null)
                         {
+                            repo.Id = (Guid) reader["RoleId"];
                             repo.Prefix = reader["Prefix"] as string;
                             repo.Title = reader["Title"] as string;
                             var userType = (int) reader["UserType"];
@@ -102,7 +103,6 @@ namespace DocHound.Models
                     
                     return user;
             }
-
 
             return null;
         }
