@@ -59,6 +59,20 @@ namespace DocHound.Models
 
             return identity;
         }
+
+
+        /// <summary>
+        /// Determine whether a role name is part of this user's role for the active repository
+        /// </summary>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        public bool IsUserInRole(string roleName)
+        {
+            if (string.IsNullOrEmpty(Roles))
+                return false;
+
+            return ("," + Roles + ",").Contains("," + roleName + ",", StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 
 

@@ -26,13 +26,21 @@
         "ASPNETCORE_ENVIRONMENT": "Release"
       }
     },
-    "CODEFrameworkIO": {
+    "DocHound": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:3969/"
+      "applicationUrl": "http://localhost:5000/"
+    },
+    "DocHoundProduction": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "applicationUrl": "http://localhost:5000/"
     },
     "IIS": {
       "commandName": "IIS",
