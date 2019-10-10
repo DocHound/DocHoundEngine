@@ -16,6 +16,7 @@
 
 ## Rendering Engine
 
+* [ ] Verify that our templates look right on Macs. I've seen some instances where the fonts look odd.
 * [ ] We should have good styles for print versions of the docs. Current print is practically unusable.
 * [ ] Code snippets (pre) should have an appropriat style to look right in lists.
 * [ ] We are now using a \_kavadocs-project.json over \_toc.json (although we are still supporting the toc one as a secondary option too)
