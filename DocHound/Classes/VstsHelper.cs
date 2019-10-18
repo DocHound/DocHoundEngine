@@ -262,6 +262,10 @@ namespace DocHound.Classes
                 if (!docsFolderNormalized.StartsWith("/")) docsFolderNormalized = "/" + docsFolderNormalized;
                 if (!docsFolderNormalized.EndsWith("/")) docsFolderNormalized = docsFolderNormalized + "/";
                 fullPath = docsFolderNormalized + filePath;
+
+                // Normalize relative paths
+                var uri = new Uri(new Uri("http://test.com/"), fullPath);
+                fullPath = uri.LocalPath;
             }
             if (!fullPath.StartsWith("/")) fullPath = "/" + fullPath;
 
