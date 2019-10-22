@@ -1,4 +1,4 @@
-# Table of Contents File Structure
+﻿# Table of Contents File Structure
 
 The following is an example of a TOC Json File structure:
 

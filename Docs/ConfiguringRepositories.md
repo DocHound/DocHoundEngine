@@ -34,24 +34,27 @@ This type of repository access provides raw (unauthenticated) access to GibHub p
 
 The following settings are available for raw GitHub access:
 
-| Setting Name | Values | Required? |
-|--------------|--------|-----------|
-| RepositoryType | GitHubRaw | Yes |
-| GitHubProject | Name of the organization and public repository in GitHub. Example: MarkusEggerInc/CodeFrameworkDocs | No |
-| MasterUrl | Instead of specifying the GitHubProject setting, one can specify a full raw GitHub URL. This is useful when the documentation starts as a sub-folder of the repository, or when a branch other than the master branch is desired. Example: *https://raw.githubusercontent.com/DocHound/DocHoundEngine/master/Docs/*  | No |
+
+
+| Setting Name   | Values                                   | Required? |
+|----------------|------------------------------------------|-----------|
+| RepositoryType | GitHubRaw                                | Yes       |
+| GitHubProject  | Name of the organization and public repository in GitHub. Example: MarkusEggerInc/CodeFrameworkDocs | No        |
+| MasterUrl      | Instead of specifying the GitHubProject setting, one can specify a full raw GitHub URL. This is useful when the documentation starts as a sub-folder of the repository, or when a branch other than the master branch is desired. Example: *https://raw.githubusercontent.com/DocHound/DocHoundEngine/master/Docs/* | No        |
 
 ## RepositoryType: VSTSGit
 
 This type of repository access is used to access a Git repository in a Microsoft Team Foundation Server instance. (Typically, not not always, hosted on VisualStudio.com). Note that the repository must use the Git standard. Older TFS source control repositories are not supported.
 
 
-| Setting Name | Values       | Required?    |
-|--------------|--------------|--------------|
-| RepositoryType | VSTSGit      | Yes          |
-| VSTSInstance | Name of the TFS instance. Example: *https://myrepo.visualstudio.com* | Yes          |
-| VSTSProjectName | Name of the project within that TFS instance. Example: *MyDocs* | Yes          |
-| VSTSDocsFolder | A folder inside of the repository. Example: *docs* | No            |
-| VSTSPAT      | Personal Access Token used to authenticate against TFS. This token can be created in the TFS interface. | Yes          |
+
+| Setting Name    | Values                                   | Required? |
+|-----------------|------------------------------------------|-----------|
+| RepositoryType  | VSTSGit                                  | Yes       |
+| VSTSInstance    | Name of the TFS instance. Example: *https://myrepo.visualstudio.com* | Yes       |
+| VSTSProjectName | Name of the project within that TFS instance. Example: *MyDocs* | Yes       |
+| VSTSDocsFolder  | A folder inside of the repository. Example: *docs* | No        |
+| VSTSPAT         | Personal Access Token used to authenticate against TFS. This token can be created in the TFS interface. | Yes       |
 
 ## Additional Repository Types under Consideration or Development
 The following repository types are being considered, or actively developed:
