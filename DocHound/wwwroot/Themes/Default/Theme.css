@@ -398,13 +398,16 @@ h1, h2, h3, h4 {
 
 li.kava-auto-link {
     list-style-type: none;
-    padding: 10px 20px 10px 20px;
+    padding: 6px 10px 6px 10px;
+    margin-bottom: 10px;
 }
     li.kava-auto-link a:link {
         cursor: pointer;
+        text-decoration: none;
     }
     li.kava-auto-link a:visited {
         cursor: pointer;
+        text-decoration: none;
     }
 
 .kava-recursive-topic {

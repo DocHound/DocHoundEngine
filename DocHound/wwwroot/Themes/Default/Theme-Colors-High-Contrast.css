@@ -97,9 +97,14 @@ blockquote {
     }
 
 li.kava-auto-link {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-left: 8px solid black;
+    border-left: 6px solid black;
 }
+    li.kava-auto-link:hover a:link {
+        text-decoration: underline;
+    }
+    li.kava-auto-link:hover a:visited {
+        text-decoration: underline;
+    }
 li.kava-auto-link a:link, li.kava-auto-link a:visited {
     color: black;
 }
