@@ -11,7 +11,7 @@ namespace DocHound.Interfaces
         public static void SetGlobalConfiguration(object configuration)
         {
             GlobalConfiguration = configuration;
-        }
+        }   
 
         public static T GetSetting<T>(string setting, dynamic repositorySettings = null, dynamic topicSettings = null, dynamic requestRootSettings = null)
         {
