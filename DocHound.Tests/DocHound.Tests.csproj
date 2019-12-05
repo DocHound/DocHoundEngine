@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UserSecretsId>89558176-7a0e-44f6-a310-9ea24170d92b</UserSecretsId>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocHound.Interfaces\DocHound.Interfaces.csproj" />
+    <ProjectReference Include="..\DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj" />
+    <ProjectReference Include="..\DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj" />
+    <ProjectReference Include="..\DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj" />
+    <ProjectReference Include="..\DocHound\DocHound.csproj" />
+  </ItemGroup>
+
+</Project>

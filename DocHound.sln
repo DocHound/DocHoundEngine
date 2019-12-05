@@ -1,19 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound", "DocHound\DocHound.csproj", "{25715F5F-247A-4516-90EB-DC30E7726591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.Interfaces", "DocHound.Interfaces\DocHound.Interfaces.csproj", "{5E9554CB-FB6E-497F-8DB5-9BBFFAB62EA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.Interfaces", "DocHound.Interfaces\DocHound.Interfaces.csproj", "{5E9554CB-FB6E-497F-8DB5-9BBFFAB62EA5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Topic Renderers", "Topic Renderers", "{7CE42800-AC30-4E47-A669-117BDE152221}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.Html", "DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj", "{910163B1-AEF9-482A-8054-C84360DD5C80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.TopicRenderers.Html", "DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj", "{910163B1-AEF9-482A-8054-C84360DD5C80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.Markdown", "DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj", "{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.TopicRenderers.Markdown", "DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj", "{A3AE9E38-319F-47B1-AC12-24E0682C7E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.TopicRenderers.VisualStudioTeamSystem", "DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj", "{101CEAE5-E939-42B8-89AE-AA433B3D6471}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocHound.TopicRenderers.VisualStudioTeamSystem", "DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj", "{101CEAE5-E939-42B8-89AE-AA433B3D6471}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocHound.Tests", "DocHound.Tests\DocHound.Tests.csproj", "{3CFE9488-484D-4259-81AA-FF1A82614B1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7A0B7DA4-85AF-4754-953D-39766595E430}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CFE9488-484D-4259-81AA-FF1A82614B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CFE9488-484D-4259-81AA-FF1A82614B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CFE9488-484D-4259-81AA-FF1A82614B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CFE9488-484D-4259-81AA-FF1A82614B1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +57,7 @@ Global
 		{910163B1-AEF9-482A-8054-C84360DD5C80} = {7CE42800-AC30-4E47-A669-117BDE152221}
 		{A3AE9E38-319F-47B1-AC12-24E0682C7E0D} = {7CE42800-AC30-4E47-A669-117BDE152221}
 		{101CEAE5-E939-42B8-89AE-AA433B3D6471} = {7CE42800-AC30-4E47-A669-117BDE152221}
+		{3CFE9488-484D-4259-81AA-FF1A82614B1E} = {7A0B7DA4-85AF-4754-953D-39766595E430}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ECF405A6-4BC2-4A47-A583-0DF2C2551E17}

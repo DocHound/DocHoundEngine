@@ -43,7 +43,7 @@ namespace DocHound.Models
         }
         [XmlIgnore]
         private string _password;
-
+        
         //public List<RepositoryUser> Repositories { get; set; }
 
         public Repository CurrentRepository { get; set; }
