@@ -1,9 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 using DocHound.Interfaces;
+using Newtonsoft.Json.Linq;
 
 namespace DocHound.Classes
 {
@@ -52,6 +51,7 @@ namespace DocHound.Classes
                         command.Parameters.Add(new SqlParameter("@Prefix", prefix.Trim().ToLower()));
                         return await command.ExecuteScalarAsync() as string;
                     }
+
                 return null;
             }
         }
@@ -70,6 +70,7 @@ namespace DocHound.Classes
                         command.Parameters.Add(new SqlParameter("@Prefix", prefix.Trim().ToLower()));
                         return await command.ExecuteScalarAsync() as string;
                     }
+
                 return null;
             }
         }
@@ -88,6 +89,7 @@ namespace DocHound.Classes
                         command.Parameters.Add(new SqlParameter("@Prefix", prefix.Trim().ToLower()));
                         return await command.ExecuteScalarAsync() as string;
                     }
+
                 return null;
             }
         }

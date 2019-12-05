@@ -3,6 +3,7 @@ namespace DocHound.Interfaces
     public static class RepositoryTypeNames
     {
         public static string GitHubRaw => "githubraw";
+        public static string GitHubApi => "githubapi";
         public static string VstsGit => "vstsgit";
         public static string VstsWorkItemTracking => "vstswit";
     }
@@ -12,7 +13,8 @@ namespace DocHound.Interfaces
         Undefined,
         GitHubRaw,
         VstsGit,
-        VstsWorkItemTracking
+        VstsWorkItemTracking,
+        GitHubApi
     }
 
     public static class RepositoryTypeHelper
@@ -20,6 +22,7 @@ namespace DocHound.Interfaces
         public static RepositoryTypes GetTypeFromTypeName(string typeName)
         {
             if (IsMatch(typeName, RepositoryTypeNames.GitHubRaw)) return RepositoryTypes.GitHubRaw;
+            if (IsMatch(typeName, RepositoryTypeNames.GitHubApi)) return RepositoryTypes.GitHubApi;
             if (IsMatch(typeName, RepositoryTypeNames.VstsGit)) return RepositoryTypes.VstsGit;
             if (IsMatch(typeName, RepositoryTypeNames.VstsWorkItemTracking)) return RepositoryTypes.VstsWorkItemTracking;
 

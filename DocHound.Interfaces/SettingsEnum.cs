@@ -14,8 +14,11 @@ namespace DocHound.Interfaces
         SqlConnectionString,
 
         // GitHub settings
-        GitHubProject,
-        GitHubMasterUrl,
+        GitHubProject, // Owner/Repository (used for GitHubRaw access)
+        GitHubMasterUrl, // Used for GitHubRaw
+        GitHubOwner, // GitHub Repository Owner or Organization (used by GitHubApi access)
+        GitHubRepository, // Repository name. Used by GitHubApi access
+        GitHubPat, // Personal access token. Used by GitHubApi access
 
         // VSTS settings
         VstsInstance,

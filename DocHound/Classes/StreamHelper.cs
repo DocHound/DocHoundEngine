@@ -22,11 +22,12 @@ namespace DocHound.Classes
             stream.Position = 0;
             if (stream.CanRead && stream.CanSeek)
             {
-                var length = (int)stream.Length;
+                var length = (int) stream.Length;
                 var buffer = new byte[length];
                 stream.Read(buffer, 0, length);
                 retVal = Encoding.UTF8.GetString(buffer);
             }
+
             return retVal;
         }
 
@@ -43,10 +44,11 @@ namespace DocHound.Classes
             stream.Position = 0;
             if (stream.CanRead && stream.CanSeek)
             {
-                var length = (int)stream.Length;
+                var length = (int) stream.Length;
                 retVal = new byte[length];
                 stream.Read(retVal, 0, length);
             }
+
             return retVal;
         }
 
@@ -84,10 +86,7 @@ namespace DocHound.Classes
         /// <param name="fileName">Name of the file.</param>
         /// <returns>True if successful</returns>
         /// <remarks>Existing files will be overwritten.</remarks>
-        public static bool ToFile(Stream stream, string fileName)
-        {
-            return ToFile(stream, fileName, true, Encoding.Default);
-        }
+        public static bool ToFile(Stream stream, string fileName) => ToFile(stream, fileName, true, Encoding.Default);
 
         /// <summary>
         /// Writes a stream to file
@@ -96,10 +95,7 @@ namespace DocHound.Classes
         /// <param name="fileName">Name of the file.</param>
         /// <param name="overrideExisting">If set to <c>true</c> override existing file.</param>
         /// <returns>True if successful</returns>
-        public static bool ToFile(Stream stream, string fileName, bool overrideExisting)
-        {
-            return ToFile(stream, fileName, overrideExisting, Encoding.Default);
-        }
+        public static bool ToFile(Stream stream, string fileName, bool overrideExisting) => ToFile(stream, fileName, overrideExisting, Encoding.Default);
 
         /// <summary>
         /// Writes a stream to file
@@ -127,7 +123,7 @@ namespace DocHound.Classes
                 {
                     var reader = new BinaryReader(stream);
                     var writer = new BinaryWriter(fileStream, encoding);
-                    writer.Write(reader.ReadBytes((int)stream.Length));
+                    writer.Write(reader.ReadBytes((int) stream.Length));
                     writer.Flush();
                     writer.Close();
                     reader.Close();
@@ -154,7 +150,7 @@ namespace DocHound.Classes
         public static Stream FromFile(string fileName)
         {
             var fileStream = File.OpenRead(fileName);
-            var fileLength = (int)fileStream.Length;
+            var fileLength = (int) fileStream.Length;
             var fileBytes = new byte[fileLength];
             fileStream.Read(fileBytes, 0, fileLength);
             fileStream.Close();
@@ -162,5 +158,4 @@ namespace DocHound.Classes
             return FromArray(fileBytes);
         }
     }
-
 }
