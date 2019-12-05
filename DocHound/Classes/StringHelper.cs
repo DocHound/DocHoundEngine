@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DocHound.Classes
 {
@@ -19,47 +17,29 @@ namespace DocHound.Classes
         /// <summary>Returns a culture-neutral to-lower operation on the string.</summary>
         /// <param name="originalString">Original string</param>
         /// <returns>Lower-case string</returns>
-        public static string Lower(string originalString)
-        {
-            return originalString.ToLower(CultureInfo.InvariantCulture);
-        }
+        public static string Lower(string originalString) => originalString.ToLower(CultureInfo.InvariantCulture);
 
         /// <summary>Returns a culture-neutral to-upper operation on the string.</summary>
         /// <param name="originalString">Original string</param>
         /// <returns>Upper-case string</returns>
-        public static string Upper(string originalString)
-        {
-            return originalString.ToUpper(CultureInfo.InvariantCulture);
-        }
+        public static string Upper(string originalString) => originalString.ToUpper(CultureInfo.InvariantCulture);
 
         /// <summary>Returns the string in a culture-neutral fashion</summary>
         /// <param name="value">Value to be turned into a string</param>
         /// <returns>String</returns>
-        public static string ToString(object value)
-        {
-            var formattableValue = value as IFormattable;
-            return formattableValue != null ? formattableValue.ToString(null, CultureInfo.InvariantCulture) : value.ToString();
-        }
+        public static string ToString(object value) => value is IFormattable formatterValue ? formatterValue.ToString(null, CultureInfo.InvariantCulture) : value.ToString();
 
         /// <summary>Returns a string representation of the provided value. Returns an empty string if the value is null</summary>
         /// <param name="value">Value to be turned into a string</param>
         /// <returns>String</returns>
-        public static string ToStringSafe(object value)
-        {
-            if (value == null) return string.Empty;
-            return ToString(value);
-        }
+        public static string ToStringSafe(object value) => value == null ? string.Empty : ToString(value);
 
         /// <summary>Returns true if the two strings match.</summary>
         /// <param name="firstString">First string</param>
         /// <param name="secondString">Second string</param>
         /// <returns>True or False</returns>
         /// <remarks>The strings are trimmed and compared in a case-insensitive, culture neutral fashion.</remarks>
-        public static bool Compare(string firstString, string secondString)
-        {
-            var pos = string.Compare(firstString.Trim(), secondString.Trim(), true, CultureInfo.InvariantCulture);
-            return pos == 0;
-        }
+        public static bool Compare(string firstString, string secondString) => string.Compare(firstString.Trim(), secondString.Trim(), true, CultureInfo.InvariantCulture) == 0;
 
         /// <summary>Returns true if the two strings match.</summary>
         /// <param name="firstString">First string</param>
@@ -67,11 +47,7 @@ namespace DocHound.Classes
         /// <param name="ignoreCase">Should case (upper/lower) be ignored?</param>
         /// <returns>True or False</returns>
         /// <remarks>The strings are trimmed and compared in a case-insensitive, culture neutral fashion.</remarks>
-        public static bool Compare(string firstString, string secondString, bool ignoreCase)
-        {
-            var pos = string.Compare(firstString.Trim(), secondString.Trim(), ignoreCase, CultureInfo.InvariantCulture);
-            return pos == 0;
-        }
+        public static bool Compare(string firstString, string secondString, bool ignoreCase) => string.Compare(firstString.Trim(), secondString.Trim(), ignoreCase, CultureInfo.InvariantCulture) == 0;
 
         /// <summary>
         /// Receives a string as a parameter and returns the string in Proper format (makes each letter after a space
@@ -186,10 +162,7 @@ namespace DocHound.Classes
         /// :
         /// <param name="expression">String to be written</param>
         /// <param name="fileName">File name the string is to be written to.</param>
-        public static void ToFile(string expression, string fileName)
-        {
-            ToFile(expression, fileName, Encoding.Default);
-        }
+        public static void ToFile(string expression, string fileName) => ToFile(expression, fileName, Encoding.Default);
 
         /// <summary>Receives a string and a file name as parameters and writes the contents of the string to that file</summary>
         /// <example>
@@ -230,18 +203,12 @@ namespace DocHound.Classes
         /// <summary>This method takes any regular string, and returns its base64 encoded representation</summary>
         /// <param name="original">Original String</param>
         /// <returns>Base64 encoded string</returns>
-        public static string Base64Encode(string original)
-        {
-            return Convert.ToBase64String(new ASCIIEncoding().GetBytes(original));
-        }
+        public static string Base64Encode(string original) => Convert.ToBase64String(new ASCIIEncoding().GetBytes(original));
 
         /// <summary>Takes a base64 encoded string and converts it into a regular string</summary>
         /// <param name="encodedString">Base64 encoded string</param>
         /// <returns>Decoded string</returns>
-        public static string Base64Decode(string encodedString)
-        {
-            return new ASCIIEncoding().GetString(Convert.FromBase64String(encodedString));
-        }
+        public static string Base64Decode(string encodedString) => new ASCIIEncoding().GetString(Convert.FromBase64String(encodedString));
 
         /// <summary>
         /// Receives two strings as parameters and searches for one string within another. If found, returns the beginning
@@ -251,10 +218,7 @@ namespace DocHound.Classes
         /// <param name="searchFor">String to search for</param>
         /// <param name="searchIn">String to search in</param>
         /// <returns>Position</returns>
-        public static int At(string searchFor, string searchIn)
-        {
-            return searchIn.IndexOf(searchFor, StringComparison.Ordinal) + 1;
-        }
+        public static int At(string searchFor, string searchIn) => searchIn.IndexOf(searchFor, StringComparison.Ordinal) + 1;
 
         /// <summary>
         /// Receives two strings and an occurrence position (1st, 2nd etc) as parameters and
@@ -275,16 +239,14 @@ namespace DocHound.Classes
             var occurred = 0;
             var position = 0;
 
-            //Loop through the string and get the position of the requiref occurrence
             for (counter = 1; counter <= occurrence; counter++)
             {
                 position = searchIn.IndexOf(searchFor, position, StringComparison.Ordinal);
 
                 if (position < 0) break;
-                //Increment the occurred counter based on the current mode we are in
+
                 occurred++;
 
-                //Check if this is the occurrence we are looking for
                 if (occurred == occurrence) return position + 1;
                 position++;
             }
@@ -295,19 +257,13 @@ namespace DocHound.Classes
         /// <example>Asc('#'); //returns 35</example>
         /// <param name="character">Character</param>
         /// <returns>ASCII value</returns>
-        public static int Asc(char character)
-        {
-            return character;
-        }
+        public static int Asc(char character) => character;
 
         /// <summary>Receives an integer ANSI code and returns a character associated with it</summary>
         /// <example>StringHelper.Chr(35); //returns '#'</example>
         /// <param name="ansiCode">Character Code</param>
         /// <returns>Char that corresponds with the ascii code</returns>
-        public static char Chr(int ansiCode)
-        {
-            return (char) ansiCode;
-        }
+        public static char Chr(int ansiCode) => (char) ansiCode;
 
         /// <summary>Receives a string as a parameter and counts the number of words in that string</summary>
         /// <example>
@@ -376,20 +332,13 @@ namespace DocHound.Classes
         /// <param name="sourceString">String</param>
         /// <param name="wordPosition">Word Position</param>
         /// <returns>Word number</returns>
-        public static string GetWordNumber(string sourceString, int wordPosition)
-        {
-            return GetWordNumb(sourceString, wordPosition);
-        }
+        public static string GetWordNumber(string sourceString, int wordPosition) => GetWordNumb(sourceString, wordPosition);
 
         /// <summary>Returns a bool indicating if the first character in a string is an alphabet or not</summary>
         /// <example>StringHelper.IsAlpha("Joe Doe"); // returns true</example>
         /// <param name="expression">Expression</param>
         /// <returns>True or False depending on whether the string only had alphanumeric chars</returns>
-        public static bool IsAlpha(string expression)
-        {
-            //Check if the first character is a letter
-            return char.IsLetter(expression[0]);
-        }
+        public static bool IsAlpha(string expression) => char.IsLetter(expression[0]);
 
         /// <summary>Returns the number of occurrences of a character within a string</summary>
         /// <example>StringHelper.Occurs('o', "Joe Doe"); // returns 2</example>
@@ -398,14 +347,12 @@ namespace DocHound.Classes
         /// <returns>Number of occurrences</returns>
         public static int Occurs(char character, string expression)
         {
-            int counter, occurred = 0;
+            var occurred = 0;
 
-            //Loop through the string
-            for (counter = 0; counter < expression.Length; counter++)
-                //Check if each expression is equal to the one we want to check against
-                if (expression[counter] == character)
-                    //if  so increment the counter
+            foreach (var currentCharacter in expression)
+                if (currentCharacter == character)
                     occurred++;
+
             return occurred;
         }
 
@@ -456,10 +403,7 @@ namespace DocHound.Classes
         /// <param name="startIndex">Start Index</param>
         /// <param name="length">Length</param>
         /// <returns>Substring</returns>
-        public static string SubstringSafe(string expression, int startIndex, int length)
-        {
-            return SubStr(expression, startIndex, length);
-        }
+        public static string SubstringSafe(string expression, int startIndex, int length) => SubStr(expression, startIndex, length);
 
         /// <summary>Overloaded method for SubStr() that receives starting position and length</summary>
         /// <param name="expression">Expression</param>
@@ -496,12 +440,7 @@ namespace DocHound.Classes
         /// <example>if(StringHelper.IsDigit("1Kamal")){...}	//returns true</example>
         /// <param name="sourceString">Expression</param>
         /// <returns>True or False</returns>
-        public static bool IsDigit(string sourceString)
-        {
-            //get the first character in the string
-            var chr = sourceString[0];
-            return char.IsDigit(chr);
-        }
+        public static bool IsDigit(string sourceString) => sourceString.Length >= 1 && char.IsDigit(sourceString[0]);
 
         /// <summary>Takes a fully qualified file name, and returns just the path</summary>
         /// <param name="path">File name with path</param>
@@ -545,10 +484,7 @@ namespace DocHound.Classes
         /// bool result3 = StringHelper.ArrayContainsString(testArray, "One"); // returns true
         /// bool result4 = StringHelper.ArrayContainsString(testArray, "Four"); // returns false
         /// </example>
-        public static bool ArrayContainsString(string[] hostArray, string searchText)
-        {
-            return ArrayContainsString(hostArray, searchText, false);
-        }
+        public static bool ArrayContainsString(string[] hostArray, string searchText) => ArrayContainsString(hostArray, searchText, false);
 
         /// <summary>Returns true if the array contains the string we are looking for</summary>
         /// <param name="hostArray">The host array.</param>
@@ -562,10 +498,7 @@ namespace DocHound.Classes
         /// bool result3 = StringHelper.ArrayContainsString(testArray, "One"); // returns true
         /// bool result4 = StringHelper.ArrayContainsString(testArray, "Four"); // returns false
         /// </example>
-        public static bool ArrayContainsString(string[] hostArray, string searchText, bool ignoreCase)
-        {
-            return hostArray.Any(item => Compare(item, searchText, ignoreCase));
-        }
+        public static bool ArrayContainsString(string[] hostArray, string searchText, bool ignoreCase) => hostArray.Any(item => Compare(item, searchText, ignoreCase));
 
         /// <summary>Tries to parse a string value as an integer. If the parse fails, the provided default value will be inserted</summary>
         /// <param name="value">The value.</param>
@@ -575,11 +508,7 @@ namespace DocHound.Classes
         /// string value = "1";
         /// int valueInt = StringHelper.TryIntParse(value, -1);
         /// </example>
-        public static int TryIntParse(string value, int failedDefault)
-        {
-            int parsedValue;
-            return int.TryParse(value, out parsedValue) ? parsedValue : failedDefault;
-        }
+        public static int TryIntParse(string value, int failedDefault) => int.TryParse(value, out var parsedValue) ? parsedValue : failedDefault;
 
         /// <summary>Tries to parse a string value as an Guid. If the parse fails, the provided default value will be inserted</summary>
         /// <param name="value">The value.</param>
@@ -608,10 +537,7 @@ namespace DocHound.Classes
         /// string value = "xxx";
         /// Guid valueGuid = StringHelper.TryGuidParse(value);
         /// </example>
-        public static Guid TryGuidParse(string value)
-        {
-            return TryGuidParse(value, Guid.Empty);
-        }
+        public static Guid TryGuidParse(string value) => TryGuidParse(value, Guid.Empty);
 
         /// <summary>Tries to parse a string value as a boolean.</summary>
         /// <param name="value">The value.</param>
@@ -621,9 +547,6 @@ namespace DocHound.Classes
         /// string value = "xxx";
         /// bool valueBool = StringHelper.TryBoolParse(value);
         /// </example>
-        public static bool TryBoolParse(string value, bool failedDefault = false)
-        {
-            return bool.TryParse(value, out var parsedValue) ? parsedValue : failedDefault;
-        }
+        public static bool TryBoolParse(string value, bool failedDefault = false) => bool.TryParse(value, out var parsedValue) ? parsedValue : failedDefault;
     }
 }

@@ -68,6 +68,11 @@ namespace DocHound.Models.Docs
                         if (!logoUrlIsAbsolute)
                             LogoUrl = GitHubMasterUrlRaw + logoUrl;
                         break;
+                    case RepositoryTypes.GitHubApi:
+                        tocJson = await TableOfContentsHelper.GetTocJsonFromGitHubApi(GitHubOwner, GitHubRepository, GitHubPat);
+                        // TODO: if (!logoUrlIsAbsolute)
+                        //    LogoUrl = GitHubMasterUrlRaw + logoUrl;
+                        break;
                     case RepositoryTypes.VstsGit:
                         tocJson = await VstsHelper.GetTocJson(GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsDocsFolder), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
                         if (!logoUrlIsAbsolute)
@@ -134,6 +139,19 @@ namespace DocHound.Models.Docs
                         if (!string.IsNullOrEmpty(ImageRootUrl) && !ImageRootUrl.EndsWith("/")) ImageRootUrl += "/";
                         break;
 
+                    case RepositoryTypes.GitHubApi:
+                        if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicBodyFormats.Markdown) || TopicTypeHelper.IsMatch(rawTopic.Type, TopicBodyFormats.Html))
+                        {
+                            var gitHubClient = new GithubRepositoryParser(GitHubOwner, GitHubRepository, GitHubPat);
+                            var gitHubContent = await gitHubClient.GetItemContent(SelectedTopic.Link);
+                            rawTopic.OriginalContent = gitHubContent.Text;
+                        }
+                        // TODO: else if (TopicTypeHelper.IsMatch(rawTopic.Type, TopicBodyFormats.ImageUrl))
+                        //    rawTopic.OriginalContent = fullGitHubRawUrl;
+                        //ImageRootUrl = StringHelper.JustPath(fullGitHubRawUrl);
+                        //if (!string.IsNullOrEmpty(ImageRootUrl) && !ImageRootUrl.EndsWith("/")) ImageRootUrl += "/";
+                        break;
+
                     case RepositoryTypes.VstsGit:
                         if (!string.IsNullOrEmpty(SelectedTopic.LinkPure))
                             rawTopic.OriginalContent = await VstsHelper.GetFileContents(SelectedTopic.LinkPure, GetSetting<string>(SettingsEnum.VstsInstance), GetSetting<string>(SettingsEnum.VstsProjectName), GetSetting<string>(SettingsEnum.VstsDocsFolder), GetSetting<string>(SettingsEnum.VstsPat), GetSetting<string>(SettingsEnum.VstsApiVersion));
@@ -191,9 +209,13 @@ namespace DocHound.Models.Docs
             var renderer = TopicRendererFactory.GetTopicRenderer(rawTopic);
 
             var intermediateHtml = renderer.RenderToHtml(rawTopic, ImageRootUrl, this);
-            intermediateHtml = await ProcessKavaTopic(intermediateHtml);
-            intermediateHtml = AutoGenerateTitle(intermediateHtml);
-            intermediateHtml = ProcessBrokenImageLinks(intermediateHtml, ImageRootUrl);
+            if (!string.IsNullOrEmpty(intermediateHtml))
+            {
+                intermediateHtml = await ProcessKavaTopic(intermediateHtml);
+                intermediateHtml = AutoGenerateTitle(intermediateHtml);
+                intermediateHtml = ProcessBrokenImageLinks(intermediateHtml, ImageRootUrl);
+            }
+
             Html = intermediateHtml;
 
             Json = renderer.RenderToJson(rawTopic, ImageRootUrl, this);
@@ -759,6 +781,15 @@ namespace DocHound.Models.Docs
                 return _gitHubMasterUrl;
             }
         }
+
+        public string GitHubOwner => _gitHubOwner ?? (_gitHubOwner = SettingsHelper.GetSetting<string>(SettingsEnum.GitHubOwner));
+        private string _gitHubOwner;
+
+        public string GitHubRepository => _gitHubRepository ?? (_gitHubRepository = SettingsHelper.GetSetting<string>(SettingsEnum.GitHubRepository));
+        private string _gitHubRepository;
+
+        public string GitHubPat => _gitHubPat ?? (_gitHubPat = SettingsHelper.GetSetting<string>(SettingsEnum.GitHubPat));
+        private string _gitHubPat;
 
         public void SetRootSettingsForRequest(string settings)
         {

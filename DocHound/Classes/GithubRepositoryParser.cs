@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace GithubGraphQl
+namespace DocHound.Classes
 {
     public class GithubRepositoryParser
     {
@@ -15,7 +15,7 @@ namespace GithubGraphQl
         private readonly string _repository;
 
         public string Token { get; set; }
-        public string ApiName { get; set; } = "APITest";
+        public string ApiName { get; set; } = "KavaDocs";
         public string ApiVersion { get; set; } = "0.1";
 
         public string UserAgent { get; set; } = "KavaDocs HTTP Client";
@@ -152,45 +152,47 @@ namespace GithubGraphQl
             //https://api.github.com/repos/RickStrahl/MarkdownMonster/contents/README.md
 
             string url = $"https://api.github.com/repos/{_owner}/{_repository}/contents/{path}";
-            var client = new WebClient();
-            client.Headers.Add(HttpRequestHeader.UserAgent, UserAgent);
-
-            if (!string.IsNullOrEmpty(Token))
-                client.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + Token);
-
-            client.CachePolicy =
-                new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.Reload);
-
-            Console.WriteLine(url);
-            var json = await client.DownloadStringTaskAsync(new Uri(url)).ConfigureAwait(false);
-
-            var jObject = JObject.Parse(json);
-
-
-            int size = jObject["size"].Value<int>();
-            string name = jObject["name"].Value<string>();
-            string sha = jObject["sha"].Value<string>();
-
-            var item = new GithubContentItem()
+            using (var client = new WebClient())
             {
-                ByteSize = size,
-                FullPath = path,
-                Name = name,
-                Sha = sha
-            };
+                client.Headers.Add(HttpRequestHeader.UserAgent, UserAgent);
 
-            string binExtensions = "|png|jpg|jpeg|gif|tiff|tif|bmp|zip|7z|rar|tar|pdf|doc|xls|ppt|";
+                if (!string.IsNullOrEmpty(Token))
+                    client.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + Token);
 
-            var ext = Path.GetExtension(item.Name)?.ToLower();
-            if (!string.IsNullOrEmpty(ext) && binExtensions.Contains("|" + ext + "|"))
-                item.IsBinary = true;
-            if (!item.IsBinary)
-            {
-                var base64Content = jObject["content"].Value<string>();
-                item.Text = Encoding.UTF8.GetString(Convert.FromBase64String(base64Content));
+                client.CachePolicy =
+                    new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.Reload);
+
+                Console.WriteLine(url);
+                var json = await client.DownloadStringTaskAsync(new Uri(url)).ConfigureAwait(false);
+
+                var jObject = JObject.Parse(json);
+
+
+                int size = jObject["size"].Value<int>();
+                string name = jObject["name"].Value<string>();
+                string sha = jObject["sha"].Value<string>();
+
+                var item = new GithubContentItem()
+                {
+                    ByteSize = size,
+                    FullPath = path,
+                    Name = name,
+                    Sha = sha
+                };
+
+                string binExtensions = "|png|jpg|jpeg|gif|tiff|tif|bmp|zip|7z|rar|tar|pdf|doc|xls|ppt|";
+
+                var ext = Path.GetExtension(item.Name)?.ToLower();
+                if (!string.IsNullOrEmpty(ext) && binExtensions.Contains("|" + ext + "|"))
+                    item.IsBinary = true;
+                if (!item.IsBinary)
+                {
+                    var base64Content = jObject["content"].Value<string>();
+                    item.Text = Encoding.UTF8.GetString(Convert.FromBase64String(base64Content));
+                }
+
+                return item;
             }
-
-            return item;
         }
 
 

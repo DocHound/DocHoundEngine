@@ -118,6 +118,23 @@ namespace DocHound.Classes
             return await CrawlGitHubForToc(gitHubRegularUrl);
         }
 
+        public static async Task<string> GetTocJsonFromGitHubApi(string owner, string repository, string pat)
+        {
+
+            var content = await ContentSniffer.DownloadGitHubApiContent(owner, repository, pat, "_kavadocs-project.json");
+            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadGitHubApiContent(owner, repository, pat, "_toc.json");
+            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadGitHubApiContent(owner, repository, pat, "_kavadocs/_toc.json");
+            if (string.IsNullOrEmpty(content)) content = await ContentSniffer.DownloadGitHubApiContent(owner, repository, pat, "_meta/_toc.json"); // TODO: We can get rid of this one eventually
+            if (!string.IsNullOrEmpty(content)) return content;
+
+            return string.Empty;
+
+            // TODO: The TOC file didn't exist, so we try to scrape the repository
+            //var gitHubRegularUrl = gitHubRawUrl.Replace("raw.githubusercontent.com", "github.com");
+            //if (gitHubRegularUrl.EndsWith("/master/")) gitHubRegularUrl = gitHubRegularUrl.Substring(0, gitHubRegularUrl.Length - 7);
+            //return await CrawlGitHubForToc(gitHubRegularUrl);
+        }
+
         private static readonly Dictionary<string, string> CrawledGitHubRepositories = new Dictionary<string, string>();
 
         private static async Task<string> CrawlGitHubForToc(string url, StringBuilder sb = null, string rootUrl = null)
