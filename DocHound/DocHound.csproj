@@ -2,7 +2,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>89558176-7a0e-44f6-a310-9ea24170d92b</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="wwwroot\css\jsmath\**" />
     <Content Remove="wwwroot\css\jsmath\**" />
