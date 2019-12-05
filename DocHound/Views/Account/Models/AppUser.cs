@@ -73,28 +73,6 @@ namespace DocHound.Models
 
             return ("," + Roles + ",").Contains("," + roleName + ",", StringComparison.InvariantCultureIgnoreCase);
         }
-
-        /// <summary>
-        /// Checks whether the user is in one or more roles
-        /// </summary>
-        /// <param name="roleNames">Comma delimited list of roles to check in user roles</param>
-        /// <returns></returns>
-        public bool IsUserInRoles(string roleNames)
-        {
-            if (string.IsNullOrEmpty(Roles))
-                return false;
-
-            var roles = "," + Roles + ",";
-
-            var tokens = roleNames.Split(',');
-            foreach (var roleName in tokens)
-            {
-                if (roles.Contains("," + roleName.Trim() + ",", StringComparison.InvariantCultureIgnoreCase))
-                    return true;
-            }
-
-            return false;
-        }
     }
 
 

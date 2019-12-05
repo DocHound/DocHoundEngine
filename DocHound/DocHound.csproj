@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>89558176-7a0e-44f6-a310-9ea24170d92b</UserSecretsId>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="wwwroot\css\jsmath\**" />
@@ -13,8 +12,8 @@
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack.CssSelectors.NetCore" Version="1.1.1" />
     <PackageReference Include="Markdig" Version="0.17.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.7" />
-    <!--<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />-->
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Westwind.AspNetCore" Version="3.2.8" />
   </ItemGroup>
   <ItemGroup>
