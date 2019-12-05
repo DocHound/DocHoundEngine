@@ -10,6 +10,9 @@
     <None Remove="wwwroot\css\jsmath\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="dotnet-install.ps1" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack.CssSelectors.NetCore" Version="1.1.1" />
     <PackageReference Include="Markdig" Version="0.17.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.2" />
@@ -24,5 +27,10 @@
     <ProjectReference Include="..\DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dotnet-install.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
