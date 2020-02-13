@@ -2,12 +2,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>89558176-7a0e-44f6-a310-9ea24170d92b</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="wwwroot\css\jsmath\**" />
     <Content Remove="wwwroot\css\jsmath\**" />
     <EmbeddedResource Remove="wwwroot\css\jsmath\**" />
     <None Remove="wwwroot\css\jsmath\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dotnet-install.ps1" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack.CssSelectors.NetCore" Version="1.1.1" />
@@ -24,5 +29,10 @@
     <ProjectReference Include="..\DocHound.TopicRenderers.Html\DocHound.TopicRenderers.Html.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.Markdown\DocHound.TopicRenderers.Markdown.csproj" />
     <ProjectReference Include="..\DocHound.TopicRenderers.VisualStudioTeamSystem\DocHound.TopicRenderers.VisualStudioTeamSystem.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dotnet-install.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
