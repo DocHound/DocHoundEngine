@@ -21,6 +21,11 @@ p code {
     border: 1px solid black;
 }
 
+.content-container li code {
+    background-color: #5d5d5d;
+    border: 1px solid black;
+}
+
 table {
     border-color: lightgray;
 }

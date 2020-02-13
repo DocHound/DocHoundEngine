@@ -598,6 +598,7 @@ loadTopicAjax = function(href, noPushState) {
                 }
 
                 // We remove all the links that were custom-injected and may now not be needed anymore
+                // TODO: We should only remove the ones that aren't in the new topic
                 $('link[kava-custom="true"]').remove();
 
                 // We look at all the links. If they are not yet loaded, we load them now. If they are already there, we are good to go and do not need to load them again.
@@ -608,12 +609,15 @@ loadTopicAjax = function(href, noPushState) {
                     var existingLinks = $('link[href="' + linkHref + '"]');
                     if (existingLinks.length < 1) {
                         // The link doesn't yet exist, so we add it
+                        // TODO: Only add if it isn't in the links already
                         $('head').append(this);
                         var custom = $(this).attr('kava-custom');
                         if (custom.length < 1)
                             $(this).attr('kava-custom', 'true');
                     }
                 });
+
+                // TODO: Remove all custom links from the header if they weren't in the new topic.
 
                 // We take all the scripts from the new topic and move them into the main content
                 // Note that we need to add them, even if they are already there, because the scripts may need to run again
