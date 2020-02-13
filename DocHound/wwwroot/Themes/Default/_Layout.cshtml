@@ -34,6 +34,18 @@
 
     @*Special links we may want to turn on and off based on settings, so we only load what is really needed*@
     <link href="~/css/fontawesome-free-5.0.3/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" type="text/css" />
+
+    @RenderSection("CssOverride", false)
+    @{
+        var localCssOverride = await Model.GetLocalCssOverride();
+        if (!string.IsNullOrEmpty(localCssOverride))
+        {
+            <style>
+                @Html.Raw(localCssOverride)
+            </style>
+        }
+    }
+
 </head>
 
 <body>
@@ -77,15 +89,5 @@
     </footer>
 
     @RenderSection("Scripts", false)
-
-    @{
-        var localCssOverride = await Model.GetLocalCssOverride();
-        if (!string.IsNullOrEmpty(localCssOverride))
-        {
-            <style>
-                @Html.Raw(localCssOverride)
-            </style>
-        }
-    }
 </body>
 </html>

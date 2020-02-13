@@ -9,13 +9,17 @@
     }
 }
 
-@if (Model.GetSetting<bool>(SettingsEnum.UseSyntaxHighlighting))
+@section CssOverride
 {
-    <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
-}
-@if (!string.IsNullOrEmpty(Model.CustomCss))
-{
-    <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" kava-custom="true" />
+    <!-- Hello -->
+    @if (Model.GetSetting<bool>(SettingsEnum.UseSyntaxHighlighting))
+    {
+        <link href="~/css/highlightjs/styles/@(Model.SyntaxTheme).css" rel="stylesheet" type="text/css"/>
+    }
+    @if (!string.IsNullOrEmpty(Model.CustomCss))
+    {
+        <link href="@Model.CustomCssFullPath" rel="stylesheet" type="text/css" kava-custom="true"/>
+    }
 }
 
 @if (!Model.RenderTopicOnly)

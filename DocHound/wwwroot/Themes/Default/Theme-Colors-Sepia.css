@@ -25,6 +25,11 @@ p code {
     border: 1px solid rgb(215, 208, 200);
 }
 
+.content-container li code {
+    background-color: #e5e1dc;
+    border: 1px solid rgb(215, 208, 200);
+}
+
 table {
     border-color: gray;
 }
