@@ -2,7 +2,7 @@
 
 Kava Docs supports Mermaid charting markup. For specifics on this standard, see https://mermaidjs.github.io/
 
-> Note: Mermaid chart features are automatically enabled when a mermaid block is used in markdown. Mermeid can also be specifically enabled using the **useDiagramsMermaid** setting, which can be set to *true* (the default can be considered to be 'auto', although that is not a setting that can be set explicitly). Note that mermaid can be specifically disabled by setting **useDiagramsMermaid** to *false*.  For more information, see [Table of Contents File Structure](TOC-File-Structure)
+> Note: Mermaid chart features are automatically enabled when a mermaid block is used in markdown. Mermeid can also be specifically enabled using the `useDiagramsMermaid` setting, which can be set to `true` (the default can be considered to be `auto`, although that is not a setting that can be set explicitly). Note that mermaid can be specifically disabled by setting `useDiagramsMermaid` to `false`.  For more information, see [Table of Contents File Structure](TOC-File-Structure)
 
 ## Mermaid Flow Chart
 
