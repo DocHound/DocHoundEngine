@@ -2,7 +2,7 @@
 
 Kava Docs supports mathematical equations supporting various standards such as (La)TeX Math markup (for specifics on this standard, see https://en.wikibooks.org/wiki/LaTeX/Mathematics), MathML (see also: https://www.w3.org/Math/), and HTML Math Markup.
 
-> Note: To use KavaDocs Math, the feature has to be enabled in the TOC, either globally, or on a topic-by-topic basis, by setting the **useMathematics** to *true*. This is done to prevent performance problems in repositories and/or topics that do not need this feature. (Note that loading all the features required for LaTeX Math features can be very resource intensive, therefore it should only be activated when it is really used). For more information, see [Table of Contents File Structure](TOC-File-Structure)
+> Note: To use KavaDocs Math, the feature has to be enabled in the TOC, either globally, or on a topic-by-topic basis, by setting the `useMathematics` to `true`. This is done to prevent performance problems in repositories and/or topics that do not need this feature. (Note that loading all the features required for LaTeX Math features can be very resource intensive, therefore it should only be activated when it is really used). For more information, see [Table of Contents File Structure](TOC-File-Structure)
 
 > Note: KavaDoc Math features are implemented using MathJax. See also: https://www.mathjax.org/
 
