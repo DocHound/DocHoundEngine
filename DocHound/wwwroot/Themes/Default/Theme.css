@@ -1,4 +1,5 @@
 ﻿/*Standard HTML styles*/
+/*Standard HTML styles*/
 * {
     padding: 0;
     margin: 0;
@@ -30,6 +31,13 @@ p {
     line-height: 1.5;
 }
     p code {
+        font-family: Consolas, monospace;
+        padding: 1px 5px;
+        font-weight: 600;
+        border-radius: 3px;
+    }
+
+    .content-container li code {
         font-family: Consolas, monospace;
         padding: 1px 5px;
         font-weight: 600;
