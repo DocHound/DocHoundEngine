@@ -49,8 +49,13 @@
 
             // Then, we check whether the style sheet is already loaded (it may not have been part of the loop above the first time around) and if not, we load it in
             var existingLinks = $("link[href='" + cssUrl + "']");
-            if (existingLinks.length == 0)
-                $('head').append('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" />');
+            if (existingLinks.length < 1)
+            {
+                debugger;
+                var $el  = $("[kava-theme-colors]").first();
+                if ($el.length > 0)
+                    $el.after('<link rel="stylesheet" href="' + cssUrl + '" type="text/css" kava-theme-colors="true" />');
+            }
         },
 
         getActiveCssUrl: function(allCssUrls) {
