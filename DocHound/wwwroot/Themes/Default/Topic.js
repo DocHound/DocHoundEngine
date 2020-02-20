@@ -570,14 +570,30 @@ loadTopicAjax = function(href, noPushState) {
                 window.newContentLoading = false;
                 $('#load-indicator').css('display', 'none');
 
-                var
-                    $html = $('<div>' +
-                        data +
-                        '</div>'); // This is kind of a hack, but we need to elevate everything within the returned concent one level so jquery actually finds everything
+                var $html = $('<div>' + data + '</div>'); // This is kind of a hack, but we need to elevate everything within the returned concent one level so jquery actually finds everything
 
                 // We grab all the references we need later
                 var $scripts = $html.find('script');
                 var $links = $html.find('link');
+
+                // Adding all the links that came down into the header of the current document
+                $links.each(function() {
+                    var $currentLink = $(this);
+                    var linkHref = $currentLink.attr('href');
+                    if ($('link[href="' + linkHref + '"]').length < 1) {
+                        $('head').append($currentLink);
+                    }
+                });
+
+                // We also make sure that we do not have links in the overall doc that are not supposed to be there for the newly downloaded topic anymore
+                $('link').each(function() {
+                    var $currentExistingLink = $(this);
+                    var currentLinkHref = $currentExistingLink.attr('href');
+                    var $foundExistingLink = $html.find('link[href="' + currentLinkHref + '"]');
+                    if ($foundExistingLink.length < 1) {
+                        $currentExistingLink.remove();
+                    }
+                });
 
                 // We remove scripts and links from the content we merge, since we are merging them into the main content and we do not want to have these elements twice
                 $html.find('script').remove();
@@ -597,35 +613,12 @@ loadTopicAjax = function(href, noPushState) {
                     $('aside.sidebar').css('opacity', '1');
                 }
 
-                // We remove all the links that were custom-injected and may now not be needed anymore
-                // TODO: We should only remove the ones that aren't in the new topic
-                $('link[kava-custom="true"]').remove();
-
-                // We look at all the links. If they are not yet loaded, we load them now. If they are already there, we are good to go and do not need to load them again.
-                $links.each(function() {
-                    var linkHref = this.href;
-                    if (linkHref.startsWith(window.location.origin))
-                        linkHref = linkHref.substring(window.location.origin.length);
-                    var existingLinks = $('link[href="' + linkHref + '"]');
-                    if (existingLinks.length < 1) {
-                        // The link doesn't yet exist, so we add it
-                        // TODO: Only add if it isn't in the links already
-                        $('head').append(this);
-                        var custom = $(this).attr('kava-custom');
-                        if (custom.length < 1)
-                            $(this).attr('kava-custom', 'true');
-                    }
-                });
-
-                // TODO: Remove all custom links from the header if they weren't in the new topic.
-
                 // We take all the scripts from the new topic and move them into the main content
                 // Note that we need to add them, even if they are already there, because the scripts may need to run again
                 $scripts.each(function() {
                     var scriptSrc = this.src;
                     var scriptSrcLower = scriptSrc.toLowerCase();
-                    if (scriptSrcLower.endsWith('jsmath/easy/load.js')
-                    ) { // jsmath doesn't work within this context, so we have to force a reload of the page.
+                    if (scriptSrcLower.endsWith('jsmath/easy/load.js')) { // jsmath doesn't work within this context, so we have to force a reload of the page.
                         window.location.href = trimNoToc(href);
                         return;
                     }
