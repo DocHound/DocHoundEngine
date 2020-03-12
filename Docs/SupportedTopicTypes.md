@@ -34,7 +34,7 @@ The following topic types are currently being considered. Those with a checkmark
 * [ ] MAML/AML files (Microsoft Help format from the Windows Vista days that is still used by Sandcastle). The JSON.NET documentation uses this format extensively. For more info, see also: https://en.wikipedia.org/wiki/Microsoft_Assistance_Markup_Language
 * [ ] PDF
 * [ ] Power Point 
-* [ ] Excel
+* [ ] Excel (xlsx and also csv)
 * [ ] EML
 * [ ] RTF
 * [ ] .msg (email messages)
