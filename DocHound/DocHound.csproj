@@ -17,7 +17,7 @@
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack.CssSelectors.NetCore" Version="1.1.1" />
     <PackageReference Include="Markdig" Version="0.17.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Westwind.AspNetCore" Version="3.2.8" />
   </ItemGroup>
